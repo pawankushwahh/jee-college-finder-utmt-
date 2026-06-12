@@ -13,6 +13,9 @@ Then open http://127.0.0.1:8000 — the portal and API are on the same origin.
 
 from __future__ import annotations
 
+import logging
+import mimetypes
+import os
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -27,14 +30,43 @@ from .data_loader import load_programs
 from .recommender import recommend
 from .schemas import MetaResponse, RecommendRequest, RecommendResponse
 
-# Resolve frontend directory relative to this file (backend/app/ → root/frontend/)
-_FRONTEND_DIR = Path(__file__).resolve().parent.parent.parent / "frontend"
+logger = logging.getLogger(__name__)
+
+_BACKEND_ROOT = Path(__file__).resolve().parent.parent
+
+
+def _resolve_frontend_dir() -> Path:
+    """Locate the static portal directory for dev and Docker layouts."""
+    if env_dir := os.environ.get("FRONTEND_DIR"):
+        return Path(env_dir)
+
+    for candidate in (
+        _BACKEND_ROOT.parent / "frontend",  # local dev: repo root / frontend
+        _BACKEND_ROOT / "frontend",         # Docker: backend/frontend
+    ):
+        if (candidate / "index.html").is_file():
+            return candidate
+
+    return _BACKEND_ROOT.parent / "frontend"
+
+
+_FRONTEND_DIR = _resolve_frontend_dir()
+
+
+def _frontend_exists() -> bool:
+    return _FRONTEND_DIR.is_dir() and (_FRONTEND_DIR / "index.html").exists()
+
+
+def _static_file_response(path: Path) -> FileResponse:
+    media_type, _ = mimetypes.guess_type(str(path))
+    return FileResponse(str(path), media_type=media_type)
 
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
     # Parse the workbook once at startup so the first request is fast.
     load_programs()
+    logger.info("Serving frontend from %s (exists=%s)", _FRONTEND_DIR, _frontend_exists())
     yield
 
 
@@ -90,10 +122,6 @@ def recommend_endpoint(req: RecommendRequest) -> RecommendResponse:
 # Static file serving  (must come AFTER API routes)
 # ---------------------------------------------------------------------------
 
-def _frontend_exists() -> bool:
-    return _FRONTEND_DIR.is_dir() and (_FRONTEND_DIR / "index.html").exists()
-
-
 if _frontend_exists():
     # Serve individual asset directories so paths like /css/style.css work.
     for _subdir in ("css", "js", "assets"):
@@ -103,15 +131,15 @@ if _frontend_exists():
 
     @app.get("/", include_in_schema=False)
     def portal_root() -> FileResponse:
-        return FileResponse(str(_FRONTEND_DIR / "index.html"))
+        return FileResponse(str(_FRONTEND_DIR / "index.html"), media_type="text/html")
 
     @app.get("/{full_path:path}", include_in_schema=False)
     def spa_fallback(full_path: str) -> FileResponse:
-        """Serve index.html for any unmatched path (SPA client-side routing)."""
+        """Serve static assets or index.html for unmatched SPA paths."""
         target = _FRONTEND_DIR / full_path
         if target.is_file():
-            return FileResponse(str(target))
-        return FileResponse(str(_FRONTEND_DIR / "index.html"))
+            return _static_file_response(target)
+        return FileResponse(str(_FRONTEND_DIR / "index.html"), media_type="text/html")
 
 else:
     # Frontend directory not present — API-only mode (e.g. running backend/ standalone).
