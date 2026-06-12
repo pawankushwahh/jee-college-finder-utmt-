@@ -1,6 +1,11 @@
 "use strict";
 
-const API_BASE = (window.APP_CONFIG?.API_BASE_URL || "http://127.0.0.1:8000").replace(/\/+$/, "");
+// Empty string means same-origin (unified Render/Docker deploy). Do not use ||
+// here — "" is valid and must not fall back to localhost.
+const configured = window.APP_CONFIG?.API_BASE_URL;
+const API_BASE = (
+  configured !== undefined ? configured : "http://127.0.0.1:8000"
+).replace(/\/+$/, "");
 
 async function apiRequest(path, options = {}) {
   let res;
