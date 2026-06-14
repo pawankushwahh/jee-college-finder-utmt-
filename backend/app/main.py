@@ -59,7 +59,12 @@ def _frontend_exists() -> bool:
 
 def _static_file_response(path: Path) -> FileResponse:
     media_type, _ = mimetypes.guess_type(str(path))
-    return FileResponse(str(path), media_type=media_type)
+    headers: dict[str, str] = {}
+    # Prevent browsers / CDNs from pinning old HTML/JS/CSS after a deploy.
+    rel = path.name.lower()
+    if rel in {"index.html", "sw.js", "manifest.json"} or rel.endswith((".js", ".css")):
+        headers["Cache-Control"] = "no-cache, must-revalidate"
+    return FileResponse(str(path), media_type=media_type, headers=headers)
 
 
 @asynccontextmanager
@@ -132,7 +137,11 @@ if _frontend_exists():
 
     @app.get("/", include_in_schema=False)
     def portal_root() -> FileResponse:
-        return FileResponse(str(_FRONTEND_DIR / "index.html"), media_type="text/html")
+        return FileResponse(
+            str(_FRONTEND_DIR / "index.html"),
+            media_type="text/html",
+            headers={"Cache-Control": "no-cache, must-revalidate"},
+        )
 
     @app.get("/{full_path:path}", include_in_schema=False)
     def spa_fallback(full_path: str) -> FileResponse:

@@ -15,9 +15,11 @@ async function apiRequest(path, options = {}) {
       ...options,
     });
   } catch {
-    throw new Error(
-      "Could not reach the recommendation service. Make sure the backend is running and reachable.",
-    );
+    // t() comes from i18n.js (loaded before this file); fall back if absent.
+    const msg = typeof t === "function"
+      ? t("errors.unreachable")
+      : "Could not reach the recommendation service. You may be offline.";
+    throw new Error(msg);
   }
 
   if (!res.ok) {
@@ -30,7 +32,10 @@ async function apiRequest(path, options = {}) {
     } catch {
       // non-JSON error body
     }
-    throw new Error(detail || `Request failed with status ${res.status}.`);
+    const fallback = typeof t === "function"
+      ? t("errors.requestFailed", { status: res.status })
+      : `Request failed with status ${res.status}.`;
+    throw new Error(detail || fallback);
   }
 
   return res.json();

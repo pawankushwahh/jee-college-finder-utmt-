@@ -1,0 +1,21 @@
+{
+  "name": "Disha — Find your direction after JEE",
+  "short_name": "Disha",
+  "description": "A calm, guided college counsellor for JEE aspirants. See which IITs, NITs, IIITs and GFTIs realistically fit your rank — grouped into Safe, Target and Reach.",
+  "lang": "en",
+  "dir": "auto",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#faf6ee",
+  "theme_color": "#faf6ee",
+  "icons": [
+    {
+      "src": "/assets/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -8,90 +8,33 @@
    ════════════════════════════════════════════════════════════════════════ */
 
 // ── Static content ──────────────────────────────────────────────────────
+// User-facing strings live in js/i18n.js (en{} / hi{}) and are pulled via t().
+// Only the language-independent SVG icons + ordering live here.
 
-const GOALS = [
-  {
-    id: "coding",
-    name: "Coding & software",
-    desc: "Build things, aim for SDE roles",
-    icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
-  },
-  {
-    id: "research",
-    name: "Research & higher studies",
-    desc: "MS, MTech or PhD pathways",
-    icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>',
-  },
-  {
-    id: "mba",
-    name: "MBA & management",
-    desc: "Brand, network, placements",
-    icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>',
-  },
-  {
-    id: "core",
-    name: "Core engineering",
-    desc: "Practice the discipline you study",
-    icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>',
-  },
-  {
-    id: "undecided",
-    name: "Not sure yet",
-    desc: "Keep as many doors open as possible",
-    icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
-  },
-];
-
-// Counsellor tips per goal, shown under the API's interest guidance.
-const GOAL_TIPS = {
-  coding: [
-    "CSE at the top NITs often closes earlier than non-CS branches at newer IITs — compare both before ranking choices.",
-    "ECE and Mathematics & Computing are close substitutes for CSE in software placements.",
-    "Consistent DSA practice and internships outweigh a one-tier branch difference.",
-  ],
-  research: [
-    "Prefer institutes with active research groups in your area — check faculty pages, not just rankings.",
-    "IISc and IISERs are strong alternatives if pure science appeals to you.",
-    "Start approaching professors for small projects in your first year.",
-  ],
-  mba: [
-    "An older IIT or NIT brand carries real weight in CAT shortlists and placements.",
-    "Branch choice is secondary — pick one you can score well in.",
-    "Use clubs, fests and POR roles to build the profile MBA programs look for.",
-  ],
-  core: [
-    "Older NITs frequently have stronger core-company relationships than newer IITs.",
-    "PSU recruitment through GATE is a dependable core-sector pathway.",
-    "Look for institutes with labs and industry tie-ups in your specific domain.",
-  ],
-  undecided: [
-    "Most IITs allow a branch change after first year based on GPA.",
-    "Broad branches (EE, Mechanical, Engineering Physics) keep many doors open.",
-    "Talk to seniors in branches you're considering before locking a choice.",
-  ],
+const GOAL_ICONS = {
+  coding: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
+  research: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>',
+  mba: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>',
+  core: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>',
+  undecided: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
 };
 
-const QUOTA_LABELS = {
-  AI: "All-India seat",
-  HS: "Home-state quota",
-  OS: "Other-state quota",
-  GO: "Goa quota",
-  JK: "J&K quota",
-  LA: "Ladakh quota",
-};
+const GOAL_IDS = ["coding", "research", "mba", "core", "undecided"];
 
-const SECTION_META = {
-  Target: { title: "Target", sub: "your best-fit zone" },
-  Reach:  { title: "Reach",  sub: "worth a try" },
-  Safe:   { title: "Safe",   sub: "strong backups" },
-};
+const QUOTA_KEYS = ["AI", "HS", "OS", "GO", "JK", "LA"];
+const quotaLabel = (q) => (QUOTA_KEYS.includes(q) ? t(`quota.${q}`) : q);
+
+const goalName = (id) => t(`goals.${id}.name`);
+const goalTips = (id) => t(`goalTips.${id}`) || [];
+
 const SECTION_ORDER = ["Target", "Reach", "Safe"];
+const sectionMeta = (cat) => ({
+  Target: { title: t("zones.targetName"), sub: t("zones.targetSub") },
+  Reach:  { title: t("zones.reachName"),  sub: t("zones.reachSub") },
+  Safe:   { title: t("zones.safeName"),   sub: t("zones.safeSub") },
+}[cat]);
 
-const LOADING_LINES = [
-  "Reading last year's cutoffs…",
-  "Matching programs to your profile…",
-  "Sorting Safe, Target and Reach…",
-];
+const loadingLines = () => t("loading");
 
 // ── DOM helpers ─────────────────────────────────────────────────────────
 
@@ -115,13 +58,20 @@ const state = {
   step: 0,
   gender: "male",
   goal: null,
+  branchPrefs: [],          // selected branch-preference values; [] means "Any"
   lastPayload: null,
   lastData: null,
   filterText: "",
   filterType: "",
 };
 
-const TOTAL_STEPS = 5;
+const TOTAL_STEPS = 6;
+
+const branchOptions = () => state.meta?.branches || [];
+const branchLabel = (value) => {
+  const b = branchOptions().find((o) => o.value === value);
+  return b ? b.label : value;
+};
 
 // ── View switching ──────────────────────────────────────────────────────
 
@@ -153,7 +103,8 @@ function attachRankFormatting(el) {
 
 // ── Guided flow ─────────────────────────────────────────────────────────
 
-const STEP_BUTTON_LABELS = ["Continue", "Continue", "Continue", "Continue", "Show my colleges"];
+const stepButtonLabel = (index) =>
+  index === TOTAL_STEPS - 1 ? t("flow.showColleges") : t("flow.continue");
 
 function goToStep(index, { backwards = false } = {}) {
   state.step = index;
@@ -173,9 +124,9 @@ function goToStep(index, { backwards = false } = {}) {
   $("flow-progressbar").setAttribute("aria-valuenow", String(index + 1));
   $("flow-count").textContent = `${index + 1} / ${TOTAL_STEPS}`;
   $("flow-back").disabled = index === 0;
-  $("flow-next").textContent = STEP_BUTTON_LABELS[index];
+  $("flow-next").textContent = stepButtonLabel(index);
 
-  if (index === 4) renderReview();
+  if (index === TOTAL_STEPS - 1) renderReview();
 
   const firstInput = document.querySelector(
     `.step[data-step="${index}"] input, .step[data-step="${index}"] select`
@@ -189,7 +140,7 @@ function validateStep(index) {
     const adv = parseRankInput($("adv-rank"));
     const err = $("error-ranks");
     if (mains === null && adv === null) {
-      err.textContent = "Enter at least one rank — JEE Main or Advanced — to continue.";
+      err.textContent = t("validation.ranks");
       err.hidden = false;
       return false;
     }
@@ -199,7 +150,7 @@ function validateStep(index) {
   if (index === 2) {
     const err = $("error-state");
     if (!$("home-state").value) {
-      err.textContent = "Pick your home state — it changes which NIT seats you can claim.";
+      err.textContent = t("validation.state");
       err.hidden = false;
       return false;
     }
@@ -209,7 +160,7 @@ function validateStep(index) {
   if (index === 3) {
     const err = $("error-goal");
     if (!state.goal) {
-      err.textContent = "Pick one — \u201cNot sure yet\u201d counts.";
+      err.textContent = t("validation.goal");
       err.hidden = false;
       return false;
     }
@@ -228,48 +179,62 @@ function advanceStep() {
   }
 }
 
-// gender pills
-function bindGenderRow() {
-  const row = $("gender-row");
-  row.addEventListener("click", (e) => {
-    const btn = e.target.closest(".choice");
-    if (!btn) return;
-    state.gender = btn.dataset.value;
-    row.querySelectorAll(".choice").forEach((c) => {
-      const on = c === btn;
+// gender pills — the flow row and the live panel row both drive state.gender.
+function setGender(value) {
+  state.gender = value;
+  syncGenderRows();
+  updateGenderNote();
+}
+
+function syncGenderRows() {
+  document
+    .querySelectorAll("#gender-row .choice, #panel-gender-row .choice")
+    .forEach((c) => {
+      const on = c.dataset.value === state.gender;
       c.classList.toggle("is-selected", on);
       c.setAttribute("aria-checked", on ? "true" : "false");
     });
-    const note = $("gender-note");
-    if (state.gender === "female") {
-      note.textContent = "Female-only (supernumerary) seats will be included for you — they often close at better ranks.";
-    } else if (state.gender === "other") {
-      note.textContent = "You'll be matched against gender-neutral seat pools.";
-    } else {
-      note.innerHTML = "&nbsp;";
-    }
+}
+
+function bindGenderRow() {
+  $("gender-row").addEventListener("click", (e) => {
+    const btn = e.target.closest(".choice");
+    if (!btn) return;
+    setGender(btn.dataset.value);
   });
+}
+
+function updateGenderNote() {
+  const note = $("gender-note");
+  if (state.gender === "female") {
+    note.textContent = t("gender.noteFemale");
+  } else if (state.gender === "other") {
+    note.textContent = t("gender.noteOther");
+  } else {
+    note.innerHTML = "&nbsp;";
+  }
 }
 
 // goal cards
 function buildGoalCards() {
   const grid = $("goal-grid");
   grid.innerHTML = "";
-  for (const goal of GOALS) {
+  for (const id of GOAL_IDS) {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "goal-card";
-    btn.dataset.goal = goal.id;
+    btn.dataset.goal = id;
     btn.setAttribute("role", "radio");
-    btn.setAttribute("aria-checked", "false");
+    btn.setAttribute("aria-checked", state.goal === id ? "true" : "false");
+    if (state.goal === id) btn.classList.add("is-selected");
     btn.innerHTML = `
-      <span class="goal-card__icon" aria-hidden="true">${goal.icon}</span>
+      <span class="goal-card__icon" aria-hidden="true">${GOAL_ICONS[id]}</span>
       <span>
-        <span class="goal-card__name">${escapeHtml(goal.name)}</span>
-        <span class="goal-card__desc">${escapeHtml(goal.desc)}</span>
+        <span class="goal-card__name">${escapeHtml(goalName(id))}</span>
+        <span class="goal-card__desc">${escapeHtml(t(`goals.${id}.desc`))}</span>
       </span>`;
     btn.addEventListener("click", () => {
-      state.goal = goal;
+      state.goal = id;
       grid.querySelectorAll(".goal-card").forEach((c) => {
         const on = c === btn;
         c.classList.toggle("is-selected", on);
@@ -283,24 +248,85 @@ function buildGoalCards() {
   }
 }
 
+// branch-preference checkboxes — shared between the flow step and the live
+// panel; both reflect and mutate state.branchPrefs ([] == "Any branch").
+const BRANCH_CHECK_SVG =
+  '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+function makeBranchChip(value, label, active) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className =
+    "branch-chip" +
+    (active ? " is-selected" : "") +
+    (value === "" ? " branch-chip--any" : "");
+  btn.setAttribute("role", "checkbox");
+  btn.setAttribute("aria-checked", active ? "true" : "false");
+  btn.dataset.branch = value;
+  btn.innerHTML =
+    `<span class="branch-chip__check" aria-hidden="true">${BRANCH_CHECK_SVG}</span>` +
+    `<span class="branch-chip__label">${escapeHtml(label)}</span>`;
+  btn.addEventListener("click", () => toggleBranchPref(value));
+  return btn;
+}
+
+function buildBranchGrid(grid) {
+  if (!grid) return;
+  grid.innerHTML = "";
+  const anyActive = state.branchPrefs.length === 0;
+  grid.appendChild(makeBranchChip("", t("flow.branchAny"), anyActive));
+  for (const b of branchOptions()) {
+    grid.appendChild(
+      makeBranchChip(b.value, b.label, state.branchPrefs.includes(b.value))
+    );
+  }
+}
+
+function renderBranchGrids() {
+  buildBranchGrid($("branch-grid"));
+  buildBranchGrid($("panel-branch-grid"));
+}
+
+function toggleBranchPref(value) {
+  if (value === "") {
+    state.branchPrefs = [];
+  } else {
+    const i = state.branchPrefs.indexOf(value);
+    if (i >= 0) state.branchPrefs.splice(i, 1);
+    else state.branchPrefs.push(value);
+  }
+  renderBranchGrids();
+  if ($("view-results").classList.contains("is-active")) schedulePanelUpdate();
+}
+
 // review
 function categoryLabel() {
   const sel = $("seat-category");
-  return sel.options[sel.selectedIndex]?.text.replace(/ — coming soon$/, "") || "General";
+  const opt = sel.options[sel.selectedIndex];
+  if (!opt) return t("category.general");
+  const suffix = " — " + t("category.comingSoon");
+  return opt.text.endsWith(suffix) ? opt.text.slice(0, -suffix.length).trim() : opt.text;
+}
+
+function branchReviewValue() {
+  if (!state.branchPrefs.length) return t("review.anyBranch");
+  return state.branchPrefs.map(branchLabel).join(", ");
 }
 
 function renderReview() {
   const mains = parseRankInput($("mains-rank"));
   const adv = parseRankInput($("adv-rank"));
-  const genderText = { male: "Male", female: "Female", other: "Other" }[state.gender];
+  const genderText = t(`gender.${state.gender}`);
+  const notGiven = `<small>${escapeHtml(t("review.notGiven"))}</small>`;
 
   const rows = [
-    { key: "JEE Main rank", val: mains ? fmt(mains) : "<small>not given</small>", step: 0 },
-    { key: "JEE Advanced rank", val: adv ? fmt(adv) : "<small>not given</small>", step: 0 },
-    { key: "Gender", val: escapeHtml(genderText), step: 1 },
-    { key: "Category", val: escapeHtml(categoryLabel()), step: 1 },
-    { key: "Home state", val: escapeHtml($("home-state").value || "—"), step: 2 },
-    { key: "Goal", val: escapeHtml(state.goal ? state.goal.name : "—"), step: 3 },
+    { key: t("review.mains"), val: mains ? fmt(mains) : notGiven, step: 0 },
+    { key: t("review.adv"), val: adv ? fmt(adv) : notGiven, step: 0 },
+    { key: t("review.gender"), val: escapeHtml(genderText), step: 1 },
+    { key: t("review.category"), val: escapeHtml(categoryLabel()), step: 1 },
+    { key: t("review.state"), val: escapeHtml($("home-state").value || t("review.dash")), step: 2 },
+    { key: t("review.goal"), val: escapeHtml(state.goal ? goalName(state.goal) : t("review.dash")), step: 3 },
+    { key: t("review.branch"), val: escapeHtml(branchReviewValue()), step: 4 },
   ];
 
   const list = $("review-list");
@@ -329,7 +355,14 @@ async function loadMeta() {
     if (meta.total_programs) $("program-count").textContent = fmt(meta.total_programs);
 
     const stateSel = $("home-state");
-    stateSel.innerHTML = '<option value="" disabled selected>Choose your state…</option>';
+    stateSel.innerHTML = "";
+    const ph = document.createElement("option");
+    ph.value = "";
+    ph.disabled = true;
+    ph.selected = true;
+    ph.id = "home-state-placeholder";
+    ph.textContent = t("flow.statePlaceholder");
+    stateSel.appendChild(ph);
     for (const s of meta.states) {
       const opt = document.createElement("option");
       opt.value = s;
@@ -337,29 +370,98 @@ async function loadMeta() {
       stateSel.appendChild(opt);
     }
 
-    const catSel = $("seat-category");
-    catSel.innerHTML = "";
-    const cats = meta.categories?.length
-      ? meta.categories
-      : [{ value: "OPEN", label: "General", available: true }];
-    for (const c of cats) {
-      const opt = document.createElement("option");
-      opt.value = c.value;
-      const label = String(c.label || c.value)
-        .replace(/OPEN \(General \/ CRL\)/i, "General (OPEN)")
-        .replace(/^OPEN$/i, "General (OPEN)");
-      opt.textContent = c.available ? label : `${label} — coming soon`;
-      opt.disabled = !c.available;
-      catSel.appendChild(opt);
-    }
-    catSel.value = "OPEN";
-    $("category-note").textContent =
-      "Cutoff data currently covers OPEN (CRL) seats; reserved-category cutoffs are on the way.";
-
+    buildCategoryOptions();
+    buildPanelControls();
     $("begin-btn").disabled = false;
   } catch {
     $("meta-offline").hidden = false;
   }
+}
+
+// ── Live panel (counsellor dashboard) ─────────────────────────────────────
+
+// Build the editable controls that mirror — and drive — the student profile
+// from the results page. Selects/options come from cached meta.
+function buildPanelControls() {
+  buildPanelGenderRow();
+  buildPanelGoalSelect();
+  buildPanelStateSelect();
+  buildCategoryOptions($("panel-seat-category"));
+  renderBranchGrids();
+}
+
+function buildPanelGenderRow() {
+  const row = $("panel-gender-row");
+  if (!row) return;
+  row.innerHTML = "";
+  for (const g of ["male", "female", "other"]) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "choice" + (state.gender === g ? " is-selected" : "");
+    btn.setAttribute("role", "radio");
+    btn.setAttribute("aria-checked", state.gender === g ? "true" : "false");
+    btn.dataset.value = g;
+    btn.textContent = t(`gender.${g}`);
+    btn.addEventListener("click", () => {
+      setGender(g);
+      schedulePanelUpdate();
+    });
+    row.appendChild(btn);
+  }
+}
+
+function buildPanelGoalSelect() {
+  const sel = $("panel-goal");
+  if (!sel) return;
+  const prev = state.goal;
+  sel.innerHTML = "";
+  for (const id of GOAL_IDS) {
+    const opt = document.createElement("option");
+    opt.value = id;
+    opt.textContent = goalName(id);
+    sel.appendChild(opt);
+  }
+  if (prev) sel.value = prev;
+}
+
+function buildPanelStateSelect() {
+  const sel = $("panel-home-state");
+  if (!sel || !state.meta) return;
+  const prev = sel.value;
+  sel.innerHTML = "";
+  for (const s of state.meta.states) {
+    const opt = document.createElement("option");
+    opt.value = s;
+    opt.textContent = s;
+    sel.appendChild(opt);
+  }
+  if (prev) sel.value = prev;
+}
+
+// Build (or relabel) a reservation-category dropdown from cached meta. Defaults
+// to the flow's #seat-category but can target the panel's clone too.
+function buildCategoryOptions(catSel) {
+  catSel = catSel || $("seat-category");
+  if (!catSel) return;
+  const prev = catSel.value || "OPEN";
+  const cats = state.meta?.categories?.length
+    ? state.meta.categories
+    : [{ value: "OPEN", label: "General", available: true }];
+  catSel.innerHTML = "";
+  for (const c of cats) {
+    const opt = document.createElement("option");
+    opt.value = c.value;
+    const label = c.value === "OPEN"
+      ? t("category.general")
+      : String(c.label || c.value);
+    opt.textContent = c.available ? label : `${label} — ${t("category.comingSoon")}`;
+    opt.disabled = !c.available;
+    catSel.appendChild(opt);
+  }
+  catSel.value = prev;
+  if (!catSel.value) catSel.value = "OPEN";
+  const note = $("category-note");
+  if (note) note.textContent = t("category.note");
 }
 
 // ── Submission ──────────────────────────────────────────────────────────
@@ -369,10 +471,12 @@ let requestSeq = 0;
 
 function startLoadingLines() {
   let i = 0;
-  $("loading-text").textContent = LOADING_LINES[0];
+  const lines = loadingLines();
+  $("loading-text").textContent = lines[0];
   loadingTimer = setInterval(() => {
-    i = (i + 1) % LOADING_LINES.length;
-    $("loading-text").textContent = LOADING_LINES[i];
+    const ls = loadingLines();
+    i = (i + 1) % ls.length;
+    $("loading-text").textContent = ls[i];
   }, 1100);
 }
 
@@ -387,18 +491,85 @@ function buildPayload() {
   const payload = {
     gender: state.gender === "female" ? "female" : "male",
     home_state: $("home-state").value,
-    goal: state.goal.id,
+    goal: state.goal,
     seat_category: $("seat-category").value || "OPEN",
     max_results: 150,
+    lang: getLang(),
   };
   if (mains !== null) payload.mains_rank = mains;
   if (adv !== null) payload.adv_rank = adv;
+  if (state.branchPrefs.length) payload.branch_preferences = state.branchPrefs.slice();
   return payload;
 }
 
 async function submitProfile() {
   state.lastPayload = buildPayload();
   await runRequest(state.lastPayload);
+}
+
+// ── Live panel updates ────────────────────────────────────────────────────
+// Editing a panel control re-runs the request in place — no view switch, no
+// page reload — so the results feel like a live counsellor dashboard.
+
+let panelDebounce = null;
+
+function showPanelUpdating(on) {
+  const el = $("panel-updating");
+  if (el) el.hidden = !on;
+  const main = document.querySelector(".results-main");
+  if (main) main.classList.toggle("is-refreshing", on);
+}
+
+function schedulePanelUpdate() {
+  showPanelUpdating(true);
+  clearTimeout(panelDebounce);
+  panelDebounce = setTimeout(runPanelUpdate, 420);
+}
+
+function runPanelUpdate() {
+  const mains = parseRankInput($("mains-rank"));
+  const adv = parseRankInput($("adv-rank"));
+  // Keep the current results on screen if both ranks are cleared.
+  if (mains === null && adv === null) {
+    showPanelUpdating(false);
+    return;
+  }
+  state.lastPayload = buildPayload();
+  runLiveRequest(state.lastPayload);
+}
+
+// Like runRequest, but never leaves the results view: we refresh the cards in
+// place and show a subtle "Updating…" cue in the panel instead.
+async function runLiveRequest(payload) {
+  const seq = ++requestSeq;
+  showPanelUpdating(true);
+  try {
+    const data = await fetchRecommendations(payload);
+    if (seq !== requestSeq) return;
+    state.lastData = data;
+    renderResults(data);
+  } catch (err) {
+    if (seq !== requestSeq) return;
+    // Soft-fail: keep the last good results rather than wiping the dashboard.
+    console.warn("Live update failed:", err && err.message);
+  } finally {
+    if (seq === requestSeq) showPanelUpdating(false);
+  }
+}
+
+// Copy the current profile (flow inputs + state) into the panel controls. Run
+// when first arriving at results, not on every keystroke, so we never fight the
+// control the user is editing.
+function syncPanelFromState() {
+  if ($("panel-mains-rank")) $("panel-mains-rank").value = $("mains-rank").value;
+  if ($("panel-adv-rank")) $("panel-adv-rank").value = $("adv-rank").value;
+  if ($("panel-home-state")) $("panel-home-state").value = $("home-state").value;
+  if ($("panel-seat-category")) {
+    $("panel-seat-category").value = $("seat-category").value || "OPEN";
+  }
+  if ($("panel-goal") && state.goal) $("panel-goal").value = state.goal;
+  syncGenderRows();
+  renderBranchGrids();
 }
 
 async function runRequest(payload) {
@@ -413,11 +584,12 @@ async function runRequest(payload) {
     stopLoadingLines();
     state.lastData = data;
     renderResults(data);
+    syncPanelFromState();
     showView("results");
   } catch (err) {
     if (seq !== requestSeq) return;
     stopLoadingLines();
-    $("error-message").textContent = err.message || "Something went wrong. Please try again.";
+    $("error-message").textContent = err.message || t("error.generic");
     showView("error");
   }
 }
@@ -443,11 +615,12 @@ function countUp(el, target) {
 function renderProfileChips() {
   const p = state.lastPayload;
   const chips = [];
-  if (p.mains_rank) chips.push(`Main <strong>${fmt(p.mains_rank)}</strong>`);
-  if (p.adv_rank) chips.push(`Advanced <strong>${fmt(p.adv_rank)}</strong>`);
+  if (p.mains_rank) chips.push(`${escapeHtml(t("results.profileMain"))} <strong>${fmt(p.mains_rank)}</strong>`);
+  if (p.adv_rank) chips.push(`${escapeHtml(t("results.profileAdvanced"))} <strong>${fmt(p.adv_rank)}</strong>`);
   chips.push(escapeHtml(p.home_state));
   chips.push(escapeHtml(categoryLabel()));
-  if (state.goal) chips.push(escapeHtml(state.goal.name));
+  if (state.goal) chips.push(escapeHtml(goalName(state.goal)));
+  for (const b of state.branchPrefs) chips.push(escapeHtml(branchLabel(b)));
 
   $("profile-chips").innerHTML = chips
     .map((c) => `<span class="pchip">${c}</span>`)
@@ -455,11 +628,11 @@ function renderProfileChips() {
 }
 
 function noteHeadline(byCat, total) {
-  if (total === 0) return "Let's adjust the compass.";
-  if ((byCat.Target || 0) > 0 && (byCat.Safe || 0) > 0) return "You're standing in a good spot.";
-  if ((byCat.Target || 0) > 0) return "You have real options on the table.";
-  if ((byCat.Safe || 0) > 0) return "You have solid ground to build from.";
-  return "It's a stretch — but not out of reach.";
+  if (total === 0) return t("headlines.adjust");
+  if ((byCat.Target || 0) > 0 && (byCat.Safe || 0) > 0) return t("headlines.good");
+  if ((byCat.Target || 0) > 0) return t("headlines.options");
+  if ((byCat.Safe || 0) > 0) return t("headlines.solid");
+  return t("headlines.stretch");
 }
 
 function renderNote(data) {
@@ -473,9 +646,9 @@ function renderNote(data) {
   if (data.guidance) pieces.push(data.guidance);
   $("note-guidance").textContent = pieces.join(" ");
 
-  const tips = GOAL_TIPS[state.goal?.id] || [];
+  const tips = state.goal ? goalTips(state.goal) : [];
   $("note-tips").innerHTML = tips
-    .map((t) => `<li>${escapeHtml(t)}</li>`)
+    .map((tip) => `<li>${escapeHtml(tip)}</li>`)
     .join("");
 
   const notesBox = $("api-notes");
@@ -496,6 +669,156 @@ function userRankFor(rec) {
     : state.lastPayload.mains_rank;
 }
 
+// ── Rank ruler (hero) ─────────────────────────────────────────────────────
+/*
+  DESIGN CHOICE — TWO stacked rulers, not one.
+  JEE Advanced (IIT) and JEE Main (NIT/IIIT/GFTI) ranks come from different
+  exams and different candidate pools, so they sit on separate scales; plotting
+  both against a single "YOU" marker would be meaningless. We draw one ruler per
+  exam the student actually has a rank for, each with its own YOU line.
+  HOW TO READ IT — the axis is logarithmic (rank 1 → 10 lakh) so the crowded
+  low-rank end stays legible; each dot is one program coloured Safe/Target/Reach,
+  and the black "YOU" line is the student's rank: dots to its LEFT closed at a
+  better (lower) rank than them, dots to its RIGHT closed later.
+*/
+
+const RANK_AXIS_MAX = 1000000;
+const LOG_AXIS_MAX = Math.log10(RANK_AXIS_MAX); // 6
+
+// pos(rank) → percentage along the axis on a log10 scale (a linear scale is
+// useless when ranks span 1 … 10⁶). Clamped so edge dots stay inside the track.
+function rankPos(rank) {
+  const r = Math.min(Math.max(Number(rank) || 1, 1), RANK_AXIS_MAX);
+  return Math.min(Math.max((Math.log10(r) / LOG_AXIS_MAX) * 100, 0.5), 99.5);
+}
+
+const RULER_TICKS = [
+  { rank: 10, label: "10" },
+  { rank: 100, label: "100" },
+  { rank: 1000, label: "1K" },
+  { rank: 10000, label: "10K" },
+  { rank: 100000, label: "1L" },
+  { rank: 1000000, label: "10L" },
+];
+
+const RULER_GROUPS = [
+  { exam: "advanced", titleKey: "ruler.iitTitle", viaKey: "ruler.iitVia", rankKey: "adv_rank" },
+  { exam: "mains", titleKey: "ruler.nitTitle", viaKey: "ruler.nitVia", rankKey: "mains_rank" },
+];
+
+const RULER_LANES = 4; // vertical jitter lanes to de-clutter dense clusters
+
+function rulerGroupHtml(group, recs) {
+  const items = recs.filter((r) => r.exam === group.exam);
+  if (!items.length) return "";
+
+  const title = t(group.titleKey);
+  const via = t(group.viaKey);
+  const youRank = state.lastPayload?.[group.rankKey];
+  // sort by closing rank so adjacent (visually overlapping) dots land in
+  // different jitter lanes, spreading dense clusters vertically
+  const sorted = items.slice().sort((a, b) => a.closing_rank - b.closing_rank);
+
+  const dots = sorted
+    .map((r, i) => {
+      const cat = r.category.toLowerCase();
+      return `<span class="ruler__dot ruler__dot--${cat}" style="left:${rankPos(r.closing_rank).toFixed(2)}%;--lane:${i % RULER_LANES}" data-inst="${escapeHtml(r.institute)}" data-branch="${escapeHtml(r.branch)}" data-rank="${r.closing_rank}" data-cat="${cat}"></span>`;
+    })
+    .join("");
+
+  const grid = RULER_TICKS.map(
+    (t) => `<span class="ruler__grid" style="left:${rankPos(t.rank).toFixed(2)}%"></span>`
+  ).join("");
+
+  const scale = RULER_TICKS.map(
+    (t) => `<span class="ruler__tick" style="left:${rankPos(t.rank).toFixed(2)}%">${t.label}</span>`
+  ).join("");
+
+  const you = youRank
+    ? `<div class="ruler__you" style="left:${rankPos(youRank).toFixed(2)}%" title="${escapeHtml(t("ruler.yourRank", { rank: fmt(youRank) }))}"><span class="ruler__you-flag">${escapeHtml(t("ruler.you"))}</span></div>`
+    : "";
+
+  const headRight = youRank
+    ? `<span class="ruler__you-rank">${escapeHtml(t("ruler.you"))} · ${fmt(youRank)}</span>`
+    : `<span class="ruler__count">${items.length} ${escapeHtml(t("ruler.options"))}</span>`;
+
+  const aria = `${title} ${via}: ${items.length}`;
+
+  return `
+    <div class="ruler__group" role="img" aria-label="${escapeHtml(aria)}">
+      <div class="ruler__head">
+        <span class="ruler__title">${escapeHtml(title)} <span class="ruler__via">${escapeHtml(via)}</span></span>
+        ${headRight}
+      </div>
+      <div class="ruler__track">
+        ${grid}
+        ${dots}
+        ${you}
+      </div>
+      <div class="ruler__scale">${scale}</div>
+    </div>`;
+}
+
+// Built once per result render (not on filter changes) to keep typing snappy.
+function renderRuler(data) {
+  const el = $("ruler");
+  const recs = data?.recommendations || [];
+  const groups = RULER_GROUPS.map((g) => rulerGroupHtml(g, recs)).filter(Boolean).join("");
+
+  if (!groups) {
+    el.hidden = true;
+    el.innerHTML = "";
+    return;
+  }
+
+  el.innerHTML = `
+    <div class="ruler__intro">
+      <p class="eyebrow">${escapeHtml(t("ruler.introEyebrow"))}</p>
+      <p class="ruler__lede">${escapeHtml(t("ruler.lede"))}</p>
+    </div>
+    ${groups}
+    <div class="ruler__tip" id="ruler-tip" aria-hidden="true"></div>`;
+  el.hidden = false;
+}
+
+// Cheap tooltip via event delegation: hover (pointer) or tap (touch) a dot.
+function bindRulerTooltip() {
+  const el = $("ruler");
+
+  const showTip = (dot) => {
+    const tip = $("ruler-tip");
+    if (!tip) return;
+    const cr = el.getBoundingClientRect();
+    const dr = dot.getBoundingClientRect();
+    tip.innerHTML =
+      `<strong>${escapeHtml(dot.dataset.inst)}</strong>` +
+      `<span>${escapeHtml(dot.dataset.branch)}</span>` +
+      `<em>${escapeHtml(t("ruler.closes"))} ${fmt(Number(dot.dataset.rank))}</em>`;
+    tip.dataset.cat = dot.dataset.cat;
+    tip.style.left = `${dr.left - cr.left + dr.width / 2}px`;
+    tip.style.top = `${dr.top - cr.top}px`;
+    tip.classList.add("is-on");
+  };
+
+  const hideTip = () => {
+    const tip = $("ruler-tip");
+    if (tip) tip.classList.remove("is-on");
+  };
+
+  el.addEventListener("pointerover", (e) => {
+    const dot = e.target.closest(".ruler__dot");
+    if (dot) showTip(dot);
+  });
+  el.addEventListener("pointerout", (e) => {
+    if (e.target.closest(".ruler__dot")) hideTip();
+  });
+  el.addEventListener("click", (e) => {
+    const dot = e.target.closest(".ruler__dot");
+    if (dot) showTip(dot);
+    else hideTip();
+  });
+}
+
 function rankBarHtml(rec) {
   const open = rec.opening_rank;
   const close = rec.closing_rank;
@@ -511,30 +834,62 @@ function rankBarHtml(rec) {
 
   let verdict;
   if (rec.category === "Safe") {
-    verdict = `You: ${fmt(rank)} — ahead of last year's opening rank.`;
+    verdict = t("rankbar.safe", { rank: fmt(rank) });
   } else if (rec.category === "Target") {
     const through = Math.round(((rank - open) / span) * 100);
     verdict =
       through <= 55
-        ? `You: ${fmt(rank)} — comfortably inside last year's window.`
-        : `You: ${fmt(rank)} — inside the window, closer to the edge.`;
+        ? t("rankbar.targetComfort", { rank: fmt(rank) })
+        : t("rankbar.targetEdge", { rank: fmt(rank) });
   } else {
     const past = Math.max(1, Math.round(((rank - close) / close) * 100));
-    verdict = `You: ${fmt(rank)} — about ${past}% past last year's closing. Cutoffs shift.`;
+    verdict = t("rankbar.reach", { rank: fmt(rank), past });
   }
 
   return `
     <div class="rankbar">
       <div class="rankbar__track">
         <div class="rankbar__window" style="left:${winLeft.toFixed(1)}%;right:${(100 - winRight).toFixed(1)}%"></div>
-        <div class="rankbar__you" style="left:${youPos.toFixed(1)}%" title="Your rank: ${fmt(rank)}"></div>
+        <div class="rankbar__you" style="left:${youPos.toFixed(1)}%" title="${escapeHtml(t("ruler.yourRank", { rank: fmt(rank) }))}"></div>
       </div>
       <div class="rankbar__labels">
-        <span>opens <strong>${fmt(open)}</strong></span>
-        <span>closes <strong>${fmt(close)}</strong></span>
+        <span>${escapeHtml(t("rankbar.opens"))} <strong>${fmt(open)}</strong></span>
+        <span>${escapeHtml(t("rankbar.closes"))} <strong>${fmt(close)}</strong></span>
       </div>
       <p class="rankbar__verdict">${escapeHtml(verdict)}</p>
     </div>`;
+}
+
+// Confidence band → human label + tooltip. Colours come from the CSS class.
+function confidenceMeta(band) {
+  const b = ["high", "medium", "fragile"].includes(band) ? band : "medium";
+  return { label: t(`confidence.${b}Label`), hint: t(`confidence.${b}Hint`) };
+}
+
+function confidenceChipHtml(rec) {
+  const meta = confidenceMeta(rec.confidence);
+  return `<span class="conf-chip conf-chip--${escapeHtml(rec.confidence)}" title="${escapeHtml(meta.hint)}">${escapeHtml(meta.label)}</span>`;
+}
+
+function advantageBadgesHtml(rec) {
+  const badges = [];
+  if (rec.home_state_advantage) {
+    badges.push(
+      `<span class="adv-badge adv-badge--home" title="${escapeHtml(t("card.homeBadgeTitle"))}">
+         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/></svg>
+         ${escapeHtml(t("card.homeBadge", { n: fmt(rec.home_state_advantage) }))}
+       </span>`
+    );
+  }
+  if (rec.female_seat_advantage) {
+    badges.push(
+      `<span class="adv-badge adv-badge--female" title="${escapeHtml(t("card.femaleBadgeTitle"))}">
+         <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M12 13v8M9 18h6"/></svg>
+         ${escapeHtml(t("card.femaleBadge", { n: fmt(rec.female_seat_advantage) }))}
+       </span>`
+    );
+  }
+  return badges.length ? `<div class="ccard__badges">${badges.join("")}</div>` : "";
 }
 
 function cardHtml(rec, index) {
@@ -542,30 +897,37 @@ function cardHtml(rec, index) {
   const typeClass = `tag--${rec.institute_type.toLowerCase()}`;
   const delay = prefersReducedMotion ? 0 : Math.min(index * 45, 420);
   const star = rec.matched_interest
-    ? `<span class="ccard__star" title="Strong fit for your stated goal">
+    ? `<span class="ccard__star" title="${escapeHtml(t("card.fitsGoalTitle"))}">
          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2z"/></svg>
-         fits your goal</span>`
+         ${escapeHtml(t("card.fitsGoal"))}</span>`
     : "";
 
-  const degreeNote = /dual/i.test(rec.degree) ? "Dual degree (5 yr)" : "";
-  const poolNote = rec.gender_pool === "female" ? "Female-only seat" : "";
+  const degreeNote = /dual/i.test(rec.degree) ? t("card.dualDegree") : "";
+  const poolNote = rec.gender_pool === "female" ? t("card.femaleSeat") : "";
   const foot = [
-    QUOTA_LABELS[rec.quota] || rec.quota,
-    rec.exam === "advanced" ? "via JEE Advanced" : "via JEE Main",
+    quotaLabel(rec.quota),
+    rec.exam === "advanced" ? t("card.viaAdvanced") : t("card.viaMains"),
     degreeNote,
     poolNote,
   ].filter(Boolean);
+
+  const reason = rec.reason
+    ? `<p class="ccard__reason">${escapeHtml(rec.reason)}</p>`
+    : "";
 
   return `
     <article class="ccard ccard--${cat}" style="animation-delay:${delay}ms">
       <div class="ccard__meta">
         <span class="tag ${typeClass}">${escapeHtml(rec.institute_type)}</span>
         <span class="tag">${escapeHtml(rec.institute_state)}</span>
+        ${confidenceChipHtml(rec)}
         ${star}
       </div>
       <h3 class="ccard__institute">${escapeHtml(rec.institute)}</h3>
       <p class="ccard__branch">${escapeHtml(rec.branch)}</p>
       ${rankBarHtml(rec)}
+      ${advantageBadgesHtml(rec)}
+      ${reason}
       <div class="ccard__foot">${foot.map((f) => `<span>${escapeHtml(f)}</span>`).join("")}</div>
     </article>`;
 }
@@ -600,7 +962,7 @@ function renderSections() {
     if (visible.length === 0) continue;
     anyShown = true;
 
-    const meta = SECTION_META[catName];
+    const meta = sectionMeta(catName);
     const section = document.createElement("section");
     section.className = "rsection";
     section.id = `section-${catName.toLowerCase()}`;
@@ -633,6 +995,7 @@ function renderResults(data) {
 
   renderProfileChips();
   renderNote(data);
+  renderRuler(data);
 
   const byCat = data.counts?.by_category || {};
   countUp($("zone-count-safe"), byCat.Safe || 0);
@@ -645,7 +1008,271 @@ function renderResults(data) {
   renderSections();
 }
 
+// ── Language switching ────────────────────────────────────────────────────
+
+// Re-apply translations to everything currently on screen. Static markup is
+// handled by applyStaticI18n(); the rest (JS-rendered) is rebuilt here.
+function refreshDynamicI18n() {
+  // Preserve the goal selection across the rebuild.
+  buildGoalCards();
+  updateGenderNote();
+  const ph = $("home-state-placeholder");
+  if (ph) ph.textContent = t("flow.statePlaceholder");
+  if (state.meta) {
+    buildCategoryOptions();
+    buildPanelControls();
+    syncPanelFromState();
+  }
+  $("flow-next").textContent = stepButtonLabel(state.step);
+  if (state.step === TOTAL_STEPS - 1) renderReview();
+  if (loadingTimer) {
+    const ls = loadingLines();
+    $("loading-text").textContent = ls[0];
+  }
+}
+
+function applyLanguage(lang, { rerun = true } = {}) {
+  setLang(lang);
+  $("lang-toggle-label").textContent = t("header.langSwitchTo");
+  $("lang-toggle").setAttribute("aria-label", t("header.langSwitchAria"));
+  applyStaticI18n();
+  refreshDynamicI18n();
+
+  // If results are on screen, re-fetch so backend-generated text (guidance,
+  // notes, reasons …) comes back in the new language. Falls back to a local
+  // re-render if we are offline / have no payload.
+  if ($("view-results").classList.contains("is-active") && state.lastPayload) {
+    state.lastPayload.lang = lang;
+    if (rerun) {
+      runRequest(state.lastPayload);
+    } else if (state.lastData) {
+      renderResults(state.lastData);
+    }
+  }
+}
+
+function toggleLanguage() {
+  applyLanguage(getLang() === "hi" ? "en" : "hi");
+}
+
+// ── Share / copy link / print ─────────────────────────────────────────────
+
+// Encode the student's inputs into a shareable, stateless query string so the
+// link reopens the SAME results (parsed on load by maybeRunFromQuery()).
+function buildShareUrl() {
+  const p = state.lastPayload || {};
+  const params = new URLSearchParams();
+  if (p.mains_rank) params.set("m", String(p.mains_rank));
+  if (p.adv_rank) params.set("a", String(p.adv_rank));
+  if (p.gender) params.set("g", p.gender);
+  if (p.home_state) params.set("s", p.home_state);
+  if (p.goal) params.set("goal", p.goal);
+  if (p.seat_category) params.set("cat", p.seat_category);
+  if (state.branchPrefs.length) params.set("b", state.branchPrefs.join(","));
+  params.set("lang", getLang());
+  const base = `${location.origin}${location.pathname}`;
+  return `${base}?${params.toString()}`;
+}
+
+function topPicksSummary(limit) {
+  const recs = state.lastData?.recommendations || [];
+  const targets = recs.filter((r) => r.category === "Target");
+  const pool = (targets.length ? targets : recs).slice(0, limit);
+  return pool.map((r) => `${r.institute_type} ${r.branch}`);
+}
+
+function buildShareText() {
+  const counts = state.lastData?.counts?.by_category || {};
+  const lines = [t("share.title")];
+  const picks = topPicksSummary(3);
+  const targetCount = counts.Target || 0;
+  if (targetCount > 0 && picks.length) {
+    lines.push(t("share.targetLine", { count: targetCount, picks: picks.join(", ") }));
+  } else if (picks.length) {
+    lines.push(t("share.noTarget", { picks: picks.join(", ") }));
+  }
+  lines.push(t("share.countsLine", { safe: counts.Safe || 0, reach: counts.Reach || 0 }));
+  lines.push("");
+  lines.push(t("share.open"));
+  lines.push(buildShareUrl());
+  return lines.join("\n");
+}
+
+function shareToWhatsApp() {
+  const text = buildShareText();
+  const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+  window.open(url, "_blank", "noopener");
+}
+
+async function copyShareLink() {
+  const url = buildShareUrl();
+  const label = $("copy-link-label");
+  const original = t("results.copyLink");
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(url);
+    } else {
+      const ta = document.createElement("textarea");
+      ta.value = url;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "absolute";
+      ta.style.left = "-9999px";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+    }
+    label.textContent = t("results.copied");
+    setTimeout(() => { label.textContent = original; }, 1800);
+  } catch {
+    label.textContent = original;
+    alert(t("share.copyFail"));
+  }
+}
+
+// ── Shareable-link bootstrap ──────────────────────────────────────────────
+
+// Parse ?m=&a=&g=&s=&goal=&cat=&lang= and, if a valid profile is present,
+// pre-fill the form and auto-run the request so the link reopens the results.
+function maybeRunFromQuery() {
+  const q = new URLSearchParams(location.search);
+  if (![...q.keys()].length) return false;
+
+  const lang = q.get("lang");
+  if (lang === "en" || lang === "hi") applyLanguage(lang, { rerun: false });
+
+  const mains = parseInt(q.get("m") || "", 10);
+  const adv = parseInt(q.get("a") || "", 10);
+  const hasMains = Number.isFinite(mains) && mains > 0;
+  const hasAdv = Number.isFinite(adv) && adv > 0;
+  if (!hasMains && !hasAdv) return false;
+
+  const goal = q.get("goal");
+  if (!GOAL_IDS.includes(goal)) return false;
+
+  // Reflect the inputs into the form so Edit / chips / re-runs stay consistent.
+  $("mains-rank").value = hasMains ? fmt(mains) : "";
+  $("adv-rank").value = hasAdv ? fmt(adv) : "";
+
+  const gender = q.get("g");
+  state.gender = ["male", "female", "other"].includes(gender) ? gender : "male";
+  document.querySelectorAll("#gender-row .choice").forEach((c) => {
+    const on = c.dataset.value === state.gender;
+    c.classList.toggle("is-selected", on);
+    c.setAttribute("aria-checked", on ? "true" : "false");
+  });
+
+  const stateVal = q.get("s") || "";
+  if (stateVal && $("home-state").querySelector(`option[value="${CSS.escape(stateVal)}"]`)) {
+    $("home-state").value = stateVal;
+  }
+
+  const cat = q.get("cat") || "OPEN";
+  if ($("seat-category").querySelector(`option[value="${CSS.escape(cat)}"]`)) {
+    $("seat-category").value = cat;
+  }
+
+  state.goal = goal;
+
+  // Branch preferences: comma-separated list of known branch values.
+  const valid = new Set(branchOptions().map((o) => o.value));
+  state.branchPrefs = (q.get("b") || "")
+    .split(",")
+    .map((v) => v.trim())
+    .filter((v) => valid.has(v));
+  renderBranchGrids();
+
+  const payload = {
+    gender: state.gender === "female" ? "female" : "male",
+    home_state: stateVal,
+    goal,
+    seat_category: $("seat-category").value || "OPEN",
+    max_results: 150,
+    lang: getLang(),
+  };
+  if (hasMains) payload.mains_rank = mains;
+  if (hasAdv) payload.adv_rank = adv;
+  if (state.branchPrefs.length) payload.branch_preferences = state.branchPrefs.slice();
+
+  state.lastPayload = payload;
+  runRequest(payload);
+  return true;
+}
+
+// ── Service worker (PWA-lite) ──────────────────────────────────────────────
+
+function registerServiceWorker() {
+  if (!("serviceWorker" in navigator)) return;
+  if (location.protocol === "file:") return;
+  window.addEventListener("load", () => {
+    navigator.serviceWorker
+      .register("/sw.js")
+      .then((reg) => {
+        reg.addEventListener("updatefound", () => {
+          const worker = reg.installing;
+          if (!worker) return;
+          worker.addEventListener("statechange", () => {
+            if (worker.state === "activated" && navigator.serviceWorker.controller) {
+              window.location.reload();
+            }
+          });
+        });
+      })
+      .catch(() => { /* non-fatal */ });
+  });
+}
+
 // ── Events ──────────────────────────────────────────────────────────────
+
+// Live panel wiring: the toggle (mobile collapse) plus every control mirrors
+// its value back to the flow inputs / state and triggers a debounced refresh.
+function bindPanelEvents() {
+  const toggle = $("panel-toggle");
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      const panel = $("results-panel");
+      const open = panel.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
+
+  const mirrorRank = (panelEl, flowEl) => {
+    if (!panelEl || !flowEl) return;
+    panelEl.addEventListener("input", () => {
+      const n = parseRankInput(panelEl);
+      panelEl.value = n === null ? "" : fmt(n);
+      flowEl.value = panelEl.value;
+      schedulePanelUpdate();
+    });
+  };
+  mirrorRank($("panel-mains-rank"), $("mains-rank"));
+  mirrorRank($("panel-adv-rank"), $("adv-rank"));
+
+  const panelState = $("panel-home-state");
+  if (panelState) {
+    panelState.addEventListener("change", () => {
+      $("home-state").value = panelState.value;
+      schedulePanelUpdate();
+    });
+  }
+
+  const panelCat = $("panel-seat-category");
+  if (panelCat) {
+    panelCat.addEventListener("change", () => {
+      $("seat-category").value = panelCat.value;
+      schedulePanelUpdate();
+    });
+  }
+
+  const panelGoal = $("panel-goal");
+  if (panelGoal) {
+    panelGoal.addEventListener("change", () => {
+      state.goal = panelGoal.value;
+      buildGoalCards();           // keep the flow's goal cards in sync
+      schedulePanelUpdate();
+    });
+  }
+}
 
 function bindEvents() {
   $("begin-btn").addEventListener("click", () => {
@@ -676,11 +1303,13 @@ function bindEvents() {
 
   const backToReview = () => {
     showView("flow");
-    goToStep(4, { backwards: true });
+    goToStep(TOTAL_STEPS - 1, { backwards: true });
   };
   $("error-edit-btn").addEventListener("click", backToReview);
   $("edit-profile-btn").addEventListener("click", backToReview);
   $("empty-edit-btn").addEventListener("click", backToReview);
+
+  bindPanelEvents();
 
   $("filter-search").addEventListener("input", (e) => {
     state.filterText = e.target.value.trim().toLowerCase();
@@ -713,14 +1342,42 @@ function bindEvents() {
     const target = $(`section-${zone.dataset.zone.toLowerCase()}`);
     if (target) target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
   });
+
+  $("lang-toggle").addEventListener("click", toggleLanguage);
+  $("share-btn").addEventListener("click", shareToWhatsApp);
+  $("copy-link-btn").addEventListener("click", copyShareLink);
+  $("print-btn").addEventListener("click", () => {
+    // Families review the full grouped list, so clear any active filters first.
+    if (state.filterText || state.filterType) {
+      state.filterText = "";
+      state.filterType = "";
+      $("filter-search").value = "";
+      document.querySelectorAll("#type-chips .chip").forEach((c) =>
+        c.classList.toggle("is-active", c.dataset.type === "")
+      );
+      renderSections();
+    }
+    window.print();
+  });
 }
 
 // ── Init ────────────────────────────────────────────────────────────────
+
+setLang(getLang());                 // sync <html lang> + persist default
+applyStaticI18n();                  // translate all static markup once
+$("lang-toggle-label").textContent = t("header.langSwitchTo");
+$("lang-toggle").setAttribute("aria-label", t("header.langSwitchAria"));
 
 attachRankFormatting($("mains-rank"));
 attachRankFormatting($("adv-rank"));
 bindGenderRow();
 buildGoalCards();
 bindEvents();
+bindRulerTooltip();
+registerServiceWorker();
 showView("welcome");
-loadMeta();
+
+// Load form metadata, then (if the URL carries a shared profile) auto-run it.
+loadMeta().then(() => {
+  maybeRunFromQuery();
+});
