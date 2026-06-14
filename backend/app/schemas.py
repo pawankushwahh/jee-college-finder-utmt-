@@ -37,11 +37,26 @@ class RecommendRequest(BaseModel):
             "will be added when multi-category cutoff data becomes available."
         ),
     )
+    branch_preferences: List[str] = Field(
+        default_factory=list,
+        description=(
+            "Branch families to filter by (e.g. 'cs_it', 'ece', 'mechanical'). "
+            "An empty list (or only 'any') means show all branches. Unknown values "
+            "are ignored. See /api/meta for the available options."
+        ),
+    )
     max_results: int = Field(
         default=60,
         ge=1,
         le=300,
         description="Maximum number of recommendations to return.",
+    )
+    lang: Literal["en", "hi"] = Field(
+        default="en",
+        description=(
+            "Language for user-facing generated text (guidance, notes, category "
+            "blurbs, fit labels and per-card reasons). 'en' English, 'hi' Hindi."
+        ),
     )
 
     @model_validator(mode="after")
@@ -76,6 +91,10 @@ class Recommendation(BaseModel):
     fit_label: str  # human-readable explanation of the category
     interest_score: float
     matched_interest: bool
+    home_state_advantage: Optional[int] = None  # ranks saved by the HS quota
+    female_seat_advantage: Optional[int] = None  # extra rank cushion from the female pool
+    confidence: str = "medium"  # high / medium / fragile (from the rank spread)
+    reason: str = ""  # templated "why this is here" explanation
 
 
 class CategoryGuidance(BaseModel):
@@ -98,4 +117,5 @@ class MetaResponse(BaseModel):
     goals: List[dict]
     genders: List[str]
     categories: List[dict]
+    branches: List[dict]
     total_programs: int

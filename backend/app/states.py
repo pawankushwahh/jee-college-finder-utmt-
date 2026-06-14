@@ -365,38 +365,74 @@ GOAL_LABELS: Dict[str, str] = {
     "undecided": "Undecided / keeping options open",
 }
 
-GOAL_GUIDANCE: Dict[str, str] = {
-    "coding": (
-        "Since you are aiming for a software/coding career, Computer Science, "
-        "Mathematics & Computing, AI/Data Science and IT branches are ranked "
-        "highest for you. A strong CS-adjacent branch usually matters more for "
-        "coding roles than the exact institute, but a higher-brand institute "
-        "helps with internships and placements."
-    ),
-    "research": (
-        "For a research or higher-studies path, fundamental-science and "
-        "research-heavy programs (Engineering Physics, BS degrees in Maths/"
-        "Physics/Chemistry/Economics) and core branches at top institutes are "
-        "prioritised. Look for institutes with strong labs, faculty and PhD "
-        "pipelines."
-    ),
-    "mba": (
-        "If you are leaning towards management/MBA, the brand and peer network "
-        "of the institute matter most, so higher-tier institutes are weighted "
-        "up. Any branch is fine for an MBA later; quantitative branches like "
-        "Economics, CS and Maths & Computing add a small edge."
-    ),
-    "core": (
-        "For a core-engineering career, Mechanical, Civil, Electrical, "
-        "Chemical, Aerospace and Materials branches are ranked highest. Core "
-        "branches at reputed institutes (with good core-sector recruiters and "
-        "labs) are the best fit."
-    ),
-    "undecided": (
-        "Since you are still deciding, the list favours versatile, high-demand "
-        "branches and stronger-brand institutes that keep the most doors open "
-        "(coding, higher studies, core roles or management later)."
-    ),
+# Per-goal interest guidance, keyed by language. Hindi uses natural, simple
+# Devanagari and keeps technical terms (CSE, NIT, MBA, AI/Data Science) in
+# English where students expect them.
+GOAL_GUIDANCE: Dict[str, Dict[str, str]] = {
+    "en": {
+        "coding": (
+            "Since you are aiming for a software/coding career, Computer Science, "
+            "Mathematics & Computing, AI/Data Science and IT branches are ranked "
+            "highest for you. A strong CS-adjacent branch usually matters more for "
+            "coding roles than the exact institute, but a higher-brand institute "
+            "helps with internships and placements."
+        ),
+        "research": (
+            "For a research or higher-studies path, fundamental-science and "
+            "research-heavy programs (Engineering Physics, BS degrees in Maths/"
+            "Physics/Chemistry/Economics) and core branches at top institutes are "
+            "prioritised. Look for institutes with strong labs, faculty and PhD "
+            "pipelines."
+        ),
+        "mba": (
+            "If you are leaning towards management/MBA, the brand and peer network "
+            "of the institute matter most, so higher-tier institutes are weighted "
+            "up. Any branch is fine for an MBA later; quantitative branches like "
+            "Economics, CS and Maths & Computing add a small edge."
+        ),
+        "core": (
+            "For a core-engineering career, Mechanical, Civil, Electrical, "
+            "Chemical, Aerospace and Materials branches are ranked highest. Core "
+            "branches at reputed institutes (with good core-sector recruiters and "
+            "labs) are the best fit."
+        ),
+        "undecided": (
+            "Since you are still deciding, the list favours versatile, high-demand "
+            "branches and stronger-brand institutes that keep the most doors open "
+            "(coding, higher studies, core roles or management later)."
+        ),
+    },
+    "hi": {
+        "coding": (
+            "चूँकि आप software/coding करियर चाहते हैं, इसलिए Computer Science, "
+            "Mathematics & Computing, AI/Data Science और IT ब्रांच आपके लिए सबसे "
+            "ऊपर रखी गई हैं। coding की नौकरियों के लिए अक्सर सही CS-जैसी ब्रांच, सटीक "
+            "संस्थान से ज़्यादा मायने रखती है, पर बेहतर ब्रांड वाला संस्थान internship "
+            "और placement में मदद करता है।"
+        ),
+        "research": (
+            "research या higher studies के रास्ते के लिए, बुनियादी-विज्ञान और "
+            "research-आधारित प्रोग्राम (Engineering Physics, Maths/Physics/Chemistry/"
+            "Economics में BS डिग्री) तथा टॉप संस्थानों की core ब्रांच को प्राथमिकता दी "
+            "गई है। ऐसे संस्थान देखें जिनकी labs, faculty और PhD पाइपलाइन मज़बूत हो।"
+        ),
+        "mba": (
+            "अगर आपका झुकाव management/MBA की ओर है, तो संस्थान का ब्रांड और peer "
+            "network सबसे ज़्यादा मायने रखता है, इसलिए ऊँचे tier के संस्थानों को ज़्यादा "
+            "महत्व दिया गया है। आगे MBA के लिए कोई भी ब्रांच ठीक है; Economics, CS और "
+            "Maths & Computing जैसी quantitative ब्रांच थोड़ी बढ़त देती हैं।"
+        ),
+        "core": (
+            "core-engineering करियर के लिए, Mechanical, Civil, Electrical, Chemical, "
+            "Aerospace और Materials ब्रांच सबसे ऊपर रखी गई हैं। अच्छे core-sector "
+            "recruiters और labs वाले प्रतिष्ठित संस्थानों की core ब्रांच सबसे अच्छा मेल हैं।"
+        ),
+        "undecided": (
+            "चूँकि आप अभी तय कर रहे हैं, यह सूची versatile, ज़्यादा माँग वाली ब्रांच और "
+            "मज़बूत-ब्रांड संस्थानों को प्राथमिकता देती है जो सबसे ज़्यादा रास्ते खुले रखें "
+            "(coding, higher studies, core roles या आगे management)।"
+        ),
+    },
 }
 
 VALID_GOALS = list(GOAL_TAG_WEIGHTS.keys())
@@ -413,3 +449,38 @@ VALID_CATEGORIES: list = [
     {"value": "EWS", "label": "EWS (Economically Weaker Section)", "available": False},
     {"value": "PwD", "label": "PwD (Person with Disability)", "available": False},
 ]
+
+# ---------------------------------------------------------------------------
+# Branch preferences: a small, friendly set of branch families a student can
+# filter results by. Each maps to one or more of the semantic tags produced by
+# ``classify_branch``. The "any" pseudo-option means no branch filter at all.
+# ---------------------------------------------------------------------------
+BRANCH_PREFERENCES: List[dict] = [
+    {"value": "cs_it", "label": "CS / IT", "tags": ["cse", "it"]},
+    {"value": "ece", "label": "ECE", "tags": ["ece"]},
+    {"value": "ee", "label": "Electrical (EE)", "tags": ["electrical"]},
+    {"value": "math_computing", "label": "Mathematics & Computing", "tags": ["math_computing"]},
+    {"value": "ai_ds", "label": "AI / Data Science", "tags": ["ai_ds"]},
+    {"value": "mechanical", "label": "Mechanical", "tags": ["mechanical"]},
+    {"value": "civil", "label": "Civil", "tags": ["civil"]},
+    {"value": "chemical", "label": "Chemical", "tags": ["chemical"]},
+]
+
+# value -> set of branch tags it covers.
+BRANCH_PREFERENCE_TAGS: Dict[str, Set[str]] = {
+    b["value"]: set(b["tags"]) for b in BRANCH_PREFERENCES
+}
+
+VALID_BRANCH_PREFERENCES = list(BRANCH_PREFERENCE_TAGS.keys())
+
+
+def tags_for_branch_preferences(prefs: List[str]) -> Set[str]:
+    """Union of branch tags for the selected preference values.
+
+    Unknown values and the "any" pseudo-option contribute nothing, so an empty
+    or all-"any" selection yields an empty set (interpreted as "no filter").
+    """
+    wanted: Set[str] = set()
+    for p in prefs or []:
+        wanted |= BRANCH_PREFERENCE_TAGS.get(p, set())
+    return wanted

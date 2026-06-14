@@ -108,6 +108,7 @@ def meta() -> MetaResponse:
         goals=[{"value": g, "label": states.GOAL_LABELS[g]} for g in states.VALID_GOALS],
         genders=states.VALID_GENDERS,
         categories=states.VALID_CATEGORIES,
+        branches=[{"value": b["value"], "label": b["label"]} for b in states.BRANCH_PREFERENCES],
         total_programs=len(load_programs()),
     )
 

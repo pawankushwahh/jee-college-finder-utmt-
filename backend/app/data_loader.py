@@ -5,9 +5,10 @@
 from __future__ import annotations
 
 import re
+from collections import defaultdict
 from dataclasses import dataclass, field
 from functools import lru_cache
-from typing import List, Set
+from typing import Dict, List, Set, Tuple
 
 import pandas as pd
 
@@ -148,7 +149,90 @@ def load_programs() -> List[Program]:
     return programs
 
 
+# ---------------------------------------------------------------------------
+# Advantage lookup indices.
+#
+# Both are precomputed once (at first access, then cached) so the recommender
+# can attach a "why" to each option with an O(1) dict lookup instead of
+# re-scanning the dataset on every request.
+# ---------------------------------------------------------------------------
+
+# A program is uniquely identified (across quota / gender pools) by this key.
+ProgramKey = Tuple[str, str, str]  # (institute, branch_full, exam)
+
+
+@lru_cache(maxsize=1)
+def home_state_advantage_index() -> Dict[Tuple[str, str, str, str], int]:
+    """Map an HS seat to the ranks it saves vs the equivalent open-pool seat.
+
+    For each (institute, branch_full, exam, gender_pool), compare the Home-State
+    (HS) row's closing rank against the same program's Other-State (OS) row
+    (falling back to All-India (AI) when there is no OS row). The advantage is
+    ``other_closing - hs_closing`` and is only stored when positive (i.e. the HS
+    quota genuinely lets a candidate in at a worse rank than they'd need
+    otherwise).
+
+    Key: (institute, branch_full, exam, gender_pool) -> ranks saved.
+    """
+    # group -> {quota: closing_rank}
+    groups: Dict[Tuple[str, str, str, str], Dict[str, int]] = defaultdict(dict)
+    for prog in load_programs():
+        key = (prog.institute, prog.branch_full, prog.exam, prog.gender_pool)
+        # Keep the most generous (largest) closing rank per quota if duplicated.
+        prev = groups[key].get(prog.quota)
+        if prev is None or prog.closing_rank > prev:
+            groups[key][prog.quota] = prog.closing_rank
+
+    index: Dict[Tuple[str, str, str, str], int] = {}
+    for key, by_quota in groups.items():
+        hs = by_quota.get("HS")
+        if hs is None:
+            continue
+        other = by_quota.get("OS")
+        if other is None:
+            other = by_quota.get("AI")
+        if other is None:
+            continue
+        advantage = other - hs
+        if advantage > 0:
+            index[key] = advantage
+    return index
+
+
+@lru_cache(maxsize=1)
+def female_seat_advantage_index() -> Dict[Tuple[str, str, str, str], int]:
+    """Map a Female-only seat to how many ranks later it closes vs the neutral pool.
+
+    For each (institute, branch_full, exam, quota), compare the Female-only
+    closing rank against the Gender-Neutral closing rank of the same program.
+    The advantage is ``female_closing - neutral_closing`` and is only stored
+    when positive (the female pool closes at a later/worse rank, so a female
+    applicant gets a cushion).
+
+    Key: (institute, branch_full, exam, quota) -> ranks of extra cushion.
+    """
+    groups: Dict[Tuple[str, str, str, str], Dict[str, int]] = defaultdict(dict)
+    for prog in load_programs():
+        key = (prog.institute, prog.branch_full, prog.exam, prog.quota)
+        prev = groups[key].get(prog.gender_pool)
+        if prev is None or prog.closing_rank > prev:
+            groups[key][prog.gender_pool] = prog.closing_rank
+
+    index: Dict[Tuple[str, str, str, str], int] = {}
+    for key, by_pool in groups.items():
+        female = by_pool.get("female")
+        neutral = by_pool.get("neutral")
+        if female is None or neutral is None:
+            continue
+        advantage = female - neutral
+        if advantage > 0:
+            index[key] = advantage
+    return index
+
+
 if __name__ == "__main__":  # pragma: no cover - manual sanity check
     progs = load_programs()
     print(f"Loaded {len(progs)} programs")
     print(progs[0])
+    print(f"HS advantage entries: {len(home_state_advantage_index())}")
+    print(f"Female advantage entries: {len(female_seat_advantage_index())}")

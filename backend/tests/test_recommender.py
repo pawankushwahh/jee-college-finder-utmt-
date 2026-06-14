@@ -7,10 +7,16 @@ through the FastAPI app.
 
 import pytest
 
-from app import recommender
-from app.data_loader import Program, load_programs
+from app import data_loader, recommender
+from app.data_loader import (
+    Program,
+    female_seat_advantage_index,
+    home_state_advantage_index,
+    load_programs,
+)
 from app.recommender import (
     _categorize,
+    _confidence,
     _passes_gender,
     _passes_quota,
     _relevant_rank,
@@ -146,6 +152,40 @@ def test_interest_ordering_prioritises_matching_branch(monkeypatch):
     assert cse_rec.matched_interest is True
 
 
+def test_branch_preference_filters_to_matching_tags(monkeypatch):
+    cse = make_program(institute="A", branch="CSE", tags={"cse"},
+                       opening_rank=1000, closing_rank=2000)
+    mech = make_program(institute="B", branch="Mechanical", tags={"mechanical"},
+                        opening_rank=1000, closing_rank=2000)
+    _patch_programs(monkeypatch, [mech, cse])
+    req = RecommendRequest(mains_rank=1500, gender="male", home_state="Rajasthan",
+                           goal="coding", branch_preferences=["cs_it"])
+    resp = recommend(req)
+    institutes = {r.institute for r in resp.recommendations}
+    assert institutes == {"A"}
+    assert any("preferred branches" in n for n in resp.notes)
+
+
+def test_empty_branch_preference_shows_all(monkeypatch):
+    cse = make_program(institute="A", branch="CSE", tags={"cse"})
+    mech = make_program(institute="B", branch="Mechanical", tags={"mechanical"})
+    _patch_programs(monkeypatch, [mech, cse])
+    req = RecommendRequest(mains_rank=1500, gender="male", home_state="Rajasthan",
+                           goal="coding", branch_preferences=[])
+    resp = recommend(req)
+    assert {r.institute for r in resp.recommendations} == {"A", "B"}
+    assert all("preferred branches" not in n for n in resp.notes)
+
+
+def test_unknown_branch_preference_ignored(monkeypatch):
+    cse = make_program(institute="A", branch="CSE", tags={"cse"})
+    _patch_programs(monkeypatch, [cse])
+    req = RecommendRequest(mains_rank=1500, gender="male", home_state="Rajasthan",
+                           goal="coding", branch_preferences=["any", "not-a-branch"])
+    resp = recommend(req)
+    assert {r.institute for r in resp.recommendations} == {"A"}
+
+
 def test_overqualified_options_dropped(monkeypatch):
     prog = make_program(opening_rank=50000, closing_rank=60000)
     _patch_programs(monkeypatch, [prog])
@@ -177,3 +217,143 @@ def test_real_recommendation_respects_band():
         # within the kept band
         assert rank <= r.closing_rank * 1.25 + 1
         assert rank >= r.opening_rank * 0.5 - 1
+
+
+# --------------------------- confidence band ---------------------------
+@pytest.mark.parametrize(
+    "opening,closing,expected",
+    [
+        (1000, 1500, "fragile"),    # spread 500 < 1,000 -> fragile
+        (1000, 1000, "fragile"),    # zero window -> always fragile
+        (5000, 4000, "fragile"),    # closing <= opening -> always fragile
+        (1000, 4000, "medium"),     # spread 3,000 (~median) -> medium
+        (1000, 8000, "high"),       # spread 7,000 >= 6,000 -> high
+    ],
+)
+def test_confidence_band(opening, closing, expected):
+    assert _confidence(opening, closing) == expected
+
+
+def test_recommendation_has_confidence_and_nonempty_reason():
+    req = RecommendRequest(adv_rank=1500, mains_rank=6000, gender="female",
+                           home_state="Rajasthan", goal="coding")
+    resp = recommend(req)
+    assert resp.recommendations
+    for r in resp.recommendations:
+        assert r.confidence in {"high", "medium", "fragile"}
+        assert r.reason and r.category in r.reason
+
+
+# --------------------------- language (Hindi) ---------------------------
+def _has_devanagari(text: str) -> bool:
+    return any("\u0900" <= ch <= "\u097f" for ch in text)
+
+
+def test_hindi_lang_returns_devanagari_text():
+    req = RecommendRequest(adv_rank=1500, mains_rank=6000, gender="female",
+                           home_state="Rajasthan", goal="coding", lang="hi")
+    resp = recommend(req)
+    assert resp.recommendations
+    # Overall + interest guidance are in Hindi (contain Devanagari script).
+    assert _has_devanagari(resp.guidance)
+    assert _has_devanagari(resp.interest_guidance)
+    # Category blurbs and fit labels are translated.
+    assert resp.category_guidance
+    for cg in resp.category_guidance:
+        assert _has_devanagari(cg.blurb)
+    for r in resp.recommendations:
+        assert _has_devanagari(r.fit_label)
+        assert _has_devanagari(r.reason)
+
+
+def test_hindi_notes_are_translated():
+    # Omitting the Advanced rank triggers the IIT note, which must be Hindi.
+    req = RecommendRequest(mains_rank=6000, gender="male",
+                           home_state="Rajasthan", goal="research", lang="hi")
+    resp = recommend(req)
+    assert resp.notes
+    assert all(_has_devanagari(n) for n in resp.notes)
+
+
+def test_lang_defaults_to_english():
+    req = RecommendRequest(mains_rank=6000, gender="male",
+                           home_state="Rajasthan", goal="coding")
+    assert req.lang == "en"
+    resp = recommend(req)
+    assert not _has_devanagari(resp.guidance)
+    for r in resp.recommendations:
+        assert not _has_devanagari(r.reason)
+
+
+def test_fragile_pick_flagged(monkeypatch):
+    # A very tight window (spread 300) must be classified fragile end-to-end.
+    prog = make_program(opening_rank=1000, closing_rank=1300)
+    _patch_programs(monkeypatch, [prog])
+    monkeypatch.setattr(recommender, "home_state_advantage_index", lambda: {})
+    monkeypatch.setattr(recommender, "female_seat_advantage_index", lambda: {})
+    req = RecommendRequest(mains_rank=1200, gender="male",
+                           home_state="Rajasthan", goal="coding")
+    resp = recommend(req)
+    assert resp.recommendations
+    rec = resp.recommendations[0]
+    assert rec.confidence == "fragile"
+    assert "volatile" in rec.reason
+
+
+# --------------------------- advantage lookup indices ---------------------------
+def test_home_state_advantage_index(monkeypatch):
+    hs = make_program(quota="HS", opening_rank=2000, closing_rank=5000)
+    os_seat = make_program(quota="OS", opening_rank=4000, closing_rank=9000)
+    monkeypatch.setattr(data_loader, "load_programs", lambda: [hs, os_seat])
+    home_state_advantage_index.cache_clear()
+    try:
+        idx = home_state_advantage_index()
+        key = (hs.institute, hs.branch_full, hs.exam, hs.gender_pool)
+        assert idx[key] == 4000  # 9000 (OS) - 5000 (HS)
+    finally:
+        home_state_advantage_index.cache_clear()
+
+
+def test_female_seat_advantage_index(monkeypatch):
+    neutral = make_program(gender_pool="neutral", closing_rank=3000)
+    female = make_program(gender_pool="female", closing_rank=5500)
+    monkeypatch.setattr(data_loader, "load_programs", lambda: [neutral, female])
+    female_seat_advantage_index.cache_clear()
+    try:
+        idx = female_seat_advantage_index()
+        key = (female.institute, female.branch_full, female.exam, female.quota)
+        assert idx[key] == 2500  # 5500 (female) - 3000 (neutral)
+    finally:
+        female_seat_advantage_index.cache_clear()
+
+
+def test_home_state_advantage_surfaced_in_recommendation(monkeypatch):
+    hs = make_program(quota="HS", institute_state="Rajasthan",
+                      opening_rank=2000, closing_rank=5000)
+    _patch_programs(monkeypatch, [hs])
+    key = (hs.institute, hs.branch_full, hs.exam, hs.gender_pool)
+    monkeypatch.setattr(recommender, "home_state_advantage_index", lambda: {key: 4000})
+    monkeypatch.setattr(recommender, "female_seat_advantage_index", lambda: {})
+    req = RecommendRequest(mains_rank=4500, gender="male",
+                           home_state="Rajasthan", goal="coding")
+    resp = recommend(req)
+    assert resp.recommendations
+    rec = resp.recommendations[0]
+    assert rec.home_state_advantage == 4000
+    assert "cushion" in rec.reason
+
+
+def test_female_seat_advantage_surfaced_in_recommendation(monkeypatch):
+    female = make_program(quota="AI", gender_pool="female",
+                          opening_rank=2000, closing_rank=5000)
+    _patch_programs(monkeypatch, [female])
+    key = (female.institute, female.branch_full, female.exam, female.quota)
+    monkeypatch.setattr(recommender, "home_state_advantage_index", lambda: {})
+    monkeypatch.setattr(recommender, "female_seat_advantage_index", lambda: {key: 2500})
+    req = RecommendRequest(mains_rank=4500, gender="female",
+                           home_state="Rajasthan", goal="coding")
+    resp = recommend(req)
+    assert resp.recommendations
+    rec = resp.recommendations[0]
+    assert rec.female_seat_advantage == 2500
+    assert "later" in rec.reason

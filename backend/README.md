@@ -9,7 +9,7 @@ project and talks to this service over HTTP.
 | Method | Path             | Description                                          |
 | ------ | ---------------- | ---------------------------------------------------- |
 | GET    | `/api/health`    | Liveness check + dataset size                        |
-| GET    | `/api/meta`      | Form metadata: states, goals, genders, dataset size  |
+| GET    | `/api/meta`      | Form metadata: states, goals, genders, branches, size |
 | POST   | `/api/recommend` | Filtered, categorized, interest-ranked suggestions   |
 | GET    | `/docs`          | Interactive OpenAPI documentation                    |
 
@@ -20,6 +20,24 @@ curl -X POST http://127.0.0.1:8000/api/recommend \
   -H "Content-Type: application/json" \
   -d '{"adv_rank": 1500, "mains_rank": 6000, "gender": "female", "home_state": "Rajasthan", "goal": "coding"}'
 ```
+
+### Branch preferences
+
+`/api/recommend` accepts an optional `"branch_preferences"` array to filter
+results to specific branch families (e.g. `["cs_it", "ece"]`). An empty list (or
+only `"any"`) shows every eligible branch. The available values and their labels
+are returned by `/api/meta` under `branches`; each value maps to one or more
+branch tags from `classify_branch` (see `app/states.py`, `BRANCH_PREFERENCES`).
+
+### Language
+
+`/api/recommend` accepts an optional `"lang"` field (`"en"` default, or `"hi"`).
+When `"hi"` is sent, all generated text — `guidance`, `interest_guidance`,
+category `blurb`s, `notes`, `fit_label`s and per-card `reason`s — is returned in
+Hindi (Devanagari), with technical terms (CSE, NIT, Target/Reach/Safe) kept in
+English. Translations live alongside their English originals in
+[`app/recommender.py`](app/recommender.py) and
+[`app/states.py`](app/states.py) (`GOAL_GUIDANCE`).
 
 ## Configuration
 
