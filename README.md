@@ -35,11 +35,12 @@ separate frontend server required.
 
 ```bash
 # From the repo root
-cd backend
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
-uvicorn app.main:app --reload
+uvicorn main:app --reload
 ```
+
+Alternatively, on Windows, you can double-click `run.bat` to automatically install dependencies and run the server.
 
 Then open **http://127.0.0.1:8000** — the portal and API are on the same origin.
 
@@ -97,28 +98,43 @@ Open **http://localhost:8000**.
 
 ```
 .
-├── backend/
-│   ├── app/
-│   │   ├── main.py          # FastAPI app — serves API + portal
-│   │   ├── recommender.py   # Pipeline: filter → categorise → rank
-│   │   ├── data_loader.py   # Excel → Program dataclasses (cached)
-│   │   ├── schemas.py       # Pydantic request/response models
-│   │   ├── states.py        # States, quotas, branch tags, goal weights
-│   │   └── config.py        # Env-based settings (CORS, data path)
-│   ├── data/
-│   │   └── JEE_2025_Cutoffs.xlsx
-│   ├── tests/               # 25 pytest tests (all passing)
-│   └── requirements.txt
-├── frontend/
-│   ├── index.html           # Single-page predictor portal
-│   ├── css/style.css
-│   └── js/
-│       ├── config.js        # API_BASE_URL (empty = same origin)
-│       ├── api.js
-│       └── app.js
-├── Dockerfile               # Multi-stage production image
-├── docker-compose.yml       # Single-command deploy
-└── README.md
+├── app/
+│   ├── __init__.py
+│   └── disha/               # Backend modules
+│       ├── __init__.py
+│       ├── config.py        # Env-based settings (CORS, data path)
+│       ├── data_loader.py   # Excel -> Program dataclasses (cached)
+│       ├── recommender.py   # Pipeline: filter -> categorise -> rank
+│       ├── schemas.py       # Pydantic request/response models
+│       ├── states.py        # States, quotas, branch tags, goal weights
+│       └── data/
+│           └── JEE_2025_Cutoffs.xlsx
+├── templates/
+│   └── disha_templates/     # Frontend resources
+│       ├── assets/
+│       │   └── favicon.svg
+│       ├── css/
+│       │   └── style.css
+│       ├── js/
+│       │   ├── api.js
+│       │   ├── app.js
+│       │   ├── config.js
+│       │   └── i18n.js
+│       ├── index.html
+│       ├── manifest.json
+│       └── sw.js
+├── tests/                   # Test suite
+│   ├── test_api.py
+│   └── test_recommender.py
+├── .env.example
+├── .gitignore
+├── conftest.py
+├── LICENSE
+├── main.py                  # FastAPI app — serves API + portal
+├── README.md
+├── render.yaml
+├── requirements.txt
+└── run.bat
 ```
 
 ---

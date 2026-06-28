@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Disha — Find your direction after JEE</title>
+  <meta name="description" content="Disha, a UTMT initiative — a calm, guided college counsellor for JEE aspirants. Enter your rank and goals, and see which IITs, NITs, IIITs and GFTIs realistically fit — grouped into Safe, Target and Reach with personal guidance." />
+  <meta name="theme-color" content="#faf6ee" />
+  <base href="/" />
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
+  <link rel="apple-touch-icon" href="/assets/favicon.svg" />
+  <link rel="manifest" href="/manifest.json" />
+  <!-- Fonts load NON-BLOCKING so first paint never waits on the CDN over slow
+       networks. The page renders immediately with the system-font fallbacks in
+       style.css; Fraunces / Inter swap in once (if) they arrive. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" media="print" onload="this.media='all'"
+        href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" />
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" />
+  </noscript>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+  <!-- ───────────────────────── Header ───────────────────────── -->
+  <header class="topbar">
+    <a class="wordmark" href="/" id="wordmark" aria-label="Disha — home">
+      <svg class="wordmark__mark" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"/>
+        <path d="M15.5 8.5l-2.2 5.1-5.1 2.2 2.2-5.1 5.1-2.2z" fill="currentColor"/>
+      </svg>
+      <span class="wordmark__text">Disha <span class="wordmark__devanagari" aria-hidden="true">दिशा</span></span>
+    </a>
+    <a class="utmt-badge" href="https://www.utmt.org" target="_blank" rel="noopener">a <strong>UTMT</strong> initiative</a>
+    <div class="topbar__right">
+      <span class="topbar__data-note"><span data-i18n="header.dataNotePre">JoSAA 2025 cutoffs · </span><span id="program-count">2,410</span><span data-i18n="header.dataNotePost"> programs</span></span>
+      <button type="button" class="lang-toggle" id="lang-toggle" data-i18n-aria="header.langSwitchAria" aria-label="Switch to Hindi">
+        <span id="lang-toggle-label" data-i18n="header.langSwitchTo">हिं</span>
+      </button>
+      <button type="button" class="btn btn--ghost btn--sm" id="restart-btn" data-i18n="header.restart" hidden>Start over</button>
+    </div>
+  </header>
+
+  <main id="main">
+
+    <!-- ───────────────────────── View: Welcome ───────────────────────── -->
+    <section class="view view--welcome is-active" id="view-welcome" aria-label="Welcome">
+      <div class="welcome">
+        <p class="eyebrow welcome__eyebrow" data-i18n="welcome.eyebrow">For JEE Main &amp; Advanced aspirants</p>
+        <h1 class="welcome__title" data-i18n-html="welcome.titleHtml">Your rank is a starting&nbsp;point, <em>not a verdict.</em></h1>
+        <p class="welcome__lede" data-i18n-html="welcome.ledeHtml">
+          Tell us your rank and what you want from the next four years.
+          We'll show you the IITs, NITs, IIITs and GFTIs where you genuinely stand a chance —
+          sorted into <strong class="tone-safe">Safe</strong>, <strong class="tone-target">Target</strong>
+          and <strong class="tone-reach">Reach</strong> — with honest guidance for your goals.
+        </p>
+        <button type="button" class="btn btn--primary btn--lg welcome__cta" id="begin-btn">
+          <span data-i18n="welcome.cta">Find where I stand</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </button>
+        <p class="welcome__trust" data-i18n="welcome.trust">Takes about a minute · Free · Nothing is stored</p>
+        <p class="welcome__utmt" data-i18n-html="welcome.utmtHtml">An open-source initiative by <a href="https://www.utmt.org" target="_blank" rel="noopener">UTMT</a> — learn to build AI products</p>
+
+        <div class="welcome__legend" aria-hidden="true">
+          <div class="legend-chip"><span class="dot dot--safe"></span><span data-i18n="welcome.legendSafe">Safe</span> <small data-i18n="welcome.legendSafeSub">very likely</small></div>
+          <div class="legend-chip"><span class="dot dot--target"></span><span data-i18n="welcome.legendTarget">Target</span> <small data-i18n="welcome.legendTargetSub">realistic fit</small></div>
+          <div class="legend-chip"><span class="dot dot--reach"></span><span data-i18n="welcome.legendReach">Reach</span> <small data-i18n="welcome.legendReachSub">worth a try</small></div>
+        </div>
+      </div>
+
+      <div class="offline-note" id="meta-offline" hidden>
+        <p data-i18n="welcome.offline">We couldn't reach the recommendation service. Make sure the backend is running, then try again.</p>
+        <button type="button" class="btn btn--ghost btn--sm" id="retry-meta-btn" data-i18n="welcome.retry">Retry</button>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── View: Guided flow ───────────────────────── -->
+    <section class="view view--flow" id="view-flow" aria-label="Your details">
+      <div class="flow">
+        <div class="flow__head">
+          <button type="button" class="flow__back" id="flow-back" data-i18n-aria="flow.back" aria-label="Previous question">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+          </button>
+          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1" id="flow-progressbar">
+            <div class="flow__progress-fill" id="flow-progress-fill"></div>
+          </div>
+          <span class="flow__count" id="flow-count">1 / 6</span>
+        </div>
+
+        <form id="flow-form" novalidate>
+
+          <!-- Step 1: Ranks -->
+          <fieldset class="step" data-step="0">
+            <p class="eyebrow" data-i18n="flow.s1Eyebrow">First things first</p>
+            <h2 class="step__title" data-i18n="flow.s1Title">What's your rank?</h2>
+            <p class="step__hint" data-i18n="flow.s1Hint">Enter whichever ranks you have — at least one. Use your CRL (Common Rank List) rank.</p>
+
+            <div class="field">
+              <label class="field__label" for="mains-rank" data-i18n="flow.mainsLabel">JEE Main rank</label>
+              <input class="input input--rank" id="mains-rank" type="text" inputmode="numeric" autocomplete="off" data-i18n-ph="flow.mainsPlaceholder" placeholder="e.g. 12,500" />
+              <p class="field__note" data-i18n="flow.mainsNote">Used for NITs, IIITs and GFTIs.</p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="adv-rank"><span data-i18n="flow.advLabel">JEE Advanced rank</span> <span class="field__optional" data-i18n="flow.optional">optional</span></label>
+              <input class="input input--rank" id="adv-rank" type="text" inputmode="numeric" autocomplete="off" data-i18n-ph="flow.advPlaceholder" placeholder="Leave blank if you didn't appear" />
+              <p class="field__note" data-i18n="flow.advNote">Used for IITs.</p>
+            </div>
+
+            <p class="field__error" id="error-ranks" role="alert" hidden></p>
+          </fieldset>
+
+          <!-- Step 2: About you -->
+          <fieldset class="step" data-step="1" hidden>
+            <p class="eyebrow" data-i18n="flow.s2Eyebrow">About you</p>
+            <h2 class="step__title" data-i18n="flow.s2Title">A little about you</h2>
+            <p class="step__hint" data-i18n="flow.s2Hint">This decides which seat pools and quotas apply to you.</p>
+
+            <div class="field">
+              <span class="field__label" id="gender-label" data-i18n="flow.genderLabel">Gender</span>
+              <div class="choice-row" role="radiogroup" aria-labelledby="gender-label" id="gender-row">
+                <button type="button" class="choice is-selected" role="radio" aria-checked="true" data-value="male" data-i18n="gender.male">Male</button>
+                <button type="button" class="choice" role="radio" aria-checked="false" data-value="female" data-i18n="gender.female">Female</button>
+                <button type="button" class="choice" role="radio" aria-checked="false" data-value="other" data-i18n="gender.other">Other</button>
+              </div>
+              <p class="field__note" id="gender-note">&nbsp;</p>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="seat-category" data-i18n="flow.categoryLabel">Reservation category</label>
+              <select class="input" id="seat-category"></select>
+              <p class="field__note" id="category-note"></p>
+            </div>
+          </fieldset>
+
+          <!-- Step 3: Home state -->
+          <fieldset class="step" data-step="2" hidden>
+            <p class="eyebrow" data-i18n="flow.s3Eyebrow">Where you're from</p>
+            <h2 class="step__title" data-i18n="flow.s3Title">Your home state</h2>
+            <p class="step__hint" data-i18n="flow.s3Hint">The state where you passed Class 12. NITs reserve half their seats for home-state students, so this genuinely changes your options.</p>
+
+            <div class="field">
+              <label class="field__label" for="home-state" data-i18n="flow.stateLabel">State / Union Territory</label>
+              <select class="input" id="home-state">
+                <option value="" disabled selected data-i18n="flow.statePlaceholder">Choose your state…</option>
+              </select>
+              <p class="field__error" id="error-state" role="alert" hidden></p>
+            </div>
+          </fieldset>
+
+          <!-- Step 4: Family Income -->
+          <fieldset class="step" data-step="3" hidden>
+            <p class="eyebrow" data-i18n="flow.sIncomeEyebrow">Financial Aid</p>
+            <h2 class="step__title" data-i18n="flow.sIncomeTitle">Your family income</h2>
+            <p class="step__hint" data-i18n="flow.sIncomeHint">This is used purely to estimate tuition waivers.</p>
+
+            <div class="field">
+              <span class="field__label" id="income-label" data-i18n="flow.incomeLabel">Annual Family Income</span>
+              <div class="choice-row choice-row--vertical" role="radiogroup" aria-labelledby="income-label" id="income-row">
+                <button type="button" class="choice is-selected" role="radio" aria-checked="true" data-value="below_3l">
+                  <strong data-i18n="income.below3l">Below ₹3 Lakh / year</strong>
+                </button>
+                <button type="button" class="choice" role="radio" aria-checked="false" data-value="3l_5l">
+                  <strong data-i18n="income.3l5l">Between ₹3 Lakh and ₹5 Lakh / year</strong>
+                </button>
+                <button type="button" class="choice" role="radio" aria-checked="false" data-value="above_5l">
+                  <strong data-i18n="income.above5l">Above ₹5 Lakh / year</strong>
+                </button>
+              </div>
+            </div>
+          </fieldset>
+
+          <!-- Step 5: Interest -->
+          <fieldset class="step" data-step="4" hidden>
+            <p class="eyebrow" data-i18n="flow.s4Eyebrow">The next four years</p>
+            <h2 class="step__title" data-i18n="flow.s4Title">What pulls you?</h2>
+            <p class="step__hint" data-i18n="flow.s4Hint">There's no wrong answer — and "not sure" is a perfectly good one. We'll order branches to fit.</p>
+
+            <div class="goal-grid" id="goal-grid" role="radiogroup" aria-label="Career interest"></div>
+            <p class="field__error" id="error-goal" role="alert" hidden></p>
+          </fieldset>
+
+          <!-- Step 6: Branch preference -->
+          <fieldset class="step" data-step="5" hidden>
+            <p class="eyebrow" data-i18n="flow.s5Eyebrow">Branch focus</p>
+            <h2 class="step__title" data-i18n="flow.s5Title">Any branch in mind?</h2>
+            <p class="step__hint" data-i18n="flow.s5Hint">Pick the branch families you'd consider. Leave it on “Any” to keep every branch in your results.</p>
+
+            <div class="branch-grid" id="branch-grid" role="group" aria-label="Branch preference"></div>
+          </fieldset>
+
+          <!-- Step 7: Review -->
+          <fieldset class="step" data-step="6" hidden>
+            <p class="eyebrow" data-i18n="flow.s6Eyebrow">One last look</p>
+            <h2 class="step__title" data-i18n="flow.s6Title">Did we get this right?</h2>
+            <p class="step__hint" data-i18n="flow.s6Hint">Tap any row to change it.</p>
+
+            <ul class="review" id="review-list"></ul>
+          </fieldset>
+
+          <div class="flow__foot">
+            <button type="submit" class="btn btn--primary btn--lg" id="flow-next" data-i18n="flow.continue">Continue</button>
+            <p class="flow__kbd-hint"><span data-i18n="flow.kbdHint">press</span> <kbd>Enter</kbd> ↵</p>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── View: Loading ───────────────────────── -->
+    <section class="view view--loading" id="view-loading" aria-label="Finding your colleges">
+      <div class="loading">
+        <svg class="loading__compass" width="56" height="56" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M15.5 8.5l-2.2 5.1-5.1 2.2 2.2-5.1 5.1-2.2z" fill="currentColor"/>
+        </svg>
+        <p class="loading__text" id="loading-text">Reading last year's cutoffs…</p>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── View: Error ───────────────────────── -->
+    <section class="view view--error" id="view-error" aria-label="Something went wrong" role="alert">
+      <div class="error-box">
+        <h2 class="error-box__title" data-i18n="error.title">That didn't work</h2>
+        <p id="error-message" data-i18n="error.generic">Something went wrong. Please try again.</p>
+        <div class="error-box__actions">
+          <button type="button" class="btn btn--primary" id="retry-btn" data-i18n="error.retry">Try again</button>
+          <button type="button" class="btn btn--ghost" id="error-edit-btn" data-i18n="error.edit">Edit my details</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────────────────── View: Results ───────────────────────── -->
+    <section class="view view--results" id="view-results" aria-label="Your results">
+
+     <div class="results-layout">
+
+      <!-- Live "counsellor dashboard" panel: edit any input, results refresh
+           instantly. Left sidebar on desktop, collapsible top panel on mobile. -->
+      <aside class="results-panel" id="results-panel" aria-label="Edit your inputs">
+        <button type="button" class="panel-toggle" id="panel-toggle" aria-expanded="false" aria-controls="panel-body">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+          <span data-i18n="panel.toggle">Filter / Edit</span>
+          <svg class="panel-toggle__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+
+        <form class="panel-body" id="panel-body" novalidate>
+          <div class="panel-head">
+            <p class="eyebrow" data-i18n="panel.title">Your inputs</p>
+            <p class="panel__subtitle" data-i18n="panel.subtitle">Change anything — results update live.</p>
+          </div>
+
+          <!-- ── Data Source toggle (shown only when allow_toggle = true) ── -->
+          <div class="panel-field data-mode-field" id="data-mode-field" hidden>
+            <span class="panel-field__label">Data Source</span>
+            <div class="data-mode-toggle" role="group" aria-label="Data source selection">
+              <button type="button" class="data-mode-btn data-mode-btn--active" id="data-mode-basic" data-mode="basic" aria-pressed="true">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span>Basic</span>
+                <small>2025 · OPEN only</small>
+              </button>
+              <button type="button" class="data-mode-btn" id="data-mode-extended" data-mode="extended" aria-pressed="false">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                <span>Extended</span>
+                <small>2018–25 · All categories</small>
+              </button>
+            </div>
+          </div>
+
+          <div class="panel-field">
+            <label class="panel-field__label" for="panel-mains-rank" data-i18n="panel.mainsLabel">JEE Main rank</label>
+            <input class="input input--sm" id="panel-mains-rank" type="text" inputmode="numeric" autocomplete="off" data-i18n-ph="panel.mainsPlaceholder" placeholder="e.g. 12,500" />
+          </div>
+
+          <div class="panel-field">
+            <label class="panel-field__label" for="panel-adv-rank" data-i18n="panel.advLabel">JEE Advanced rank</label>
+            <input class="input input--sm" id="panel-adv-rank" type="text" inputmode="numeric" autocomplete="off" data-i18n-ph="panel.advPlaceholder" placeholder="Optional" />
+          </div>
+
+          <div class="panel-field">
+            <span class="panel-field__label" id="panel-gender-label" data-i18n="panel.genderLabel">Gender</span>
+            <div class="choice-row choice-row--sm" role="radiogroup" aria-labelledby="panel-gender-label" id="panel-gender-row"></div>
+          </div>
+
+          <!-- seat-category: locked to OPEN in Basic mode; fully enabled in Extended -->
+          <div class="panel-field" id="panel-category-field">
+            <label class="panel-field__label" for="panel-seat-category" data-i18n="panel.categoryLabel">Category</label>
+            <select class="input input--sm" id="panel-seat-category"></select>
+            <p class="panel-field__hint" id="panel-category-hint" hidden>Switch to Extended mode to use reserved categories</p>
+          </div>
+
+          <div class="panel-field">
+            <label class="panel-field__label" for="panel-home-state" data-i18n="panel.stateLabel">Home state</label>
+            <select class="input input--sm" id="panel-home-state"></select>
+          </div>
+
+          <div class="panel-field">
+            <label class="panel-field__label" for="panel-goal" data-i18n="panel.goalLabel">Career goal</label>
+            <select class="input input--sm" id="panel-goal"></select>
+          </div>
+
+          <div class="panel-field">
+            <label class="panel-field__label" for="panel-family-income" data-i18n="panel.incomeLabel">Family income</label>
+            <select class="input input--sm" id="panel-family-income">
+              <option value="below_3l" data-i18n="income.below_3l">Below ₹3 Lakh</option>
+              <option value="3l_5l" data-i18n="income.3l_5l">₹3 Lakh - ₹5 Lakh</option>
+              <option value="above_5l" data-i18n="income.above_5l">Above ₹5 Lakh</option>
+            </select>
+          </div>
+
+          <div class="panel-field">
+            <label class="panel-field__label" data-i18n="panel.ratioLabel">College vs Branch Priority</label>
+            <div class="slider-container" style="margin-top: 8px;">
+              <input type="range" class="slider" id="panel-brand-branch-slider" min="0" max="1" step="0.1" value="0.5" style="width: 100%; cursor: pointer;" />
+              <div class="slider-labels" style="display: flex; justify-content: space-between; font-size: 11px; color: var(--color-text-muted); margin-top: 4px;">
+                <span data-i18n="panel.ratioBranch">Favour Branch</span>
+                <span data-i18n="panel.ratioBrand">Favour Brand</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="panel-field">
+            <label class="panel-field__label" for="panel-region" data-i18n="panel.regionLabel">Geographic region</label>
+            <select class="input input--sm" id="panel-region">
+              <option value="all" data-i18n="region.all">All India</option>
+              <option value="metro" data-i18n="region.metro">Metro Cities Only</option>
+              <option value="north" data-i18n="region.north">North India</option>
+              <option value="south" data-i18n="region.south">South India</option>
+              <option value="east" data-i18n="region.east">East India</option>
+              <option value="west" data-i18n="region.west">West India</option>
+              <option value="northeast" data-i18n="region.northeast">Northeast / Hills</option>
+            </select>
+          </div>
+
+          <div class="panel-field">
+            <span class="panel-field__label" data-i18n="panel.branchLabel">Branch preference</span>
+            <div class="branch-grid branch-grid--compact" id="panel-branch-grid" role="group" aria-label="Branch preference"></div>
+          </div>
+
+          <p class="panel__updating" id="panel-updating" hidden aria-live="polite">
+            <span class="panel__spinner" aria-hidden="true"></span>
+            <span data-i18n="panel.updating">Updating…</span>
+          </p>
+        </form>
+      </aside>
+
+      <div class="results-main">
+
+      <div class="results-head">
+        <div class="profile-chips" id="profile-chips"></div>
+        <div class="results-actions">
+          <button type="button" class="btn btn--ghost btn--sm" id="share-btn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg>
+            <span data-i18n="results.share">Share</span>
+          </button>
+          <button type="button" class="btn btn--ghost btn--sm" id="copy-link-btn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 007.5.5l3-3a5 5 0 00-7-7l-1.5 1.5"/><path d="M14 11a5 5 0 00-7.5-.5l-3 3a5 5 0 007 7L12 19"/></svg>
+            <span id="copy-link-label" data-i18n="results.copyLink">Copy link</span>
+          </button>
+          <button type="button" class="btn btn--ghost btn--sm" id="print-btn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            <span data-i18n="results.print">Print / Save PDF</span>
+          </button>
+          <button type="button" class="btn btn--ghost btn--sm" id="edit-profile-btn">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 3a2.8 2.8 0 014 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+            <span data-i18n="results.edit">Edit</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Counsellor's note -->
+      <article class="note">
+        <div class="note__rule" aria-hidden="true"></div>
+        <div class="note__body">
+          <p class="eyebrow note__eyebrow" data-i18n="results.noteEyebrow">A note for you</p>
+          <h2 class="note__headline" id="note-headline" data-i18n="results.noteHeadlineDefault">Here's where you stand.</h2>
+          <p class="note__text" id="note-guidance"></p>
+          <ul class="note__tips" id="note-tips"></ul>
+        </div>
+      </article>
+
+      <div class="api-notes" id="api-notes" hidden></div>
+
+      <!-- Standing spectrum -->
+      <div class="spectrum" id="spectrum" role="group" aria-label="Your standing at a glance">
+        <button type="button" class="zone zone--safe" data-zone="Safe">
+          <span class="zone__count" id="zone-count-safe">0</span>
+          <span class="zone__name" data-i18n="zones.safeName">Safe</span>
+          <span class="zone__sub" data-i18n="zones.safeSub">strong backups</span>
+        </button>
+        <button type="button" class="zone zone--target is-hot" data-zone="Target">
+          <span class="zone__count" id="zone-count-target">0</span>
+          <span class="zone__name" data-i18n="zones.targetName">Target</span>
+          <span class="zone__sub" data-i18n="zones.targetSub">your best-fit zone</span>
+        </button>
+        <button type="button" class="zone zone--reach" data-zone="Reach">
+          <span class="zone__count" id="zone-count-reach">0</span>
+          <span class="zone__name" data-i18n="zones.reachName">Reach</span>
+          <span class="zone__sub" data-i18n="zones.reachSub">worth a try</span>
+        </button>
+      </div>
+
+      <!-- Rank ruler — zoomed-out hero: every eligible pick on one log rank axis -->
+      <section class="ruler" id="ruler" role="group" aria-label="Rank ruler: where you stand against every match" hidden></section>
+
+      <!-- Filter toolbar -->
+      <div class="toolbar" id="toolbar">
+        <div class="searchbox">
+          <svg width="14" height="14" viewBox="0 0 20 20" aria-hidden="true"><path d="M9 3.5a5.5 5.5 0 1 0 3.4 9.8l3.2 3.2a.9.9 0 0 0 1.3-1.3l-3.2-3.2A5.5 5.5 0 0 0 9 3.5zm-3.7 5.5a3.7 3.7 0 1 1 7.4 0 3.7 3.7 0 0 1-7.4 0z" fill="currentColor"/></svg>
+          <input type="search" id="filter-search" data-i18n-ph="results.searchPlaceholder" placeholder="Search institute or branch…" data-i18n-aria="results.searchAria" aria-label="Search results" />
+        </div>
+        <div class="type-chips" id="type-chips" role="group" aria-label="Filter by institute type">
+          <button type="button" class="chip is-active" data-type="" data-i18n="results.typeAll">All</button>
+          <button type="button" class="chip" data-type="IIT">IIT</button>
+          <button type="button" class="chip" data-type="NIT">NIT</button>
+          <button type="button" class="chip" data-type="IIIT">IIIT</button>
+          <button type="button" class="chip" data-type="GFTI">GFTI</button>
+        </div>
+      </div>
+
+      <!-- Result sections (populated by JS) -->
+      <div id="result-sections" aria-live="polite"></div>
+
+      <div class="empty-state" id="empty-filtered" hidden>
+        <p><strong data-i18n="results.emptyFilteredTitle">Nothing matches those filters.</strong></p>
+        <p data-i18n="results.emptyFilteredBody">Try clearing the search or showing all institute types.</p>
+        <button type="button" class="btn btn--ghost btn--sm" id="clear-filters-btn" data-i18n="results.clearFilters">Clear filters</button>
+      </div>
+
+      <div class="empty-state" id="empty-results" hidden>
+        <p><strong data-i18n="results.emptyResultsTitle">We couldn't find close matches.</strong></p>
+        <p data-i18n="results.emptyResultsBody">Your rank may sit far from this dataset's cutoff windows for the filters chosen. Try adding your other rank, or double-check your home state.</p>
+        <button type="button" class="btn btn--primary btn--sm" id="empty-edit-btn" data-i18n="results.emptyEdit">Edit my details</button>
+      </div>
+
+
+
+      <p class="disclaimer" data-i18n-html="results.disclaimerHtml">
+        Based on JoSAA 2025 Round-6 closing ranks for OPEN (CRL) seats. Cutoffs move every year —
+        treat this as a compass, not a contract. Verify on <strong>josaa.nic.in</strong> before locking choices.
+      </p>
+
+      </div><!-- /.results-main -->
+     </div><!-- /.results-layout -->
+      <!-- Choice List floating button and drawer -->
+      <button type="button" class="btn btn--primary" id="choice-list-trigger" style="position: fixed; bottom: 24px; right: 24px; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.2); display: none; align-items: center; gap: 8px; border-radius: 50px; padding: 12px 20px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>
+        <span>My Preference List</span> (<span id="choice-count">0</span>)
+      </button>
+
+      <div class="choice-drawer" id="choice-drawer" hidden>
+        <div class="choice-drawer__overlay" id="choice-drawer-overlay"></div>
+        <div class="choice-drawer__content">
+          <div class="choice-drawer__header">
+            <h3>My Preference List</h3>
+            <button type="button" class="choice-drawer__close" id="choice-drawer-close">&times;</button>
+          </div>
+          <div class="choice-drawer__body">
+            <p class="choice-drawer__hint">Drag and drop options to rearrange your custom preference list.</p>
+            <ul class="choice-drawer__list" id="choice-drawer-list"></ul>
+          </div>
+          <div class="choice-drawer__footer" style="display: flex; gap: 12px; margin-top: 16px;">
+            <button type="button" class="btn btn--ghost btn--sm" id="choice-export-csv" style="flex: 1;">Export CSV</button>
+            <button type="button" class="btn btn--primary btn--sm" id="choice-export-pdf" style="flex: 1;">Print List</button>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <span data-i18n-html="footer.aboutHtml">Disha — a <a href="https://www.utmt.org" target="_blank" rel="noopener">UTMT</a> initiative, built with care for JEE aspirants</span>
+    <span class="footer__sep" aria-hidden="true">·</span>
+    <span data-i18n="footer.openSource">Open source · Free · No login</span>
+    <span class="footer__sep" aria-hidden="true">·</span>
+    <span data-i18n-html="footer.dataHtml">Cutoff data: <a href="https://github.com/atmabodha/OpenNLP" target="_blank" rel="noopener">OpenNLP (JoSAA 2025)</a></span>
+  </footer>
+
+  <script src="/js/config.js"></script>
+  <script src="/js/i18n.js"></script>
+  <script src="/js/api.js"></script>
+  <script src="/js/app.js" defer></script>
+</body>
+</html>
