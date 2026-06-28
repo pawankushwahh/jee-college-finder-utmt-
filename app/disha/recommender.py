@@ -185,36 +185,8 @@ def _is_metro(institute: str, state: str) -> bool:
     return any(city in inst_lower for city in METRO_CITIES) or state == "Delhi"
 
 
-def _calculate_fees(inst_type: str, income: str, category: str) -> tuple[int, bool, str]:
-    if inst_type == "IIT":
-        base_tuition = 200000
-        other_charges = 25000
-    elif inst_type == "NIT":
-        base_tuition = 125000
-        other_charges = 15000
-    elif inst_type == "IIIT":
-        base_tuition = 180000
-        other_charges = 20000
-    else:  # GFTI
-        base_tuition = 75000
-        other_charges = 10000
-
-    # SC/ST/PwD automatic 100% tuition waiver at IITs and NITs
-    is_reserved_waiver = category in {"SC", "ST", "PwD"}
-    if is_reserved_waiver and inst_type in {"IIT", "NIT"}:
-        return other_charges, True, f"100% tuition waiver applied for {category} category"
-
-    # Income-based waivers at IITs and NITs
-    if inst_type in {"IIT", "NIT"}:
-        if income == "below_3l":
-            return other_charges, True, "100% tuition fee waiver applied (Income < 3L)"
-        elif income == "3l_5l":
-            tuition_to_pay = int(base_tuition * (1 / 3))
-            return tuition_to_pay + other_charges, True, "2/3rd tuition fee waiver applied (Income 3L-5L)"
-        else:
-            return base_tuition + other_charges, False, "Standard fees apply"
-    
-    return base_tuition + other_charges, False, "Standard fees apply (no standard income waivers)"
+# _calculate_fees is removed to focus exclusively on admission probability insights.
+# Future-proofing: If verified fees data becomes available, re-implement fee calculation logic here.
 
 
 def _interest_score(prog: Program, goal: str, ratio: float) -> tuple[float, bool]:
@@ -526,9 +498,8 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
             lang,
         )
 
-        est_fees, waiver_applied, fee_note = _calculate_fees(
-            prog.institute_type, req.family_income, req.seat_category
-        )
+        # Fee calculation is removed to focus on admission probability insights.
+        # Future-proofing: If verified fees data becomes available, recalculate est_fees, waiver_applied, and fee_note here.
         region = _get_region(prog.institute_state)
         is_metro = _is_metro(prog.institute, prog.institute_state)
 
@@ -556,9 +527,11 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
                 female_seat_advantage=female_seat_advantage,
                 confidence=confidence,
                 reason=reason,
-                estimated_fees=est_fees,
-                fee_waiver_applied=waiver_applied,
-                fee_note=fee_note,
+                # estimated_fees, fee_waiver_applied, fee_note are removed to focus on admission insights.
+                # Future-proofing: If verified fees data becomes available, pass these fields:
+                # estimated_fees=est_fees,
+                # fee_waiver_applied=waiver_applied,
+                # fee_note=fee_note,
                 region=region,
                 is_metro=is_metro,
                 history=history,

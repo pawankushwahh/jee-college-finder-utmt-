@@ -7,7 +7,6 @@ import pytest
 from app.disha.recommender import (
     _get_region,
     _is_metro,
-    _calculate_fees,
     _interest_score,
 )
 from app.disha.data_loader import Program
@@ -24,6 +23,7 @@ def make_test_program(**kw) -> Program:
         degree="Bachelor of Technology",
         quota="AI",
         gender_pool="neutral",
+        seat_type="OPEN",
         opening_rank=100,
         closing_rank=500,
         brand_score=0.9,
@@ -53,70 +53,7 @@ def test_is_metro():
     assert _is_metro("NIT Trichy", "Tamil Nadu") is False
 
 
-# --------------------------- Fee and Tuition Waivers ---------------------------
-
-def test_calculate_fees_sc_st_pwd():
-    # SC/ST/PwD candidates get 100% waiver at IITs and NITs regardless of income (but pay other charges)
-    for cat in ["SC", "ST", "PwD"]:
-        fee, waiver, note = _calculate_fees("IIT", "above_5l", cat)
-        assert fee == 25000  # other charges only
-        assert waiver is True
-        assert "tuition waiver applied" in note
-
-        fee, waiver, note = _calculate_fees("NIT", "below_3l", cat)
-        assert fee == 15000  # other charges only
-        assert waiver is True
-        assert "tuition waiver applied" in note
-
-
-def test_calculate_fees_low_income_general_obc_ews():
-    # Income < 3L gets 100% tuition waiver (but pay other charges)
-    for cat in ["OPEN", "OBC-NCL", "GEN-EWS"]:
-        fee, waiver, note = _calculate_fees("IIT", "below_3l", cat)
-        assert fee == 25000  # other charges only
-        assert waiver is True
-        assert "tuition fee waiver" in note
-
-        fee, waiver, note = _calculate_fees("NIT", "below_3l", cat)
-        assert fee == 15000  # other charges only
-        assert waiver is True
-        assert "tuition fee waiver" in note
-
-
-def test_calculate_fees_mid_income_general_obc_ews():
-    # Income 3L-5L gets 2/3rd tuition waiver (meaning they pay 1/3rd of the tuition fees + other charges)
-    for cat in ["OPEN", "OBC-NCL", "GEN-EWS"]:
-        fee, waiver, note = _calculate_fees("IIT", "3l_5l", cat)
-        assert fee == 91666  # int(200000 / 3) + 25000 = 66666 + 25000 = 91666
-        assert waiver is True
-        assert "2/3rd tuition fee waiver" in note
-
-        fee, waiver, note = _calculate_fees("NIT", "3l_5l", cat)
-        assert fee == 56666  # int(125000 / 3) + 15000 = 41666 + 15000 = 56666
-        assert waiver is True
-        assert "2/3rd tuition fee waiver" in note
-
-
-def test_calculate_fees_high_income_general_obc_ews():
-    # Income > 5L gets standard fees (no waiver)
-    for cat in ["OPEN", "OBC-NCL", "GEN-EWS"]:
-        fee, waiver, note = _calculate_fees("IIT", "above_5l", cat)
-        assert fee == 225000  # 200k tuition + 25k other
-        assert waiver is False
-        assert "Standard fees" in note
-
-        fee, waiver, note = _calculate_fees("NIT", "above_5l", cat)
-        assert fee == 140000  # 125k tuition + 15k other
-        assert waiver is False
-        assert "Standard fees" in note
-
-
-def test_calculate_fees_gfti_iiit_not_eligible_for_standard_mhrd():
-    # IIITs and GFTIs do not follow standard MHRD IIT/NIT waiver schemes
-    fee, waiver, note = _calculate_fees("IIIT", "below_3l", "OPEN")
-    assert fee == 200000  # 180k tuition + 20k other
-    assert waiver is False
-    assert "no standard income waivers" in note
+# Fee and Tuition Waiver tests removed since fee calculation has been decoupled to focus on admission probability insights.
 
 
 # --------------------------- Blended scoring ---------------------------

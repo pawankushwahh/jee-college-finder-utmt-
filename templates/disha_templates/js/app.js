@@ -30,8 +30,8 @@ const goalTips = (id) => t(`goalTips.${id}`) || [];
 const SECTION_ORDER = ["Target", "Reach", "Safe"];
 const sectionMeta = (cat) => ({
   Target: { title: t("zones.targetName"), sub: t("zones.targetSub") },
-  Reach:  { title: t("zones.reachName"),  sub: t("zones.reachSub") },
-  Safe:   { title: t("zones.safeName"),   sub: t("zones.safeSub") },
+  Reach: { title: t("zones.reachName"), sub: t("zones.reachSub") },
+  Safe: { title: t("zones.safeName"), sub: t("zones.safeSub") },
 }[cat]);
 
 const loadingLines = () => t("loading");
@@ -57,7 +57,6 @@ const state = {
   meta: null,
   step: 0,
   gender: "male",
-  familyIncome: "below_3l",
   brandBranchRatio: 0.5,
   goal: null,
   branchPrefs: [],          // selected branch-preference values; [] means "Any"
@@ -70,9 +69,11 @@ const state = {
   // Data source mode: "basic" or "extended".
   // Persisted across sessions; overridden to server default if toggle is hidden.
   dataMode: localStorage.getItem("disha_data_mode") || "basic",
+  view: localStorage.getItem("disha_view") || "branch", // "branch" or "college"
+  expandedColleges: {}, // in-memory accordion toggle state
 };
 
-const TOTAL_STEPS = 7;
+const TOTAL_STEPS = 6;
 
 const branchOptions = () => state.meta?.branches || [];
 const branchLabel = (value) => {
@@ -165,9 +166,6 @@ function validateStep(index) {
     return true;
   }
   if (index === 3) {
-    return true; // family income is always valid (pre-selected)
-  }
-  if (index === 4) {
     const err = $("error-goal");
     if (!state.goal) {
       err.textContent = t("validation.goal");
@@ -225,30 +223,7 @@ function updateGenderNote() {
   }
 }
 
-function setFamilyIncome(value) {
-  state.familyIncome = value;
-  syncFamilyIncomeRow();
-}
-
-function syncFamilyIncomeRow() {
-  document
-    .querySelectorAll("#income-row .choice")
-    .forEach((c) => {
-      const on = c.dataset.value === state.familyIncome;
-      c.classList.toggle("is-selected", on);
-      c.setAttribute("aria-checked", on ? "true" : "false");
-    });
-}
-
-function bindFamilyIncomeRow() {
-  const row = $("income-row");
-  if (!row) return;
-  row.addEventListener("click", (e) => {
-    const btn = e.target.closest(".choice");
-    if (!btn) return;
-    setFamilyIncome(btn.dataset.value);
-  });
-}
+// familyIncome handlers removed to focus on admission probability insights.
 
 // goal cards
 function buildGoalCards() {
@@ -277,7 +252,7 @@ function buildGoalCards() {
       });
       $("error-goal").hidden = true;
       // small pause so the selection registers visually, then advance
-      setTimeout(() => { if (state.step === 4) advanceStep(); }, prefersReducedMotion ? 0 : 260);
+      setTimeout(() => { if (state.step === 3) advanceStep(); }, prefersReducedMotion ? 0 : 260);
     });
     grid.appendChild(btn);
   }
@@ -360,9 +335,8 @@ function renderReview() {
     { key: t("review.gender"), val: escapeHtml(genderText), step: 1 },
     { key: t("review.category"), val: escapeHtml(categoryLabel()), step: 1 },
     { key: t("review.state"), val: escapeHtml($("home-state").value || t("review.dash")), step: 2 },
-    { key: t("review.income"), val: escapeHtml(state.familyIncome ? t(`income.${state.familyIncome}`) : t("review.dash")), step: 3 },
-    { key: t("review.goal"), val: escapeHtml(state.goal ? goalName(state.goal) : t("review.dash")), step: 4 },
-    { key: t("review.branch"), val: escapeHtml(branchReviewValue()), step: 5 },
+    { key: t("review.goal"), val: escapeHtml(state.goal ? goalName(state.goal) : t("review.dash")), step: 3 },
+    { key: t("review.branch"), val: escapeHtml(branchReviewValue()), step: 4 },
   ];
 
   const list = $("review-list");
@@ -578,7 +552,7 @@ function buildCategoryOptions(catSel) {
     const label = c.value === "OPEN"
       ? t("category.general")
       : String(c.label || c.value);
-    
+
     // In extended mode, all categories are available.
     const isAvailable = (state.dataMode === "extended") || c.available;
     opt.textContent = isAvailable ? label : `${label} — ${t("category.comingSoon")}`;
@@ -620,7 +594,6 @@ function buildPayload() {
     home_state: $("home-state").value,
     goal: state.goal,
     seat_category: $("seat-category").value || "OPEN",
-    family_income: state.familyIncome || "above_5l",
     brand_branch_ratio: state.brandBranchRatio !== undefined ? state.brandBranchRatio : 0.5,
     max_results: 150,
     lang: getLang(),
@@ -698,7 +671,6 @@ function syncPanelFromState() {
     $("panel-seat-category").value = $("seat-category").value || "OPEN";
   }
   if ($("panel-goal") && state.goal) $("panel-goal").value = state.goal;
-  if ($("panel-family-income")) $("panel-family-income").value = state.familyIncome || "above_5l";
   if ($("panel-brand-branch-slider")) $("panel-brand-branch-slider").value = state.brandBranchRatio !== undefined ? state.brandBranchRatio : 0.5;
   if ($("panel-region")) $("panel-region").value = state.filterRegion || "all";
   syncGenderRows();
@@ -1048,7 +1020,7 @@ function probabilityBadgeHtml(rec) {
 function historyTableHtml(rec) {
   if (!rec.history || Object.keys(rec.history).length <= 1) return "";
   const sortedYears = Object.keys(rec.history).sort((a, b) => Number(a) - Number(b));
-  
+
   let html = `<div class="history-timeline">`;
   for (const year of sortedYears) {
     const isCurrent = year === "2025";
@@ -1098,12 +1070,13 @@ function cardHtml(rec, index) {
       </svg>
     </button>`;
 
-  const waiverBadge = rec.fee_waiver_applied
-    ? `<span class="tag tag--fee-waiver" title="${escapeHtml(rec.fee_note || '')}">Waiver</span>`
+  // Future-proofing: Render fees only if returned by the API
+  const waiverBadge = (rec.fee_waiver_applied && rec.fee_note)
+    ? `<span class="tag tag--fee-waiver" title="${escapeHtml(rec.fee_note)}">Waiver</span>`
     : "";
-  const feeText = rec.estimated_fees > 0
+  const feeText = (rec.estimated_fees !== undefined && rec.estimated_fees > 0)
     ? `<span class="tag tag--fee">₹${(rec.estimated_fees / 1000).toFixed(0)}k/yr</span>`
-    : `<span class="tag tag--fee tag--free">Free</span>`;
+    : "";
 
   // Only show history if we have more than 1 year of data.
   const hasHistory = rec.history && Object.keys(rec.history).length > 1;
@@ -1144,7 +1117,7 @@ function cardHtml(rec, index) {
 
 // ── Choice List bookmarking, sorting and exports ──────────────────────────
 
-window.toggleHistory = function(event, btn) {
+window.toggleHistory = function (event, btn) {
   if (event) {
     event.preventDefault();
     event.stopPropagation();
@@ -1152,17 +1125,17 @@ window.toggleHistory = function(event, btn) {
   const card = btn.closest(".ccard");
   const collapse = card.querySelector(".ccard__history-collapse");
   const isHidden = collapse.hidden;
-  
+
   collapse.hidden = !isHidden;
   btn.classList.toggle("is-expanded", isHidden);
-  
+
   const btnText = btn.querySelector("span");
   if (btnText) {
     btnText.textContent = isHidden ? t("card.historyBtnClose") : t("card.historyBtn");
   }
 };
 
-window.toggleBookmark = function(event, index, institute, branch) {
+window.toggleBookmark = function (event, index, institute, branch) {
   if (event) {
     event.preventDefault();
     event.stopPropagation();
@@ -1181,6 +1154,7 @@ window.toggleBookmark = function(event, index, institute, branch) {
       branch: rec.branch,
       branch_full: rec.branch_full,
       degree: rec.degree,
+      // Future-proofing: Preserve fees parameters if returned by API
       estimated_fees: rec.estimated_fees,
       fee_waiver_applied: rec.fee_waiver_applied,
       fee_note: rec.fee_note,
@@ -1198,9 +1172,9 @@ window.toggleBookmark = function(event, index, institute, branch) {
 function updateChoiceUI() {
   const trigger = $("choice-list-trigger");
   const count = $("choice-count");
-  
+
   if (count) count.textContent = state.choices.length;
-  
+
   const inResultsView = $("view-results").classList.contains("is-active");
   if (trigger) {
     trigger.style.display = (inResultsView && state.choices.length > 0) ? "flex" : "none";
@@ -1287,18 +1261,25 @@ function renderChoiceDrawerList() {
 
 function exportChoicesCSV() {
   if (state.choices.length === 0) return;
-  let csv = "Preference Number,Institute,Branch,Degree,Estimated Fees,Fee Notes,Category\n";
+  const hasFees = state.choices.some(c => c.estimated_fees !== undefined);
+  let headers = ["Preference Number", "Institute", "Branch", "Degree"];
+  if (hasFees) {
+    headers.push("Estimated Fees", "Fee Notes");
+  }
+  headers.push("Category");
+  let csv = headers.join(",") + "\n";
   state.choices.forEach((c, idx) => {
-    const feeStr = c.estimated_fees > 0 ? `₹${(c.estimated_fees/1000).toFixed(0)}k/year` : "Free / Fully Waived";
     const row = [
       idx + 1,
       `"${c.institute.replace(/"/g, '""')}"`,
       `"${c.branch.replace(/"/g, '""')}"`,
-      `"${c.degree.replace(/"/g, '""')}"`,
-      `"${feeStr}"`,
-      `"${(c.fee_note || "").replace(/"/g, '""')}"`,
-      `"${c.category}"`
+      `"${c.degree.replace(/"/g, '""')}"`
     ];
+    if (hasFees) {
+      const feeStr = c.estimated_fees > 0 ? `₹${(c.estimated_fees / 1000).toFixed(0)}k/year` : "Free / Fully Waived";
+      row.push(`"${feeStr}"`, `"${(c.fee_note || "").replace(/"/g, '""')}"`);
+    }
+    row.push(`"${c.category}"`);
     csv += row.join(",") + "\n";
   });
 
@@ -1321,13 +1302,14 @@ function printChoices() {
     return;
   }
 
+  const hasFees = state.choices.some(c => c.estimated_fees !== undefined);
   let rowsHtml = state.choices.map((c, idx) => `
     <tr>
       <td>${idx + 1}</td>
       <td><strong>${escapeHtml(c.institute)}</strong></td>
       <td>${escapeHtml(c.branch)}</td>
       <td>${escapeHtml(c.degree)}</td>
-      <td>${c.estimated_fees > 0 ? `₹${(c.estimated_fees/1000).toFixed(0)}k/yr` : "Fully Waived"}</td>
+      ${hasFees ? `<td>${c.estimated_fees > 0 ? `₹${(c.estimated_fees / 1000).toFixed(0)}k/yr` : "Fully Waived"}</td>` : ""}
     </tr>
   `).join("");
 
@@ -1360,7 +1342,7 @@ function printChoices() {
             <th>Institute</th>
             <th>Branch</th>
             <th>Degree</th>
-            <th>Est. Fees</th>
+            ${hasFees ? `<th>Est. Fees</th>` : ""}
           </tr>
         </thead>
         <tbody>
@@ -1395,6 +1377,164 @@ function recPassesFilters(rec) {
   );
 }
 
+function syncViewToggleUI() {
+  const btnBranch = $("view-by-branch");
+  const btnCollege = $("view-by-college");
+  if (btnBranch && btnCollege) {
+    btnBranch.classList.toggle("is-active", state.view === "branch");
+    btnCollege.classList.toggle("is-active", state.view === "college");
+  }
+}
+
+function getCollegeLocation(rec) {
+  const parts = rec.institute.split(",");
+  if (parts.length > 1) {
+    return parts[1].trim();
+  }
+  if (rec.institute.startsWith("Indian Institute of Technology")) {
+    return rec.institute.replace("Indian Institute of Technology", "").trim();
+  }
+  if (rec.institute.startsWith("Indian Institute of Information Technology")) {
+    return rec.institute.replace("Indian Institute of Information Technology", "").trim();
+  }
+  return rec.institute_state;
+}
+
+function getCollegeDomId(instName) {
+  return "college-" + instName.toLowerCase().replace(/[^a-z0-9]/g, "-");
+}
+
+window.toggleCollegeCard = function(event, instName) {
+  if (event) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+  const isExpanded = !state.expandedColleges[instName];
+  state.expandedColleges[instName] = isExpanded;
+  
+  const domId = getCollegeDomId(instName);
+  const collapseEl = document.getElementById(`collapse-${domId}`);
+  const headerEl = collapseEl ? collapseEl.previousElementSibling : null;
+  if (collapseEl && headerEl) {
+    collapseEl.hidden = !isExpanded;
+    headerEl.classList.toggle("is-expanded", isExpanded);
+  }
+};
+
+function branchRowCardHtml(r, index) {
+  const cat = r.category.toLowerCase();
+  const delay = prefersReducedMotion ? 0 : Math.min(index * 45, 420);
+  const star = r.matched_interest
+    ? `<span class="ccard__star" title="${escapeHtml(t("card.fitsGoalTitle"))}">
+         <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2z"/></svg>
+         ${escapeHtml(t("card.fitsGoal"))}</span>`
+    : "";
+
+  const degreeNote = /dual/i.test(r.degree) ? t("card.dualDegree") : "";
+  const poolNote = r.gender_pool === "female" ? t("card.femaleSeat") : "";
+  const foot = [
+    quotaLabel(r.quota),
+    degreeNote,
+    poolNote,
+  ].filter(Boolean);
+
+  const reason = r.reason
+    ? `<p class="ccard__reason">${escapeHtml(r.reason)}</p>`
+    : "";
+
+  const isBookmarked = state.choices && state.choices.some(c => c.institute === r.institute && c.branch === r.branch);
+  const bookmarkHtml = `
+    <button type="button" class="ccard__bookmark ${isBookmarked ? "is-selected" : ""}"
+            data-institute="${escapeHtml(r.institute)}"
+            data-branch="${escapeHtml(r.branch)}"
+            onclick="toggleBookmark(event, ${index}, '${escapeHtml(r.institute)}', '${escapeHtml(r.branch)}')"
+            aria-label="Add to preference list">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+      </svg>
+    </button>`;
+
+  const waiverBadge = (r.fee_waiver_applied && r.fee_note)
+    ? `<span class="tag tag--fee-waiver" title="${escapeHtml(r.fee_note)}">Waiver</span>`
+    : "";
+  const feeText = (r.estimated_fees !== undefined && r.estimated_fees > 0)
+    ? `<span class="tag tag--fee">₹${(r.estimated_fees / 1000).toFixed(0)}k/yr</span>`
+    : "";
+
+  const hasHistory = r.history && Object.keys(r.history).length > 1;
+
+  return `
+    <article class="ccard ccard--${cat} ccard--subbranch" style="animation-delay:${delay}ms; margin-top: 10px; box-shadow: none; border-color: var(--line);">
+      ${bookmarkHtml}
+      <div class="ccard__meta">
+        ${feeText}
+        ${waiverBadge}
+        ${probabilityBadgeHtml(r)}
+        ${confidenceChipHtml(r)}
+        ${star}
+      </div>
+      <p class="ccard__branch" style="font-size: 0.95rem; font-weight: 600; margin-top: 4px;">${escapeHtml(r.branch)}</p>
+      ${rankBarHtml(r)}
+      ${advantageBadgesHtml(r)}
+      ${reason}
+
+      ${hasHistory ? `
+      <button type="button" class="ccard__history-btn" onclick="toggleHistory(event, this)">
+        <span>${escapeHtml(t("card.historyBtn"))}</span>
+        <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="ccard__history-collapse" hidden>
+        <div class="ccard__history-body">
+          ${historyTableHtml(r)}
+        </div>
+      </div>
+      ` : ""}
+
+      <div class="ccard__foot">${foot.map((f) => `<span>${escapeHtml(f)}</span>`).join("")}</div>
+    </article>`;
+}
+
+function collegeCardHtml(group, catName, index) {
+  const firstRec = group.branches[0];
+  const instName = group.institute;
+  const instType = firstRec.institute_type;
+  const typeClass = `tag--${instType.toLowerCase()}`;
+  const city = getCollegeLocation(firstRec);
+  const branchCount = group.branches.length;
+  const isExpanded = !!state.expandedColleges[instName];
+  const catClass = catName.toLowerCase();
+  
+  const delay = prefersReducedMotion ? 0 : Math.min(index * 45, 420);
+  const viaExamText = firstRec.exam === "advanced" ? t("card.viaAdvanced") : t("card.viaMains");
+  const domId = getCollegeDomId(instName);
+
+  const branchRowsHtml = group.branches.map((r, bIdx) => {
+    return branchRowCardHtml(r, index * 100 + bIdx);
+  }).join("");
+
+  return `
+    <article class="ccard ccard--${catClass} ccard--college" style="animation-delay:${delay}ms">
+      <div class="ccard__college-header ${isExpanded ? "is-expanded" : ""}" onclick="toggleCollegeCard(event, '${escapeHtml(instName)}')">
+        <div class="ccard__meta" style="width: 100%;">
+          <span class="tag ${typeClass}">${escapeHtml(instType)}</span>
+          <span class="tag">${escapeHtml(firstRec.institute_state)}</span>
+          <span class="tag" style="opacity: 0.85; border-style: dashed;">${escapeHtml(viaExamText)}</span>
+          <span class="tag tag--count" style="margin-left: auto; background: var(--paper-deep); color: var(--ink-soft); font-weight: 600;">${branchCount} ${branchCount === 1 ? 'branch' : 'branches'}</span>
+        </div>
+        <div class="ccard__college-title-row" style="margin-top: 10px; display: flex; justify-content: space-between; align-items: flex-start; width: 100%; gap: 12px;">
+          <h3 class="ccard__institute" style="margin: 0; font-size: 1.12rem;">${escapeHtml(instName)} <small style="font-size: 0.82rem; font-weight: 500; color: var(--ink-soft); display: inline-block; margin-left: 6px;">(${escapeHtml(city)})</small></h3>
+          <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.2s; margin-top: 5px; flex-shrink: 0;"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+      <div class="ccard__branches-collapse" id="collapse-${domId}" ${isExpanded ? "" : "hidden"}>
+        <div class="ccard__branches-list" style="margin-top: 14px; border-top: 1px solid var(--line); padding-top: 6px;">
+          ${branchRowsHtml}
+        </div>
+      </div>
+    </article>
+  `;
+}
+
 function renderSections() {
   const data = state.lastData;
   const recs = data?.recommendations || [];
@@ -1417,6 +1557,23 @@ function renderSections() {
     const section = document.createElement("section");
     section.className = "rsection";
     section.id = `section-${catName.toLowerCase()}`;
+
+    let contentHtml = "";
+    if (state.view === "college") {
+      const grouped = [];
+      visible.forEach((r) => {
+        let group = grouped.find((g) => g.institute === r.institute);
+        if (!group) {
+          group = { institute: r.institute, branches: [] };
+          grouped.push(group);
+        }
+        group.branches.push(r);
+      });
+      contentHtml = `<div class="cards">${grouped.map((g, i) => collegeCardHtml(g, catName, i)).join("")}</div>`;
+    } else {
+      contentHtml = `<div class="cards">${visible.map((r, i) => cardHtml(r, i)).join("")}</div>`;
+    }
+
     section.innerHTML = `
       <div class="rsection__head">
         <h2 class="rsection__title">
@@ -1425,7 +1582,7 @@ function renderSections() {
         </h2>
       </div>
       ${blurbs[catName] ? `<p class="rsection__blurb">${escapeHtml(blurbs[catName])}</p>` : ""}
-      <div class="cards">${visible.map((r, i) => cardHtml(r, i)).join("")}</div>`;
+      ${contentHtml}`;
     container.appendChild(section);
   }
 
@@ -1434,6 +1591,10 @@ function renderSections() {
   $("empty-filtered").hidden = !hasResults || anyShown;
   $("toolbar").style.display = hasResults ? "" : "none";
   $("spectrum").style.display = hasResults ? "" : "none";
+  const specHeader = $("spectrum-header");
+  if (specHeader) {
+    specHeader.style.display = hasResults ? "flex" : "none";
+  }
 }
 
 function renderResults(data) {
@@ -1456,9 +1617,9 @@ function renderResults(data) {
     z.classList.toggle("is-empty", !(byCat[z.dataset.zone] > 0));
   });
 
+  syncViewToggleUI();
   renderSections();
   updateChoiceUI();
-
 }
 
 // ── Language switching ────────────────────────────────────────────────────
@@ -1725,14 +1886,7 @@ function bindPanelEvents() {
       });
     }
 
-    const panelIncome = $("panel-family-income");
-    if (panelIncome) {
-      panelIncome.addEventListener("change", () => {
-        state.familyIncome = panelIncome.value;
-        syncFamilyIncomeRow();     // keep the flow's choice row in sync
-        schedulePanelUpdate();
-      });
-    }
+    // panel-family-income event listener removed to focus on admission probability insights.
 
     const panelSlider = $("panel-brand-branch-slider");
     if (panelSlider) {
@@ -1769,9 +1923,13 @@ function bindEvents() {
     if (state.step > 0) goToStep(state.step - 1, { backwards: true });
   });
 
-  $("restart-btn").addEventListener("click", () => showView("welcome"));
+  $("restart-btn").addEventListener("click", () => {
+    state.expandedColleges = {};
+    showView("welcome");
+  });
   $("wordmark").addEventListener("click", (e) => {
     e.preventDefault();
+    state.expandedColleges = {};
     showView("welcome");
   });
 
@@ -1846,6 +2004,27 @@ function bindEvents() {
     renderSections();
   });
 
+  const btnBranch = $("view-by-branch");
+  const btnCollege = $("view-by-college");
+  if (btnBranch && btnCollege) {
+    btnBranch.addEventListener("click", () => {
+      if (state.view !== "branch") {
+        state.view = "branch";
+        localStorage.setItem("disha_view", "branch");
+        syncViewToggleUI();
+        renderSections();
+      }
+    });
+    btnCollege.addEventListener("click", () => {
+      if (state.view !== "college") {
+        state.view = "college";
+        localStorage.setItem("disha_view", "college");
+        syncViewToggleUI();
+        renderSections();
+      }
+    });
+  }
+
   $("spectrum").addEventListener("click", (e) => {
     const zone = e.target.closest(".zone");
     if (!zone) return;
@@ -1881,7 +2060,7 @@ $("lang-toggle").setAttribute("aria-label", t("header.langSwitchAria"));
 attachRankFormatting($("mains-rank"));
 attachRankFormatting($("adv-rank"));
 bindGenderRow();
-bindFamilyIncomeRow();
+// bindFamilyIncomeRow() removed to focus on admission probability insights.
 buildGoalCards();
 bindEvents();
 bindRulerTooltip();

@@ -36,6 +36,7 @@ def make_program(**kw) -> Program:
         degree="Bachelor of Technology",
         quota="AI",
         gender_pool="neutral",
+        seat_type="OPEN",
         opening_rank=1000,
         closing_rank=2000,
         brand_score=0.7,
@@ -120,7 +121,7 @@ def test_categorize(rank, expected):
 
 # --------------------------- full pipeline (synthetic) ---------------------------
 def _patch_programs(monkeypatch, programs):
-    monkeypatch.setattr(recommender, "load_programs", lambda: programs)
+    monkeypatch.setattr(recommender, "load_programs", lambda *a, **kw: programs)
 
 
 def test_only_mains_rank_omits_iits_and_adds_note(monkeypatch):
@@ -289,8 +290,8 @@ def test_fragile_pick_flagged(monkeypatch):
     # A very tight window (spread 300) must be classified fragile end-to-end.
     prog = make_program(opening_rank=1000, closing_rank=1300)
     _patch_programs(monkeypatch, [prog])
-    monkeypatch.setattr(recommender, "home_state_advantage_index", lambda: {})
-    monkeypatch.setattr(recommender, "female_seat_advantage_index", lambda: {})
+    monkeypatch.setattr(recommender, "home_state_advantage_index", lambda *a, **kw: {})
+    monkeypatch.setattr(recommender, "female_seat_advantage_index", lambda *a, **kw: {})
     req = RecommendRequest(mains_rank=1200, gender="male",
                            home_state="Rajasthan", goal="coding")
     resp = recommend(req)
@@ -304,7 +305,7 @@ def test_fragile_pick_flagged(monkeypatch):
 def test_home_state_advantage_index(monkeypatch):
     hs = make_program(quota="HS", opening_rank=2000, closing_rank=5000)
     os_seat = make_program(quota="OS", opening_rank=4000, closing_rank=9000)
-    monkeypatch.setattr(data_loader, "load_programs", lambda: [hs, os_seat])
+    monkeypatch.setattr(data_loader, "load_programs", lambda *a, **kw: [hs, os_seat])
     home_state_advantage_index.cache_clear()
     try:
         idx = home_state_advantage_index()
@@ -317,7 +318,7 @@ def test_home_state_advantage_index(monkeypatch):
 def test_female_seat_advantage_index(monkeypatch):
     neutral = make_program(gender_pool="neutral", closing_rank=3000)
     female = make_program(gender_pool="female", closing_rank=5500)
-    monkeypatch.setattr(data_loader, "load_programs", lambda: [neutral, female])
+    monkeypatch.setattr(data_loader, "load_programs", lambda *a, **kw: [neutral, female])
     female_seat_advantage_index.cache_clear()
     try:
         idx = female_seat_advantage_index()
@@ -332,8 +333,8 @@ def test_home_state_advantage_surfaced_in_recommendation(monkeypatch):
                       opening_rank=2000, closing_rank=5000)
     _patch_programs(monkeypatch, [hs])
     key = (hs.institute, hs.branch_full, hs.exam, hs.gender_pool)
-    monkeypatch.setattr(recommender, "home_state_advantage_index", lambda: {key: 4000})
-    monkeypatch.setattr(recommender, "female_seat_advantage_index", lambda: {})
+    monkeypatch.setattr(recommender, "home_state_advantage_index", lambda *a, **kw: {key: 4000})
+    monkeypatch.setattr(recommender, "female_seat_advantage_index", lambda *a, **kw: {})
     req = RecommendRequest(mains_rank=4500, gender="male",
                            home_state="Rajasthan", goal="coding")
     resp = recommend(req)
@@ -348,8 +349,8 @@ def test_female_seat_advantage_surfaced_in_recommendation(monkeypatch):
                           opening_rank=2000, closing_rank=5000)
     _patch_programs(monkeypatch, [female])
     key = (female.institute, female.branch_full, female.exam, female.quota)
-    monkeypatch.setattr(recommender, "home_state_advantage_index", lambda: {})
-    monkeypatch.setattr(recommender, "female_seat_advantage_index", lambda: {key: 2500})
+    monkeypatch.setattr(recommender, "home_state_advantage_index", lambda *a, **kw: {})
+    monkeypatch.setattr(recommender, "female_seat_advantage_index", lambda *a, **kw: {key: 2500})
     req = RecommendRequest(mains_rank=4500, gender="female",
                            home_state="Rajasthan", goal="coding")
     resp = recommend(req)

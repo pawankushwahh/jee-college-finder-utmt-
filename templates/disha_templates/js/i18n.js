@@ -103,10 +103,10 @@ const I18N = {
       general: "General (OPEN)",
     },
     goals: {
-      coding:    { name: "Coding & software", desc: "Build things, aim for SDE roles" },
-      research:  { name: "Research & higher studies", desc: "MS, MTech or PhD pathways" },
-      mba:       { name: "MBA & management", desc: "Brand, network, placements" },
-      core:      { name: "Core engineering", desc: "Practice the discipline you study" },
+      coding: { name: "Coding & software", desc: "Build things, aim for SDE roles" },
+      research: { name: "Research & higher studies", desc: "MS, MTech or PhD pathways" },
+      mba: { name: "MBA & management", desc: "Brand, network, placements" },
+      core: { name: "Core engineering", desc: "Practice the discipline you study" },
       undecided: { name: "Not sure yet", desc: "Keep as many doors open as possible" },
     },
     goalTips: {
@@ -198,6 +198,9 @@ const I18N = {
       done: "Done",
     },
     results: {
+      standingTitle: "Your standing",
+      byBranch: "By branch",
+      byCollege: "By college",
       edit: "Edit",
       share: "Share",
       copyLink: "Copy link",
@@ -218,7 +221,9 @@ const I18N = {
       profileAdvanced: "Advanced",
       disclaimerHtml:
         "Based on JoSAA 2025 Round-6 closing ranks for OPEN (CRL) seats. Cutoffs move every year — " +
-        "treat this as a compass, not a contract. Verify on <strong>josaa.nic.in</strong> before locking choices.",
+        "treat this as a compass, not a contract. Verify on <strong>josaa.nic.in</strong> before locking choices. " +
+        "Note: We focus on providing accurate admission insights based on official JEE cutoff data, so fee details " +
+        "are not provided here. Please refer to the official websites of individual institutes for their verified fee structures.",
     },
     headlines: {
       adjust: "Let's adjust the compass.",
@@ -377,10 +382,10 @@ const I18N = {
       general: "जनरल (OPEN)",
     },
     goals: {
-      coding:    { name: "Coding और software", desc: "चीज़ें बनाएँ, SDE भूमिकाएँ" },
-      research:  { name: "Research और higher studies", desc: "MS, MTech या PhD के रास्ते" },
-      mba:       { name: "MBA और management", desc: "ब्रांड, network, placements" },
-      core:      { name: "Core engineering", desc: "अपनी पढ़ी हुई शाखा में काम करें" },
+      coding: { name: "Coding और software", desc: "चीज़ें बनाएँ, SDE भूमिकाएँ" },
+      research: { name: "Research और higher studies", desc: "MS, MTech या PhD के रास्ते" },
+      mba: { name: "MBA और management", desc: "ब्रांड, network, placements" },
+      core: { name: "Core engineering", desc: "अपनी पढ़ी हुई शाखा में काम करें" },
       undecided: { name: "अभी पक्का नहीं", desc: "ज़्यादा से ज़्यादा रास्ते खुले रखें" },
     },
     goalTips: {
@@ -472,6 +477,9 @@ const I18N = {
       done: "हो गया",
     },
     results: {
+      standingTitle: "आपकी स्थिति",
+      byBranch: "ब्रांच के अनुसार",
+      byCollege: "कॉलेज के अनुसार",
       edit: "बदलें",
       share: "शेयर करें",
       copyLink: "लिंक कॉपी करें",
@@ -492,7 +500,9 @@ const I18N = {
       profileAdvanced: "Advanced",
       disclaimerHtml:
         "OPEN (CRL) सीटों के लिए JoSAA 2025 राउंड-6 क्लोज़िंग रैंक पर आधारित। कटऑफ़ हर साल बदलते हैं — " +
-        "इसे एक कम्पास मानें, अनुबंध नहीं। चुनाव लॉक करने से पहले <strong>josaa.nic.in</strong> पर जाँच लें।",
+        "इसे एक कम्पास मानें, अनुबंध नहीं। चुनाव लॉक करने से पहले <strong>josaa.nic.in</strong> पर जाँच लें। " +
+        "नोट: हम केवल आधिकारिक JEE कटऑफ़ डेटा के आधार पर सटीक प्रवेश संभावनाओं की जानकारी देने पर ध्यान केंद्रित करते हैं, " +
+        "इसलिए यहाँ शुल्क (fees) का विवरण नहीं दिया गया है। नवीनतम और सत्यापित शुल्क विवरण के लिए आप संस्थानों की आधिकारिक वेबसाइट देख सकते हैं।",
     },
     headlines: {
       adjust: "आइए कम्पास को थोड़ा ठीक करें।",

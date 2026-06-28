@@ -47,10 +47,7 @@ class RecommendRequest(BaseModel):
             "will be added when multi-category cutoff data becomes available."
         ),
     )
-    family_income: Literal["below_3l", "3l_5l", "above_5l"] = Field(
-        default="above_5l",
-        description="Family annual income, used for fee waivers.",
-    )
+    # family_income is removed to focus exclusively on admission probability insights.
     brand_branch_ratio: float = Field(
         default=0.5,
         ge=0.0,
@@ -115,9 +112,11 @@ class Recommendation(BaseModel):
     female_seat_advantage: Optional[int] = None  # extra rank cushion from the female pool
     confidence: str = "medium"  # high / medium / fragile (from the rank spread)
     reason: str = ""  # templated "why this is here" explanation
-    estimated_fees: int = 0  # annual tuition fees in INR
-    fee_waiver_applied: bool = False  # whether a tuition fee waiver is active
-    fee_note: str = ""  # note detailing tuition waiver status
+    # estimated_fees, fee_waiver_applied, and fee_note are removed to focus on admission insights.
+    # Future-proofing: If verified fees data becomes available, uncomment these fields:
+    # estimated_fees: int = 0
+    # fee_waiver_applied: bool = False
+    # fee_note: str = ""
     region: str = "other"  # geographic region (north/south/east/west/northeast)
     is_metro: bool = False  # true if located in a major metro hub
     history: Optional[dict[int, int]] = None  # historical closing ranks by year
