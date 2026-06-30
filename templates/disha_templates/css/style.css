@@ -282,8 +282,8 @@ kbd {
   }
 }
 
-/* language toggle (EN / हिं) */
-.lang-toggle {
+/* language toggle / dropdown */
+.lang-select {
   font-family: var(--sans);
   font-size: 0.78rem;
   font-weight: 700;
@@ -292,20 +292,26 @@ kbd {
   background: var(--card);
   border: 1.5px solid var(--line);
   border-radius: 999px;
-  padding: 7px 13px;
-  min-width: 42px;
+  padding: 6px 28px 6px 12px;
   cursor: pointer;
-  transition: border-color 0.18s, background-color 0.18s, color 0.18s, transform 0.15s var(--ease-out);
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'><path d='M1 1L5 5L9 1' stroke='%230e4237' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px 6px;
+  transition: border-color 0.18s, background-color 0.18s;
   -webkit-tap-highlight-color: transparent;
 }
 
-.lang-toggle:hover {
+.lang-select:hover {
   border-color: var(--pine);
   background: var(--pine-tint);
 }
 
-.lang-toggle:active {
-  transform: scale(0.95);
+.lang-select:focus {
+  outline: none;
+  border-color: var(--pine);
 }
 
 /* ── View switching ────────────────────────────────────────────────────── */

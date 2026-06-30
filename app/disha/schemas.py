@@ -68,11 +68,11 @@ class RecommendRequest(BaseModel):
         le=300,
         description="Maximum number of recommendations to return.",
     )
-    lang: Literal["en", "hi"] = Field(
+    lang: Literal["en", "hi", "gu", "kn"] = Field(
         default="en",
         description=(
             "Language for user-facing generated text (guidance, notes, category "
-            "blurbs, fit labels and per-card reasons). 'en' English, 'hi' Hindi."
+            "blurbs, fit labels and per-card reasons). 'en' English, 'hi' Hindi, 'gu' Gujarati, 'kn' Kannada."
         ),
     )
 

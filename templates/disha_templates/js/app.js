@@ -51,6 +51,8 @@ const fmt = (n) => Number(n).toLocaleString("en-IN");
 const prefersReducedMotion =
   window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+let initialStateLoaded = false;
+
 // ── App state ───────────────────────────────────────────────────────────
 
 const state = {
@@ -91,6 +93,7 @@ function showView(name) {
   }
   $("restart-btn").hidden = name === "welcome";
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+  saveStateToURL();
 }
 
 // ── Rank inputs (live Indian-grouping format) ───────────────────────────
@@ -106,6 +109,7 @@ function attachRankFormatting(el) {
   el.addEventListener("input", () => {
     const n = parseRankInput(el);
     el.value = n === null ? "" : fmt(n);
+    saveStateToURL();
   });
 }
 
@@ -140,6 +144,7 @@ function goToStep(index, { backwards = false } = {}) {
     `.step[data-step="${index}"] input, .step[data-step="${index}"] select`
   );
   if (firstInput && window.matchMedia("(min-width: 720px)").matches) firstInput.focus();
+  saveStateToURL();
 }
 
 function validateStep(index) {
@@ -192,6 +197,7 @@ function setGender(value) {
   state.gender = value;
   syncGenderRows();
   updateGenderNote();
+  saveStateToURL();
 }
 
 function syncGenderRows() {
@@ -253,6 +259,7 @@ function buildGoalCards() {
       $("error-goal").hidden = true;
       // small pause so the selection registers visually, then advance
       setTimeout(() => { if (state.step === 3) advanceStep(); }, prefersReducedMotion ? 0 : 260);
+      saveStateToURL();
     });
     grid.appendChild(btn);
   }
@@ -307,6 +314,7 @@ function toggleBranchPref(value) {
   }
   renderBranchGrids();
   if ($("view-results").classList.contains("is-active")) schedulePanelUpdate();
+  saveStateToURL();
 }
 
 // review
@@ -677,7 +685,7 @@ function syncPanelFromState() {
   renderBranchGrids();
 }
 
-async function runRequest(payload) {
+async function runRequest(payload, { keepFilters = false } = {}) {
   const seq = ++requestSeq;
   showView("loading");
   startLoadingLines();
@@ -688,7 +696,7 @@ async function runRequest(payload) {
     if (seq !== requestSeq) return;
     stopLoadingLines();
     state.lastData = data;
-    renderResults(data);
+    renderResults(data, { keepFilters });
     syncPanelFromState();
     showView("results");
   } catch (err) {
@@ -1597,13 +1605,15 @@ function renderSections() {
   }
 }
 
-function renderResults(data) {
-  state.filterText = "";
-  state.filterType = "";
-  $("filter-search").value = "";
-  document.querySelectorAll("#type-chips .chip").forEach((c) =>
-    c.classList.toggle("is-active", c.dataset.type === "")
-  );
+function renderResults(data, { keepFilters = false } = {}) {
+  if (!keepFilters) {
+    state.filterText = "";
+    state.filterType = "";
+    $("filter-search").value = "";
+    document.querySelectorAll("#type-chips .chip").forEach((c) =>
+      c.classList.toggle("is-active", c.dataset.type === "")
+    );
+  }
 
   renderProfileChips();
   renderNote(data);
@@ -1647,8 +1657,8 @@ function refreshDynamicI18n() {
 
 function applyLanguage(lang, { rerun = true } = {}) {
   setLang(lang);
-  $("lang-toggle-label").textContent = t("header.langSwitchTo");
-  $("lang-toggle").setAttribute("aria-label", t("header.langSwitchAria"));
+  const select = $("lang-select");
+  if (select) select.value = lang;
   applyStaticI18n();
   refreshDynamicI18n();
 
@@ -1665,27 +1675,202 @@ function applyLanguage(lang, { rerun = true } = {}) {
   }
 }
 
-function toggleLanguage() {
-  applyLanguage(getLang() === "hi" ? "en" : "hi");
-}
-
 // ── Share / copy link / print ─────────────────────────────────────────────
 
 // Encode the student's inputs into a shareable, stateless query string so the
 // link reopens the SAME results (parsed on load by maybeRunFromQuery()).
 function buildShareUrl() {
-  const p = state.lastPayload || {};
   const params = new URLSearchParams();
-  if (p.mains_rank) params.set("m", String(p.mains_rank));
-  if (p.adv_rank) params.set("a", String(p.adv_rank));
-  if (p.gender) params.set("g", p.gender);
-  if (p.home_state) params.set("s", p.home_state);
-  if (p.goal) params.set("goal", p.goal);
-  if (p.seat_category) params.set("cat", p.seat_category);
-  if (state.branchPrefs.length) params.set("b", state.branchPrefs.join(","));
+
+  // 1. Current step/view
+  let currentStep = "welcome";
+  if ($("view-results").classList.contains("is-active")) {
+    currentStep = "results";
+  } else if ($("view-flow").classList.contains("is-active")) {
+    currentStep = String(state.step);
+  }
+  params.set("step", currentStep);
+
+  // 2. JEE Main rank
+  const mains = parseRankInput($("mains-rank"));
+  if (mains !== null) params.set("m", String(mains));
+
+  // 3. JEE Advanced rank
+  const adv = parseRankInput($("adv-rank"));
+  if (adv !== null) params.set("a", String(adv));
+
+  // 4. gender
+  if (state.gender) params.set("g", state.gender);
+
+  // 5. category
+  const cat = $("seat-category").value || "OPEN";
+  params.set("cat", cat);
+
+  // 6. home state
+  const hs = $("home-state").value;
+  if (hs) params.set("s", hs);
+
+  // 7. career goal
+  if (state.goal) params.set("goal", state.goal);
+
+  // 8. branch preference
+  if (state.branchPrefs && state.branchPrefs.length) {
+    params.set("b", state.branchPrefs.join(","));
+  }
+
+  // 9. region filter
+  if (state.filterRegion && state.filterRegion !== "all") {
+    params.set("region", state.filterRegion);
+  }
+
+  // 10. college vs branch priority (slider value)
+  if (state.brandBranchRatio !== undefined && state.brandBranchRatio !== null) {
+    params.set("ratio", String(state.brandBranchRatio));
+  }
+
+  // 11. text search filter and chip type filter
+  if (state.filterText) {
+    params.set("q", state.filterText);
+  }
+  if (state.filterType) {
+    params.set("t", state.filterType);
+  }
+
   params.set("lang", getLang());
+
   const base = `${location.origin}${location.pathname}`;
   return `${base}?${params.toString()}`;
+}
+
+function saveStateToURL() {
+  if (!initialStateLoaded) return;
+  const newUrl = buildShareUrl();
+  history.replaceState(null, "", newUrl);
+}
+
+function restoreScrollPosition() {
+  const saved = sessionStorage.getItem("disha_scroll_y");
+  if (saved !== null) {
+    setTimeout(() => {
+      window.scrollTo(0, parseFloat(saved));
+    }, 100);
+  }
+}
+
+function loadStateFromURL() {
+  const q = new URLSearchParams(location.search);
+  const hasParams = [...q.keys()].length > 0;
+
+  if (!hasParams) {
+    initialStateLoaded = true;
+    return false;
+  }
+
+  const lang = q.get("lang");
+  if (lang === "en" || lang === "hi") applyLanguage(lang, { rerun: false });
+
+  // Restore ranks
+  const mains = parseInt(q.get("m") || "", 10);
+  const adv = parseInt(q.get("a") || "", 10);
+  const hasMains = Number.isFinite(mains) && mains > 0;
+  const hasAdv = Number.isFinite(adv) && adv > 0;
+
+  $("mains-rank").value = hasMains ? fmt(mains) : "";
+  $("adv-rank").value = hasAdv ? fmt(adv) : "";
+
+  // Restore gender
+  const gender = q.get("g");
+  if (gender && ["male", "female", "other"].includes(gender)) {
+    state.gender = gender;
+    syncGenderRows();
+    updateGenderNote();
+  }
+
+  // Restore category
+  const cat = q.get("cat") || "OPEN";
+  if ($("seat-category").querySelector(`option[value="${CSS.escape(cat)}"]`)) {
+    $("seat-category").value = cat;
+  }
+
+  // Restore home state
+  const stateVal = q.get("s") || "";
+  if (stateVal && $("home-state").querySelector(`option[value="${CSS.escape(stateVal)}"]`)) {
+    $("home-state").value = stateVal;
+  }
+
+  // Restore goal
+  const goal = q.get("goal");
+  if (goal && GOAL_IDS.includes(goal)) {
+    state.goal = goal;
+    buildGoalCards();
+  }
+
+  // Restore branch preferences
+  const valid = new Set(branchOptions().map((o) => o.value));
+  state.branchPrefs = (q.get("b") || "")
+    .split(",")
+    .map((v) => v.trim())
+    .filter((v) => valid.has(v));
+  renderBranchGrids();
+
+  // Restore region filter
+  const region = q.get("region") || "all";
+  state.filterRegion = region;
+  if ($("panel-region")) {
+    $("panel-region").value = region;
+  }
+
+  // Restore college vs branch priority (slider)
+  const ratio = q.get("ratio");
+  if (ratio !== null) {
+    const parsedRatio = parseFloat(ratio);
+    if (!isNaN(parsedRatio)) {
+      state.brandBranchRatio = parsedRatio;
+      if ($("panel-brand-branch-slider")) {
+        $("panel-brand-branch-slider").value = ratio;
+      }
+    }
+  }
+
+  // Restore filter text & type
+  const filterText = q.get("q") || "";
+  state.filterText = filterText.toLowerCase();
+  $("filter-search").value = filterText;
+
+  const filterType = q.get("t") || "";
+  state.filterType = filterType;
+  document.querySelectorAll("#type-chips .chip").forEach((c) =>
+    c.classList.toggle("is-active", c.dataset.type === filterType)
+  );
+
+  // Synchronize elements to make sure panel and flow inputs match
+  syncPanelFromState();
+
+  // Determine target view / step
+  const stepParam = q.get("step");
+  if (stepParam === "results" || (!stepParam && (hasMains || hasAdv))) {
+    const payload = buildPayload();
+    state.lastPayload = payload;
+    runRequest(payload, { keepFilters: true }).then(() => {
+      restoreScrollPosition();
+    });
+  } else {
+    const stepNum = parseInt(stepParam, 10);
+    if (Number.isInteger(stepNum) && stepNum >= 0 && stepNum < TOTAL_STEPS) {
+      showView("flow");
+      goToStep(stepNum);
+      restoreScrollPosition();
+    } else if (stepParam === "welcome") {
+      showView("welcome");
+      restoreScrollPosition();
+    } else {
+      showView("welcome");
+      restoreScrollPosition();
+    }
+  }
+
+  initialStateLoaded = true;
+  return true;
 }
 
 function topPicksSummary(limit) {
@@ -1744,76 +1929,6 @@ async function copyShareLink() {
   }
 }
 
-// ── Shareable-link bootstrap ──────────────────────────────────────────────
-
-// Parse ?m=&a=&g=&s=&goal=&cat=&lang= and, if a valid profile is present,
-// pre-fill the form and auto-run the request so the link reopens the results.
-function maybeRunFromQuery() {
-  const q = new URLSearchParams(location.search);
-  if (![...q.keys()].length) return false;
-
-  const lang = q.get("lang");
-  if (lang === "en" || lang === "hi") applyLanguage(lang, { rerun: false });
-
-  const mains = parseInt(q.get("m") || "", 10);
-  const adv = parseInt(q.get("a") || "", 10);
-  const hasMains = Number.isFinite(mains) && mains > 0;
-  const hasAdv = Number.isFinite(adv) && adv > 0;
-  if (!hasMains && !hasAdv) return false;
-
-  const goal = q.get("goal");
-  if (!GOAL_IDS.includes(goal)) return false;
-
-  // Reflect the inputs into the form so Edit / chips / re-runs stay consistent.
-  $("mains-rank").value = hasMains ? fmt(mains) : "";
-  $("adv-rank").value = hasAdv ? fmt(adv) : "";
-
-  const gender = q.get("g");
-  state.gender = ["male", "female", "other"].includes(gender) ? gender : "male";
-  document.querySelectorAll("#gender-row .choice").forEach((c) => {
-    const on = c.dataset.value === state.gender;
-    c.classList.toggle("is-selected", on);
-    c.setAttribute("aria-checked", on ? "true" : "false");
-  });
-
-  const stateVal = q.get("s") || "";
-  if (stateVal && $("home-state").querySelector(`option[value="${CSS.escape(stateVal)}"]`)) {
-    $("home-state").value = stateVal;
-  }
-
-  const cat = q.get("cat") || "OPEN";
-  if ($("seat-category").querySelector(`option[value="${CSS.escape(cat)}"]`)) {
-    $("seat-category").value = cat;
-  }
-
-  state.goal = goal;
-
-  // Branch preferences: comma-separated list of known branch values.
-  const valid = new Set(branchOptions().map((o) => o.value));
-  state.branchPrefs = (q.get("b") || "")
-    .split(",")
-    .map((v) => v.trim())
-    .filter((v) => valid.has(v));
-  renderBranchGrids();
-
-  const payload = {
-    gender: state.gender === "female" ? "female" : "male",
-    home_state: stateVal,
-    goal,
-    seat_category: $("seat-category").value || "OPEN",
-    max_results: 150,
-    lang: getLang(),
-    data_mode: state.dataMode || "basic",
-  };
-  if (hasMains) payload.mains_rank = mains;
-  if (hasAdv) payload.adv_rank = adv;
-  if (state.branchPrefs.length) payload.branch_preferences = state.branchPrefs.slice();
-
-  state.lastPayload = payload;
-  runRequest(payload);
-  return true;
-}
-
 // ── Service worker (PWA-lite) ──────────────────────────────────────────────
 
 function registerServiceWorker() {
@@ -1858,6 +1973,7 @@ function bindPanelEvents() {
       panelEl.value = n === null ? "" : fmt(n);
       flowEl.value = panelEl.value;
       schedulePanelUpdate();
+      saveStateToURL();
     });
   };
   mirrorRank($("panel-mains-rank"), $("mains-rank"));
@@ -1868,6 +1984,7 @@ function bindPanelEvents() {
     panelState.addEventListener("change", () => {
       $("home-state").value = panelState.value;
       schedulePanelUpdate();
+      saveStateToURL();
     });
   }
 
@@ -1876,6 +1993,7 @@ function bindPanelEvents() {
     panelCat.addEventListener("change", () => {
       $("seat-category").value = panelCat.value;
       schedulePanelUpdate();
+      saveStateToURL();
     });
     const panelGoal = $("panel-goal");
     if (panelGoal) {
@@ -1883,6 +2001,7 @@ function bindPanelEvents() {
         state.goal = panelGoal.value;
         buildGoalCards();           // keep the flow's goal cards in sync
         schedulePanelUpdate();
+        saveStateToURL();
       });
     }
 
@@ -1893,6 +2012,7 @@ function bindPanelEvents() {
       panelSlider.addEventListener("input", () => {
         state.brandBranchRatio = parseFloat(panelSlider.value);
         schedulePanelUpdate();
+        saveStateToURL();
       });
     }
 
@@ -1901,6 +2021,7 @@ function bindPanelEvents() {
       panelRegion.addEventListener("change", () => {
         state.filterRegion = panelRegion.value;
         renderSections();           // region filter runs completely client-side!
+        saveStateToURL();
       });
     }
   }
@@ -1982,6 +2103,7 @@ function bindEvents() {
   $("filter-search").addEventListener("input", (e) => {
     state.filterText = e.target.value.trim().toLowerCase();
     renderSections();
+    saveStateToURL();
   });
 
   $("type-chips").addEventListener("click", (e) => {
@@ -1992,6 +2114,7 @@ function bindEvents() {
       c.classList.toggle("is-active", c === chip)
     );
     renderSections();
+    saveStateToURL();
   });
 
   $("clear-filters-btn").addEventListener("click", () => {
@@ -2002,6 +2125,15 @@ function bindEvents() {
       c.classList.toggle("is-active", c.dataset.type === "")
     );
     renderSections();
+    saveStateToURL();
+  });
+
+  $("home-state").addEventListener("change", () => {
+    saveStateToURL();
+  });
+
+  $("seat-category").addEventListener("change", () => {
+    saveStateToURL();
   });
 
   const btnBranch = $("view-by-branch");
@@ -2032,7 +2164,11 @@ function bindEvents() {
     if (target) target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
   });
 
-  $("lang-toggle").addEventListener("click", toggleLanguage);
+  const langSelect = $("lang-select");
+  if (langSelect) {
+    langSelect.value = getLang();
+    langSelect.addEventListener("change", (e) => applyLanguage(e.target.value));
+  }
   $("share-btn").addEventListener("click", shareToWhatsApp);
   $("copy-link-btn").addEventListener("click", copyShareLink);
   $("print-btn").addEventListener("click", () => {
@@ -2052,22 +2188,39 @@ function bindEvents() {
 
 // ── Init ────────────────────────────────────────────────────────────────
 
-setLang(getLang());                 // sync <html lang> + persist default
-applyStaticI18n();                  // translate all static markup once
-$("lang-toggle-label").textContent = t("header.langSwitchTo");
-$("lang-toggle").setAttribute("aria-label", t("header.langSwitchAria"));
+document.addEventListener("DOMContentLoaded", () => {
+  setLang(getLang());                 // sync <html lang> + persist default
+  applyStaticI18n();                  // translate all static markup once
+  const langSelect = $("lang-select");
+  if (langSelect) langSelect.value = getLang();
 
-attachRankFormatting($("mains-rank"));
-attachRankFormatting($("adv-rank"));
-bindGenderRow();
-// bindFamilyIncomeRow() removed to focus on admission probability insights.
-buildGoalCards();
-bindEvents();
-bindRulerTooltip();
-registerServiceWorker();
-showView("welcome");
+  attachRankFormatting($("mains-rank"));
+  attachRankFormatting($("adv-rank"));
+  bindGenderRow();
+  // bindFamilyIncomeRow() removed to focus on admission probability insights.
+  buildGoalCards();
+  bindEvents();
+  bindRulerTooltip();
+  registerServiceWorker();
 
-// Load form metadata, then (if the URL carries a shared profile) auto-run it.
-loadMeta().then(() => {
-  maybeRunFromQuery();
+  // Wire scroll position persistence on beforeunload
+  window.addEventListener("beforeunload", () => {
+    sessionStorage.setItem("disha_scroll_y", String(window.scrollY));
+  });
+
+  // Determine initial view: show loading if URL has parameters, otherwise welcome
+  const hasParams = [...new URLSearchParams(location.search).keys()].length > 0;
+  if (hasParams) {
+    showView("loading");
+  } else {
+    showView("welcome");
+  }
+
+  // Load form metadata, then load state from URL if present
+  loadMeta().then(() => {
+    const restored = loadStateFromURL();
+    if (!restored) {
+      showView("welcome");
+    }
+  });
 });

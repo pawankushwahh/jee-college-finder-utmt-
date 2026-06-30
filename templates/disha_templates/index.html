@@ -42,10 +42,12 @@
     <div class="topbar__right">
       <span class="topbar__data-note"><span data-i18n="header.dataNotePre">JoSAA 2025 cutoffs · </span><span
           id="program-count">2,410</span><span data-i18n="header.dataNotePost"> programs</span></span>
-      <button type="button" class="lang-toggle" id="lang-toggle" data-i18n-aria="header.langSwitchAria"
-        aria-label="Switch to Hindi">
-        <span id="lang-toggle-label" data-i18n="header.langSwitchTo">हिं</span>
-      </button>
+      <select class="lang-select" id="lang-select" aria-label="Select Language">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="gu">ગુજરાતી</option>
+        <option value="kn">ಕನ್ನಡ</option>
+      </select>
       <button type="button" class="btn btn--ghost btn--sm" id="restart-btn" data-i18n="header.restart" hidden>Start
         over</button>
     </div>
