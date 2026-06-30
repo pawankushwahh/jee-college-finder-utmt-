@@ -2,6 +2,15 @@
 
 Disha is an open-source intelligent counselling pipeline and interactive portal designed to help JEE Main and Advanced aspirants navigate the complex JoSAA/CSAB seat allocation process. By inputting their ranks, gender, home state, and career aspirations, students receive a personalized, mathematically backed list of eligible college and branch options. Unlike static PDF cutoff tables, Disha groups recommendations into intuitive categories (Safe, Target, and Reach), calculates the statistical probability of admission based on historical volatility, and aligns choices with the student's personal career interests.
 
+On the technical side, **Disha** is built as a unified **FastAPI** application in Python. The backend runs a full recommendation pipeline:
+*   **Loads 2,410 JoSAA 2025 cutoff rows** at startup — cached in memory for sub-millisecond responses.
+*   **Filters** by rank type, gender pool, home-state quota, and branch tags.
+*   **Scores** every option using a weighted tag-interest model per career goal.
+*   **Calculates admission probability** using a sigmoid function over historical rank volatility.
+*   **Returns** categorised, ranked results through a clean REST API.
+
+The frontend is pure **HTML, CSS, and vanilla JavaScript** — no frameworks — served from the same server as the API. The entire UI works in both **English and Hindi** (as well as Gujarati and Kannada) — switching languages with a single click. The API is fully documented with **Swagger UI**. It also works as a **Progressive Web App (PWA)**, meaning it can be installed directly on a phone or desktop.
+
 ![Disha Portal — Desktop and Mobile View](./screenshots/hero.png)
 
 ---
