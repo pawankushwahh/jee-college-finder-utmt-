@@ -63,11 +63,11 @@ For a student rank $R$, opening rank $OR$, and closing rank $CR$, the category i
 *   `LOWER_MARGIN = 0.50` (Prunes any option where the student's rank is more than 50% better than the opening rank to avoid overqualification).
 
 $$\text{Category} = \begin{cases} 
-\text{None (Pruned)} & \text{if } R < OR \times (1 - \text{LOWER\_MARGIN}) \\
+\text{None (Pruned)} & \text{if } R < OR \times (1 - \text{LOWER MARGIN}) \\
 \text{Safe} & \text{if } R \le OR \\
 \text{Target} & \text{if } OR < R \le CR \\
-\text{Reach} & \text{if } CR < R \le CR \times (1 + \text{UPPER\_MARGIN}) \\
-\text{None (Dropped)} & \text{if } R > CR \times (1 + \text{UPPER\_MARGIN})
+\text{Reach} & \text{if } CR < R \le CR \times (1 + \text{UPPER MARGIN}) \\
+\text{None (Dropped)} & \text{if } R > CR \times (1 + \text{UPPER MARGIN})
 \end{cases}$$
 
 #### B. Personalized Scoring (Tag-Weight Model)
