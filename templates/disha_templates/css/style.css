@@ -2840,12 +2840,12 @@ select.input--sm {
 
 .data-mode-btn:hover {
   border-color: var(--pine);
-  color: var(--pine);
-  background: var(--pine-tint);
+  background: var(--paper-deep);
+  color: var(--pine-deep);
 }
 
 .data-mode-btn:hover svg {
-  opacity: 1;
+  opacity: 0.9;
 }
 
 .data-mode-btn--active,
@@ -2854,6 +2854,12 @@ select.input--sm {
   background: var(--pine-tint);
   color: var(--pine-deep);
   box-shadow: 0 0 0 3px rgba(23, 92, 76, 0.12);
+}
+
+.data-mode-btn--active:hover,
+.data-mode-btn[aria-pressed="true"]:hover {
+  background: var(--pine-tint);
+  border-color: var(--pine-deep);
 }
 
 .data-mode-btn--active svg,

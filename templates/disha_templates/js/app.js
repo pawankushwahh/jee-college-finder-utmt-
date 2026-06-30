@@ -462,6 +462,8 @@ function setDataModeUI(mode, basicBtn, extBtn, catSel, catHint) {
   const isExt = mode === "extended";
   basicBtn.setAttribute("aria-pressed", (!isExt).toString());
   extBtn.setAttribute("aria-pressed", isExt.toString());
+  basicBtn.classList.toggle("data-mode-btn--active", !isExt);
+  extBtn.classList.toggle("data-mode-btn--active", isExt);
   applyDataModeToCategory(mode, catSel, catHint);
   // Pulse the category field so the user notices it changed.
   const catField = $("panel-category-field");
