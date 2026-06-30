@@ -269,28 +269,6 @@ Submits a student profile and returns filtered, categorized, and sorted recommen
 
 ---
 
-## Screen Tours
-
-This section highlights the core interactive features of the Disha portal.
-
-### 1. Interactive Preference Drawer
-Allows students to select and pin their preferred colleges into a custom list, drag and drop to re-arrange their order, and export the final selection as a CSV or clean printable PDF.
-![My Preference List Drawer](./screenshots/preference_drawer.png)
-
-### 2. Multi-lingual Interface
-Supports instant toggle between English, Hindi, Gujarati, and Kannada, translating all UI labels, category explanations, and card-specific reasons on the fly.
-![Language Switcher](./screenshots/language_switcher.png)
-
-### 3. Live Counsellor Filters
-Allows students to dynamically change their inputs (ranks, quotas, branch families, regions) and watch the list of colleges and probabilities refresh in real-time.
-![Live Filters Sidebar](./screenshots/live_filters.png)
-
-### 4. Admission Probability & Volatility Display
-Displays a visual gauge of the student's admission chances alongside a tag indicating whether the cutoff for that branch is historically stable or volatile.
-![Admission Probability and Volatility Display](./screenshots/probability_display.png)
-
----
-
 ## Project Structure
 
 ```
