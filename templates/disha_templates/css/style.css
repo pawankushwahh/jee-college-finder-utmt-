@@ -186,6 +186,30 @@ kbd {
   background: var(--card);
 }
 
+.btn--link {
+  background: var(--card);
+  border: 1.5px solid var(--pine);
+  border-radius: 999px;
+  padding: 6px 14px;
+  color: var(--pine-deep);
+  font-family: var(--sans);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn--link:hover {
+  background: var(--pine-tint);
+  border-color: var(--pine-deep);
+  color: var(--pine-deep);
+}
+
 .btn--lg {
   font-size: 1.05rem;
   padding: 15px 30px;
@@ -1777,9 +1801,56 @@ select.input--sm {
 
 .rsection__head {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 10px;
   flex-wrap: wrap;
+}
+
+.rsection__toggle-btn {
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 12px;
+  cursor: pointer;
+  color: var(--ink-soft);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--sans);
+  font-size: 0.72rem;
+  font-weight: 700;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  margin-left: auto;
+}
+
+.rsection__toggle-btn:hover {
+  background: var(--pine-tint);
+  border-color: var(--pine);
+  color: var(--pine-deep);
+}
+
+.rsection__toggle-btn .chevron {
+  transition: transform 0.2s var(--ease-out);
+}
+
+.rsection__toggle-btn[aria-expanded="false"] .chevron {
+  transform: rotate(-90deg);
+}
+
+.rsection__collapse {
+  display: grid;
+  grid-template-rows: 1fr;
+  transition: grid-template-rows 220ms ease;
+  overflow: hidden;
+}
+
+.rsection__collapse.is-collapsed {
+  grid-template-rows: 0fr;
+}
+
+.rsection__collapse-inner {
+  min-height: 0;
 }
 
 .rsection__title {

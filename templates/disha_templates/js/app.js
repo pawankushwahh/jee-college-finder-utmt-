@@ -73,6 +73,7 @@ const state = {
   dataMode: localStorage.getItem("disha_data_mode") || "basic",
   view: localStorage.getItem("disha_view") || "branch", // "branch" or "college"
   expandedColleges: {}, // in-memory accordion toggle state
+  collapsedSections: { Safe: false, Target: false, Reach: false },
 };
 
 const TOTAL_STEPS = 6;
@@ -1582,17 +1583,33 @@ function renderSections() {
       contentHtml = `<div class="cards">${visible.map((r, i) => cardHtml(r, i)).join("")}</div>`;
     }
 
+    const isSectionCollapsed = !!state.collapsedSections[catName];
     section.innerHTML = `
       <div class="rsection__head">
         <h2 class="rsection__title">
           <span class="dot dot--${catName.toLowerCase()}" aria-hidden="true"></span>
           ${meta.title} <span class="rsection__count">· ${meta.sub} · ${visible.length}</span>
         </h2>
+        <button type="button" class="rsection__toggle-btn" 
+                aria-expanded="${!isSectionCollapsed}" 
+                aria-controls="cards-${catName.toLowerCase()}" 
+                onclick="toggleSection('${catName}')">
+          <span class="rsection__toggle-text">${isSectionCollapsed ? t("results.expand") : t("results.collapse")}</span>
+          <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
       </div>
-      ${blurbs[catName] ? `<p class="rsection__blurb">${escapeHtml(blurbs[catName])}</p>` : ""}
-      ${contentHtml}`;
+      <div class="rsection__collapse ${isSectionCollapsed ? "is-collapsed" : ""}" id="cards-${catName.toLowerCase()}">
+        <div class="rsection__collapse-inner">
+          ${blurbs[catName] ? `<p class="rsection__blurb">${escapeHtml(blurbs[catName])}</p>` : ""}
+          ${contentHtml}
+        </div>
+      </div>`;
     container.appendChild(section);
   }
+
+  updateExpandAllButtonUI();
 
   const hasResults = recs.length > 0;
   $("empty-results").hidden = hasResults;
@@ -1605,10 +1622,54 @@ function renderSections() {
   }
 }
 
+window.toggleSection = function(catName) {
+  state.collapsedSections[catName] = !state.collapsedSections[catName];
+  const sectionEl = $(`section-${catName.toLowerCase()}`);
+  if (sectionEl) {
+    const btn = sectionEl.querySelector(".rsection__toggle-btn");
+    const collapseEl = sectionEl.querySelector(".rsection__collapse");
+    if (btn && collapseEl) {
+      const isExpanded = !state.collapsedSections[catName];
+      btn.setAttribute("aria-expanded", String(isExpanded));
+      collapseEl.classList.toggle("is-collapsed", !isExpanded);
+      const textEl = btn.querySelector(".rsection__toggle-text");
+      if (textEl) {
+        textEl.textContent = isExpanded ? t("results.collapse") : t("results.expand");
+      }
+    }
+  }
+  updateExpandAllButtonUI();
+};
+
+window.updateExpandAllButtonUI = function() {
+  const btn = $("expand-collapse-all-btn");
+  if (!btn) return;
+
+  const data = state.lastData;
+  const recs = data?.recommendations || [];
+  let hasAnyExpanded = false;
+
+  for (const catName of SECTION_ORDER) {
+    const all = recs.filter((r) => r.category === catName);
+    if (all.length === 0) continue;
+    const visible = all.filter(recPassesFilters);
+    if (visible.length === 0) continue;
+
+    if (!state.collapsedSections[catName]) {
+      hasAnyExpanded = true;
+      break;
+    }
+  }
+
+  btn.textContent = hasAnyExpanded ? t("results.collapseAll") : t("results.expandAll");
+  btn.dataset.action = hasAnyExpanded ? "collapse" : "expand";
+};
+
 function renderResults(data, { keepFilters = false } = {}) {
   if (!keepFilters) {
     state.filterText = "";
     state.filterType = "";
+    state.collapsedSections = { Safe: false, Target: false, Reach: false };
     $("filter-search").value = "";
     document.querySelectorAll("#type-chips .chip").forEach((c) =>
       c.classList.toggle("is-active", c.dataset.type === "")
@@ -2127,6 +2188,35 @@ function bindEvents() {
     renderSections();
     saveStateToURL();
   });
+
+  const expColAllBtn = $("expand-collapse-all-btn");
+  if (expColAllBtn) {
+    expColAllBtn.addEventListener("click", () => {
+      const action = expColAllBtn.dataset.action || "collapse";
+      const shouldCollapse = action === "collapse";
+
+      for (const catName of SECTION_ORDER) {
+        state.collapsedSections[catName] = shouldCollapse;
+
+        const sectionId = `section-${catName.toLowerCase()}`;
+        const sectionEl = $(sectionId);
+        if (sectionEl) {
+          const btn = sectionEl.querySelector(".rsection__toggle-btn");
+          const collapseEl = sectionEl.querySelector(".rsection__collapse");
+          if (btn && collapseEl) {
+            btn.setAttribute("aria-expanded", String(!shouldCollapse));
+            collapseEl.classList.toggle("is-collapsed", shouldCollapse);
+            const textEl = btn.querySelector(".rsection__toggle-text");
+            if (textEl) {
+              textEl.textContent = shouldCollapse ? t("results.expand") : t("results.collapse");
+            }
+          }
+        }
+      }
+
+      updateExpandAllButtonUI();
+    });
+  }
 
   $("home-state").addEventListener("change", () => {
     saveStateToURL();
