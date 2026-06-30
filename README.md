@@ -1,57 +1,54 @@
 # Disha (दिशा) — JEE College Recommender · a UTMT initiative
 
-An open-source intelligent pipeline deployed as a **unified FastAPI portal** that
-suggests institutes and branches based on JEE Main / Advanced rank.
+An open-source intelligent pipeline deployed as a **unified FastAPI portal** that suggests institutes and branches based on JEE Main / Advanced rank, gender, home state, and career interest.
 
-Built for **[UTMT](https://www.utmt.org)** ("Learn to Build AI Products") and designed
-to be deployed on the UTMT platform. The frontend is plain HTML + CSS + vanilla JS
-(no frameworks), presented as **Disha** — a calm, guided counselling experience for
-JEE aspirants. It also surfaces UTMT's
-[Nachiketa Initiative](https://www.utmt.org/nachiketa) to eligible students
-(90+ percentile, family income below ₹3 lakh).
+Built for **[UTMT](https://www.utmt.org)** ("Learn to Build AI Products") and designed to be deployed on the UTMT platform. The frontend is plain HTML + CSS + vanilla JS (no frameworks), presented as **Disha** — a calm, guided counselling experience for JEE aspirants. It also surfaces UTMT's [Nachiketa Initiative](https://www.utmt.org/nachiketa) to eligible students (90+ percentile, family income below ₹3 lakh).
 
-Portal **and** JSON API are served from the same process on the same port — no
-separate frontend server required.
+Portal **and** JSON API are served from the same process on the same port — no separate frontend server required.
 
 ---
 
-## What it does
+## Key Features (Audited)
 
-- Accepts JEE Main rank (for NIT / IIIT / GFTI) and / or JEE Advanced rank (for IIT).
-- Filters 2,410 JoSAA 2025 OPEN (CRL) cutoff rows by rank, gender pool, home-state
-  quota (HS/OS/AI/special) and career interest.
-- Groups results into **Target** (within last year's opening-closing window),
-  **Reach** (just beyond closing, ≤ 25 % above) and **Safe** (rank beats opening).
-- Re-ranks branches by stated career goal (coding, research, MBA/management, core
-  engineering, or undecided) using a tag-weight scoring model.
-- Returns overall guidance, category blurbs, institute-type breakdown and a star (★)
-  on cards that match your interest.
-- Reservation category selector is present in the UI; OBC-NCL / SC / ST / EWS / PwD
-  cutoff data will be loaded once a multi-category dataset is available.
+- **Dual Data Modes**:
+  - **Basic Mode**: Loads **2,410 rows** of JoSAA 2025 OPEN (CRL) Round 6 cutoffs from the Excel sheet (`JEE_2025_Cutoffs.xlsx`).
+  - **Extended Mode**: Loads historical cutoffs from 2018–2025 (`merged_jee_cutoff_2018_2025.csv`) covering all reservation categories (**OBC-NCL, SC, ST, EWS, PwD, and OPEN**).
+- **Statistical Admission Probability**: Calculates the exact probability of admission (0% to 100%) using a logistic Sigmoid function of the Z-score based on historical closing rank volatility (standard deviation).
+- **Cutoff Stability Indicators**: Classifies cutoff confidence into **High** (spread $\ge$ 6,000 ranks), **Medium**, or **Fragile** (spread < 1,000 ranks) to warn students about volatile cutoffs.
+- **Personalized Tag-Weight Scoring**: Re-ranks branches based on the student's career goal (coding, research, MBA, core engineering, or undecided) and dynamically blends this with the institute's brand tier using a **Brand-vs-Branch Priority Slider**.
+- **Draggable Preference List**: Allows students to bookmark recommended options into a custom "My Preference List" drawer, rearrange them via drag-and-drop, export them as a CSV, or print them.
+- **Geographic & Metro Filters**: Allows students to filter options by region (North, South, East, West, Northeast/Hills) or restrict results to major metro hubs.
+- **Multi-lingual Support**: Fully localized in **English, Hindi, Gujarati, and Kannada**, with natural translations that retain common technical terms.
+- **Progressive Web App (PWA)**: Includes a service worker (`sw.js`) for offline caching of the app shell and a `manifest.json` for home-screen installation.
 
 ---
 
-## Quick start — one command
+## Quick Start — One Command
+
+From the repository root, run:
 
 ```bash
-# From the repo root
+# Create and activate virtual environment
 python -m venv .venv && source .venv/bin/activate   # Windows: .venv\Scripts\activate
+
+# Install dependencies
 pip install -r requirements.txt
+
+# Start the FastAPI server
 uvicorn main:app --reload
 ```
 
 Alternatively, on Windows, you can double-click `run.bat` to automatically install dependencies and run the server.
 
-Then open **http://127.0.0.1:8000** — the portal and API are on the same origin.
-
-Interactive API docs are at **http://127.0.0.1:8000/api/docs**.
+- Open **http://127.0.0.1:8000** to access the portal.
+- Interactive API docs are available at **http://127.0.0.1:8000/api/docs**.
 
 ---
 
-## Docker (single command)
+## Docker (Single Command)
 
 ```bash
-# Build and run
+# Build and run with Docker Compose
 docker compose up --build
 
 # Or with plain Docker
@@ -63,38 +60,45 @@ Open **http://localhost:8000**.
 
 ---
 
-## API endpoints
+## API Endpoints
 
 | Method | Path | Description |
 |--------|------|-------------|
 | `GET`  | `/`  | Portal (serves `index.html`) |
 | `GET`  | `/api/health` | Health check + program count |
-| `GET`  | `/api/meta` | States, goals, genders, categories, dataset size |
+| `GET`  | `/api/meta` | States, goals, genders, categories, branches, and dataset size |
 | `POST` | `/api/recommend` | Recommendation pipeline |
 | `GET`  | `/api/docs` | Interactive Swagger UI |
 
-### POST `/api/recommend` — request body
+### POST `/api/recommend` — Request Body
 
 ```json
 {
-  "adv_rank":   1500,
+  "adv_rank": 1500,
   "mains_rank": 6000,
-  "gender":     "male",
+  "gender": "male",
   "home_state": "Rajasthan",
-  "goal":       "coding",
+  "goal": "coding",
+  "data_mode": "basic",
   "seat_category": "OPEN",
-  "max_results": 90
+  "brand_branch_ratio": 0.5,
+  "branch_preferences": ["cs_it", "ece"],
+  "max_results": 90,
+  "lang": "en"
 }
 ```
 
-- `adv_rank` and `mains_rank` — at least one is required.
-- `goal` — `coding` | `research` | `mba` | `core` | `undecided`.
-- `seat_category` — `OPEN` (current dataset); other categories listed in `/api/meta`.
-- `max_results` — 1–300, default 60.
+- `adv_rank` and `mains_rank`: At least one is required.
+- `goal`: `coding` | `research` | `mba` | `core` | `undecided`.
+- `data_mode`: `basic` | `extended`.
+- `seat_category`: `OPEN` | `OBC-NCL` | `SC` | `ST` | `EWS` | `PwD`.
+- `brand_branch_ratio`: Float between `0.0` (pure branch focus) and `1.0` (pure brand focus).
+- `branch_preferences`: List of branch families to filter by (e.g. `cs_it`, `ece`, `ee`, `mechanical`, etc.).
+- `lang`: `en` | `hi` | `gu` | `kn` (default is `en`).
 
 ---
 
-## Project structure
+## Project Structure
 
 ```
 .
@@ -102,13 +106,14 @@ Open **http://localhost:8000**.
 │   ├── __init__.py
 │   └── disha/               # Backend modules
 │       ├── __init__.py
-│       ├── config.py        # Env-based settings (CORS, data path)
-│       ├── data_loader.py   # Excel -> Program dataclasses (cached)
-│       ├── recommender.py   # Pipeline: filter -> categorise -> rank
+│       ├── config.py        # Env-based settings (CORS, data paths, modes)
+│       ├── data_loader.py   # Excel/CSV -> Program dataclasses (cached)
+│       ├── recommender.py   # Pipeline: filter -> categorise -> rank -> probability
 │       ├── schemas.py       # Pydantic request/response models
 │       ├── states.py        # States, quotas, branch tags, goal weights
 │       └── data/
-│           └── JEE_2025_Cutoffs.xlsx
+│           ├── JEE_2025_Cutoffs.xlsx
+│           └── merged_jee_cutoff_2018_2025.csv
 ├── templates/
 │   └── disha_templates/     # Frontend resources
 │       ├── assets/
@@ -125,7 +130,8 @@ Open **http://localhost:8000**.
 │       └── sw.js
 ├── tests/                   # Test suite
 │   ├── test_api.py
-│   └── test_recommender.py
+│   ├── test_recommender.py
+│   └── test_enhancements.py
 ├── .env.example
 ├── .gitignore
 ├── conftest.py
@@ -197,31 +203,35 @@ The final recommendations are sorted by:
 
 ## Configuration
 
-| Env variable | Default | Description |
-|-------------|---------|-------------|
-| `CORS_ORIGINS` | `http://localhost:8000,...` | Comma-separated allowed origins |
-| `DATA_PATH` | `data/JEE_2025_Cutoffs.xlsx` | Path to cutoff workbook |
+The application is configured using environment variables (which can be specified in a `.env` file at the root):
 
-Copy `backend/.env.example` → `backend/.env` and adjust values.
+| Env Variable | Default | Description |
+|--------------|---------|-------------|
+| `CORS_ORIGINS` | `*` | Comma-separated list of allowed origins (or `*` for all) |
+| `DATA_PATH` | `app/disha/data/JEE_2025_Cutoffs.xlsx` | Path to the basic Excel cutoff file |
+| `EXTENDED_DATA_PATH` | `app/disha/data/merged_jee_cutoff_2018_2025.csv` | Path to the extended historical CSV file |
+| `DATA_MODE` | `basic` | Default data mode (`basic` or `extended`) |
+| `ALLOW_USER_DATA_TOGGLE` | `True` | Allow users to toggle between basic and extended mode in the UI |
 
 ---
 
-## Running tests
+## Running Tests
+
+To run the complete test suite:
 
 ```bash
-cd backend
+# Activate your virtual environment
 source .venv/bin/activate
+
+# Run pytest
 pytest tests/ -v
 ```
 
 ---
 
-## Data
+## Data Sources
 
-Cutoffs are sourced from the
-[atmabodha/OpenNLP JEE dataset](https://github.com/atmabodha/OpenNLP)
-(JoSAA 2025, OPEN CRL, Round 6 closing ranks), published by UTMT.
-This tool is for guidance only and does not guarantee admission outcomes.
+Cutoffs are sourced from the [atmabodha/OpenNLP JEE dataset](https://github.com/atmabodha/OpenNLP) (JoSAA 2025, OPEN CRL, Round 6 closing ranks), published by UTMT. This tool is for guidance only and does not guarantee admission outcomes.
 
 ---
 
