@@ -8,8 +8,6 @@ Disha is an open-source intelligent counselling pipeline and interactive portal 
 
 ## Quick Start
 
-### Running Locally (Python & Uvicorn)
-
 1. **Set up a virtual environment and install dependencies**:
    ```bash
    # From the repository root
@@ -28,18 +26,6 @@ Disha is an open-source intelligent counselling pipeline and interactive portal 
    The interactive API documentation is available at [http://127.0.0.1:8000/api/docs](http://127.0.0.1:8000/api/docs).
 
 *Note: On Windows, you can also double-click the `run.bat` file in the root directory to automatically set up the virtual environment, install dependencies, and launch the server.*
-
-### Running with Docker
-
-*Note: The repository does not currently contain a `Dockerfile` or `docker-compose.yml` in the root. If you add them, the standard commands to build and run the application are:*
-
-```bash
-# Build the Docker image
-docker build -t jee-recommender .
-
-# Run the container
-docker run -p 8000:8000 jee-recommender
-```
 
 ---
 
