@@ -144,6 +144,26 @@ kbd {
   color: var(--reach);
 }
 
+/* Accessibility Focus Rings */
+.btn:focus-visible, 
+.choice:focus-visible, 
+.chip:focus-visible, 
+.view-toggle-btn:focus-visible, 
+.zone:focus-visible, 
+.panel-toggle:focus-visible, 
+.data-mode-btn:focus-visible, 
+.rsection__toggle-btn:focus-visible, 
+.ccard__history-btn:focus-visible,
+.choice-drawer__close:focus-visible,
+.choice-drawer__item-remove:focus-visible,
+.lang-select:focus-visible,
+.flow__back:focus-visible,
+.goal-card:focus-visible,
+.branch-chip:focus-visible {
+  outline: 2.5px solid var(--pine);
+  outline-offset: 2px;
+}
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -154,36 +174,38 @@ kbd {
   font-weight: 600;
   padding: 12px 22px;
   border-radius: 999px;
-  border: 1px solid transparent;
+  border: 1.5px solid transparent;
   cursor: pointer;
-  transition: transform 0.15s var(--ease-out), box-shadow 0.2s, background-color 0.2s, border-color 0.2s;
+  transition: transform 0.1s var(--ease-out), box-shadow 0.2s, background-color 0.2s, border-color 0.2s, color 0.2s;
   -webkit-tap-highlight-color: transparent;
 }
 
 .btn:active {
-  transform: scale(0.97);
+  transform: scale(0.96);
 }
 
 .btn--primary {
   background: var(--pine);
   color: #fdfbf4;
+  border-color: var(--pine);
   box-shadow: 0 2px 6px rgba(14, 66, 55, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .btn--primary:hover {
   background: var(--pine-deep);
+  border-color: var(--pine-deep);
 }
 
 .btn--ghost {
-  background: transparent;
-  color: var(--ink-soft);
-  border-color: var(--line);
+  background: var(--card);
+  color: var(--pine-deep);
+  border-color: var(--pine);
 }
 
 .btn--ghost:hover {
-  border-color: var(--ink-faint);
-  color: var(--ink);
-  background: var(--card);
+  border-color: var(--pine-deep);
+  color: var(--pine-deep);
+  background: var(--pine-tint);
 }
 
 .btn--link {
@@ -199,7 +221,7 @@ kbd {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+  transition: background-color 0.15s, color 0.15s, border-color 0.15s, transform 0.1s;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }
@@ -208,6 +230,10 @@ kbd {
   background: var(--pine-tint);
   border-color: var(--pine-deep);
   color: var(--pine-deep);
+}
+
+.btn--link:active {
+  transform: scale(0.96);
 }
 
 .btn--lg {
@@ -334,6 +360,37 @@ kbd {
 }
 
 .lang-select:focus {
+  outline: none;
+  border-color: var(--pine);
+}
+
+.sort-select {
+  font-family: var(--sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--pine-deep);
+  background: var(--card);
+  border: 1.5px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 28px 6px 12px;
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6' fill='none'><path d='M1 1L5 5L9 1' stroke='%230e4237' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 10px 6px;
+  transition: border-color 0.18s, background-color 0.18s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sort-select:hover {
+  border-color: var(--pine);
+  background: var(--pine-tint);
+}
+
+.sort-select:focus {
   outline: none;
   border-color: var(--pine);
 }
@@ -674,7 +731,7 @@ main {
 }
 
 .input:hover {
-  border-color: #d8cdb4;
+  border-color: var(--pine);
 }
 
 .input:focus {
@@ -734,12 +791,14 @@ select.input {
   border: 1.5px solid var(--line);
   border-radius: 999px;
   cursor: pointer;
-  transition: border-color 0.18s, background-color 0.18s, color 0.18s, transform 0.15s var(--ease-out);
+  transition: border-color 0.18s, background-color 0.18s, color 0.18s, transform 0.1s var(--ease-out);
   -webkit-tap-highlight-color: transparent;
 }
 
 .choice:hover {
-  border-color: #d8cdb4;
+  border-color: var(--pine);
+  background-color: var(--pine-tint);
+  color: var(--pine-deep);
 }
 
 .choice:active {
@@ -747,10 +806,11 @@ select.input {
 }
 
 .choice.is-selected {
-  background: var(--pine-tint);
+  background: var(--pine);
   border-color: var(--pine);
-  color: var(--pine-deep);
+  color: #fdfbf4;
   font-weight: 600;
+  box-shadow: 0 2px 6px rgba(14, 66, 55, 0.15);
 }
 
 /* goal cards */
@@ -784,7 +844,8 @@ select.input {
 }
 
 .goal-card:hover {
-  border-color: #d8cdb4;
+  border-color: var(--pine);
+  background-color: var(--pine-tint);
   box-shadow: var(--shadow-sm);
 }
 
@@ -1197,7 +1258,9 @@ select.input--sm {
 }
 
 .branch-chip:hover {
-  border-color: #d8cdb4;
+  border-color: var(--pine);
+  background-color: var(--pine-tint);
+  color: var(--pine-deep);
 }
 
 .branch-chip:active {
@@ -1268,10 +1331,22 @@ select.input--sm {
     font-weight: 600;
     color: var(--ink);
     background: var(--card);
-    border: 0;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius);
     padding: 14px 16px;
     cursor: pointer;
+    transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
     -webkit-tap-highlight-color: transparent;
+  }
+
+  .panel-toggle:hover {
+    background: var(--pine-tint);
+    border-color: var(--pine);
+    color: var(--pine-deep);
+  }
+
+  .panel-toggle:active {
+    transform: scale(0.98);
   }
 
   .panel-toggle__chevron {
@@ -1773,20 +1848,29 @@ select.input--sm {
   background: var(--card);
   border: 1.5px solid var(--line);
   border-radius: 999px;
-  padding: 7px 14px;
+  padding: 6px 14px;
   cursor: pointer;
-  transition: border-color 0.15s, background-color 0.15s, color 0.15s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s, background-color 0.15s, color 0.15s, transform 0.1s;
   -webkit-tap-highlight-color: transparent;
 }
 
 .chip:hover {
-  border-color: #d8cdb4;
+  border-color: var(--pine);
+  background-color: var(--pine-tint);
+  color: var(--pine-deep);
+}
+
+.chip:active {
+  transform: scale(0.96);
 }
 
 .chip.is-active {
-  background: var(--ink);
-  border-color: var(--ink);
-  color: var(--paper);
+  background: var(--pine);
+  border-color: var(--pine);
+  color: #fdfbf4;
 }
 
 /* result sections */
@@ -2394,12 +2478,28 @@ select.input--sm {
 }
 
 .choice-drawer__close {
-  background: none;
+  background: transparent;
   border: none;
   font-size: 1.5rem;
-  color: #6b7280;
+  color: var(--ink-soft);
   cursor: pointer;
   line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  transition: background-color 0.15s, color 0.15s, transform 0.1s;
+}
+
+.choice-drawer__close:hover {
+  background: var(--paper-deep);
+  color: var(--ink);
+}
+
+.choice-drawer__close:active {
+  transform: scale(0.92);
 }
 
 .choice-drawer__body {
@@ -2495,18 +2595,30 @@ select.input--sm {
 }
 
 .choice-drawer__item-remove {
-  background: none;
+  background: transparent;
   border: none;
   color: #ef4444;
   font-size: 1.25rem;
   cursor: pointer;
-  padding: 4px;
+  padding: 0;
   margin-left: 12px;
   line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  transition: background-color 0.15s, color 0.15s, transform 0.1s;
 }
 
 .choice-drawer__item-remove:hover {
+  background: #fef2f2;
   color: #dc2626;
+}
+
+.choice-drawer__item-remove:active {
+  transform: scale(0.9);
 }
 
 .choice-drawer__footer {
@@ -2839,20 +2951,27 @@ select.input--sm {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-  background: none;
-  border: none;
-  padding: 4px 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 4px 10px;
   margin: 10px 0 2px;
   color: var(--pine, #175e4c);
   font-family: var(--sans);
   font-size: 11px;
   font-weight: 600;
   cursor: pointer;
-  transition: color 0.15s ease;
+  transition: background-color 0.15s, border-color 0.15s, color 0.15s, transform 0.1s;
 }
 
 .ccard__history-btn:hover {
+  background: var(--pine-tint);
+  border-color: var(--pine);
   color: var(--pine-deep, #0e3d31);
+}
+
+.ccard__history-btn:active {
+  transform: scale(0.96);
 }
 
 .ccard__history-btn .chevron {
@@ -2955,23 +3074,28 @@ select.input--sm {
 .view-toggle-btn {
   font-family: var(--sans);
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 700;
   color: var(--ink-soft);
   background: transparent;
   border: none;
   border-radius: 999px;
   padding: 6px 14px;
   cursor: pointer;
-  transition: background-color 0.15s, color 0.15s;
+  transition: background-color 0.15s, color 0.15s, transform 0.1s;
 }
 
 .view-toggle-btn:hover {
-  color: var(--ink);
+  color: var(--pine-deep);
+  background: var(--pine-tint);
+}
+
+.view-toggle-btn:active {
+  transform: scale(0.96);
 }
 
 .view-toggle-btn.is-active {
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--pine);
+  color: #fdfbf4;
 }
 
 .spectrum-header + .spectrum {

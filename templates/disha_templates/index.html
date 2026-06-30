@@ -444,9 +444,12 @@
           <!-- Standing spectrum header -->
           <div class="spectrum-header" id="spectrum-header" style="display: none;">
             <h4 class="spectrum-title" data-i18n="results.standingTitle">Your standing</h4>
-            <div class="view-toggle" role="group" aria-label="View toggle">
-              <button type="button" class="view-toggle-btn" id="view-by-branch" data-i18n="results.byBranch">By branch</button>
-              <button type="button" class="view-toggle-btn" id="view-by-college" data-i18n="results.byCollege">By college</button>
+            <div class="spectrum-controls" style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+              <select class="sort-select" id="results-sort" aria-label="Sort options"></select>
+              <div class="view-toggle" role="group" aria-label="View toggle">
+                <button type="button" class="view-toggle-btn" id="view-by-branch" data-i18n="results.byBranch">By branch</button>
+                <button type="button" class="view-toggle-btn" id="view-by-college" data-i18n="results.byCollege">By college</button>
+              </div>
             </div>
           </div>
 

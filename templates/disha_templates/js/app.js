@@ -74,6 +74,7 @@ const state = {
   view: localStorage.getItem("disha_view") || "branch", // "branch" or "college"
   expandedColleges: {}, // in-memory accordion toggle state
   collapsedSections: { Safe: false, Target: false, Reach: false },
+  sortBy: "probability",
 };
 
 const TOTAL_STEPS = 6;
@@ -1567,6 +1568,27 @@ function renderSections() {
     section.className = "rsection";
     section.id = `section-${catName.toLowerCase()}`;
 
+    const sortedVisible = [...visible];
+    if (state.sortBy === "probability") {
+      sortedVisible.sort((a, b) => {
+        const valA = a.admission_probability !== null && a.admission_probability !== undefined ? a.admission_probability : 0;
+        const valB = b.admission_probability !== null && b.admission_probability !== undefined ? b.admission_probability : 0;
+        return valB - valA;
+      });
+    } else if (state.sortBy === "rank") {
+      sortedVisible.sort((a, b) => {
+        const valA = a.closing_rank !== null && a.closing_rank !== undefined ? a.closing_rank : Infinity;
+        const valB = b.closing_rank !== null && b.closing_rank !== undefined ? b.closing_rank : Infinity;
+        return valA - valB;
+      });
+    } else if (state.sortBy === "college") {
+      sortedVisible.sort((a, b) => {
+        const instA = a.institute || "";
+        const instB = b.institute || "";
+        return instA.localeCompare(instB);
+      });
+    }
+
     let contentHtml = "";
     if (state.view === "college") {
       const grouped = [];
@@ -1578,9 +1600,44 @@ function renderSections() {
         }
         group.branches.push(r);
       });
+
+      if (state.sortBy === "probability") {
+        grouped.sort((a, b) => {
+          const maxA = Math.max(...a.branches.map(r => r.admission_probability !== null && r.admission_probability !== undefined ? r.admission_probability : 0), 0);
+          const maxB = Math.max(...b.branches.map(r => r.admission_probability !== null && r.admission_probability !== undefined ? r.admission_probability : 0), 0);
+          return maxB - maxA;
+        });
+      } else if (state.sortBy === "rank") {
+        grouped.sort((a, b) => {
+          const minA = Math.min(...a.branches.map(r => r.closing_rank !== null && r.closing_rank !== undefined ? r.closing_rank : Infinity), Infinity);
+          const minB = Math.min(...b.branches.map(r => r.closing_rank !== null && r.closing_rank !== undefined ? r.closing_rank : Infinity), Infinity);
+          return minA - minB;
+        });
+      } else if (state.sortBy === "college") {
+        grouped.sort((a, b) => a.institute.localeCompare(b.institute));
+      }
+
+      grouped.forEach((group) => {
+        if (state.sortBy === "probability") {
+          group.branches.sort((a, b) => {
+            const valA = a.admission_probability !== null && a.admission_probability !== undefined ? a.admission_probability : 0;
+            const valB = b.admission_probability !== null && b.admission_probability !== undefined ? b.admission_probability : 0;
+            return valB - valA;
+          });
+        } else if (state.sortBy === "rank") {
+          group.branches.sort((a, b) => {
+            const valA = a.closing_rank !== null && a.closing_rank !== undefined ? a.closing_rank : Infinity;
+            const valB = b.closing_rank !== null && b.closing_rank !== undefined ? b.closing_rank : Infinity;
+            return valA - valB;
+          });
+        } else if (state.sortBy === "college") {
+          group.branches.sort((a, b) => a.branch.localeCompare(b.branch));
+        }
+      });
+
       contentHtml = `<div class="cards">${grouped.map((g, i) => collegeCardHtml(g, catName, i)).join("")}</div>`;
     } else {
-      contentHtml = `<div class="cards">${visible.map((r, i) => cardHtml(r, i)).join("")}</div>`;
+      contentHtml = `<div class="cards">${sortedVisible.map((r, i) => cardHtml(r, i)).join("")}</div>`;
     }
 
     const isSectionCollapsed = !!state.collapsedSections[catName];
@@ -1665,10 +1722,34 @@ window.updateExpandAllButtonUI = function() {
   btn.dataset.action = hasAnyExpanded ? "collapse" : "expand";
 };
 
+function buildSortOptions() {
+  const sortSel = $("results-sort");
+  if (!sortSel) return;
+  const prev = sortSel.value || state.sortBy || "probability";
+  sortSel.innerHTML = "";
+
+  const options = [
+    { value: "category", labelKey: "results.sortCategory" },
+    { value: "probability", labelKey: "results.sortProbability" },
+    { value: "rank", labelKey: "results.sortRank" },
+    { value: "college", labelKey: "results.sortCollege" }
+  ];
+
+  options.forEach((opt) => {
+    const el = document.createElement("option");
+    el.value = opt.value;
+    el.textContent = t(opt.labelKey);
+    sortSel.appendChild(el);
+  });
+
+  sortSel.value = prev;
+}
+
 function renderResults(data, { keepFilters = false } = {}) {
   if (!keepFilters) {
     state.filterText = "";
     state.filterType = "";
+    state.sortBy = "probability";
     state.collapsedSections = { Safe: false, Target: false, Reach: false };
     $("filter-search").value = "";
     document.querySelectorAll("#type-chips .chip").forEach((c) =>
@@ -1676,6 +1757,7 @@ function renderResults(data, { keepFilters = false } = {}) {
     );
   }
 
+  buildSortOptions();
   renderProfileChips();
   renderNote(data);
   renderRuler(data);
@@ -1708,6 +1790,7 @@ function refreshDynamicI18n() {
     buildPanelControls();
     syncPanelFromState();
   }
+  buildSortOptions();
   $("flow-next").textContent = stepButtonLabel(state.step);
   if (state.step === TOTAL_STEPS - 1) renderReview();
   if (loadingTimer) {
@@ -2244,6 +2327,14 @@ function bindEvents() {
         syncViewToggleUI();
         renderSections();
       }
+    });
+  }
+
+  const sortSel = $("results-sort");
+  if (sortSel) {
+    sortSel.addEventListener("change", (e) => {
+      state.sortBy = e.target.value;
+      renderSections();
     });
   }
 
