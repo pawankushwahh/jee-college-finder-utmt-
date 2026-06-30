@@ -139,19 +139,59 @@ Open **http://localhost:8000**.
 
 ---
 
-## Recommendation pipeline
+## Recommendation Algorithm & Pipeline
 
-```
-Excel (2 410 rows)
-  └─ data_loader   →  Program dataclasses (cached, parsed once at startup)
-       └─ recommender
-            ├─ filter by: rank type (Advanced=IIT / Mains=rest)
-            │             gender pool (neutral | female)
-            │             quota (AI / HS / OS / GO / JK / LA)
-            ├─ categorise: Safe / Target / Reach  (or drop if too far)
-            ├─ score: tag-weight model per career goal + institute brand bonus
-            └─ sort: category → score desc → closing rank → name
-```
+Disha implements a multi-stage, intelligent recommendation pipeline that processes student ranks, demographic quotas, and career goals to deliver ranked college and branch suggestions.
+
+### 1. Data Ingestion & Caching
+- **Basic Mode**: Loads **2,410 rows** of JoSAA 2025 OPEN (CRL) Round 6 cutoffs from the Excel sheet (`JEE_2025_Cutoffs.xlsx`).
+- **Extended Mode**: Loads historical cutoffs from 2018–2025 (`merged_jee_cutoff_2018_2025.csv`) covering all reservation categories (**OBC-NCL, SC, ST, EWS, PwD, and OPEN**).
+- Both datasets are parsed once at application startup, validated, and cached in-memory as Pydantic models for sub-millisecond response times.
+
+### 2. Multi-Stage Filtering
+Each program (institute-branch pair) is passed through five sequential filters:
+- **Exam Match**: JEE Advanced rank is matched only to IIT programs; JEE Main rank is matched to NIT, IIIT, and GFTI programs.
+- **Gender Pool**: Male candidates are restricted to `Gender-Neutral` seats. Female candidates are eligible for both `Gender-Neutral` and `Female-Only` seats.
+- **Quota Match**: Filters seats by quota eligibility:
+  - **All India (AI)** and **IITs** are open to all.
+  - **Home State (HS)** seats are kept if the candidate's home state matches the institute's state.
+  - **Other State (OS)** seats are kept if the candidate's home state is different.
+  - Special state-specific quotas (e.g., Goa, Jammu & Kashmir) are mapped to their respective beneficiary states.
+- **Category Match**: In Extended mode, matches the student's reservation category (e.g., SC, OBC-NCL) to the corresponding seat quota.
+- **Branch Preference**: If the user selects preferred branches (e.g., CS/IT, ECE), only programs matching those branch tags are retained.
+
+### 3. Rank Categorization & Pruning
+Each program is categorized into one of three buckets based on the candidate's rank relative to last year's opening rank ($OR$) and closing rank ($CR$):
+- **Safe**: The candidate's rank is better than or equal to the opening rank ($\text{Rank} \le OR$).
+- **Target**: The candidate's rank lies between the opening and closing ranks ($OR < \text{Rank} \le CR$).
+- **Reach**: The candidate's rank is slightly beyond the closing rank, up to a 25% upper margin ($CR < \text{Rank} \le CR \times 1.25$).
+- **Overqualification Pruning**: To keep suggestions realistic and high-aiming, programs where the candidate's rank is significantly better than the opening rank ($\text{Rank} < OR \times 0.50$) are pruned.
+
+### 4. Personalized Tag-Weight Scoring (Career Alignment)
+To rank programs by the student's personal interests, branches are mapped to tags (e.g., `cs`, `it`, `circuital`, `core`). Each career goal has a pre-defined tag weight:
+- **Coding**: High weights for `cs` (10) and `it` (8).
+- **Research**: High weights for `physics`, `chemistry`, `math_computing` (8-10).
+- **MBA / Management**: Balanced weights across circuital and core engineering.
+- **Core Engineering**: High weights for `mechanical`, `civil`, `chemical`, `ee` (9-10).
+
+The final interest score blends the **Branch Interest Score** (from the tag weights) and the **Institute Brand Score** (a normalized tier rating) using the user's **Brand-vs-Branch Ratio Slider** ($\alpha \in [0, 1]$):
+$$\text{Score} = (1 - \alpha) \times \text{Branch Score} + \alpha \times (\text{Brand Score} \times 10)$$
+
+### 5. Admission Probability & Volatility Estimation
+Rather than presenting static cutoffs, Disha estimates the statistical probability of admission ($P$) using a logistic sigmoid function of the Z-score:
+$$z = \frac{CR - \text{Rank}}{\sigma}$$
+$$P = \frac{1}{1 + e^{-1.7 \cdot z}}$$
+Where:
+- $\sigma$ is the historical volatility (standard deviation of closing ranks across 2018–2025).
+- If historical data is insufficient, it defaults to $8\%$ of the closing rank (with a floor of $5\%$ or $10$ ranks).
+- Cutoff stability is classified into **High** ($\text{spread} \ge 6,000$ ranks), **Medium**, or **Fragile** ($\text{spread} < 1,000$ ranks or $CR \le OR$) to alert students of volatile cutoffs.
+
+### 6. Sorting Order
+The final recommendations are sorted by:
+1. **Category Order**: `Target` (highest priority) $\to$ `Reach` $\to$ `Safe`.
+2. **Interest Score**: Descending (aligning with the student's career goal and brand/branch preference).
+3. **Closing Rank**: Ascending (harder/more competitive branches first).
+4. **Institute Name**: Alphabetically.
 
 ---
 
