@@ -2,6 +2,8 @@
 
 Disha is an open-source intelligent counselling pipeline and interactive portal designed to help JEE Main and Advanced aspirants navigate the complex JoSAA/CSAB seat allocation process. By inputting their ranks, gender, home state, and career aspirations, students receive a personalized, mathematically backed list of eligible college and branch options. Unlike static PDF cutoff tables, Disha groups recommendations into intuitive categories (Safe, Target, and Reach), calculates the statistical probability of admission based on historical volatility, and aligns choices with the student's personal career interests.
 
+**Live Application**: [jee-college-finder-utmt-asov.onrender.com](https://jee-college-finder-utmt-asov.onrender.com/)
+
 On the technical side, **Disha** is built as a unified **FastAPI** application in Python. The backend runs a full recommendation pipeline supporting two data modes:
 *   **Basic Mode**: Loads **2,410 JoSAA 2025 cutoff rows** (OPEN seats) at startup from an Excel sheet — cached in memory for sub-millisecond responses.
 *   **Extended Mode**: Loads a multi-year dataset (2018–2025) from a CSV covering all reservation categories (**OBC-NCL, SC, ST, EWS, PwD, and OPEN**), allowing users to filter by their specific seat category.
