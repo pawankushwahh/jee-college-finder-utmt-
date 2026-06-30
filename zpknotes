@@ -1,0 +1,13 @@
+Here is a brief summary of the Disha JEE College Recommender algorithm:
+
+* **Seat & Quota Filtering**: Filters options based on exam type (JEE Main vs. Advanced), gender (excluding female-only seats for male candidates), and geographic quotas (Home State vs. Other State).
+* **Rank Categorization (Bucketing)**: Categorizes eligible programs based on historical opening (OR) and closing (CR) ranks:
+  * **Reach**: Rank is up to 25% higher than the closing rank (within fluctuation margin).
+  * **Target**: Rank sits comfortably between the opening and closing ranks.
+  * **Safe**: Rank is better than the opening rank, but not more than 50% better (pruning options where the candidate is extremely overqualified).
+* **Personalized Scoring**: Calculates a preference score by blending:
+  * **Branch Interest**: A tag-weight mapping matching academic branches to career goals (e.g., CSE = 10 for "Coding").
+  * **College Brand**: Tier-based weights (Old IITs = 1.0, Top NITs = 0.78, IIITs = 0.60, etc.).
+  * Combined using a user-adjustable brand-vs-branch slider weighting factor.
+* **Admission Probability**: Uses a logistic sigmoid function of the Z-score ($z = \frac{CR - R}{\sigma}$) to calculate a percentage probability of admission, where volatility ($\sigma$) is either the historical standard deviation of the closing rank or a default of 8% of the closing rank.
+* **Multi-Key Sorting**: Ranks recommendations hierarchically by: Category (Target → Reach → Safe), followed by Interest Score (descending), Closing Rank (ascending), and alphabetical order of the college/branch.
