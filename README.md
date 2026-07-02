@@ -4,12 +4,12 @@ Disha is an open-source intelligent counselling pipeline and interactive portal 
 
 **Live Application**: [jee-college-finder-utmt-asov.onrender.com](https://jee-college-finder-utmt-asov.onrender.com/)
 
-On the technical side, **Disha** is built as a unified **FastAPI** application in Python. The backend runs a full recommendation pipeline supporting two data modes:
-*   **Basic Mode**: Loads **2,410 JoSAA 2025 cutoff rows** (OPEN seats) at startup from an Excel sheet — cached in memory for sub-millisecond responses.
-*   **Extended Mode**: Loads a multi-year dataset (2018–2025) from a CSV covering all reservation categories (**OBC-NCL, SC, ST, EWS, PwD, and OPEN**), allowing users to filter by their specific seat category.
-*   **Filters** by rank type, gender pool, home-state quota, category, and branch tags.
+On the technical side, **Disha** is built as a unified **FastAPI** application in Python. The backend runs a full recommendation pipeline utilizing:
+*   **2025 Merged Dataset**: Loads **12,143 cutoff rows** (all reservation categories: OPEN, OBC-NCL, SC, ST, EWS, and PwD variants) at startup from `josaa_merged_2025.csv` — cached in memory for sub-millisecond responses.
+*   **Round-wise Cutoffs**: Extracts opening and closing ranks at runtime from rounds `Opening_R1…R6` / `Closing_R1…R6`.
+*   **Filters** by rank type, gender pool, home-state quota, seat category, and branch tags.
 *   **Scores** every option using a weighted tag-interest model per career goal.
-*   **Calculates admission probability** using a sigmoid function over historical rank volatility (standard deviation of closing ranks across 2018–2025).
+*   **Calculates admission probability** using a sigmoid function over last-year cutoffs, adjusted by a **Volatility Penalty** derived from round-to-round movement ratio.
 *   **Returns** categorised, ranked results through a clean REST API.
 
 The frontend is pure **HTML, CSS, and vanilla JavaScript** — no frameworks — served from the same server as the API. The entire UI works in both **English and Hindi** (as well as Gujarati and Kannada) — switching languages with a single click. The API is fully documented with **Swagger UI**. It also works as a **Progressive Web App (PWA)**, meaning it can be installed directly on a phone or desktop.
@@ -111,26 +111,35 @@ The final interest score ($S_{\text{interest}}$) blends these two components usi
 $$S_{\text{interest}} = (1 - \alpha) \times S_{\text{branch}} + \alpha \times (S_{\text{brand}} \times 10)$$
 
 #### C. Admission Probability & Volatility
-The probability of admission $P$ is calculated using a logistic sigmoid function of the Z-score:
+The probability of admission $P$ is calculated using a logistic sigmoid function of the Z-score and adjusted by a Volatility Penalty:
 
-$$P = \frac{1}{1 + e^{-1.7 \cdot z}} \times 100\%$$
+$$P_{\text{base}} = \frac{1}{1 + e^{-1.7 \cdot z}} \times 100\%$$
 
 Where the Z-score $z$ represents how many standard deviations the student's rank is from the closing rank:
 
 $$z = \frac{CR - R}{\sigma}$$
 
 *   **Volatility ($\sigma$)**:
-    *   In **Extended Mode**, $\sigma$ is the standard deviation of the program's closing ranks across all historical years (2018–2025) in which it appeared.
-    *   If the program has less than 2 years of historical data, or if running in **Basic Mode**, the volatility defaults to $8\%$ of the closing rank:
+    *   Since multi-year history has been removed, volatility defaults to a baseline of $8\%$ of the closing rank:
         $$\sigma = 0.08 \times CR$$
-    *   To prevent unrealistically low volatility, a minimum floor is enforced:
+    *   To prevent zero or low spreads, a minimum floor is enforced:
         $$\sigma_{\text{min}} = \max(10, 0.05 \times CR)$$
 
-#### D. Cutoff Confidence Bands
-The stability of a cutoff window is classified based on its rank spread ($\text{spread} = CR - OR$):
-*   **Fragile**: If $\text{spread} < 1,000$ ranks or if $CR \le OR$.
-*   **High**: If $\text{spread} \ge 6,000$ ranks.
-*   **Medium**: All other spreads.
+*   **Volatility Penalty**:
+    A penalty is deducted from the base probability based on the program's round-to-round **movement ratio** to account for vacancy fluctuations:
+    $$\text{penalty} = \min(0.2, \text{movement\_ratio} \times 0.3)$$
+    $$P = \max(0.0, P_{\text{base}} - \text{penalty} \times 100)$$
+
+#### D. Cutoff Confidence & Volatility Tags
+Cutoffs are classified dynamically by analyzing the round-wise closing ranks (`Closing_R1...R6`) of 2025 using `compute_stable_and_volatility()`:
+*   **Stable Cutoff**: Computed as the median of the last 4 valid round closing ranks (if $\ge 4$ valid rounds exist), otherwise the median of all valid rounds.
+*   **Movement Ratio**: $\text{total\_movement} / \text{stable\_cutoff}$ (where total movement is the sum of consecutive round-to-round deltas).
+*   **Jump Concentration**: $\text{max\_single\_jump} / \text{total\_movement}$.
+*   **Classifications**:
+    *   **Highly Stable** (`highly_stable`): Movement ratio $< 0.05$ (highly stable across all rounds).
+    *   **Stable — Predictable Drift** (`stable_drift`): Movement ratio $< 0.20$ and jump concentration $< 0.5$.
+    *   **Volatile — Vacancy-Driven** (`volatile_vacancy`): Jump concentration $\ge 0.5$ and movement ratio $\ge 0.20$ (includes the round number of the largest jump).
+    *   **Volatile — Erratic** (`volatile_erratic`): Erratic fluctuations across rounds.
 
 #### E. Sorting Hierarchy
 Recommended programs are sorted by a tuple containing five keys:
@@ -172,17 +181,17 @@ Returns metadata required to populate the frontend form dropdowns and sliders.
   "genders": ["male", "female"],
   "categories": [
     { "value": "OPEN", "label": "OPEN (General / CRL)", "available": true },
-    { "value": "OBC-NCL", "label": "OBC-NCL", "available": false },
+    { "value": "OBC-NCL", "label": "OBC-NCL", "available": true },
     "..."
   ],
   "branches": [
     { "value": "cs_it", "label": "CS / IT" },
     "..."
   ],
-  "total_programs": 2410,
+  "total_programs": 12143,
   "data_mode": "basic",
-  "allow_toggle": true,
-  "extended_available": true
+  "allow_toggle": false,
+  "extended_available": false
 }
 ```
 

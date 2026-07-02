@@ -236,14 +236,9 @@ def _interest_score(prog: Program, goal: str, ratio: float) -> tuple[float, bool
     return float(score), branch_score > 0
 
 
-def _confidence(opening: int, closing: int) -> str:
-    """Classify how stable last year's window is, from its rank spread."""
-    spread = closing - opening
-    if spread <= 0 or spread < FRAGILE_MAX_SPREAD:
-        return "fragile"
-    if spread >= HIGH_MIN_SPREAD:
-        return "high"
-    return "medium"
+# Legacy _confidence function removed; stable cutoff and volatility metrics
+# are now precomputed at loading time in data_loader.py using the function
+# compute_stable_and_volatility.
 
 
 _BRAND_PHRASES = {
@@ -299,21 +294,37 @@ _CONFIDENCE_TAIL = {
         "high": "Cutoff has a wide, stable window.",
         "medium": "Cutoff has been fairly steady.",
         "fragile": "Cutoff window is tight, so treat it as volatile.",
+        "highly_stable": "Cutoff is highly stable across all rounds.",
+        "stable_drift": "Cutoff exhibits a predictable, gradual drift.",
+        "volatile_vacancy": "Cutoff is volatile due to vacancy-driven shifts.",
+        "volatile_erratic": "Cutoff behaves erratically across rounds.",
     },
     "hi": {
         "high": "कटऑफ़ की रेंज चौड़ी और स्थिर है।",
         "medium": "कटऑफ़ काफ़ी हद तक स्थिर रहा है।",
         "fragile": "कटऑफ़ की रेंज तंग है, इसलिए इसे अस्थिर मानें।",
+        "highly_stable": "कटऑफ़ सभी राउंड में अत्यधिक स्थिर है।",
+        "stable_drift": "कटऑफ़ क्रमिक और अनुमानित बदलाव दर्शाता है।",
+        "volatile_vacancy": "रिक्तियों के कारण कटऑफ़ में अचानक उछाल देखा गया है।",
+        "volatile_erratic": "सभी राउंड में कटऑफ़ का व्यवहार अनियमित रहा है।",
     },
     "gu": {
         "high": "કટઓફની શ્રેણી વિશાળ અને સ્થિર છે.",
         "medium": "કટઓફ સામાન્ય રીતે સ્થિર રહ્યો છે.",
         "fragile": "કટઓફની શ્રેણી સાંકડી છે, તેથી તેને અસ્થિર માનો.",
+        "highly_stable": "કટઓફ બધા રાઉન્ડમાં ખૂબ જ સ્થિર રહ્યો છે.",
+        "stable_drift": "કટઓફ ક્રમિક અને અંદાજિત બદલાવ દર્શાવે છે.",
+        "volatile_vacancy": "ખાલી જગ્યાઓને કારણે કટઓફમાં અચાનક ઉછાળો જોવા મળ્યો છે.",
+        "volatile_erratic": "રાઉન્ડ દરમિયાન કટઓફનું વર્તન અનિયમિત રહ્યું છે.",
     },
     "kn": {
         "high": "ಕಟ್‌ಆಫ್ ವ್ಯಾಪ್ತಿಯು ವಿಸ್ತಾರವಾಗಿದೆ ಮತ್ತು ಸ್ಥಿರವಾಗಿದೆ.",
         "medium": "ಕಟ್‌ಆಫ್ ಸಾಧಾರಣವಾಗಿ ಸ್ಥಿರವಾಗಿದೆ.",
         "fragile": "ಕಟ್‌ಆಫ್ ವ್ಯಾಪ್ತಿಯು ಕಿರಿದಾಗಿದೆ, ಆದ್ದರಿಂದ ಇದು ಬದಲಾಗಬಹುದು.",
+        "highly_stable": "ಎಲ್ಲಾ ಸುತ್ತುಗಳಲ್ಲಿ ಕಟ್‌ಆಫ್ ಹೆಚ್ಚು ಸ್ಥಿರವಾಗಿದೆ.",
+        "stable_drift": "ಕಟ್‌ಆಫ್ ಕ್ರಮೇಣ ಮತ್ತು ಊಹಿಸಬಹುದಾದ ಬದಲಾವಣೆಯನ್ನು ತೋರಿಸುತ್ತದೆ.",
+        "volatile_vacancy": "ಖಾಲಿ ಹುದ್ದೆಗಳಿಂದಾಗಿ ಕಟ್‌ಆಫ್‌ನಲ್ಲಿ ಹಠಾತ್ ಜಂಪ್ ಕಂಡುಬಂದಿದೆ.",
+        "volatile_erratic": "ಸುತ್ತುಗಳಾದ್ಯಂತ ಕಟ್‌ಆಫ್ ಬದಲಾವಣೆಗಳು ಅನಿಶ್ಚಿತವಾಗಿವೆ.",
     },
 }
 
@@ -605,9 +616,10 @@ _GUIDANCE = {
 
 
 def recommend(req: RecommendRequest) -> RecommendResponse:
-    # Resolve effective data_mode: server can lock it regardless of what the
-    # client sends when allow_user_data_toggle is False.
-    effective_mode = req.data_mode if settings.allow_user_data_toggle else settings.data_mode
+    # Extended mode has been removed — always use basic (2025) dataset.
+    # TODO (reworkable): remove effective_mode variable entirely and replace all
+    # usages with the literal string "basic" once callers stop sending data_mode.
+    effective_mode = "basic"
 
     programs = load_programs(effective_mode)
     lang = req.lang if req.lang in ("en", "hi", "gu", "kn") else "en"
@@ -618,8 +630,9 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         notes.append(notes_text["no_adv"])
     if req.mains_rank is None:
         notes.append(notes_text["no_mains"])
-    # Only warn about unsupported category in basic mode (extended supports all).
-    if req.seat_category != "OPEN" and effective_mode == "basic":
+    # TODO (reworkable): all seat categories are now present in the 2025 basic dataset
+    # so this warning is no longer correct — remove or rephrase when seat_filter is fixed.
+    if req.seat_category != "OPEN":
         notes.append(notes_text["category"].format(cat=req.seat_category))
     if req.home_state not in states.INDIAN_STATES:
         notes.append(notes_text["home_state"].format(state=req.home_state))
@@ -631,16 +644,19 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
     hs_index = home_state_advantage_index(effective_mode)
     female_index = female_seat_advantage_index(effective_mode)
 
-    # In extended mode, filter programs to the requested seat_category.
-    # In basic mode, all programs are OPEN — no filtering needed.
-    seat_filter = req.seat_category if effective_mode == "extended" else None
+    # TODO (reworkable): seat_filter was previously only applied in extended mode because
+    # basic mode had only OPEN seats.  Now that josaa_merged_2025.csv contains ALL
+    # categories, this filter should ALWAYS be applied so the user's seat_category
+    # choice is respected.  Changing this requires verifying the category values sent
+    # by the frontend match the seat_type strings in the CSV exactly.
+    seat_filter = req.seat_category  # always filter now (was: only in extended mode)
 
     results: List[Recommendation] = []
     for prog in programs:
         rank = _relevant_rank(prog, req)
         if rank is None:
             continue
-        # In extended mode, filter by seat_type (OPEN / OBC-NCL / SC / ST / EWS / PwD)
+        # Filter by seat_type (OPEN / OBC-NCL / SC / ST / EWS / PwD variants)
         if seat_filter and prog.seat_type != seat_filter:
             continue
         if not _passes_gender(prog, req.gender):
@@ -665,7 +681,7 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
                 (prog.institute, prog.branch_full, prog.exam, prog.quota)
             )
 
-        confidence = _confidence(prog.opening_rank, prog.closing_rank)
+        confidence = prog.volatility_tag
         reason = _build_reason(
             prog,
             category,
@@ -681,8 +697,15 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         region = _get_region(prog.institute_state)
         is_metro = _is_metro(prog.institute, prog.institute_state)
 
+        # Probability calculation
         history = get_program_history(prog, effective_mode)
         prob = _calculate_probability(rank, prog.closing_rank, history)
+        
+        # Apply volatility penalty: volatility_penalty = min(0.2, movement_ratio * 0.3)
+        # penalty reduces the final probability (e.g. if prob is 90% and penalty is 0.1, final prob becomes 80%)
+        volatility_penalty = min(0.2, prog.movement_ratio * 0.3)
+        prob = max(0.0, prob - (volatility_penalty * 100.0))
+        prob = round(prob, 1)
 
         results.append(
             Recommendation(
@@ -704,6 +727,7 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
                 home_state_advantage=home_state_advantage,
                 female_seat_advantage=female_seat_advantage,
                 confidence=confidence,
+                flag_round=prog.flag_round,
                 reason=reason,
                 # estimated_fees, fee_waiver_applied, fee_note are removed to focus on admission insights.
                 # Future-proofing: If verified fees data becomes available, pass these fields:

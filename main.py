@@ -22,7 +22,7 @@ from fastapi.staticfiles import StaticFiles
 
 from app.disha import states
 from app.disha.config import settings
-from app.disha.data_loader import load_programs, load_programs_basic, load_programs_extended
+from app.disha.data_loader import load_programs, load_programs_basic
 from app.disha.recommender import recommend
 from app.disha.schemas import MetaResponse, RecommendRequest, RecommendResponse
 
@@ -43,13 +43,8 @@ def _static_file_response(path: Path) -> FileResponse:
 
 @asynccontextmanager
 async def lifespan(_: FastAPI):
-    # Always preload the basic (default) dataset so the first request is fast.
+    # Preload the 2025 dataset at startup so the first request is fast.
     load_programs_basic()
-    # Preload the extended dataset too when the user toggle is allowed, so
-    # switching modes is instant rather than incurring a cold-parse delay.
-    if settings.allow_user_data_toggle and settings.resolved_extended_data_path.exists():
-        logger.info("Preloading extended dataset…")
-        load_programs_extended()
     logger.info("Serving frontend from %s", _TEMPLATES_DIR)
     yield
 
@@ -87,11 +82,8 @@ def health() -> dict:
 @app.get("/api/meta", response_model=MetaResponse, tags=["meta"])
 def meta() -> MetaResponse:
     """Form metadata: valid states, goals, genders, categories and dataset size."""
-    extended_exists = settings.resolved_extended_data_path.exists()
-    categories = [
-        {**c, "available": True if extended_exists else c["available"]}
-        for c in states.VALID_CATEGORIES
-    ]
+    # All categories are now available in the 2025 basic dataset.
+    categories = states.VALID_CATEGORIES
     return MetaResponse(
         states=states.INDIAN_STATES,
         goals=[{"value": g, "label": states.GOAL_LABELS[g]} for g in states.VALID_GOALS],
@@ -100,8 +92,8 @@ def meta() -> MetaResponse:
         branches=[{"value": b["value"], "label": b["label"]} for b in states.BRANCH_PREFERENCES],
         total_programs=len(load_programs(settings.data_mode)),
         data_mode=settings.data_mode,
-        allow_toggle=settings.allow_user_data_toggle and extended_exists,
-        extended_available=extended_exists,
+        allow_toggle=False,       # extended toggle removed
+        extended_available=False, # extended dataset no longer used
     )
 
 

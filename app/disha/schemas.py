@@ -34,9 +34,11 @@ class RecommendRequest(BaseModel):
     data_mode: Literal["basic", "extended"] = Field(
         default="basic",
         description=(
-            "Which dataset to use. 'basic' = JEE_2025_Cutoffs.xlsx (OPEN only, 2025). "
-            "'extended' = merged CSV (all categories, 2018-2025). "
-            "Ignored if the server has allow_user_data_toggle=False."
+            # TODO (reworkable): change Literal to just "basic" once the frontend
+            # stops sending data_mode in the request payload.  For now, 'extended'
+            # is accepted but silently treated as 'basic' by the recommender.
+            "Dataset to use. Only 'basic' (2025 round-wise data) is active; "
+            "'extended' is accepted for compatibility but resolves to 'basic'."
         ),
     )
     seat_category: str = Field(
@@ -110,7 +112,8 @@ class Recommendation(BaseModel):
     matched_interest: bool
     home_state_advantage: Optional[int] = None  # ranks saved by the HS quota
     female_seat_advantage: Optional[int] = None  # extra rank cushion from the female pool
-    confidence: str = "medium"  # high / medium / fragile (from the rank spread)
+    confidence: str = "medium"  # high / medium / fragile OR the new custom volatility tags
+    flag_round: Optional[int] = None  # the round where the largest vacancy-driven jump happened
     reason: str = ""  # templated "why this is here" explanation
     # estimated_fees, fee_waiver_applied, and fee_note are removed to focus on admission insights.
     # Future-proofing: If verified fees data becomes available, uncomment these fields:
@@ -145,6 +148,6 @@ class MetaResponse(BaseModel):
     categories: List[dict]
     branches: List[dict]
     total_programs: int
-    data_mode: str              # server default: "basic" or "extended"
-    allow_toggle: bool          # whether the UI data-source toggle is visible
-    extended_available: bool    # whether the extended CSV file actually exists
+    data_mode: str              # always "basic"
+    allow_toggle: bool          # always False (extended toggle removed)
+    extended_available: bool    # always False (extended dataset removed)

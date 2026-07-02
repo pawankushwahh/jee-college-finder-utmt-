@@ -270,6 +270,10 @@ const I18N = {
       highLabel: "Stable cutoff", highHint: "Wide last-year window — unlikely to swing past you.",
       mediumLabel: "Fairly steady", mediumHint: "Last-year window is around average — moderate swing risk.",
       fragileLabel: "Volatile cutoff", fragileHint: "Very tight last-year window — the cutoff can shift sharply.",
+      highly_stableLabel: "Highly Stable", highly_stableHint: "Extremely stable cutoff across all rounds (movement < 5%).",
+      stable_driftLabel: "Stable — Predictable Drift", stable_driftHint: "Predictable, gradual drift across rounds.",
+      volatile_vacancyLabel: "Volatile — Vacancy-Driven", volatile_vacancyHint: "Sudden vacancy-driven jump in round {r}.",
+      volatile_erraticLabel: "Volatile — Erratic", volatile_erraticHint: "Erratic cutoff changes across rounds.",
     },
     card: {
       fitsGoal: "fits your goal",
@@ -554,6 +558,10 @@ const I18N = {
       highLabel: "स्थिर कटऑफ़", highHint: "पिछले साल की चौड़ी रेंज — आपके पार जाने की संभावना कम।",
       mediumLabel: "काफ़ी स्थिर", mediumHint: "पिछले साल की रेंज औसत के आसपास — मध्यम बदलाव जोखिम।",
       fragileLabel: "अस्थिर कटऑफ़", fragileHint: "पिछले साल की बहुत तंग रेंज — कटऑफ़ तेज़ी से बदल सकता है।",
+      highly_stableLabel: "अत्यधिक स्थिर", highly_stableHint: "सभी राउंड में अत्यधिक स्थिर कटऑफ़ (बदलाव < 5%)।",
+      stable_driftLabel: "स्थिर — अनुमानित बदलाव", stable_driftHint: "राउंड के दौरान अनुमानित, क्रमिक बदलाव।",
+      volatile_vacancyLabel: "अस्थिर — रिक्ति-संचालित", volatile_vacancyHint: "राउंड {r} में अचानक रिक्ति-संचालित उछाल।",
+      volatile_erraticLabel: "अस्थिर — अनियमित", volatile_erraticHint: "विभिन्न राउंड में कटऑफ़ में अनियमित बदलाव।",
     },
     card: {
       fitsGoal: "आपके लक्ष्य से मेल",
@@ -834,6 +842,10 @@ const I18N = {
       highLabel: "સ્થિર કટઓફ", highHint: "ગયા વર્ષની પહોળી રેન્જ — તમારા કટઓફથી વહેલા બદલાવાની શક્યતા ઓછી છે.",
       mediumLabel: "સાધારણ સ્થિર", mediumHint: "ગયા વર્ષની રેન્જ સરેરાશ હતી — મધ્યમ ફેરફારનું જોખમ.",
       fragileLabel: "અસ્થિર કટઓફ", fragileHint: "ગયા વર્ષની ખૂબ જ સાંકડી રેન્જ — કટઓફ ઝડપથી બદલાઈ શકે છે.",
+      highly_stableLabel: "ખૂબ જ સ્થિર", highly_stableHint: "બધા રાઉન્ડમાં ખૂબ જ સ્થિર કટઓફ (બદલાવ < 5%).",
+      stable_driftLabel: "સ્થિર — અનુમાનિત પ્રવાહ", stable_driftHint: "રાઉન્ડ દરમિયાન અનુમાનિત, ક્રમિક બદલાવ.",
+      volatile_vacancyLabel: "અસ્થિર — ખાલી જગ્યા-સંચાલિત", volatile_vacancyHint: "રાઉન્ડ {r} માં અચાનક ખાલી જગ્યા-સંચાલિત ઉછાળો.",
+      volatile_erraticLabel: "અસ્થિર — અનિયમિત", volatile_erraticHint: "વિવિધ રાઉન્ડમાં કટઓફમાં અનિયમિત ફેરફારો.",
     },
     card: {
       fitsGoal: "લક્ષ્ય સાથે સુસંગત",
@@ -1113,6 +1125,10 @@ const I18N = {
       highLabel: "ಸ್ಥಿರ ಕಟ್‌ಆಫ್", highHint: "ಕಳೆದ ವರ್ಷದ ವಿಸ್ತಾರವಾದ ಶ್ರೇಣಿ — ಬದಲಾಗುವ ಸಾಧ್ಯತೆ ಕಡಿಮೆ.",
       mediumLabel: "ಸಾಧಾರಣ ಸ್ಥಿರ", mediumHint: "ಕಳೆದ ವರ್ಷದ ಶ್ರೇಣಿ ಸಾಧಾರಣವಾಗಿದೆ — ಆವರೇಜ್ ರಿಸ್ಕ್.",
       fragileLabel: "ಅಸ್ಥಿರ ಕಟ್‌ಆಫ್", fragileHint: "ಕಳೆದ ವರ್ಷದ ಕಿರಿದಾದ ಶ್ರೇಣಿ — ಕಟ್‌ಆಫ್ ಬೇಗ ಬದಲಾಗಬಹುದು.",
+      highly_stableLabel: "ಹೆಚ್ಚು ಸ್ಥಿರ", highly_stableHint: "ಎಲ್ಲಾ ಸುತ್ತುಗಳಲ್ಲಿ ಹೆಚ್ಚು ಸ್ಥಿರವಾದ ಕಟ್‌ಆಫ್ (ಬದಲಾವಣೆ < 5%).",
+      stable_driftLabel: "ಸ್ಥಿರ — ಅಂದಾಜು ಬದಲಾವಣೆ", stable_driftHint: "ಸುತ್ತುಗಳಲ್ಲಿ ಅಂದಾಜು, ಕ್ರಮೇಣ ಬದಲಾವಣೆ.",
+      volatile_vacancyLabel: "ಅಸ್ಥಿರ — ಖಾಲಿ ಹುದ್ದೆ ಆಧಾರಿತ", volatile_vacancyHint: "ಸುತ್ತು {r} ನಲ್ಲಿ ಹಠಾತ್ ಖಾಲಿ ಹುದ್ದೆ ಆಧಾರಿತ ಜಂಪ್.",
+      volatile_erraticLabel: "ಅಸ್ಥಿರ — ಅನಿಶ್ಚಿತ", volatile_erraticHint: "ಸುತ್ತುಗಳಲ್ಲಿ ಅನಿಶ್ಚಿತ ಕಟ್‌ಆಫ್ ಬದಲಾವಣೆಗಳು.",
     },
     card: {
       fitsGoal: "ನಿಮ್ಮ ಗುರಿಗೆ ಹೊಂದುತ್ತದೆ",

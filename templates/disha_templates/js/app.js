@@ -68,9 +68,9 @@ const state = {
   filterType: "",
   filterRegion: "all",
   choices: JSON.parse(localStorage.getItem("disha_choices") || "[]"),
-  // Data source mode: "basic" or "extended".
-  // Persisted across sessions; overridden to server default if toggle is hidden.
-  dataMode: localStorage.getItem("disha_data_mode") || "basic",
+  // Extended data mode removed — always "basic" (2025 dataset).
+  // TODO (reworkable): remove dataMode from state entirely once API no longer expects it.
+  dataMode: "basic",
   view: localStorage.getItem("disha_view") || "branch", // "branch" or "college"
   expandedColleges: {}, // in-memory accordion toggle state
   collapsedSections: { Safe: false, Target: false, Reach: false },
@@ -411,81 +411,28 @@ async function loadMeta() {
  *   3. Enables/disables the seat_category select accordingly.
  *   4. Triggers a live refresh if results are already showing.
  */
+// Extended data mode toggle removed — initDataModeToggle(), setDataModeUI() deleted.
+// applyDataModeToCategory() is kept but flagged as reworkable: it currently locks the
+// category select to OPEN (legacy basic-mode behaviour).  Once the seat_filter TODO in
+// recommender.py is resolved, this function should unlock the select unconditionally.
 function initDataModeToggle(meta) {
-  const field = $("data-mode-field");
-  const basicBtn = $("data-mode-basic");
-  const extBtn = $("data-mode-extended");
+  // No-op: toggle no longer exists.  Force mode to "basic" and unlock nothing yet.
+  state.dataMode = "basic";
   const catSel = $("panel-seat-category");
   const catHint = $("panel-category-hint");
-
-  if (!meta.allow_toggle) {
-    // Server has locked the mode — hide toggle, force the server default.
-    if (field) field.hidden = true;
-    state.dataMode = meta.data_mode;
-    localStorage.setItem("disha_data_mode", state.dataMode);
-    applyDataModeToCategory(state.dataMode, catSel, catHint);
-    return;
-  }
-
-  // Show the toggle.
-  if (field) field.hidden = false;
-
-  // Clamp stored mode to a valid value.
-  if (!["basic", "extended"].includes(state.dataMode)) {
-    state.dataMode = meta.data_mode || "basic";
-  }
-
-  // Reflect current mode on buttons.
-  setDataModeUI(state.dataMode, basicBtn, extBtn, catSel, catHint);
-
-  // Wire click handlers.
-  [basicBtn, extBtn].forEach((btn) => {
-    btn.addEventListener("click", () => {
-      const chosen = btn.dataset.mode;
-      if (chosen === state.dataMode) return;  // no-op
-      state.dataMode = chosen;
-      localStorage.setItem("disha_data_mode", chosen);
-      setDataModeUI(chosen, basicBtn, extBtn, catSel, catHint);
-      // If results are on screen, refresh immediately.
-      if (state.lastPayload) {
-        const payload = { ...state.lastPayload, data_mode: chosen };
-        // Reset category to OPEN when switching back to basic.
-        if (chosen === "basic") payload.seat_category = "OPEN";
-        state.lastPayload = payload;
-        runLiveRequest(payload);
-      }
-    });
-  });
-}
-
-function setDataModeUI(mode, basicBtn, extBtn, catSel, catHint) {
-  const isExt = mode === "extended";
-  basicBtn.setAttribute("aria-pressed", (!isExt).toString());
-  extBtn.setAttribute("aria-pressed", isExt.toString());
-  basicBtn.classList.toggle("data-mode-btn--active", !isExt);
-  extBtn.classList.toggle("data-mode-btn--active", isExt);
-  applyDataModeToCategory(mode, catSel, catHint);
-  // Pulse the category field so the user notices it changed.
-  const catField = $("panel-category-field");
-  if (catField) {
-    catField.classList.remove("field-pulse");
-    void catField.offsetWidth; // force reflow to restart animation
-    catField.classList.add("field-pulse");
-  }
+  // TODO (reworkable): call applyDataModeToCategory with the unlocked mode once
+  // recommender.py seat_filter is verified to correctly filter all categories.
+  applyDataModeToCategory("basic", catSel, catHint);
 }
 
 function applyDataModeToCategory(mode, catSel, catHint) {
   if (!catSel) return;
-  buildCategoryOptions(catSel); // Re-build options so disabled states match the mode!
-  if (mode === "extended") {
-    catSel.disabled = false;
-    if (catHint) catHint.hidden = true;
-  } else {
-    // Basic: lock to OPEN only.
-    catSel.value = "OPEN";
-    catSel.disabled = true;
-    if (catHint) catHint.hidden = false;
-  }
+  buildCategoryOptions(catSel);
+  // TODO (reworkable): remove this lock once seat_filter in recommender is fixed.
+  // All categories exist in the 2025 dataset — the select should NOT be locked.
+  catSel.value = "OPEN";
+  catSel.disabled = true;
+  if (catHint) catHint.hidden = true;
 }
 
 // ── Live panel (counsellor dashboard) ─────────────────────────────────────
@@ -565,7 +512,8 @@ function buildCategoryOptions(catSel) {
       ? t("category.general")
       : String(c.label || c.value);
 
-    // In extended mode, all categories are available.
+    // TODO (reworkable): once seat_filter in recommender.py is verified, remove the
+    // "extended" check and always use c.available (all categories now in 2025 dataset).
     const isAvailable = (state.dataMode === "extended") || c.available;
     opt.textContent = isAvailable ? label : `${label} — ${t("category.comingSoon")}`;
     opt.disabled = !isAvailable;
@@ -609,7 +557,7 @@ function buildPayload() {
     brand_branch_ratio: state.brandBranchRatio !== undefined ? state.brandBranchRatio : 0.5,
     max_results: 150,
     lang: getLang(),
-    data_mode: state.dataMode || "basic",
+    data_mode: "basic",  // extended mode removed; always send basic
   };
   if (mains !== null) payload.mains_rank = mains;
   if (adv !== null) payload.adv_rank = adv;
@@ -739,15 +687,9 @@ function renderProfileChips() {
   if (state.goal) chips.push(escapeHtml(goalName(state.goal)));
   for (const b of state.branchPrefs) chips.push(escapeHtml(branchLabel(b)));
 
-  // Data source mode badge
-  const mode = state.dataMode || "basic";
-  const modeBadge = mode === "extended"
-    ? `<span class="data-mode-badge data-mode-badge--extended">&#9210; Extended</span>`
-    : `<span class="data-mode-badge data-mode-badge--basic">&#9109; Basic</span>`;
-
+  // Data source mode badge removed — extended mode no longer available.
   $("profile-chips").innerHTML =
-    chips.map((c) => `<span class="pchip">${c}</span>`).join("") +
-    `<span class="pchip" style="padding:0">${modeBadge}</span>`;
+    chips.map((c) => `<span class="pchip">${c}</span>`).join("");
 }
 
 function noteHeadline(byCat, total) {
@@ -983,15 +925,46 @@ function rankBarHtml(rec) {
     </div>`;
 }
 
-// Confidence band → human label + tooltip. Colours come from the CSS class.
-function confidenceMeta(band) {
-  const b = ["high", "medium", "fragile"].includes(band) ? band : "medium";
-  return { label: t(`confidence.${b}Label`), hint: t(`confidence.${b}Hint`) };
+// Volatility tag -> localized label, hint (interpolating flag_round), and CSS class mapping.
+function confidenceMeta(band, flagRound) {
+  let styleClass = "medium";
+  let labelKey = "mediumLabel";
+  let hintKey = "mediumHint";
+
+  if (band === "highly_stable") {
+    styleClass = "high";
+    labelKey = "highly_stableLabel";
+    hintKey = "highly_stableHint";
+  } else if (band === "stable_drift") {
+    styleClass = "medium";
+    labelKey = "stable_driftLabel";
+    hintKey = "stable_driftHint";
+  } else if (band === "volatile_vacancy") {
+    styleClass = "fragile";
+    labelKey = "volatile_vacancyLabel";
+    hintKey = "volatile_vacancyHint";
+  } else if (band === "volatile_erratic") {
+    styleClass = "fragile";
+    labelKey = "volatile_erraticLabel";
+    hintKey = "volatile_erraticHint";
+  } else {
+    // Fallback for any legacy bands
+    const b = ["high", "medium", "fragile"].includes(band) ? band : "medium";
+    styleClass = b;
+    labelKey = `${b}Label`;
+    hintKey = `${b}Hint`;
+  }
+
+  return {
+    styleClass,
+    label: t(`confidence.${labelKey}`),
+    hint: t(`confidence.${hintKey}`, { r: flagRound || "" })
+  };
 }
 
 function confidenceChipHtml(rec) {
-  const meta = confidenceMeta(rec.confidence);
-  return `<span class="conf-chip conf-chip--${escapeHtml(rec.confidence)}" title="${escapeHtml(meta.hint)}">${escapeHtml(meta.label)}</span>`;
+  const meta = confidenceMeta(rec.confidence, rec.flag_round);
+  return `<span class="conf-chip conf-chip--${escapeHtml(meta.styleClass)}" title="${escapeHtml(meta.hint)}">${escapeHtml(meta.label)}</span>`;
 }
 
 function advantageBadgesHtml(rec) {

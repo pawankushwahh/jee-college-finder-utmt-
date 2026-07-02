@@ -25,23 +25,25 @@ class Settings(BaseSettings):
     # Comma-separated list of allowed frontend origins, or "*" for any.
     cors_origins: str = "*"
 
-    # Path to the basic cutoff workbook (sir-provided, OPEN only, 2025).
-    # Relative paths resolve against project root.
+    # Path to the basic cutoff workbook (legacy, kept for reference).
     data_path: str = "app/disha/data/JEE_2025_Cutoffs.xlsx"
 
-    # Path to the extended merged CSV (all categories, 2018–2025).
-    extended_data_path: str = "app/disha/data/merged_jee_cutoff_2018_2025.csv"
+    # Path to the round-wise merged CSV for Basic (2025) mode.
+    # Has columns Opening_R1..Closing_R6; Opening/Closing Rank are
+    # computed at runtime as MIN/MAX across rounds.
+    basic_merged_data_path: str = "app/disha/data/josaa_merged_2025.csv"
 
-    # Active data mode: "basic" uses only the Excel file (OPEN seats, 2025),
-    # "extended" uses the merged CSV (all categories, 2018-2025).
-    # This is the server-side default; users can override via the UI toggle
-    # if allow_user_data_toggle is True.
+    # Path to the extended merged CSV (all categories, 2018–2025).
+    # REMOVED — fully dependent on the multi-year dataset which is no longer used.
+    # extended_data_path: str = "app/disha/data/merged_jee_cutoff_2018_2025.csv"
+
+    # Active data mode: always "basic" (2025 round-wise merged CSV).
+    # Extended mode has been removed — this setting is kept for API compatibility.
+    # TODO (reworkable): remove data_mode once all callers stop sending it.
     data_mode: str = "basic"
 
-    # When True, the frontend shows a Data Source toggle so users can switch
-    # between basic and extended mode themselves. Set to False to lock the
-    # mode to whatever data_mode is set above (useful for classroom/demo use).
-    allow_user_data_toggle: bool = True
+    # REMOVED — the user-facing toggle between basic and extended mode is gone.
+    # allow_user_data_toggle: bool = True
 
     @property
     def cors_origin_list(self) -> List[str]:
@@ -54,9 +56,16 @@ class Settings(BaseSettings):
         return p if p.is_absolute() else _PROJECT_ROOT / p
 
     @property
-    def resolved_extended_data_path(self) -> Path:
-        p = Path(self.extended_data_path)
+    def resolved_basic_merged_data_path(self) -> Path:
+        p = Path(self.basic_merged_data_path)
         return p if p.is_absolute() else _PROJECT_ROOT / p
+
+    @property
+    def resolved_extended_data_path(self) -> Path:
+        """REMOVED — returns a non-existent path; kept only to avoid AttributeError
+        in any code not yet updated to stop referencing this property.
+        """
+        return Path("app/disha/data/merged_jee_cutoff_2018_2025.csv")  # no longer used
 
 
 settings = Settings()

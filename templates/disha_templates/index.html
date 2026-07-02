@@ -276,33 +276,8 @@
               <p class="panel__subtitle" data-i18n="panel.subtitle">Change anything — results update live.</p>
             </div>
 
-            <!-- ── Data Source toggle (shown only when allow_toggle = true) ── -->
-            <div class="panel-field data-mode-field" id="data-mode-field" hidden>
-              <span class="panel-field__label">Data Source</span>
-              <div class="data-mode-toggle" role="group" aria-label="Data source selection">
-                <button type="button" class="data-mode-btn data-mode-btn--active" id="data-mode-basic" data-mode="basic"
-                  aria-pressed="true">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-                    <polyline points="14 2 14 8 20 8" />
-                  </svg>
-                  <span>Basic</span>
-                  <small>2025 · OPEN only</small>
-                </button>
-                <button type="button" class="data-mode-btn" id="data-mode-extended" data-mode="extended"
-                  aria-pressed="false">
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-                    stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                    <ellipse cx="12" cy="5" rx="9" ry="3" />
-                    <path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3" />
-                    <path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5" />
-                  </svg>
-                  <span>Extended</span>
-                  <small>2018–25 · All categories</small>
-                </button>
-              </div>
-            </div>
+            <!-- Data Source toggle removed — extended mode no longer available. -->
+            <!-- All categories are now enabled in the 2025 dataset. -->
 
             <div class="panel-field">
               <label class="panel-field__label" for="panel-mains-rank" data-i18n="panel.mainsLabel">JEE Main
@@ -324,13 +299,13 @@
                 id="panel-gender-row"></div>
             </div>
 
-            <!-- seat-category: locked to OPEN in Basic mode; fully enabled in Extended -->
+            <!-- seat-category: all categories available in the 2025 dataset -->
+            <!-- TODO (reworkable): unlock the select; currently locked to OPEN in applyDataModeToCategory() -->
             <div class="panel-field" id="panel-category-field">
               <label class="panel-field__label" for="panel-seat-category"
                 data-i18n="panel.categoryLabel">Category</label>
               <select class="input input--sm" id="panel-seat-category"></select>
-              <p class="panel-field__hint" id="panel-category-hint" hidden>Switch to Extended mode to use reserved
-                categories</p>
+              <!-- Category hint removed — all categories now available in 2025 data -->
             </div>
 
             <div class="panel-field">

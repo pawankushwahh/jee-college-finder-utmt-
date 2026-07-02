@@ -13,10 +13,10 @@ from app.disha.data_loader import (
     female_seat_advantage_index,
     home_state_advantage_index,
     load_programs,
+    compute_stable_and_volatility,
 )
 from app.disha.recommender import (
     _categorize,
-    _confidence,
     _passes_gender,
     _passes_quota,
     _relevant_rank,
@@ -40,6 +40,11 @@ def make_program(**kw) -> Program:
         opening_rank=1000,
         closing_rank=2000,
         brand_score=0.7,
+        stable_cutoff=1500,
+        movement_ratio=0.1,
+        jump_concentration=0.2,
+        volatility_tag="stable_drift",
+        flag_round=None,
         tags={"cse"},
     )
     defaults.update(kw)
@@ -220,19 +225,24 @@ def test_real_recommendation_respects_band():
         assert rank >= r.opening_rank * 0.5 - 1
 
 
-# --------------------------- confidence band ---------------------------
+# --------------------------- stable & volatility ---------------------------
 @pytest.mark.parametrize(
-    "opening,closing,expected",
+    "closings_with_rounds,expected_stable,expected_tag",
     [
-        (1000, 1500, "fragile"),    # spread 500 < 1,000 -> fragile
-        (1000, 1000, "fragile"),    # zero window -> always fragile
-        (5000, 4000, "fragile"),    # closing <= opening -> always fragile
-        (1000, 4000, "medium"),     # spread 3,000 (~median) -> medium
-        (1000, 8000, "high"),       # spread 7,000 >= 6,000 -> high
+        # movement_ratio < 0.05 -> highly_stable
+        ([(1, 10000.0), (2, 10000.0), (3, 10100.0), (4, 10200.0), (5, 10200.0), (6, 10200.0)], 10200, "highly_stable"),
+        # movement_ratio < 0.20 and jump_concentration < 0.5 -> stable_drift
+        ([(1, 10000.0), (2, 10200.0), (3, 10500.0), (4, 10800.0), (5, 11000.0), (6, 11200.0)], 11000, "stable_drift"),
+        # jump_concentration >= 0.5 and movement_ratio >= 0.20 -> volatile_vacancy
+        ([(1, 10000.0), (2, 10000.0), (3, 10000.0), (4, 10000.0), (5, 12000.0), (6, 12100.0)], 12050, "volatile_vacancy"),
+        # else -> volatile_erratic
+        ([(1, 10000.0), (2, 12000.0), (3, 11000.0), (4, 13000.0), (5, 12500.0), (6, 14000.0)], 13125, "volatile_erratic"),
     ],
 )
-def test_confidence_band(opening, closing, expected):
-    assert _confidence(opening, closing) == expected
+def test_stable_and_volatility_logic(closings_with_rounds, expected_stable, expected_tag):
+    res = compute_stable_and_volatility(closings_with_rounds)
+    assert res["stable_cutoff"] == expected_stable
+    assert res["tag"] == expected_tag
 
 
 def test_recommendation_has_confidence_and_nonempty_reason():
@@ -241,7 +251,7 @@ def test_recommendation_has_confidence_and_nonempty_reason():
     resp = recommend(req)
     assert resp.recommendations
     for r in resp.recommendations:
-        assert r.confidence in {"high", "medium", "fragile"}
+        assert r.confidence in {"highly_stable", "stable_drift", "volatile_vacancy", "volatile_erratic"}
         assert r.reason and r.category in r.reason
 
 
@@ -287,8 +297,8 @@ def test_lang_defaults_to_english():
 
 
 def test_fragile_pick_flagged(monkeypatch):
-    # A very tight window (spread 300) must be classified fragile end-to-end.
-    prog = make_program(opening_rank=1000, closing_rank=1300)
+    # A volatile vacancy pick must be classified volatile_vacancy end-to-end.
+    prog = make_program(opening_rank=1000, closing_rank=1300, volatility_tag="volatile_vacancy")
     _patch_programs(monkeypatch, [prog])
     monkeypatch.setattr(recommender, "home_state_advantage_index", lambda *a, **kw: {})
     monkeypatch.setattr(recommender, "female_seat_advantage_index", lambda *a, **kw: {})
@@ -297,7 +307,7 @@ def test_fragile_pick_flagged(monkeypatch):
     resp = recommend(req)
     assert resp.recommendations
     rec = resp.recommendations[0]
-    assert rec.confidence == "fragile"
+    assert rec.confidence == "volatile_vacancy"
     assert "volatile" in rec.reason
 
 
