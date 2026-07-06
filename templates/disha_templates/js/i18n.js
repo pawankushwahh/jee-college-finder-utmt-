@@ -98,8 +98,7 @@ const I18N = {
       noteOther: "You'll be matched against gender-neutral seat pools.",
     },
     category: {
-      note: "Cutoff data currently covers OPEN (CRL) seats; reserved-category cutoffs are on the way.",
-      comingSoon: "coming soon",
+      note: "Cutoff data covers all categories (General/OPEN, OBC-NCL, SC, ST, EWS, and PwD).",
       general: "General (OPEN)",
     },
     goals: {
@@ -390,8 +389,7 @@ const I18N = {
       noteOther: "आपका मिलान जेंडर-न्यूट्रल सीट पूल से किया जाएगा।",
     },
     category: {
-      note: "कटऑफ़ डेटा अभी केवल OPEN (CRL) सीटों के लिए है; आरक्षित-श्रेणी के कटऑफ़ जल्द आ रहे हैं।",
-      comingSoon: "जल्द आ रहा है",
+      note: "कटऑफ़ डेटा में सभी श्रेणियाँ (General/OPEN, OBC-NCL, SC, ST, EWS, और PwD) शामिल हैं।",
       general: "जनरल (OPEN)",
     },
     goals: {
@@ -675,8 +673,7 @@ const I18N = {
       noteOther: "તમને જેન્ડર-ન્યુટ્રલ સીટ પૂલ સાથે મેચ કરવામાં આવશે.",
     },
     category: {
-      note: "કટઓફ ડેટા હાલમાં OPEN (CRL) સીટોને આવરી લે છે; કેટેગરી કટઓફ ટૂંક સમયમાં ઉમેરવામાં આવશે.",
-      comingSoon: "ટૂંક સમયમાં આવી રહ્યું છે",
+      note: "કટઓફ ડેટામાં તમામ કેટેગરીઓ (General/OPEN, OBC-NCL, SC, ST, EWS, અને PwD) શામેલ છે.",
       general: "જનરલ (OPEN)",
     },
     goals: {
@@ -958,8 +955,7 @@ const I18N = {
       noteOther: "ನಿಮ್ಮನ್ನು ಜೆಂಡರ್-ನ್ಯೂಟ್ರಲ್ ಸೀಟುಗಳಿಗೆ ಮ್ಯಾಚ್ ಮಾಡಲಾಗುತ್ತದೆ.",
     },
     category: {
-      note: "ಕಟ್‌ಆಫ್ ಡೇಟಾ ಸದ್ಯಕ್ಕೆ OPEN (CRL) ಸೀಟುಗಳನ್ನು ಮಾತ್ರ ಒಳಗೊಂಡಿದೆ; ಮೀಸಲಾತಿ ವರ್ಗದ ಕಟ್‌ಆಫ್ ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ.",
-      comingSoon: "ಶೀಘ್ರದಲ್ಲೇ ಬರಲಿದೆ",
+      note: "ಕಟ್‌ಆಫ್ ಡೇಟಾ ಎಲ್ಲಾ ವರ್ಗಗಳನ್ನು (General/OPEN, OBC-NCL, SC, ST, EWS, ಮತ್ತು PwD) ಒಳಗೊಂಡಿದೆ.",
       general: "ಜನರಲ್ (OPEN)",
     },
     goals: {

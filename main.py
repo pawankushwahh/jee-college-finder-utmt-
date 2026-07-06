@@ -23,6 +23,7 @@ from fastapi.staticfiles import StaticFiles
 from app.disha import states
 from app.disha.config import settings
 from app.disha.data_loader import load_programs, load_programs_basic
+from app.disha.stats_loader import compute_dataset_stats
 from app.disha.recommender import recommend
 from app.disha.schemas import MetaResponse, RecommendRequest, RecommendResponse
 
@@ -103,9 +104,21 @@ def recommend_endpoint(req: RecommendRequest) -> RecommendResponse:
     return recommend(req)
 
 
+@app.get("/api/stats", tags=["meta"])
+def stats_endpoint() -> dict:
+    """Return dynamically computed statistical insights on the active dataset."""
+    return compute_dataset_stats()
+
+
 # ---------------------------------------------------------------------------
 # Static file serving  (must come AFTER API routes)
 # ---------------------------------------------------------------------------
+
+@app.get("/stats", include_in_schema=False)
+def stats_page() -> FileResponse:
+    """Serve the static Statistical Insights page."""
+    return _static_file_response(_TEMPLATES_DIR / "stats.html")
+
 
 @app.get("/", include_in_schema=False)
 def portal_root() -> FileResponse:

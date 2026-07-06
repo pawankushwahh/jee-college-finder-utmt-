@@ -324,8 +324,7 @@ function categoryLabel() {
   const sel = $("seat-category");
   const opt = sel.options[sel.selectedIndex];
   if (!opt) return t("category.general");
-  const suffix = " — " + t("category.comingSoon");
-  return opt.text.endsWith(suffix) ? opt.text.slice(0, -suffix.length).trim() : opt.text;
+  return opt.text;
 }
 
 function branchReviewValue() {
@@ -428,10 +427,7 @@ function initDataModeToggle(meta) {
 function applyDataModeToCategory(mode, catSel, catHint) {
   if (!catSel) return;
   buildCategoryOptions(catSel);
-  // TODO (reworkable): remove this lock once seat_filter in recommender is fixed.
-  // All categories exist in the 2025 dataset — the select should NOT be locked.
-  catSel.value = "OPEN";
-  catSel.disabled = true;
+  catSel.disabled = false;
   if (catHint) catHint.hidden = true;
 }
 
@@ -512,11 +508,8 @@ function buildCategoryOptions(catSel) {
       ? t("category.general")
       : String(c.label || c.value);
 
-    // TODO (reworkable): once seat_filter in recommender.py is verified, remove the
-    // "extended" check and always use c.available (all categories now in 2025 dataset).
-    const isAvailable = (state.dataMode === "extended") || c.available;
-    opt.textContent = isAvailable ? label : `${label} — ${t("category.comingSoon")}`;
-    opt.disabled = !isAvailable;
+    opt.textContent = label;
+    opt.disabled = false;
     catSel.appendChild(opt);
   }
   catSel.value = prev;

@@ -630,10 +630,6 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         notes.append(notes_text["no_adv"])
     if req.mains_rank is None:
         notes.append(notes_text["no_mains"])
-    # TODO (reworkable): all seat categories are now present in the 2025 basic dataset
-    # so this warning is no longer correct — remove or rephrase when seat_filter is fixed.
-    if req.seat_category != "OPEN":
-        notes.append(notes_text["category"].format(cat=req.seat_category))
     if req.home_state not in states.INDIAN_STATES:
         notes.append(notes_text["home_state"].format(state=req.home_state))
 
@@ -644,12 +640,7 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
     hs_index = home_state_advantage_index(effective_mode)
     female_index = female_seat_advantage_index(effective_mode)
 
-    # TODO (reworkable): seat_filter was previously only applied in extended mode because
-    # basic mode had only OPEN seats.  Now that josaa_merged_2025.csv contains ALL
-    # categories, this filter should ALWAYS be applied so the user's seat_category
-    # choice is respected.  Changing this requires verifying the category values sent
-    # by the frontend match the seat_type strings in the CSV exactly.
-    seat_filter = req.seat_category  # always filter now (was: only in extended mode)
+    seat_filter = req.seat_category  # always filter now
 
     results: List[Recommendation] = []
     for prog in programs:
@@ -657,8 +648,12 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         if rank is None:
             continue
         # Filter by seat_type (OPEN / OBC-NCL / SC / ST / EWS / PwD variants)
-        if seat_filter and prog.seat_type != seat_filter:
-            continue
+        if seat_filter:
+            if seat_filter == "PwD":
+                if not prog.seat_type.endswith("(PwD)"):
+                    continue
+            elif prog.seat_type != seat_filter:
+                continue
         if not _passes_gender(prog, req.gender):
             continue
         if not _passes_quota(prog, req.home_state):

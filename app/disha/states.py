@@ -497,11 +497,11 @@ VALID_GENDERS = ["male", "female"]
 # Entries marked available=False are shown in the UI with a "coming soon" note.
 VALID_CATEGORIES: list = [
     {"value": "OPEN", "label": "OPEN (General / CRL)", "available": True},
-    {"value": "OBC-NCL", "label": "OBC-NCL", "available": False},
-    {"value": "SC", "label": "SC (Scheduled Caste)", "available": False},
-    {"value": "ST", "label": "ST (Scheduled Tribe)", "available": False},
-    {"value": "EWS", "label": "EWS (Economically Weaker Section)", "available": False},
-    {"value": "PwD", "label": "PwD (Person with Disability)", "available": False},
+    {"value": "OBC-NCL", "label": "OBC-NCL", "available": True},
+    {"value": "SC", "label": "SC (Scheduled Caste)", "available": True},
+    {"value": "ST", "label": "ST (Scheduled Tribe)", "available": True},
+    {"value": "EWS", "label": "EWS (Economically Weaker Section)", "available": True},
+    {"value": "PwD", "label": "PwD (Person with Disability)", "available": True},
 ]
 
 # ---------------------------------------------------------------------------

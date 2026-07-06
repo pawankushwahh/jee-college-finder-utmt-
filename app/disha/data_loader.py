@@ -17,7 +17,7 @@ import re
 from collections import defaultdict
 from dataclasses import dataclass, field
 from functools import lru_cache
-from typing import Dict, List, Set, Tuple
+from typing import Dict, List, Optional, Set, Tuple
 
 import pandas as pd
 

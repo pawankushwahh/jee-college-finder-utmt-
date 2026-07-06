@@ -2875,11 +2875,7 @@ select.input--sm {
   line-height: 1.4;
 }
 
-/* Category select dimmed in basic mode */
-#panel-seat-category[disabled] {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
+
 
 /* Data mode badge in results header (tiny chip) */
 .data-mode-badge {

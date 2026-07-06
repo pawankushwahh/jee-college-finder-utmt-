@@ -14,11 +14,12 @@
    Bump CACHE when shipping changes so old caches are purged on activate.
    ════════════════════════════════════════════════════════════════════════ */
 
-const CACHE = "disha-shell-v2";
+const CACHE = "disha-shell-v3";
 
 const APP_SHELL = [
   "/",
   "/index.html",
+  "/stats",
   "/css/style.css",
   "/js/config.js",
   "/js/i18n.js",
@@ -77,6 +78,7 @@ function isAppShellAsset(url) {
   const p = url.pathname;
   return (
     p === "/index.html" ||
+    p === "/stats" ||
     p.endsWith(".js") ||
     p.endsWith(".css") ||
     p === "/manifest.json"
@@ -97,7 +99,11 @@ self.addEventListener("fetch", (event) => {
 
   // SPA navigations: network-first so deploys show up immediately.
   if (req.mode === "navigate") {
-    event.respondWith(networkFirst(new Request("/index.html", { cache: "no-store" })));
+    if (url.pathname === "/stats") {
+      event.respondWith(networkFirst(new Request("/stats", { cache: "no-store" })));
+    } else {
+      event.respondWith(networkFirst(new Request("/index.html", { cache: "no-store" })));
+    }
     return;
   }
 
