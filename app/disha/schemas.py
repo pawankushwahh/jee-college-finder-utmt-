@@ -28,7 +28,7 @@ class RecommendRequest(BaseModel):
     home_state: str = Field(
         description="Home state / UT, used for Home-State (HS) vs Other-State (OS) quota at NITs/IIITs.",
     )
-    goal: Literal["coding", "research", "mba", "core", "undecided"] = Field(
+    goal: Literal["coding", "research", "mba", "core", "undecided", "pure_science"] = Field(
         description="Career interest, used to re-rank branches and produce guidance.",
     )
     data_mode: Literal["basic", "extended"] = Field(

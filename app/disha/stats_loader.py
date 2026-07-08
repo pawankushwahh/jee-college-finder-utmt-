@@ -213,56 +213,53 @@ def compute_dataset_stats() -> Dict[str, Any]:
                     "avg_rank_difference": round(row["avg_diff"], 1)
                 })
 
-    # 2. Home State vs Other State Quota Advantage (for NITs)
-    quota_advantage = []
-    quota_df = valid_cutoffs[
-        valid_cutoffs["Quota"].isin(["HS", "OS"])
-    ][["Institute", "Academic Program Name", "Seat Type", "Gender", "Quota", "Max_Closing"]].copy()
-    pivot_quota = quota_df.pivot_table(
-        index=["Institute", "Academic Program Name", "Seat Type", "Gender"],
-        columns="Quota",
-        values="Max_Closing"
-    ).reset_index()
-    if "HS" in pivot_quota.columns and "OS" in pivot_quota.columns:
-        pivot_quota = pivot_quota.dropna(subset=["HS", "OS"])
-        if not pivot_quota.empty:
-            pivot_quota["diff"] = pivot_quota["HS"] - pivot_quota["OS"]
-            grouped_quota = pivot_quota.groupby("Institute").agg(
-                avg_diff=("diff", "mean"),
-                total_programs=("Academic Program Name", "count")
-            ).reset_index()
-            grouped_quota["inst_type"] = grouped_quota["Institute"].apply(_classify_institute_type)
-            nit_quota_adv = grouped_quota[grouped_quota["inst_type"] == "NIT"].sort_values("avg_diff", ascending=False)
-            for _, row in nit_quota_adv.head(10).iterrows():
-                quota_advantage.append({
-                    "institute": row["Institute"],
-                    "avg_rank_advantage": round(row["avg_diff"], 1),
-                    "total_programs": int(row["total_programs"])
-                })
+    # 2. CSE Cutoff Premium by Institute Type
+    cse_premium = []
+    if not crl_cutoffs.empty:
+        crl_copy = crl_cutoffs.copy()
+        crl_copy["Branch_Clean"] = crl_copy["Academic Program Name"].apply(_extract_branch_name)
+        crl_copy["Family"] = crl_copy["Branch_Clean"].apply(_classify_branch_family)
+        for itype in ["IIT", "NIT", "IIIT", "GFTI"]:
+            itype_df = crl_copy[crl_copy["Institute_Type"] == itype]
+            if itype_df.empty:
+                continue
+            cse_df = itype_df[itype_df["Family"] == "Computer Science & IT"]
+            non_cse_df = itype_df[itype_df["Family"] != "Computer Science & IT"]
+            cse_avg = round(cse_df["Max_Closing"].mean(), 1) if not cse_df.empty else None
+            non_cse_avg = round(non_cse_df["Max_Closing"].mean(), 1) if not non_cse_df.empty else None
+            overall_avg = round(itype_df["Max_Closing"].mean(), 1)
+            cse_premium.append({
+                "inst_type": itype,
+                "cse_avg": cse_avg,
+                "non_cse_avg": non_cse_avg,
+                "overall_avg": overall_avg,
+                "cse_programs": len(cse_df),
+                "non_cse_programs": len(non_cse_df)
+            })
 
-    # 3. Cutoff Drift by Branch Family
-    branch_drift = []
-    if "Closing_R1" in df.columns and "Closing_R6" in df.columns:
-        drift_df = df[["Academic Program Name", "Closing_R1", "Closing_R6"]].copy()
-        drift_df["R1_Clean"] = drift_df["Closing_R1"].apply(_clean_rank_value)
-        drift_df["R6_Clean"] = drift_df["Closing_R6"].apply(_clean_rank_value)
-        drift_df = drift_df.dropna(subset=["R1_Clean", "R6_Clean"])
-        drift_df = drift_df[(drift_df["R1_Clean"] > 0) & (drift_df["R6_Clean"] > 0)]
-        if not drift_df.empty:
-            drift_df["Branch_Clean"] = drift_df["Academic Program Name"].apply(_extract_branch_name)
-            drift_df["Family"] = drift_df["Branch_Clean"].apply(_classify_branch_family)
-            drift_df["pct_drift"] = ((drift_df["R6_Clean"] - drift_df["R1_Clean"]) / drift_df["R1_Clean"]) * 100
-            grouped_drift = drift_df.groupby("Family").agg(
-                avg_pct_drift=("pct_drift", "mean"),
-                program_count=("pct_drift", "count")
+    # 3. Top 5 Competitive Branches per Institute Type
+    top_branches_by_type = {}
+    if not crl_cutoffs.empty:
+        crl_br = crl_cutoffs.copy()
+        crl_br["Branch_Clean"] = crl_br["Academic Program Name"].apply(_extract_branch_name)
+        for itype in ["IIT", "NIT", "IIIT"]:
+            itype_df = crl_br[crl_br["Institute_Type"] == itype]
+            if itype_df.empty:
+                continue
+            branch_avg = itype_df.groupby("Branch_Clean").agg(
+                avg_closing=("Max_Closing", "mean"),
+                count=("Branch_Clean", "count")
             ).reset_index()
-            for _, row in grouped_drift.iterrows():
-                if row["Family"] != "Others":
-                    branch_drift.append({
-                        "family": row["Family"],
-                        "avg_pct_drift": round(row["avg_pct_drift"], 2),
-                        "program_count": int(row["program_count"])
-                    })
+            branch_avg = branch_avg[branch_avg["count"] >= 3]  # min 3 programs
+            branch_avg = branch_avg.sort_values("avg_closing").head(5)
+            entries = []
+            for _, row in branch_avg.iterrows():
+                entries.append({
+                    "branch": row["Branch_Clean"],
+                    "avg_closing": round(row["avg_closing"], 1),
+                    "count": int(row["count"])
+                })
+            top_branches_by_type[itype] = entries
 
     # 4. 4-Year vs 5-Year Program Comparison
     duration_comparison = []
@@ -302,7 +299,10 @@ def compute_dataset_stats() -> Dict[str, Any]:
             "five_year_count": five_count
         })
 
-    # 5. Options/Colleges Available by Rank
+    # 5. Options/Colleges Available by Rank (capped for cleaner display)
+    MAX_DISPLAY_PROGRAMS = 20
+    MAX_DISPLAY_INSTITUTES = 15
+
     advanced_curve = []
     adv_thresholds = [500, 1000, 2000, 5000, 8000, 10000, 15000, 20000, 25000]
     iit_crl = valid_cutoffs[
@@ -312,10 +312,14 @@ def compute_dataset_stats() -> Dict[str, Any]:
     ]
     for r in adv_thresholds:
         available_rows = iit_crl[iit_crl["Max_Closing"] >= r]
+        total_progs = len(available_rows)
+        total_insts = int(available_rows["Institute"].nunique())
         advanced_curve.append({
             "rank": r,
-            "program_count": len(available_rows),
-            "institute_count": int(available_rows["Institute"].nunique())
+            "program_count": min(total_progs, MAX_DISPLAY_PROGRAMS),
+            "institute_count": min(total_insts, MAX_DISPLAY_INSTITUTES),
+            "total_programs": total_progs,
+            "total_institutes": total_insts
         })
 
     mains_curve = []
@@ -327,10 +331,14 @@ def compute_dataset_stats() -> Dict[str, Any]:
     ]
     for r in mains_thresholds:
         available_rows = mains_crl[mains_crl["Max_Closing"] >= r]
+        total_progs = len(available_rows)
+        total_insts = int(available_rows["Institute"].nunique())
         mains_curve.append({
             "rank": r,
-            "program_count": len(available_rows),
-            "institute_count": int(available_rows["Institute"].nunique())
+            "program_count": min(total_progs, MAX_DISPLAY_PROGRAMS),
+            "institute_count": min(total_insts, MAX_DISPLAY_INSTITUTES),
+            "total_programs": total_progs,
+            "total_institutes": total_insts
         })
 
     return {
@@ -355,8 +363,8 @@ def compute_dataset_stats() -> Dict[str, Any]:
         "branch_counts": dict(list(branch_counts.items())[:15]),
         "volatility_counts": volatility_counts,
         "gender_advantage": gender_advantage,
-        "quota_advantage": quota_advantage,
-        "branch_drift": branch_drift,
+        "cse_premium": cse_premium,
+        "top_branches_by_type": top_branches_by_type,
         "duration_comparison": duration_comparison,
         "rank_availability": {
             "advanced": advanced_curve,

@@ -312,6 +312,15 @@ GOAL_TAG_WEIGHTS: Dict[str, Dict[str, float]] = {
         "mechanical": 4,
         "chemical": 4,
     },
+    "pure_science": {
+        "physics": 10,
+        "chemistry": 10,
+        "math_science": 10,
+        "bs_science": 9,
+        "biotech": 7,
+        "materials": 4,
+        "chemical": 3,
+    },
     "mba": {
         # For management aspirants the branch matters less than the brand of
         # the institute (handled via a brand bonus in the recommender), but
@@ -360,6 +369,7 @@ GOAL_BRAND_SENSITIVE = {"mba": 1.0, "undecided": 0.5}
 GOAL_LABELS: Dict[str, str] = {
     "coding": "Software / coding career",
     "research": "Research / higher studies",
+    "pure_science": "Pure Science (Physics, Chemistry, Maths)",
     "mba": "Management / MBA / business",
     "core": "Core engineering",
     "undecided": "Undecided / keeping options open",
@@ -383,6 +393,12 @@ GOAL_GUIDANCE: Dict[str, Dict[str, str]] = {
             "Physics/Chemistry/Economics) and core branches at top institutes are "
             "prioritised. Look for institutes with strong labs, faculty and PhD "
             "pipelines."
+        ),
+        "pure_science": (
+            "Since you are interested in pure science, BS and MS programs in Physics, "
+            "Chemistry, Maths, and Earth Science are prioritized. Look for premium "
+            "institutes with strong academic research cultures, active laboratories, "
+            "and established PhD placement records."
         ),
         "mba": (
             "If you are leaning towards management/MBA, the brand and peer network "
@@ -416,6 +432,12 @@ GOAL_GUIDANCE: Dict[str, Dict[str, str]] = {
             "Economics में BS डिग्री) तथा टॉप संस्थानों की core ब्रांच को प्राथमिकता दी "
             "गई है। ऐसे संस्थान देखें जिनकी labs, faculty और PhD पाइपलाइन मज़बूत हो।"
         ),
+        "pure_science": (
+            "चूँकि आपकी रुचि प्योर साइंस (pure science) में है, इसलिए Physics, Chemistry, "
+            "Maths और Earth Science में BS और MS प्रोग्राम को प्राथमिकता दी गई है। "
+            "मज़बूत शैक्षणिक रिसर्च संस्कृति, सक्रिय प्रयोगशालाओं और स्थापित PhD प्लेसमेंट "
+            "रिकॉर्ड वाले प्रतिष्ठित संस्थान चुनें।"
+        ),
         "mba": (
             "अगर आपका झुकाव management/MBA की ओर है, तो संस्थान का ब्रांड और peer "
             "network सबसे ज़्यादा मायने रखता है, इसलिए ऊँचे tier के संस्थानों को ज़्यादा "
@@ -445,6 +467,12 @@ GOAL_GUIDANCE: Dict[str, Dict[str, str]] = {
             "(Engineering Physics, Maths/Physics/Chemistry/Economics માં BS ડિગ્રી) અને ટોચની સંસ્થાઓની કોર બ્રાન્ચોને "
             "પ્રાથમિકતા આપવામાં આવે છે. એવી સંસ્થાઓ શોધો જેમાં મજબૂત લેબ્સ, ફેકલ્ટી અને PhD પાઇપલાઇન હોય."
         ),
+        "pure_science": (
+            "તમારી રુચિ પ્યોર સાયન્સ (pure science) માં હોવાથી, Physics, Chemistry, Maths "
+            "અને Earth Science માં BS અને MS પ્રોગ્રામ્સને પ્રાથમિકતા આપવામાં આવી છે. "
+            "મજબૂત શૈમિક સંશોધન સંસ્કૃતિ, સક્રિય પ્રયોગશાળાઓ અને સ્થાપિત PhD પ્લેસમેન્ટ "
+            "રેકોર્ડ ધરાવતી પ્રતિષ્ઠિત સંસ્થાઓ પસંદ કરો."
+        ),
         "mba": (
             "જો તમારો ઝુકાવ મેનેજમેન્ટ/MBA તરફ હોય, તો સંસ્થાની બ્રાન્ડ અને પીઅર નેટવર્ક સૌથી વધુ મહત્વ ધરાવે છે, "
             "તેથી ઉચ્ચ-સ્તરની સંસ્થાઓને વધુ મહત્વ આપવામાં આવે છે. ભવિષ્યમાં MBA કરવા માટે કોઈ પણ બ્રાન્ચ ચાલે; "
@@ -471,6 +499,12 @@ GOAL_GUIDANCE: Dict[str, Dict[str, str]] = {
             "ಸಂಶೋಧನೆ ಅಥವಾ ಉನ್ನತ ವ್ಯಾಸಂಗದ ಮಾರ್ಗಕ್ಕಾಗಿ, ಮೂಲಭೂತ-ವಿಜ್ಞಾನ ಮತ್ತು ಸಂಶೋಧನಾ-ಆಧಾರಿತ ಕಾರ್ಯಕ್ರಮಗಳು "
             "(Engineering Physics, Maths/Physics/Chemistry/Economics ನಲ್ಲಿ BS ಪದವಿಗಳು) ಮತ್ತು ಉನ್ನತ ಸಂಸ್ಥೆಗಳಲ್ಲಿನ ಕೋರ್ ಬ್ರಾಂಚ್‌ಗಳಿಗೆ "
             "ಆದ್ಯತೆ ನೀಡಲಾಗುತ್ತದೆ. ಬಲವಾದ ಲ್ಯಾಬ್‌ಗಳು, ಬೋಧಕ ಸಿಬ್ಬಂದಿ ಮತ್ತು PhD ಅವಕಾಶಗಳಿರುವ ಸಂಸ್ಥೆಗಳನ್ನು ಹುಡುಕಿ."
+        ),
+        "pure_science": (
+            "ನಿಮ್ಮ ಆಸಕ್ತಿ ಪ್ಯೂರ್ ಸೈನ್ಸ್ (pure science) ನಲ್ಲ ಇರುವುದರಿಂದ, Physics, Chemistry, Maths "
+            "ಮತ್ತು Earth Science ಗಳಲ್ಲಿನ BS ಮತ್ತು MS ಕಾರ್ಯಕ್ರಮಗಳಿಗೆ ಆದ್ಯತೆ ನೀಡಲಾಗಿದೆ. "
+            "ಬಲವಾದ ಶೈಕ್ಷಣಿಕ ಸಂಶೋಧನಾ ಸಂಸ್ಕೃತಿ, ಸಕ್ರಿಯ ಪ್ರಯೋಗಾಲಯಗಳು ಮತ್ತು ಸುಸ್ಥಾಪಿತ PhD ನಿಯೋಜನೆ "
+            "ದಾಖಲೆಗಳನ್ನು ಹೊಂದಿರುವ ಪ್ರತಿಷ್ಠಿತ ಸಂಸ್ಥೆಗಳನ್ನು ಆಯ್ಕೆಮಾಡಿ."
         ),
         "mba": (
             "ನೀವು ಮ್ಯಾನೇಜ್‌ಮೆಂಟ್/MBA ಕಡೆಗೆ ಒಲವು ಹೊಂದಿದ್ದರೆ, ಸಂಸ್ಥೆಯ ಬ್ರಾಂಡ್ ಮತ್ತು ಸಹಪಾಠಿಗಳ ನೆಟ್‌ವರ್ಕ್ ಅತ್ಯಂತ ಪ್ರಮುಖವಾಗಿದೆ, "
@@ -518,6 +552,9 @@ BRANCH_PREFERENCES: List[dict] = [
     {"value": "mechanical", "label": "Mechanical", "tags": ["mechanical"]},
     {"value": "civil", "label": "Civil", "tags": ["civil"]},
     {"value": "chemical", "label": "Chemical", "tags": ["chemical"]},
+    {"value": "physics", "label": "Physics", "tags": ["physics"]},
+    {"value": "math_science", "label": "Maths", "tags": ["math_science"]},
+    {"value": "biotech", "label": "Biotechnology", "tags": ["biotech"]},
 ]
 
 # value -> set of branch tags it covers.

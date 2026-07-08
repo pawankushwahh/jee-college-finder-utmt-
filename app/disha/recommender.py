@@ -532,6 +532,9 @@ _BRANCH_PREF_LABELS = {
         "mechanical": "Mechanical",
         "civil": "Civil",
         "chemical": "Chemical",
+        "physics": "Physics",
+        "math_science": "Maths",
+        "biotech": "Biotechnology",
     },
     "hi": {
         "cs_it": "CS / IT",
@@ -542,6 +545,9 @@ _BRANCH_PREF_LABELS = {
         "mechanical": "Mechanical",
         "civil": "Civil",
         "chemical": "Chemical",
+        "physics": "Physics",
+        "math_science": "Maths",
+        "biotech": "Biotechnology",
     },
     "gu": {
         "cs_it": "CS / IT",
@@ -552,6 +558,9 @@ _BRANCH_PREF_LABELS = {
         "mechanical": "Mechanical",
         "civil": "Civil",
         "chemical": "Chemical",
+        "physics": "Physics",
+        "math_science": "Maths",
+        "biotech": "Biotechnology",
     },
     "kn": {
         "cs_it": "CS / IT",
@@ -562,6 +571,9 @@ _BRANCH_PREF_LABELS = {
         "mechanical": "Mechanical",
         "civil": "Civil",
         "chemical": "Chemical",
+        "physics": "Physics",
+        "math_science": "Maths",
+        "biotech": "Biotechnology",
     },
 }
 

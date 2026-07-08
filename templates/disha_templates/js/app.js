@@ -14,12 +14,13 @@
 const GOAL_ICONS = {
   coding: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
   research: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>',
+  pure_science: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v8L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45L14 10V2z"/><path d="M8.5 2h7"/><path d="M7 16h10"/></svg>',
   mba: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>',
   core: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>',
   undecided: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
 };
 
-const GOAL_IDS = ["coding", "research", "mba", "core", "undecided"];
+const GOAL_IDS = ["coding", "research", "pure_science", "mba", "core", "undecided"];
 
 const QUOTA_KEYS = ["AI", "HS", "OS", "GO", "JK", "LA"];
 const quotaLabel = (q) => (QUOTA_KEYS.includes(q) ? t(`quota.${q}`) : q);
@@ -67,6 +68,7 @@ const state = {
   filterText: "",
   filterType: "",
   filterRegion: "all",
+  filterState: "all",
   choices: JSON.parse(localStorage.getItem("disha_choices") || "[]"),
   // Extended data mode removed — always "basic" (2025 dataset).
   // TODO (reworkable): remove dataMode from state entirely once API no longer expects it.
@@ -439,6 +441,7 @@ function buildPanelControls() {
   buildPanelGenderRow();
   buildPanelGoalSelect();
   buildPanelStateSelect();
+  buildFilterStateSelect();
   buildCategoryOptions($("panel-seat-category"));
   renderBranchGrids();
 }
@@ -489,6 +492,25 @@ function buildPanelStateSelect() {
     sel.appendChild(opt);
   }
   if (prev) sel.value = prev;
+}
+
+function buildFilterStateSelect() {
+  const sel = $("filter-state");
+  if (!sel || !state.meta) return;
+  const prev = sel.value || "all";
+  sel.innerHTML = "";
+  const optAll = document.createElement("option");
+  optAll.value = "all";
+  optAll.setAttribute("data-i18n", "stateFilter.all");
+  optAll.textContent = t("stateFilter.all") || "All States";
+  sel.appendChild(optAll);
+  for (const s of state.meta.states) {
+    const opt = document.createElement("option");
+    opt.value = s;
+    opt.textContent = s;
+    sel.appendChild(opt);
+  }
+  sel.value = prev;
 }
 
 // Build (or relabel) a reservation-category dropdown from cached meta. Defaults
@@ -626,6 +648,7 @@ function syncPanelFromState() {
   if ($("panel-goal") && state.goal) $("panel-goal").value = state.goal;
   if ($("panel-brand-branch-slider")) $("panel-brand-branch-slider").value = state.brandBranchRatio !== undefined ? state.brandBranchRatio : 0.5;
   if ($("panel-region")) $("panel-region").value = state.filterRegion || "all";
+  if ($("filter-state")) $("filter-state").value = state.filterState || "all";
   syncGenderRows();
   renderBranchGrids();
 }
@@ -1345,6 +1368,7 @@ function recPassesFilters(rec) {
     if (state.filterRegion === "metro" && !rec.is_metro) return false;
     if (state.filterRegion !== "metro" && rec.region !== state.filterRegion) return false;
   }
+  if (state.filterState && state.filterState !== "all" && rec.institute_state !== state.filterState) return false;
   if (!state.filterText) return true;
   const q = state.filterText;
   return (
@@ -1835,6 +1859,11 @@ function buildShareUrl() {
     params.set("region", state.filterRegion);
   }
 
+  // State filter
+  if (state.filterState && state.filterState !== "all") {
+    params.set("inst_state", state.filterState);
+  }
+
   // 10. college vs branch priority (slider value)
   if (state.brandBranchRatio !== undefined && state.brandBranchRatio !== null) {
     params.set("ratio", String(state.brandBranchRatio));
@@ -1930,6 +1959,13 @@ function loadStateFromURL() {
   state.filterRegion = region;
   if ($("panel-region")) {
     $("panel-region").value = region;
+  }
+
+  // Restore state filter
+  const instState = q.get("inst_state") || "all";
+  state.filterState = instState;
+  if ($("filter-state")) {
+    $("filter-state").value = instState;
   }
 
   // Restore college vs branch priority (slider)
@@ -2218,6 +2254,15 @@ function bindEvents() {
     saveStateToURL();
   });
 
+  const filterState = $("filter-state");
+  if (filterState) {
+    filterState.addEventListener("change", () => {
+      state.filterState = filterState.value;
+      renderSections();
+      saveStateToURL();
+    });
+  }
+
   $("type-chips").addEventListener("click", (e) => {
     const chip = e.target.closest(".chip");
     if (!chip) return;
@@ -2232,7 +2277,11 @@ function bindEvents() {
   $("clear-filters-btn").addEventListener("click", () => {
     state.filterText = "";
     state.filterType = "";
+    state.filterRegion = "all";
+    state.filterState = "all";
     $("filter-search").value = "";
+    if ($("panel-region")) $("panel-region").value = "all";
+    if ($("filter-state")) $("filter-state").value = "all";
     document.querySelectorAll("#type-chips .chip").forEach((c) =>
       c.classList.toggle("is-active", c.dataset.type === "")
     );

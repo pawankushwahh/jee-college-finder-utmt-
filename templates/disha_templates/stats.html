@@ -663,29 +663,28 @@
           </div>
         </div>
 
-        <!-- Chart 6: Home State Advantage in NITs -->
+        <!-- Chart 6: CSE Cutoff Premium by Institute Type -->
         <div class="card card--col-6">
           <div class="card__header">
             <h3 class="card__title">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44A2.5 2.5 0 0 1 2 17.5v-15A2.5 2.5 0 0 1 4.5 0h5zM14.5 16a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z" />
               </svg>
-              Top 10 NITs with Largest Home-State Advantage
+              CSE Cutoff Premium — JoSAA 2025
             </h3>
           </div>
           <div class="card__body">
             <div class="chart-container">
-              <canvas id="chart-home-state-adv"></canvas>
+              <canvas id="chart-cse-premium"></canvas>
             </div>
             <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
-              Rank differences between Home-State (HS) and Other-State (OS) quotas (higher means local students get in
-              with much higher ranks).
+              How much harder is Computer Science to get into? Average closing rank for CSE vs Non-CSE branches (lower rank = more competitive).
             </p>
           </div>
         </div>
 
-        <!-- Chart 7: Cutoff Relaxation Drift by Branch Family -->
+        <!-- Chart 7: Top Competitive Branches by Institute Type -->
         <div class="card card--col-6">
           <div class="card__header">
             <h3 class="card__title">
@@ -693,15 +692,20 @@
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 20V10M18 20V4M6 20v-6" />
               </svg>
-              Cutoff Drift % (Round 1 vs Round 6)
+              Top Competitive Branches — 2025
             </h3>
           </div>
           <div class="card__body">
+            <div class="tabs-nav" id="branch-type-tabs" style="margin-bottom: 12px; border-bottom-color: var(--line-soft);">
+              <button class="tab-btn is-active" onclick="switchBranchTab('IIT')" data-branch-tab="IIT">IIT</button>
+              <button class="tab-btn" onclick="switchBranchTab('NIT')" data-branch-tab="NIT">NIT</button>
+              <button class="tab-btn" onclick="switchBranchTab('IIIT')" data-branch-tab="IIIT">IIIT</button>
+            </div>
             <div class="chart-container">
-              <canvas id="chart-branch-drift"></canvas>
+              <canvas id="chart-top-branches"></canvas>
             </div>
             <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
-              Average percentage relaxation of cutoffs from Round 1 to Round 6 grouped by branch families.
+              Top 5 hardest-to-get branches per institute type based on average OPEN closing rank (2025 data).
             </p>
           </div>
         </div>
@@ -736,15 +740,15 @@
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
-              JEE Advanced: Available IIT Options by Rank
+              JEE Advanced: Recommended IIT Picks — 2025
             </h3>
           </div>
           <div class="card__body">
             <div class="chart-container">
               <canvas id="chart-avail-adv"></canvas>
             </div>
-            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
-              Number of program choices and unique IIT colleges available as your JEE Advanced rank changes.
+            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;" id="desc-avail-adv">
+              Recommended top picks (capped at 20 programs, 15 IITs) from the full JoSAA 2025 pool for each rank range.
             </p>
           </div>
         </div>
@@ -757,15 +761,15 @@
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
-              JEE Mains: Available NIT/IIIT/GFTI Options by Rank
+              JEE Mains: Recommended NIT/IIIT/GFTI Picks — 2025
             </h3>
           </div>
           <div class="card__body">
             <div class="chart-container">
               <canvas id="chart-avail-mains"></canvas>
             </div>
-            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
-              Number of program choices and unique colleges available as your JEE Mains rank changes.
+            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;" id="desc-avail-mains">
+              Recommended top picks (capped at 20 programs, 15 colleges) from the full JoSAA 2025 pool for each rank range.
             </p>
           </div>
         </div>
@@ -1159,71 +1163,45 @@
           }
         });
 
-        // Draw Home-State Advantage chart (NITs)
-        const hsLabels = data.quota_advantage.map(q => q.institute.replace('National Institute of Technology', 'NIT').replace('Indian Institute of Technology', 'IIT'));
-        const hsValues = data.quota_advantage.map(q => q.avg_rank_advantage);
+        // Draw CSE Cutoff Premium chart
+        const cseLabels = data.cse_premium.map(c => c.inst_type);
+        const cseAvgValues = data.cse_premium.map(c => c.cse_avg);
+        const nonCseAvgValues = data.cse_premium.map(c => c.non_cse_avg);
 
-        charts.homeStateAdv = new Chart(document.getElementById("chart-home-state-adv"), {
+        charts.csePremium = new Chart(document.getElementById("chart-cse-premium"), {
           type: 'bar',
           data: {
-            labels: hsLabels,
-            datasets: [{
-              data: hsValues,
-              backgroundColor: '#a87714',
-              borderRadius: 4
-            }]
-          },
-          options: {
-            indexAxis: 'y',
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { display: false },
-              tooltip: {
-                callbacks: {
-                  label: function (context) {
-                    return ` Avg. Rank Buffer: +${Math.round(context.raw).toLocaleString()}`;
-                  }
-                }
-              }
-            },
-            scales: {
-              x: {
-                grid: { color: '#efe8d8' },
-                ticks: { font: { family: 'Inter' }, color: '#5f5747' }
+            labels: cseLabels,
+            datasets: [
+              {
+                label: 'CSE & IT',
+                data: cseAvgValues,
+                backgroundColor: '#bf5b3c',
+                borderRadius: 6
               },
-              y: {
-                grid: { display: false },
-                ticks: { font: { family: 'Inter', size: 9 }, color: '#241e12' }
+              {
+                label: 'Non-CSE Branches',
+                data: nonCseAvgValues,
+                backgroundColor: '#2e7d5b',
+                borderRadius: 6
               }
-            }
-          }
-        });
-
-        // Draw Cutoff Drift % by Branch Family
-        const driftLabels = data.branch_drift.map(b => b.family);
-        const driftValues = data.branch_drift.map(b => b.avg_pct_drift);
-
-        charts.branchDrift = new Chart(document.getElementById("chart-branch-drift"), {
-          type: 'bar',
-          data: {
-            labels: driftLabels,
-            datasets: [{
-              label: 'Drift %',
-              data: driftValues,
-              backgroundColor: '#2e7d5b',
-              borderRadius: 4
-            }]
+            ]
           },
           options: {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-              legend: { display: false },
+              legend: {
+                position: 'bottom',
+                labels: { font: { family: 'Inter', size: 11 }, color: '#241e12', padding: 15 }
+              },
               tooltip: {
                 callbacks: {
                   label: function (context) {
-                    return ` R1 to R6 Relaxation: +${context.raw.toFixed(1)}%`;
+                    const idx = context.dataIndex;
+                    const item = data.cse_premium[idx];
+                    const count = context.datasetIndex === 0 ? item.cse_programs : item.non_cse_programs;
+                    return ` ${context.dataset.label}: Avg. Closing ${Math.round(context.raw).toLocaleString()} (${count} programs)`;
                   }
                 }
               }
@@ -1234,16 +1212,98 @@
                 ticks: {
                   font: { family: 'Inter' },
                   color: '#5f5747',
-                  callback: function (value) { return value + '%'; }
+                  callback: function (value) { return value.toLocaleString(); }
+                },
+                title: {
+                  display: true,
+                  text: 'Avg. Closing Rank (lower = harder)',
+                  font: { family: 'Inter', size: 11 },
+                  color: '#93897a'
                 }
               },
               x: {
                 grid: { display: false },
-                ticks: { font: { family: 'Inter', size: 10 }, color: '#5f5747' }
+                ticks: { font: { family: 'Inter', weight: 'bold' }, color: '#241e12' }
               }
             }
           }
         });
+
+        // Draw Top Competitive Branches chart (default: IIT)
+        window._topBranchesData = data.top_branches_by_type;
+        window._currentBranchTab = 'IIT';
+
+        function renderTopBranches(itype) {
+          const entries = window._topBranchesData[itype] || [];
+          const labels = entries.map(e => e.branch.length > 30 ? e.branch.substring(0, 28) + '…' : e.branch);
+          const values = entries.map(e => e.avg_closing);
+          const counts = entries.map(e => e.count);
+          const colors = {
+            'IIT': '#bf5b3c',
+            'NIT': '#2e7d5b',
+            'IIIT': '#a87714'
+          };
+
+          if (charts.topBranches) charts.topBranches.destroy();
+
+          charts.topBranches = new Chart(document.getElementById("chart-top-branches"), {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: [{
+                data: values,
+                backgroundColor: colors[itype] || '#175c4c',
+                borderRadius: 6
+              }]
+            },
+            options: {
+              indexAxis: 'y',
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  callbacks: {
+                    label: function (context) {
+                      const idx = context.dataIndex;
+                      return ` Avg. Closing: ${Math.round(context.raw).toLocaleString()} (${counts[idx]} programs)`;
+                    }
+                  }
+                }
+              },
+              scales: {
+                x: {
+                  grid: { color: '#efe8d8' },
+                  ticks: {
+                    font: { family: 'Inter' },
+                    color: '#5f5747',
+                    callback: function (value) { return value.toLocaleString(); }
+                  },
+                  title: {
+                    display: true,
+                    text: 'Avg. Closing Rank',
+                    font: { family: 'Inter', size: 11 },
+                    color: '#93897a'
+                  }
+                },
+                y: {
+                  grid: { display: false },
+                  ticks: { font: { family: 'Inter', size: 10 }, color: '#241e12' }
+                }
+              }
+            }
+          });
+        }
+
+        window.switchBranchTab = function(itype) {
+          document.querySelectorAll('#branch-type-tabs .tab-btn').forEach(btn => {
+            btn.classList.toggle('is-active', btn.dataset.branchTab === itype);
+          });
+          window._currentBranchTab = itype;
+          renderTopBranches(itype);
+        };
+
+        renderTopBranches('IIT');
 
         // Draw 4-Year vs 5-Year comparison chart
         const durationLabels = data.duration_comparison.map(d => d.inst_type);
@@ -1311,22 +1371,28 @@
             labels: advAvailLabels,
             datasets: [
               {
-                label: 'Programs (Courses)',
+                label: 'Recommended Programs',
                 data: advAvailProgs,
                 borderColor: '#175c4c',
-                backgroundColor: 'rgba(23, 92, 76, 0.05)',
-                borderWidth: 2,
-                tension: 0.2,
-                fill: true
+                backgroundColor: 'rgba(23, 92, 76, 0.08)',
+                borderWidth: 2.5,
+                tension: 0.3,
+                fill: true,
+                pointBackgroundColor: '#175c4c',
+                pointRadius: 4,
+                pointHoverRadius: 6
               },
               {
                 label: 'IIT Colleges',
                 data: advAvailInsts,
                 borderColor: '#bf5b3c',
-                backgroundColor: 'rgba(191, 91, 60, 0.05)',
-                borderWidth: 2,
-                tension: 0.2,
-                fill: true
+                backgroundColor: 'rgba(191, 91, 60, 0.06)',
+                borderWidth: 2.5,
+                tension: 0.3,
+                fill: true,
+                pointBackgroundColor: '#bf5b3c',
+                pointRadius: 4,
+                pointHoverRadius: 6
               }
             ]
           },
@@ -1336,17 +1402,33 @@
             plugins: {
               legend: {
                 position: 'bottom',
-                labels: { font: { family: 'Inter', size: 11 }, color: '#241e12' }
+                labels: { font: { family: 'Inter', size: 11 }, color: '#241e12', padding: 15 }
+              },
+              tooltip: {
+                callbacks: {
+                  afterBody: function (tooltipItems) {
+                    const idx = tooltipItems[0].dataIndex;
+                    const item = data.rank_availability.advanced[idx];
+                    return `Total available: ${item.total_programs} programs, ${item.total_institutes} IITs`;
+                  }
+                }
               }
             },
             scales: {
               y: {
                 grid: { color: '#efe8d8' },
-                ticks: { font: { family: 'Inter' }, color: '#5f5747' }
+                ticks: { font: { family: 'Inter' }, color: '#5f5747' },
+                max: 25
               },
               x: {
                 grid: { display: false },
-                ticks: { font: { family: 'Inter', size: 10 }, color: '#5f5747' }
+                ticks: { font: { family: 'Inter', size: 10 }, color: '#5f5747' },
+                title: {
+                  display: true,
+                  text: 'Your JEE Advanced Rank',
+                  font: { family: 'Inter', size: 11 },
+                  color: '#93897a'
+                }
               }
             }
           }
@@ -1363,22 +1445,28 @@
             labels: mainsAvailLabels,
             datasets: [
               {
-                label: 'Programs (Courses)',
+                label: 'Recommended Programs',
                 data: mainsAvailProgs,
                 borderColor: '#175c4c',
-                backgroundColor: 'rgba(23, 92, 76, 0.05)',
-                borderWidth: 2,
-                tension: 0.2,
-                fill: true
+                backgroundColor: 'rgba(23, 92, 76, 0.08)',
+                borderWidth: 2.5,
+                tension: 0.3,
+                fill: true,
+                pointBackgroundColor: '#175c4c',
+                pointRadius: 4,
+                pointHoverRadius: 6
               },
               {
                 label: 'Colleges',
                 data: mainsAvailInsts,
                 borderColor: '#a87714',
-                backgroundColor: 'rgba(168, 119, 20, 0.05)',
-                borderWidth: 2,
-                tension: 0.2,
-                fill: true
+                backgroundColor: 'rgba(168, 119, 20, 0.06)',
+                borderWidth: 2.5,
+                tension: 0.3,
+                fill: true,
+                pointBackgroundColor: '#a87714',
+                pointRadius: 4,
+                pointHoverRadius: 6
               }
             ]
           },
@@ -1388,17 +1476,33 @@
             plugins: {
               legend: {
                 position: 'bottom',
-                labels: { font: { family: 'Inter', size: 11 }, color: '#241e12' }
+                labels: { font: { family: 'Inter', size: 11 }, color: '#241e12', padding: 15 }
+              },
+              tooltip: {
+                callbacks: {
+                  afterBody: function (tooltipItems) {
+                    const idx = tooltipItems[0].dataIndex;
+                    const item = data.rank_availability.mains[idx];
+                    return `Total available: ${item.total_programs} programs, ${item.total_institutes} colleges`;
+                  }
+                }
               }
             },
             scales: {
               y: {
                 grid: { color: '#efe8d8' },
-                ticks: { font: { family: 'Inter' }, color: '#5f5747' }
+                ticks: { font: { family: 'Inter' }, color: '#5f5747' },
+                max: 25
               },
               x: {
                 grid: { display: false },
-                ticks: { font: { family: 'Inter', size: 10 }, color: '#5f5747' }
+                ticks: { font: { family: 'Inter', size: 10 }, color: '#5f5747' },
+                title: {
+                  display: true,
+                  text: 'Your JEE Mains Rank',
+                  font: { family: 'Inter', size: 11 },
+                  color: '#93897a'
+                }
               }
             }
           }

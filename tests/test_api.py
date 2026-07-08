@@ -21,7 +21,7 @@ def test_meta_shape():
     body = res.json()
     assert "Rajasthan" in body["states"]
     assert {g["value"] for g in body["goals"]} == {
-        "coding", "research", "mba", "core", "undecided",
+        "coding", "research", "pure_science", "mba", "core", "undecided",
     }
     assert body["genders"] == ["male", "female"]
     assert body["total_programs"] > 2000

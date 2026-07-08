@@ -104,6 +104,7 @@ const I18N = {
     goals: {
       coding: { name: "Coding & software", desc: "Build things, aim for SDE roles" },
       research: { name: "Research & higher studies", desc: "MS, MTech or PhD pathways" },
+      pure_science: { name: "Pure Science", desc: "Physics, Chemistry, Maths pathways" },
       mba: { name: "MBA & management", desc: "Brand, network, placements" },
       core: { name: "Core engineering", desc: "Practice the discipline you study" },
       undecided: { name: "Not sure yet", desc: "Keep as many doors open as possible" },
@@ -118,6 +119,11 @@ const I18N = {
         "Prefer institutes with active research groups in your area — check faculty pages, not just rankings.",
         "IISc and IISERs are strong alternatives if pure science appeals to you.",
         "Start approaching professors for small projects in your first year.",
+      ],
+      pure_science: [
+        "IISc, IISERs, and top IITs offer excellent BS/MS programs in sciences.",
+        "Look for opportunities to get involved in research projects early in your college life.",
+        "A strong foundation in pure sciences opens up research, academia, and specialized R&D roles.",
       ],
       mba: [
         "An older IIT or NIT brand carries real weight in CAT shortlists and placements.",
@@ -174,6 +180,9 @@ const I18N = {
       east: "East India",
       west: "West India",
       northeast: "Northeast / Hills",
+    },
+    stateFilter: {
+      all: "All States",
     },
     panel: {
       toggle: "Filter / Edit",
@@ -395,6 +404,7 @@ const I18N = {
     goals: {
       coding: { name: "Coding और software", desc: "चीज़ें बनाएँ, SDE भूमिकाएँ" },
       research: { name: "Research और higher studies", desc: "MS, MTech या PhD के रास्ते" },
+      pure_science: { name: "Pure Science", desc: "Physics, Chemistry, Maths के रास्ते" },
       mba: { name: "MBA और management", desc: "ब्रांड, network, placements" },
       core: { name: "Core engineering", desc: "अपनी पढ़ी हुई शाखा में काम करें" },
       undecided: { name: "अभी पक्का नहीं", desc: "ज़्यादा से ज़्यादा रास्ते खुले रखें" },
@@ -407,6 +417,11 @@ const I18N = {
         "अपने क्षेत्र में सक्रिय research समूह वाले संस्थान चुनें — सिर्फ़ rankings नहीं, faculty पेज देखें।",
         "अगर शुद्ध विज्ञान पसंद है तो IISc और IISERs मज़बूत विकल्प हैं।",
         "पहले साल से ही professors से छोटे projects के लिए संपर्क करना शुरू करें।",
+      ],
+      pure_science: [
+        "IISc, IISERs और टॉप IITs विज्ञान में बेहतरीन BS/MS प्रोग्राम प्रदान करते हैं।",
+        "अपने कॉलेज जीवन के शुरुआत में ही रिसर्च प्रोजेक्ट्स में शामिल होने के अवसरों को तलाशें।",
+        "प्योर साइंस में एक मजबूत आधार रिसर्च, शिक्षा क्षेत्र और विशिष्ट R&D भूमिकाओं के द्वार खोलता है।",
       ],
       mba: [
         "पुरानी IIT या NIT का ब्रांड CAT shortlists और placements में असली वज़न रखता है।",
@@ -461,6 +476,9 @@ const I18N = {
       east: "पूर्व भारत",
       west: "पश्चिम भारत",
       northeast: "पूर्वोत्तर / पर्वतीय क्षेत्र",
+    },
+    stateFilter: {
+      all: "सभी राज्य",
     },
     panel: {
       toggle: "फ़िल्टर / बदलें",
@@ -679,6 +697,7 @@ const I18N = {
     goals: {
       coding: { name: "કોડિંગ અને સોફ્ટવેર", desc: "પ્રોડક્ટ્સ બનાવો, SDE રોલ્સ લક્ષ્ય કરો" },
       research: { name: "રિસર્ચ અને ઉચ્ચ અભ્યાસ", desc: "MS, MTech અથવા PhD માટેના રસ્તાઓ" },
+      pure_science: { name: "Pure Science", desc: "Physics, Chemistry, Maths માટેના રસ્તાઓ" },
       mba: { name: "MBA અને મેનેજમેન્ટ", desc: "બ્રાન્ડ, નેટવર્ક, પ્લેસમેન્ટ્સ" },
       core: { name: "કોર એન્જિનિયરિંગ", desc: "તમે જે વિષય ભણો છો તેની પ્રેક્ટિસ કરો" },
       undecided: { name: "હજી નક્કી નથી", desc: "બને તેટલા દરવાજા ખુલ્લા રાખો" },
@@ -691,6 +710,11 @@ const I18N = {
         "તમારા ક્ષેત્રમાં સક્રિય સંશોધન જૂથો ધરાવતી કૉલેજો પસંદ કરો — માત્ર રેન્કિંગ નહીં, ફેકલ્ટી પેજ પણ જુઓ.",
         "જો તમને શુદ્ધ વિજ્ઞાન ગમતું હોય તો IISc અને IISERs મજબૂત વિકલ્પો છે.",
         "તમારા પ્રથમ વર્ષમાં જ પ્રોફેસરો સાથે નાના પ્રોજેક્ટ્સ માટે વાત કરવાનું શરૂ કરો.",
+      ],
+      pure_science: [
+        "IISc, IISERs અને ટોચની IITs વિજ્ઞાનમાં ઉત્કૃષ્ટ BS/MS પ્રોગ્રામ્સ પ્રદાન કરે છે.",
+        "તમારા પ્રથમ વર્ષમાં જ સંશોધન પ્રોજેક્ટ્સમાં જોડાવાની તકો શોધો.",
+        "પ્યોર સાયન્સમાં મજબૂત પાયો સંશોધન, શિક્ષણ અને વિશિષ્ટ R&D ક્ષેત્રો માટેના રસ્તાઓ ખોલે છે.",
       ],
       mba: [
         "જૂની IIT અથવા NIT ની બ્રાન્ડ MBA શોર્ટલિસ્ટ અને પ્લેસમેન્ટમાં ઘણું મહત્વ ધરાવે છે.",
@@ -745,6 +769,9 @@ const I18N = {
       east: "પૂર્વ ભારત",
       west: "પશ્ચિમ ભારત",
       northeast: "ઉત્તરપૂર્વ / પર્વતીય",
+    },
+    stateFilter: {
+      all: "બધા રાજ્યો",
     },
     panel: {
       toggle: "ફિલ્ટર / સુધારો",
@@ -961,6 +988,7 @@ const I18N = {
     goals: {
       coding: { name: "ಕೋಡಿಂಗ್ ಮತ್ತು ಸಾಫ್ಟ್‌ವೇರ್", desc: "ನಿರ್ಮಾಣ ಮಾಡಿ, SDE ಪಾತ್ರಗಳನ್ನು ಗುರಿಯಾಗಿಸಿ" },
       research: { name: "ಸಂಶೋಧನೆ ಮತ್ತು ಉನ್ನತ ವ್ಯಾಸಂಗ", desc: "MS, MTech ಅಥವಾ PhD ಮಾರ್ಗಗಳು" },
+      pure_science: { name: "Pure Science", desc: "Physics, Chemistry, Maths ಮಾರ್ಗಗಳು" },
       mba: { name: "MBA ಮತ್ತು ನಿರ್ವಹಣೆ", desc: "ಬ್ರಾಂಡ್, ನೆಟ್‌ವರ್ಕ್, ಪ್ಲೇಸ್‌ಮೆಂಟ್ಸ್" },
       core: { name: "ಕೋರ್ ಇಂಜಿನಿಯರಿಂಗ್", desc: "ನೀವು ಓದುವ ವಿಷಯದಲ್ಲೇ ವೃತ್ತಿಪರರಾಗಿ" },
       undecided: { name: "ಇನ್ನೂ ನಿರ್ಧರಿಸಿಲ್ಲ", desc: "ಹೆಚ್ಚಿನ ಆಯ್ಕೆಗಳನ್ನು ತೆರೆದಿಡಿ" },
@@ -973,6 +1001,11 @@ const I18N = {
         "ನಿಮ್ಮ ಆಸಕ್ತಿಯ ಕ್ಷೇತ್ರದಲ್ಲಿ ಸಕ್ರಿಯ ಸಂಶೋಧನಾ ತಂಡಗಳನ್ನು ಹೊಂದಿರುವ ಕಾಲೇಜುಗಳನ್ನು ಆಯ್ಕೆ ಮಾಡಿ — ಬರೀ ರ‍್ಯಾಂಕಿಂಗ್ ಅಲ್ಲದೆ ಪ್ರೊಫೆಸರ್‌ಗಳ ಪ್ರೊಫೈಲ್ ಗಮನಿಸಿ.",
         "ಶುದ್ಧ ವಿಜ್ಞಾನದಲ್ಲಿ ಆಸಕ್ತಿ ಇದ್ದರೆ IISc and IISERs ಉತ್ತಮ ಪರ್ಯಾಯಗಳಾಗಿವೆ.",
         "ನಿಮ್ಮ ಮೊದಲ ವರ್ಷದಲ್ಲೇ ಪ್ರೊಫೆಸರ್‌ಗಳೊಂದಿಗೆ ಸಣ್ಣ ಸಂಶೋಧನಾ ಯೋಜನೆಗಳಿಗೆ ಸಂಪರ್ಕಿಸಿ.",
+      ],
+      pure_science: [
+        "IISc, IISERs ಮತ್ತು ಉನ್ನತ IITs ಗಳು ವಿಜ್ಞಾನದಲ್ಲಿ ಅತ್ಯುತ್ತಮ BS/MS ಪ್ರೋಗ್ರಾಂಗಳನ್ನು ಒದಗಿಸುತ್ತವೆ.",
+        "ಕಾಲೇಜಿನ ಮೊದಲ ವರ್ಷದಲ್ಲೇ ಸಂಶೋಧನಾ ಯೋಜನೆಗಳಲ್ಲಿ भागವಹಿಸಲು ಪ್ರಯತ್ನಿಸಿ.",
+        "ಪ್ಯೂರ್ ಸೈನ್ಸ್‌ನಲ್ಲಿನ ಬಲವಾದ ಅಡಿಪಾಯವು ಸಂಶೋಧನೆ, ಶಿಕ್ಷಣ ಮತ್ತು ವಿಶೇಷ R&D ಕ್ಷೇತ್ರಗಳಲ್ಲಿ ಹಲವು ಅವಕಾಶಗಳನ್ನು ತೆರೆಯುತ್ತದೆ.",
       ],
       mba: [
         "ಹಳೆಯ IIT ಅಥವಾ NIT ಬ್ರಾಂಡ್ ಮೌಲ್ಯವು MBA ಶಾರ್ಟ್‌ಲಿಸ್ಟ್‌ಗಳು ಮತ್ತು ಉದ್ಯೋಗಾವಕಾಶಗಳಲ್ಲಿ ಬಹಳ ಸಹಕಾರಿಯಾಗಿದೆ.",
@@ -1027,6 +1060,9 @@ const I18N = {
       east: "ಪೂರ್ವ ಭಾರತ",
       west: "ಪಶ್ಚಿಮ ಭಾರತ",
       northeast: "ಈಶಾನ್ಯ / ಗುಡ್ಡಗಾಡು ಪ್ರಾಂತ್ಯ",
+    },
+    stateFilter: {
+      all: "ಎಲ್ಲಾ ರಾಜ್ಯಗಳು",
     },
     panel: {
       toggle: "ಫಿಲ್ಟರ್ / ಬದಲಾಯಿಸಿ",
