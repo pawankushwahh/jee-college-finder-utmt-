@@ -1,0 +1,5 @@
+[33m368cbe5[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m Updated JEE College Finder UI and API
+[33m972aeb6[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m feat: unlock and enable all reservation categories end-to-end
+[33m7783731[m feat: migrate to 2025 round-wise dataset and implement advanced volatility metrics - Replaced legacy Excel and extended datasets with josaa_merged_2025.csv. - Handled Preparatory 'P'-suffixed ranks to prevent PwD seats from dropping. - Implemented compute_stable_and_volatility helper to analyze round-wise cutoffs. - Added dynamic tag classification: Highly Stable, Stable Drift, Volatile Vacancy, and Volatile Erratic. - Hooked volatility tags to localized front-end tooltips and styled chip states. - Cleaned up all code paths, schema parameters, config properties, and UI toggles dependent on extended dataset. - Updated recommendation tests to assert new tag classifications. - Updated README.md to document the 2025 round-wise cutoff and volatility penalty architecture.
+[33m0198af5[m flder removedy ag
+[33m2409000[m docs: add live application link to README
