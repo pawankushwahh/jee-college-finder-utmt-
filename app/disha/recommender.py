@@ -161,7 +161,10 @@ def _categorize(rank: int, opening: int, closing: int) -> Optional[str]:
         return None  # no realistic chance
     if rank < opening * (1 - LOWER_MARGIN):
         return None  # heavily overqualified - aim higher
-    if rank <= opening:
+    
+    # Safe: rank is in the top 25% of the opening-closing gap
+    safe_threshold = opening + 0.25 * (closing - opening)
+    if rank <= safe_threshold:
         return "Safe"
     if rank <= closing:
         return "Target"
@@ -770,7 +773,32 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         note_key = "branch_filter" if total_found else "branch_filter_empty"
         notes.append(notes_text[note_key].format(branches=branch_names))
 
-    results = results[: req.max_results]
+    # Ensure fair distribution among categories so Reach and Safe aren't starved out
+    targets = [r for r in results if r.category == "Target"]
+    reaches = [r for r in results if r.category == "Reach"]
+    safes = [r for r in results if r.category == "Safe"]
+
+    reach_quota = req.max_results // 4
+    safe_quota = req.max_results // 4
+    
+    reach_keep = reaches[:reach_quota]
+    safe_keep = safes[:safe_quota]
+    target_quota = req.max_results - len(reach_keep) - len(safe_keep)
+    target_keep = targets[:target_quota]
+    
+    # If we didn't fill the max_results (e.g. fewer targets than expected), 
+    # we could try giving extra quota back, but for simplicity we'll just combine what we kept.
+    # Note: we re-sort to maintain the CATEGORY_ORDER -> interest_score -> etc order.
+    results = target_keep + reach_keep + safe_keep
+    results.sort(
+        key=lambda r: (
+            CATEGORY_ORDER[r.category],
+            -r.interest_score,
+            r.closing_rank,
+            r.institute,
+            r.branch,
+        )
+    )
 
     counts = {
         "total": total_found,

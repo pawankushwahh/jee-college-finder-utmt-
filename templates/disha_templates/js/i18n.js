@@ -173,7 +173,7 @@ const I18N = {
       above5lSub: "Standard tuition fees apply",
     },
     region: {
-      all: "All India",
+      all: "Select geographic location",
       metro: "Metro Cities Only",
       north: "North India",
       south: "South India",

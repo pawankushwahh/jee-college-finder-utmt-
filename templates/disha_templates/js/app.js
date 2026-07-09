@@ -647,7 +647,7 @@ function syncPanelFromState() {
   }
   if ($("panel-goal") && state.goal) $("panel-goal").value = state.goal;
   if ($("panel-brand-branch-slider")) $("panel-brand-branch-slider").value = state.brandBranchRatio !== undefined ? state.brandBranchRatio : 0.5;
-  if ($("panel-region")) $("panel-region").value = state.filterRegion || "all";
+  if ($("filter-region")) $("filter-region").value = state.filterRegion || "all";
   if ($("filter-state")) $("filter-state").value = state.filterState || "all";
   syncGenderRows();
   renderBranchGrids();
@@ -1957,8 +1957,8 @@ function loadStateFromURL() {
   // Restore region filter
   const region = q.get("region") || "all";
   state.filterRegion = region;
-  if ($("panel-region")) {
-    $("panel-region").value = region;
+  if ($("filter-region")) {
+    $("filter-region").value = region;
   }
 
   // Restore state filter
@@ -2164,7 +2164,7 @@ function bindPanelEvents() {
       });
     }
 
-    const panelRegion = $("panel-region");
+    const panelRegion = $("filter-region");
     if (panelRegion) {
       panelRegion.addEventListener("change", () => {
         state.filterRegion = panelRegion.value;
@@ -2280,7 +2280,7 @@ function bindEvents() {
     state.filterRegion = "all";
     state.filterState = "all";
     $("filter-search").value = "";
-    if ($("panel-region")) $("panel-region").value = "all";
+    if ($("filter-region")) $("filter-region").value = "all";
     if ($("filter-state")) $("filter-state").value = "all";
     document.querySelectorAll("#type-chips .chip").forEach((c) =>
       c.classList.toggle("is-active", c.dataset.type === "")

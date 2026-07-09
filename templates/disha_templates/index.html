@@ -339,18 +339,7 @@
               </div>
             </div>
 
-            <div class="panel-field">
-              <label class="panel-field__label" for="panel-region" data-i18n="panel.regionLabel">Geographic region</label>
-              <select class="input input--sm" id="panel-region" aria-label="Filter by region">
-                <option value="all" data-i18n="region.all">All India</option>
-                <option value="metro" data-i18n="region.metro">Metro Cities Only</option>
-                <option value="north" data-i18n="region.north">North India</option>
-                <option value="south" data-i18n="region.south">South India</option>
-                <option value="east" data-i18n="region.east">East India</option>
-                <option value="west" data-i18n="region.west">West India</option>
-                <option value="northeast" data-i18n="region.northeast">Northeast / Hills</option>
-              </select>
-            </div>
+
 
 
             <div class="panel-field">
@@ -434,7 +423,7 @@
               <span class="zone__name" data-i18n="zones.safeName">Safe</span>
               <span class="zone__sub" data-i18n="zones.safeSub">strong backups</span>
             </button>
-            <button type="button" class="zone zone--target is-hot" data-zone="Target">
+            <button type="button" class="zone zone--target is-hot" data-zone="Achievable">
               <span class="zone__count" id="zone-count-target">0</span>
               <span class="zone__name" data-i18n="zones.targetName">Target</span>
               <span class="zone__sub" data-i18n="zones.targetSub">your best-fit zone</span>
@@ -484,6 +473,15 @@
                   <button type="button" class="view-toggle-btn" id="view-by-branch" data-i18n="results.byBranch">By branch</button>
                   <button type="button" class="view-toggle-btn" id="view-by-college" data-i18n="results.byCollege">By college</button>
                 </div>
+                <select class="sort-select" id="filter-region" aria-label="Filter by region">
+                  <option value="all" data-i18n="region.all">Select geographic location</option>
+                  <option value="metro" data-i18n="region.metro">Metro Cities Only</option>
+                  <option value="north" data-i18n="region.north">North India</option>
+                  <option value="south" data-i18n="region.south">South India</option>
+                  <option value="east" data-i18n="region.east">East India</option>
+                  <option value="west" data-i18n="region.west">West India</option>
+                  <option value="northeast" data-i18n="region.northeast">Northeast / Hills</option>
+                </select>
               </div>
               <button type="button" class="btn--link" id="expand-collapse-all-btn"></button>
             </div>
