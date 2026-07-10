@@ -669,7 +669,8 @@
             <h3 class="card__title">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44A2.5 2.5 0 0 1 2 17.5v-15A2.5 2.5 0 0 1 4.5 0h5zM14.5 16a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z" />
+                <path
+                  d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44A2.5 2.5 0 0 1 2 17.5v-15A2.5 2.5 0 0 1 4.5 0h5zM14.5 16a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z" />
               </svg>
               CSE Cutoff Premium — JoSAA 2025
             </h3>
@@ -679,7 +680,8 @@
               <canvas id="chart-cse-premium"></canvas>
             </div>
             <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
-              How much harder is Computer Science to get into? Average closing rank for CSE vs Non-CSE branches (lower rank = more competitive).
+              How much harder is Computer Science to get into? Average closing rank for CSE vs Non-CSE branches (lower
+              rank = more competitive).
             </p>
           </div>
         </div>
@@ -696,7 +698,8 @@
             </h3>
           </div>
           <div class="card__body">
-            <div class="tabs-nav" id="branch-type-tabs" style="margin-bottom: 12px; border-bottom-color: var(--line-soft);">
+            <div class="tabs-nav" id="branch-type-tabs"
+              style="margin-bottom: 12px; border-bottom-color: var(--line-soft);">
               <button class="tab-btn is-active" onclick="switchBranchTab('IIT')" data-branch-tab="IIT">IIT</button>
               <button class="tab-btn" onclick="switchBranchTab('NIT')" data-branch-tab="NIT">NIT</button>
               <button class="tab-btn" onclick="switchBranchTab('IIIT')" data-branch-tab="IIIT">IIIT</button>
@@ -740,15 +743,16 @@
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
-              JEE Advanced: Recommended IIT Picks — 2025
+              JEE Advanced: Total Available Options — 2025
             </h3>
           </div>
           <div class="card__body">
             <div class="chart-container">
               <canvas id="chart-avail-adv"></canvas>
             </div>
-            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;" id="desc-avail-adv">
-              Recommended top picks (capped at 20 programs, 15 IITs) from the full JoSAA 2025 pool for each rank range.
+            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;"
+              id="desc-avail-adv">
+              Total number of eligible programs and institutes available for each rank range in JoSAA 2025.
             </p>
           </div>
         </div>
@@ -761,15 +765,16 @@
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
               </svg>
-              JEE Mains: Recommended NIT/IIIT/GFTI Picks — 2025
+              JEE Mains: Total Available Options — 2025
             </h3>
           </div>
           <div class="card__body">
             <div class="chart-container">
               <canvas id="chart-avail-mains"></canvas>
             </div>
-            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;" id="desc-avail-mains">
-              Recommended top picks (capped at 20 programs, 15 colleges) from the full JoSAA 2025 pool for each rank range.
+            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;"
+              id="desc-avail-mains">
+              Total number of eligible programs and institutes available for each rank range in JoSAA 2025.
             </p>
           </div>
         </div>
@@ -1295,7 +1300,7 @@
           });
         }
 
-        window.switchBranchTab = function(itype) {
+        window.switchBranchTab = function (itype) {
           document.querySelectorAll('#branch-type-tabs .tab-btn').forEach(btn => {
             btn.classList.toggle('is-active', btn.dataset.branchTab === itype);
           });
@@ -1362,8 +1367,8 @@
 
         // Draw Options Availability by Rank (Advanced - IITs)
         const advAvailLabels = data.rank_availability.advanced.map(a => a.rank.toLocaleString());
-        const advAvailProgs = data.rank_availability.advanced.map(a => a.program_count);
-        const advAvailInsts = data.rank_availability.advanced.map(a => a.institute_count);
+        const advAvailProgs = data.rank_availability.advanced.map(a => a.total_programs);
+        const advAvailInsts = data.rank_availability.advanced.map(a => a.total_institutes);
 
         charts.availAdv = new Chart(document.getElementById("chart-avail-adv"), {
           type: 'line',
@@ -1371,7 +1376,7 @@
             labels: advAvailLabels,
             datasets: [
               {
-                label: 'Recommended Programs',
+                label: 'Eligible Programs',
                 data: advAvailProgs,
                 borderColor: '#175c4c',
                 backgroundColor: 'rgba(23, 92, 76, 0.08)',
@@ -1383,7 +1388,7 @@
                 pointHoverRadius: 6
               },
               {
-                label: 'IIT Colleges',
+                label: 'Eligible IITs',
                 data: advAvailInsts,
                 borderColor: '#bf5b3c',
                 backgroundColor: 'rgba(191, 91, 60, 0.06)',
@@ -1417,8 +1422,7 @@
             scales: {
               y: {
                 grid: { color: '#efe8d8' },
-                ticks: { font: { family: 'Inter' }, color: '#5f5747' },
-                max: 25
+                ticks: { font: { family: 'Inter' }, color: '#5f5747' }
               },
               x: {
                 grid: { display: false },
@@ -1436,8 +1440,8 @@
 
         // Draw Options Availability by Rank (Mains - NITs/IIITs/GFTIs)
         const mainsAvailLabels = data.rank_availability.mains.map(m => m.rank.toLocaleString());
-        const mainsAvailProgs = data.rank_availability.mains.map(m => m.program_count);
-        const mainsAvailInsts = data.rank_availability.mains.map(m => m.institute_count);
+        const mainsAvailProgs = data.rank_availability.mains.map(m => m.total_programs);
+        const mainsAvailInsts = data.rank_availability.mains.map(m => m.total_institutes);
 
         charts.availMains = new Chart(document.getElementById("chart-avail-mains"), {
           type: 'line',
@@ -1445,7 +1449,7 @@
             labels: mainsAvailLabels,
             datasets: [
               {
-                label: 'Recommended Programs',
+                label: 'Eligible Programs',
                 data: mainsAvailProgs,
                 borderColor: '#175c4c',
                 backgroundColor: 'rgba(23, 92, 76, 0.08)',
@@ -1457,7 +1461,7 @@
                 pointHoverRadius: 6
               },
               {
-                label: 'Colleges',
+                label: 'Eligible Colleges',
                 data: mainsAvailInsts,
                 borderColor: '#a87714',
                 backgroundColor: 'rgba(168, 119, 20, 0.06)',
@@ -1491,8 +1495,7 @@
             scales: {
               y: {
                 grid: { color: '#efe8d8' },
-                ticks: { font: { family: 'Inter' }, color: '#5f5747' },
-                max: 25
+                ticks: { font: { family: 'Inter' }, color: '#5f5747' }
               },
               x: {
                 grid: { display: false },

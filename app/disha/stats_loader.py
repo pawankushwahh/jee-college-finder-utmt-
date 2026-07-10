@@ -302,6 +302,8 @@ def compute_dataset_stats() -> Dict[str, Any]:
     # 5. Options/Colleges Available by Rank (capped for cleaner display)
     MAX_DISPLAY_PROGRAMS = 20
     MAX_DISPLAY_INSTITUTES = 15
+    UPPER_MARGIN = 0.25
+    LOWER_MARGIN = 0.50
 
     advanced_curve = []
     adv_thresholds = [500, 1000, 2000, 5000, 8000, 10000, 15000, 20000, 25000]
@@ -311,7 +313,10 @@ def compute_dataset_stats() -> Dict[str, Any]:
         (valid_cutoffs["Gender"].str.lower().str.contains("gender-neutral|neutral"))
     ]
     for r in adv_thresholds:
-        available_rows = iit_crl[iit_crl["Max_Closing"] >= r]
+        available_rows = iit_crl[
+            (r <= iit_crl["Max_Closing"] * (1 + UPPER_MARGIN)) &
+            (r >= iit_crl["Min_Opening"] * (1 - LOWER_MARGIN))
+        ]
         total_progs = len(available_rows)
         total_insts = int(available_rows["Institute"].nunique())
         advanced_curve.append({
@@ -330,7 +335,10 @@ def compute_dataset_stats() -> Dict[str, Any]:
         (valid_cutoffs["Gender"].str.lower().str.contains("gender-neutral|neutral"))
     ]
     for r in mains_thresholds:
-        available_rows = mains_crl[mains_crl["Max_Closing"] >= r]
+        available_rows = mains_crl[
+            (r <= mains_crl["Max_Closing"] * (1 + UPPER_MARGIN)) &
+            (r >= mains_crl["Min_Opening"] * (1 - LOWER_MARGIN))
+        ]
         total_progs = len(available_rows)
         total_insts = int(available_rows["Institute"].nunique())
         mains_curve.append({
