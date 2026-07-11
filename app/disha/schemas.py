@@ -122,6 +122,7 @@ class Recommendation(BaseModel):
     # fee_note: str = ""
     region: str = "other"  # geographic region (north/south/east/west/northeast)
     is_metro: bool = False  # true if located in a major metro hub
+    is_top_iit: bool = False  # true for Top 5 IITs (Bombay, Delhi, Madras, Kanpur, Kharagpur)
     history: Optional[dict[int, int]] = None  # historical closing ranks by year
     admission_probability: Optional[float] = None  # calculated admission probability %
 

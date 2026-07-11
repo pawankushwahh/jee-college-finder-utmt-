@@ -39,6 +39,13 @@ _OLD_IITS = {
     "Indian Institute of Technology Guwahati",
     "Indian Institute of Technology (BHU) Varanasi",
 }
+_TOP_5_IITS = {
+    "Indian Institute of Technology Bombay",
+    "Indian Institute of Technology Delhi",
+    "Indian Institute of Technology Madras",
+    "Indian Institute of Technology Kanpur",
+    "Indian Institute of Technology Kharagpur",
+}
 _TOP_NITS = {
     "National Institute of Technology, Tiruchirappalli",
     "National Institute of Technology, Warangal",
@@ -71,6 +78,7 @@ class Program:
     jump_concentration: float = 0.0
     volatility_tag: str = "highly_stable"
     flag_round: Optional[int] = None
+    is_top_iit: bool = False
     tags: Set[str] = field(default_factory=set)
 
 
@@ -352,6 +360,7 @@ def load_programs_basic() -> List[Program]:
                 opening_rank=int(row.opening_rank),
                 closing_rank=int(row.closing_rank),
                 brand_score=_brand_score(institute, itype),
+                is_top_iit=(itype == "IIT" and institute in _TOP_5_IITS),
                 stable_cutoff=int(row.stable_cutoff),
                 movement_ratio=float(row.movement_ratio),
                 jump_concentration=float(row.jump_concentration),

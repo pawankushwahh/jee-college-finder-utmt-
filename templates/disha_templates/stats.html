@@ -294,6 +294,28 @@
       gap: 8px;
     }
 
+    /* === Enhanced Detailed Metrics Card === */
+    .card--detail .card__header {
+      padding: 24px 28px;
+      background: linear-gradient(135deg, var(--pine-tint) 0%, rgba(255, 253, 248, 0.6) 100%);
+      border-bottom: 2px solid var(--pine);
+      border-left: 5px solid var(--pine);
+    }
+
+    .card--detail .card__title {
+      font-family: var(--serif);
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--pine-deep);
+      letter-spacing: -0.01em;
+    }
+
+    .card--detail .card__title svg {
+      color: var(--pine);
+      width: 22px;
+      height: 22px;
+    }
+
     .card__body {
       padding: 24px;
       flex-grow: 1;
@@ -302,11 +324,10 @@
       justify-content: center;
     }
 
-    /* Custom Tables */
+    /* Custom Tables — kept for any remaining usage */
     .table-container {
       overflow-x: auto;
       margin: -24px;
-      /* Expand to borders of card__body */
     }
 
     .table {
@@ -317,28 +338,237 @@
     }
 
     .table th {
-      background: var(--paper-deep);
-      color: var(--ink-soft);
+      background: var(--pine-deep);
+      color: #e3ede7;
       font-weight: 600;
-      padding: 12px 24px;
-      border-bottom: 1px solid var(--line);
+      padding: 14px 24px;
+      border-bottom: 2px solid var(--pine);
       text-transform: uppercase;
-      font-size: 11px;
-      letter-spacing: 0.05em;
+      font-size: 11.5px;
+      letter-spacing: 0.06em;
+      position: sticky;
+      top: 0;
+      z-index: 2;
     }
 
     .table td {
-      padding: 14px 24px;
+      padding: 15px 24px;
       border-bottom: 1px solid var(--line-soft);
       color: var(--ink);
+    }
+
+    .table td:first-child {
+      font-weight: 500;
     }
 
     .table tr:last-child td {
       border-bottom: none;
     }
 
-    .table tr:hover td {
-      background: rgba(242, 236, 221, 0.25);
+    .table tbody tr:hover td {
+      background: rgba(23, 92, 76, 0.06);
+    }
+
+    /* ═══ Mini Stat Card Grid (Detailed Metrics section) ═══ */
+    .tile-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 14px;
+    }
+
+    .tile {
+      background: var(--card);
+      border: 1px solid var(--line-soft);
+      border-radius: var(--radius);
+      padding: 18px 16px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out), border-color 0.18s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tile::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--line);
+      transition: background 0.2s;
+    }
+
+    .tile:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--line);
+    }
+
+    .tile:hover::before {
+      background: var(--pine);
+    }
+
+    .tile__label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.3;
+      min-height: 34px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .tile__value {
+      font-family: var(--serif);
+      font-weight: 700;
+      font-size: 26px;
+      line-height: 1;
+      color: var(--pine-deep);
+    }
+
+    .tile__sub {
+      font-size: 11.5px;
+      font-weight: 500;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+
+    /* Color variants for tile top bar */
+    .tile--hot::before {
+      background: var(--reach);
+    }
+
+    .tile--warm::before {
+      background: var(--target);
+    }
+
+    .tile--cool::before {
+      background: var(--safe);
+    }
+
+    .tile--hot .tile__value {
+      color: var(--reach);
+    }
+
+    .tile--warm .tile__value {
+      color: var(--target);
+    }
+
+    .tile--cool .tile__value {
+      color: var(--safe);
+    }
+
+    .tile--hot:hover::before {
+      background: var(--reach);
+    }
+
+    .tile--warm:hover::before {
+      background: var(--target);
+    }
+
+    .tile--cool:hover::before {
+      background: var(--safe);
+    }
+
+    /* Cutoff tile — wider for program names */
+    .tile-grid--cutoffs {
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    }
+
+    .tile--cutoff {
+      gap: 8px;
+    }
+
+    .tile--cutoff .tile__label {
+      min-height: auto;
+      -webkit-line-clamp: 3;
+    }
+
+    .tile--cutoff .tile__institute {
+      font-size: 12px;
+      color: var(--ink-soft);
+      line-height: 1.3;
+    }
+
+    .tile--cutoff .tile__meta {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 2px;
+    }
+
+    /* Tab section header */
+    .tab-section-head {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid;
+    }
+
+    .tab-section-head__icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .tab-section-head__icon--reach {
+      background: var(--reach-bg);
+      color: var(--reach);
+    }
+
+    .tab-section-head__icon--safe {
+      background: var(--safe-bg);
+      color: var(--safe);
+    }
+
+    .tab-section-head__text {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .tab-section-head--reach {
+      border-bottom-color: var(--reach);
+    }
+
+    .tab-section-head--reach .tab-section-head__text {
+      color: var(--reach);
+    }
+
+    .tab-section-head--safe {
+      border-bottom-color: var(--safe);
+    }
+
+    .tab-section-head--safe .tab-section-head__text {
+      color: var(--safe);
+    }
+
+    @media (max-width: 768px) {
+      .tile-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 10px;
+      }
+
+      .tile__value {
+        font-size: 22px;
+      }
+
+      .tab-pane>div[style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+      }
     }
 
     /* Badges & Tags */
@@ -371,43 +601,156 @@
       color: var(--ink-soft);
     }
 
-    /* Tabs Component */
+    /* Tabs Component — Bright Pill Style */
     .tabs-nav {
       display: flex;
-      gap: 8px;
-      border-bottom: 1px solid var(--line);
-      margin-bottom: 20px;
+      gap: 6px;
+      padding: 6px;
+      background: var(--paper-deep);
+      border-radius: 12px;
+      margin-bottom: 24px;
+      border: 1px solid var(--line);
+      flex-wrap: wrap;
     }
 
     .tab-btn {
-      background: none;
+      background: transparent;
       border: none;
-      padding: 10px 16px;
+      padding: 10px 20px;
       font-family: var(--sans);
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--ink-soft);
       cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: all 0.2s ease;
+      border-radius: 8px;
+      transition: all 0.25s var(--ease-out);
+      position: relative;
     }
 
     .tab-btn:hover {
-      color: var(--pine);
+      color: var(--pine-deep);
+      background: rgba(23, 92, 76, 0.08);
     }
 
     .tab-btn.is-active {
-      color: var(--pine);
-      border-bottom-color: var(--pine);
-      font-weight: 600;
+      color: #ffffff;
+      background: linear-gradient(135deg, #1a6b58 0%, var(--pine-deep) 100%);
+      box-shadow: 0 2px 8px rgba(14, 66, 55, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
 
     .tab-pane {
       display: none;
+      animation: tab-fade-in 0.3s var(--ease-out);
     }
 
     .tab-pane.is-active {
       display: block;
+    }
+
+    @keyframes tab-fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* Quota & Category Panel Styles */
+    .metrics-panel {
+      background: var(--card);
+      border: 1px solid var(--line-soft);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .metrics-panel__header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 16px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      border-bottom: 2px solid;
+    }
+
+    .metrics-panel__header--quota {
+      background: linear-gradient(135deg, rgba(23, 92, 76, 0.08), transparent);
+      color: var(--pine-deep);
+      border-bottom-color: var(--pine);
+    }
+
+    .metrics-panel__header--category {
+      background: linear-gradient(135deg, rgba(168, 119, 20, 0.08), transparent);
+      color: #8a6210;
+      border-bottom-color: var(--target);
+    }
+
+    .metrics-panel__header svg {
+      flex-shrink: 0;
+    }
+
+    .metrics-panel__body {
+      padding: 0;
+    }
+
+    .metric-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 13px 20px;
+      border-bottom: 1px solid var(--line-soft);
+      transition: background-color 0.15s ease;
+    }
+
+    .metric-row:last-child {
+      border-bottom: none;
+    }
+
+    .metric-row:hover {
+      background: rgba(23, 92, 76, 0.04);
+    }
+
+    .metric-row:nth-child(even) {
+      background: rgba(227, 237, 231, 0.12);
+    }
+
+    .metric-row:nth-child(even):hover {
+      background: rgba(23, 92, 76, 0.06);
+    }
+
+    .metric-row__label {
+      font-weight: 600;
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    .metric-row__value {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 14px;
+      font-family: var(--serif);
+      color: var(--pine-deep);
+    }
+
+    .metric-bar {
+      height: 6px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--pine), #2c8a6f);
+      min-width: 8px;
+      transition: width 0.5s var(--ease-out);
+    }
+
+    .metric-bar--target {
+      background: linear-gradient(90deg, var(--target), #c99420);
     }
 
     /* Footer styling */
@@ -780,10 +1123,10 @@
         </div>
 
         <!-- Detailed statistics tables & highlights -->
-        <div class="card card--col-12">
+        <div class="card card--col-12 card--detail">
           <div class="card__header">
             <h3 class="card__title">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
                 <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" />
@@ -802,76 +1145,49 @@
 
             <!-- Tab: Popular Branches -->
             <div class="tab-pane is-active" id="tab-popular">
-              <div class="table-container">
-                <table class="table" id="table-branches">
-                  <thead>
-                    <tr>
-                      <th>Branch / Discipline</th>
-                      <th>Programs Count (All Inst.)</th>
-                      <th>Avg Closing Rank (OPEN, GN)</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- Populated dynamically -->
-                  </tbody>
-                </table>
+              <div class="tile-grid" id="grid-branches">
+                <!-- Populated dynamically -->
               </div>
             </div>
 
             <!-- Tab: State-wise summary -->
             <div class="tab-pane" id="tab-states">
-              <div class="table-container">
-                <table class="table" id="table-states">
-                  <thead>
-                    <tr>
-                      <th>State / UT</th>
-                      <th>Number of Registered Program Options</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <!-- Populated dynamically -->
-                  </tbody>
-                </table>
+              <div class="tile-grid" id="grid-states">
+                <!-- Populated dynamically -->
               </div>
             </div>
 
             <!-- Tab: Quotas & Categories -->
             <div class="tab-pane" id="tab-quotas">
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px;">
                 <div>
-                  <h4
-                    style="font-size: 13px; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 12px; letter-spacing: 0.05em;">
-                    Quota Counts</h4>
-                  <div class="table-container" style="margin: 0;">
-                    <table class="table" id="table-quotas-data">
-                      <thead>
-                        <tr>
-                          <th>Quota Code</th>
-                          <th>Program Options</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <!-- Populated dynamically -->
-                      </tbody>
-                    </table>
+                  <div class="tab-section-head tab-section-head--safe" style="border-bottom-color: var(--pine);">
+                    <div class="tab-section-head__icon" style="background: var(--pine-tint); color: var(--pine);">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      </svg>
+                    </div>
+                    <span class="tab-section-head__text" style="color: var(--pine-deep);">Quota Distribution</span>
+                  </div>
+                  <div class="tile-grid" id="grid-quotas"
+                    style="grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));">
+                    <!-- Populated dynamically -->
                   </div>
                 </div>
                 <div>
-                  <h4
-                    style="font-size: 13px; text-transform: uppercase; color: var(--ink-soft); margin-bottom: 12px; letter-spacing: 0.05em;">
-                    Seat Categories</h4>
-                  <div class="table-container" style="margin: 0;">
-                    <table class="table" id="table-categories-data">
-                      <thead>
-                        <tr>
-                          <th>Category Name</th>
-                          <th>Program Options</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <!-- Populated dynamically -->
-                      </tbody>
-                    </table>
+                  <div class="tab-section-head" style="border-bottom-color: var(--target);">
+                    <div class="tab-section-head__icon" style="background: var(--target-bg); color: var(--target);">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 7a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" />
+                      </svg>
+                    </div>
+                    <span class="tab-section-head__text" style="color: #8a6210;">Seat Categories</span>
+                  </div>
+                  <div class="tile-grid" id="grid-categories"
+                    style="grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));">
+                    <!-- Populated dynamically -->
                   </div>
                 </div>
               </div>
@@ -879,20 +1195,32 @@
 
             <!-- Tab: Highest and Lowest cutoffs -->
             <div class="tab-pane" id="tab-extremes">
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px;">
                 <div>
-                  <h4
-                    style="font-size: 13px; text-transform: uppercase; color: var(--reach); margin-bottom: 16px; letter-spacing: 0.05em; font-weight: 600;">
-                    Most Competitive Cutoffs (Lowest Ranks)</h4>
-                  <div class="highlight-list" id="list-highest">
+                  <div class="tab-section-head tab-section-head--reach">
+                    <div class="tab-section-head__icon tab-section-head__icon--reach">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                      </svg>
+                    </div>
+                    <span class="tab-section-head__text">Most Competitive (Lowest Ranks)</span>
+                  </div>
+                  <div class="tile-grid tile-grid--cutoffs" id="grid-highest">
                     <!-- Populated dynamically -->
                   </div>
                 </div>
                 <div>
-                  <h4
-                    style="font-size: 13px; text-transform: uppercase; color: var(--safe); margin-bottom: 16px; letter-spacing: 0.05em; font-weight: 600;">
-                    Least Competitive Cutoffs (Highest Ranks)</h4>
-                  <div class="highlight-list" id="list-lowest">
+                  <div class="tab-section-head tab-section-head--safe">
+                    <div class="tab-section-head__icon tab-section-head__icon--safe">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      </svg>
+                    </div>
+                    <span class="tab-section-head__text">Least Competitive (Highest Ranks)</span>
+                  </div>
+                  <div class="tile-grid tile-grid--cutoffs" id="grid-lowest">
                     <!-- Populated dynamically -->
                   </div>
                 </div>
@@ -1511,81 +1839,97 @@
           }
         });
 
-        // Populate Table: Popular Branches
-        const tbodyBranches = document.querySelector("#table-branches tbody");
-        tbodyBranches.innerHTML = "";
+        // ═══ Populate: Popular Branches (mini stat card grid) ═══
+        const gridBranches = document.getElementById("grid-branches");
+        gridBranches.innerHTML = "";
         data.popular_branches.forEach(b => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td style="font-weight: 500;">${b.branch}</td>
-            <td>${b.total_programs} programs</td>
-            <td style="font-weight: 600; color: var(--pine);">${Math.round(b.avg_closing_rank).toLocaleString()}</td>
+          const rank = Math.round(b.avg_closing_rank);
+          const mod = rank < 5000 ? 'hot' : rank < 15000 ? 'warm' : 'cool';
+          const tile = document.createElement("div");
+          tile.className = `tile tile--${mod}`;
+          tile.innerHTML = `
+            <div class="tile__label">${b.branch}</div>
+            <div class="tile__value">${rank.toLocaleString()}</div>
+            <div class="tile__sub">${b.total_programs} programs · Avg. Rank</div>
           `;
-          tbodyBranches.appendChild(tr);
+          gridBranches.appendChild(tile);
         });
 
-        // Populate Table: State Distribution
-        const tbodyStates = document.querySelector("#table-states tbody");
-        tbodyStates.innerHTML = "";
-        // Sort states by count descending
+        // ═══ Populate: State Distribution (mini stat card grid) ═══
+        const gridStates = document.getElementById("grid-states");
+        gridStates.innerHTML = "";
         const sortedStates = Object.entries(data.state_counts).sort((a, b) => b[1] - a[1]);
         sortedStates.forEach(([state, count]) => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td style="font-weight: 500;">${state}</td>
-            <td>${count} program options</td>
+          const tile = document.createElement("div");
+          tile.className = "tile";
+          tile.innerHTML = `
+            <div class="tile__label">${state}</div>
+            <div class="tile__value">${count.toLocaleString()}</div>
+            <div class="tile__sub">Program Options</div>
           `;
-          tbodyStates.appendChild(tr);
+          gridStates.appendChild(tile);
         });
 
-        // Populate Quota and Seat Type
-        const tbodyQuotas = document.querySelector("#table-quotas-data tbody");
-        tbodyQuotas.innerHTML = "";
+        // ═══ Populate: Quota & Seat Type (mini stat card grid) ═══
+        const gridQuotas = document.getElementById("grid-quotas");
+        gridQuotas.innerHTML = "";
         Object.entries(data.quota_counts).sort((a, b) => b[1] - a[1]).forEach(([quota, count]) => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `<td style="font-weight:600;">${quota}</td><td>${count}</td>`;
-          tbodyQuotas.appendChild(tr);
+          const tile = document.createElement("div");
+          tile.className = "tile";
+          tile.innerHTML = `
+            <div class="tile__label">${quota}</div>
+            <div class="tile__value">${count.toLocaleString()}</div>
+            <div class="tile__sub">Program Options</div>
+          `;
+          gridQuotas.appendChild(tile);
         });
 
-        const tbodyCategories = document.querySelector("#table-categories-data tbody");
-        tbodyCategories.innerHTML = "";
+        const gridCategories = document.getElementById("grid-categories");
+        gridCategories.innerHTML = "";
         Object.entries(data.seat_type_counts).sort((a, b) => b[1] - a[1]).forEach(([cat, count]) => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `<td style="font-weight:600;">${cat}</td><td>${count}</td>`;
-          tbodyCategories.appendChild(tr);
+          const tile = document.createElement("div");
+          tile.className = "tile tile--warm";
+          tile.innerHTML = `
+            <div class="tile__label">${cat}</div>
+            <div class="tile__value">${count.toLocaleString()}</div>
+            <div class="tile__sub">Program Options</div>
+          `;
+          gridCategories.appendChild(tile);
         });
 
-        // Populate Highlights lists
-        const listHighest = document.getElementById("list-highest");
-        listHighest.innerHTML = "";
-        data.highest_cutoffs.forEach((item, idx) => {
-          const div = document.createElement("div");
-          div.className = "highlight-item";
-          div.innerHTML = `
-            <div class="highlight-number">#${idx + 1}</div>
-            <div class="highlight-detail">
-              <div class="highlight-name">${item.program}</div>
-              <div class="highlight-sub">${item.institute} &middot; <span class="${badgeClass(item.inst_type)}">${item.inst_type}</span> &middot; Quota: <strong>${item.quota}</strong></div>
+        // ═══ Populate: Highest & Lowest Cutoffs (mini stat card grid) ═══
+        const gridHighest = document.getElementById("grid-highest");
+        gridHighest.innerHTML = "";
+        data.highest_cutoffs.forEach(item => {
+          const tile = document.createElement("div");
+          tile.className = "tile tile--cutoff tile--hot";
+          tile.innerHTML = `
+            <div class="tile__label">${item.program}</div>
+            <div class="tile--cutoff tile__institute">${item.institute}</div>
+            <div class="tile__value">${item.closing_rank.toLocaleString()}</div>
+            <div class="tile--cutoff tile__meta">
+              <span class="${badgeClass(item.inst_type)}">${item.inst_type}</span>
+              <span class="tile__sub">${item.quota}</span>
             </div>
-            <div style="font-weight: 700; color: var(--reach); font-size: 14px; text-align: right; width: 60px;">${item.closing_rank.toLocaleString()}</div>
           `;
-          listHighest.appendChild(div);
+          gridHighest.appendChild(tile);
         });
 
-        const listLowest = document.getElementById("list-lowest");
-        listLowest.innerHTML = "";
-        data.lowest_cutoffs.forEach((item, idx) => {
-          const div = document.createElement("div");
-          div.className = "highlight-item";
-          div.innerHTML = `
-            <div class="highlight-number highlight-number--low">#${idx + 1}</div>
-            <div class="highlight-detail">
-              <div class="highlight-name">${item.program}</div>
-              <div class="highlight-sub">${item.institute} &middot; <span class="${badgeClass(item.inst_type)}">${item.inst_type}</span> &middot; Quota: <strong>${item.quota}</strong></div>
+        const gridLowest = document.getElementById("grid-lowest");
+        gridLowest.innerHTML = "";
+        data.lowest_cutoffs.forEach(item => {
+          const tile = document.createElement("div");
+          tile.className = "tile tile--cutoff tile--cool";
+          tile.innerHTML = `
+            <div class="tile__label">${item.program}</div>
+            <div class="tile--cutoff tile__institute">${item.institute}</div>
+            <div class="tile__value">${item.closing_rank.toLocaleString()}</div>
+            <div class="tile--cutoff tile__meta">
+              <span class="${badgeClass(item.inst_type)}">${item.inst_type}</span>
+              <span class="tile__sub">${item.quota}</span>
             </div>
-            <div style="font-weight: 700; color: var(--safe); font-size: 14px; text-align: right; width: 75px;">${item.closing_rank.toLocaleString()}</div>
           `;
-          listLowest.appendChild(div);
+          gridLowest.appendChild(tile);
         });
 
         // Show dashboard, hide loading

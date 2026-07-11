@@ -746,6 +746,7 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
                 # fee_note=fee_note,
                 region=region,
                 is_metro=is_metro,
+                is_top_iit=getattr(prog, 'is_top_iit', False),
                 history=history,
                 admission_probability=prob,
             )

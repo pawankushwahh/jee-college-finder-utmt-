@@ -773,6 +773,45 @@ function rankPos(rank) {
   return Math.min(Math.max((Math.log10(r) / LOG_AXIS_MAX) * 100, 0.5), 99.5);
 }
 
+// Scoped position within a given log range [logMin, logMax]
+function rankPosScoped(rank, logMin, logMax) {
+  const r = Math.min(Math.max(Number(rank) || 1, 1), RANK_AXIS_MAX);
+  const logR = Math.log10(r);
+  const span = logMax - logMin;
+  if (span <= 0) return 50;
+  return Math.min(Math.max(((logR - logMin) / span) * 100, 0.5), 99.5);
+}
+
+const ALL_TICKS = [
+  { rank: 1, label: "1" },
+  { rank: 5, label: "5" },
+  { rank: 10, label: "10" },
+  { rank: 50, label: "50" },
+  { rank: 100, label: "100" },
+  { rank: 500, label: "500" },
+  { rank: 1000, label: "1K" },
+  { rank: 2000, label: "2K" },
+  { rank: 5000, label: "5K" },
+  { rank: 10000, label: "10K" },
+  { rank: 20000, label: "20K" },
+  { rank: 50000, label: "50K" },
+  { rank: 100000, label: "1L" },
+  { rank: 200000, label: "2L" },
+  { rank: 500000, label: "5L" },
+  { rank: 1000000, label: "10L" },
+];
+
+// Select a reasonable subset of ticks for a given log range
+function ticksForRange(logMin, logMax) {
+  const visible = ALL_TICKS.filter(t => {
+    const logR = Math.log10(t.rank || 1);
+    return logR >= logMin - 0.05 && logR <= logMax + 0.05;
+  });
+  // If too many, pick every other
+  if (visible.length > 8) return visible.filter((_, i) => i % 2 === 0);
+  return visible;
+}
+
 const RULER_TICKS = [
   { rank: 10, label: "10" },
   { rank: 100, label: "100" },
@@ -789,6 +828,24 @@ const RULER_GROUPS = [
 
 const RULER_LANES = 4; // vertical jitter lanes to de-clutter dense clusters
 
+// Per-group zoom state: { logMin, logMax, defaultLogMin, defaultLogMax }
+const rulerZoomState = {};
+
+function computeAutoRange(items, youRank) {
+  const ranks = items.map(r => r.closing_rank);
+  if (youRank) ranks.push(youRank);
+  if (!ranks.length) return { logMin: 1, logMax: LOG_AXIS_MAX };
+  const minR = Math.max(1, Math.min(...ranks));
+  const maxR = Math.min(RANK_AXIS_MAX, Math.max(...ranks));
+  const logMin = Math.log10(minR);
+  const logMax = Math.log10(maxR);
+  const padding = Math.max((logMax - logMin) * 0.15, 0.3);
+  return {
+    logMin: Math.max(0, logMin - padding),
+    logMax: Math.min(LOG_AXIS_MAX, logMax + padding),
+  };
+}
+
 function rulerGroupHtml(group, recs) {
   const items = recs.filter((r) => r.exam === group.exam);
   if (!items.length) return "";
@@ -800,23 +857,35 @@ function rulerGroupHtml(group, recs) {
   // different jitter lanes, spreading dense clusters vertically
   const sorted = items.slice().sort((a, b) => a.closing_rank - b.closing_rank);
 
+  // Compute autoscaled range
+  const autoRange = computeAutoRange(items, youRank);
+  const zs = rulerZoomState[group.exam] || autoRange;
+  rulerZoomState[group.exam] = {
+    ...zs,
+    defaultLogMin: autoRange.logMin,
+    defaultLogMax: autoRange.logMax,
+  };
+  const { logMin, logMax } = zs;
+
   const dots = sorted
     .map((r, i) => {
       const cat = r.category.toLowerCase();
-      return `<span class="ruler__dot ruler__dot--${cat}" style="left:${rankPos(r.closing_rank).toFixed(2)}%;--lane:${i % RULER_LANES}" data-inst="${escapeHtml(r.institute)}" data-branch="${escapeHtml(r.branch)}" data-rank="${r.closing_rank}" data-cat="${cat}"></span>`;
+      return `<span class="ruler__dot ruler__dot--${cat}" style="left:${rankPosScoped(r.closing_rank, logMin, logMax).toFixed(2)}%;--lane:${i % RULER_LANES}" data-inst="${escapeHtml(r.institute)}" data-branch="${escapeHtml(r.branch)}" data-rank="${r.closing_rank}" data-cat="${cat}"></span>`;
     })
     .join("");
 
-  const grid = RULER_TICKS.map(
-    (t) => `<span class="ruler__grid" style="left:${rankPos(t.rank).toFixed(2)}%"></span>`
+  const visibleTicks = ticksForRange(logMin, logMax);
+
+  const grid = visibleTicks.map(
+    (tk) => `<span class="ruler__grid" style="left:${rankPosScoped(tk.rank, logMin, logMax).toFixed(2)}%"></span>`
   ).join("");
 
-  const scale = RULER_TICKS.map(
-    (t) => `<span class="ruler__tick" style="left:${rankPos(t.rank).toFixed(2)}%">${t.label}</span>`
+  const scale = visibleTicks.map(
+    (tk) => `<span class="ruler__tick" style="left:${rankPosScoped(tk.rank, logMin, logMax).toFixed(2)}%">${tk.label}</span>`
   ).join("");
 
   const you = youRank
-    ? `<div class="ruler__you" style="left:${rankPos(youRank).toFixed(2)}%" title="${escapeHtml(t("ruler.yourRank", { rank: fmt(youRank) }))}"><span class="ruler__you-flag">${escapeHtml(t("ruler.you"))}</span></div>`
+    ? `<div class="ruler__you" style="left:${rankPosScoped(youRank, logMin, logMax).toFixed(2)}%" title="${escapeHtml(t("ruler.yourRank", { rank: fmt(youRank) }))}"><span class="ruler__you-flag">${escapeHtml(t("ruler.you"))}</span></div>`
     : "";
 
   const headRight = youRank
@@ -826,24 +895,50 @@ function rulerGroupHtml(group, recs) {
   const aria = `${title} ${via}: ${items.length}`;
 
   return `
-    <div class="ruler__group" role="img" aria-label="${escapeHtml(aria)}">
+    <div class="ruler__group" role="img" aria-label="${escapeHtml(aria)}" data-exam="${group.exam}">
       <div class="ruler__head">
         <span class="ruler__title">${escapeHtml(title)} <span class="ruler__via">${escapeHtml(via)}</span></span>
         ${headRight}
       </div>
-      <div class="ruler__track">
-        ${grid}
-        ${dots}
-        ${you}
+      <div class="ruler__track-wrap">
+        <div class="ruler__track" data-exam="${group.exam}">
+          ${grid}
+          ${dots}
+          ${you}
+        </div>
+        <div class="ruler__zoom-controls">
+          <button type="button" class="ruler__zoom-btn" data-action="in" data-exam="${group.exam}" title="Zoom in">+</button>
+          <button type="button" class="ruler__zoom-btn" data-action="out" data-exam="${group.exam}" title="Zoom out">−</button>
+          <button type="button" class="ruler__zoom-btn" data-action="reset" data-exam="${group.exam}" title="Reset zoom">⟲</button>
+        </div>
       </div>
       <div class="ruler__scale">${scale}</div>
     </div>`;
+}
+
+// Re-render a single ruler group in-place after zoom/pan
+function rerenderRulerGroup(exam) {
+  const data = state.lastData;
+  if (!data) return;
+  const recs = data.recommendations || [];
+  const group = RULER_GROUPS.find(g => g.exam === exam);
+  if (!group) return;
+  const groupEl = document.querySelector(`.ruler__group[data-exam="${exam}"]`);
+  if (!groupEl) return;
+  const newHtml = rulerGroupHtml(group, recs);
+  if (!newHtml) return;
+  const temp = document.createElement("div");
+  temp.innerHTML = newHtml;
+  const newGroup = temp.firstElementChild;
+  groupEl.replaceWith(newGroup);
 }
 
 // Built once per result render (not on filter changes) to keep typing snappy.
 function renderRuler(data) {
   const el = $("ruler");
   const recs = data?.recommendations || [];
+  // Reset zoom state for fresh renders
+  for (const key of Object.keys(rulerZoomState)) delete rulerZoomState[key];
   const groups = RULER_GROUPS.map((g) => rulerGroupHtml(g, recs)).filter(Boolean).join("");
 
   if (!groups) {
@@ -1363,7 +1458,15 @@ function printChoices() {
 }
 
 function recPassesFilters(rec) {
-  if (state.filterType && rec.institute_type !== state.filterType) return false;
+  if (state.filterType) {
+    if (state.filterType === "IIT_TOP5") {
+      if (rec.institute_type !== "IIT" || !rec.is_top_iit) return false;
+    } else if (state.filterType === "IIT_REST") {
+      if (rec.institute_type !== "IIT" || rec.is_top_iit) return false;
+    } else if (rec.institute_type !== state.filterType) {
+      return false;
+    }
+  }
   if (state.filterRegion && state.filterRegion !== "all") {
     if (state.filterRegion === "metro" && !rec.is_metro) return false;
     if (state.filterRegion !== "metro" && rec.region !== state.filterRegion) return false;
