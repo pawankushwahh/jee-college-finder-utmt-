@@ -953,6 +953,13 @@
             </h3>
           </div>
           <div class="card__body">
+            <div class="tabs-nav" id="comp-inst-type-tabs"
+              style="margin-bottom: 12px; border-bottom-color: var(--line-soft);">
+              <button class="tab-btn is-active" onclick="switchCompInstTab('IIT')" data-comp-inst-tab="IIT">IIT</button>
+              <button class="tab-btn" onclick="switchCompInstTab('NIT')" data-comp-inst-tab="NIT">NIT</button>
+              <button class="tab-btn" onclick="switchCompInstTab('IIIT')" data-comp-inst-tab="IIIT">IIIT</button>
+              <button class="tab-btn" onclick="switchCompInstTab('GFTI')" data-comp-inst-tab="GFTI">GFTI</button>
+            </div>
             <div class="chart-container">
               <canvas id="chart-competitive-insts"></canvas>
             </div>
@@ -1052,6 +1059,34 @@
             </div>
             <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
               Top 5 hardest-to-get branches per institute type based on average OPEN closing rank (2025 data).
+            </p>
+          </div>
+        </div>
+
+        <!-- Chart 7b: Top 10 Competitive Programs by Institute Type -->
+        <div class="card card--col-6">
+          <div class="card__header">
+            <h3 class="card__title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round">
+                <path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+              </svg>
+              Top 10 Competitive Programs — 2025
+            </h3>
+          </div>
+          <div class="card__body">
+            <div class="tabs-nav" id="comp-prog-type-tabs"
+              style="margin-bottom: 12px; border-bottom-color: var(--line-soft);">
+              <button class="tab-btn is-active" onclick="switchCompProgTab('IIT')" data-comp-prog-tab="IIT">IIT</button>
+              <button class="tab-btn" onclick="switchCompProgTab('NIT')" data-comp-prog-tab="NIT">NIT</button>
+              <button class="tab-btn" onclick="switchCompProgTab('IIIT')" data-comp-prog-tab="IIIT">IIIT</button>
+              <button class="tab-btn" onclick="switchCompProgTab('GFTI')" data-comp-prog-tab="GFTI">GFTI</button>
+            </div>
+            <div class="chart-container">
+              <canvas id="chart-competitive-progs"></canvas>
+            </div>
+            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
+              Top 10 hardest-to-get programs (e.g. CSE at IITB) based on average OPEN closing rank (2025 data).
             </p>
           </div>
         </div>
@@ -1371,46 +1406,142 @@
           }
         });
 
-        // Draw top competitive institutes horizontal bar chart
-        const compInstLabels = data.inst_competitiveness.map(i => i.institute.replace('Indian Institute of Technology', 'IIT').replace('National Institute of Technology', 'NIT').replace('Indian Institute of Information Technology', 'IIIT'));
-        const compInstValues = data.inst_competitiveness.map(i => i.avg_closing_rank);
+        // Draw top competitive institutes horizontal bar chart (filterable by type)
+        window._compInstsData = data.inst_competitiveness; // dict keyed by itype
+        window._currentCompInstTab = 'IIT';
 
-        charts.compInsts = new Chart(document.getElementById("chart-competitive-insts"), {
-          type: 'bar',
-          data: {
-            labels: compInstLabels,
-            datasets: [{
-              data: compInstValues,
-              backgroundColor: '#175c4c',
-              borderRadius: 4
-            }]
-          },
-          options: {
-            indexAxis: 'y',
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: { display: false },
-              tooltip: {
-                callbacks: {
-                  label: function (context) {
-                    return ` Avg. Closing: ${Math.round(context.raw).toLocaleString()}`;
+        function renderCompInsts(itype) {
+          const entries = window._compInstsData[itype] || [];
+          const compInstLabels = entries.map(i => i.institute
+            .replace('Indian Institute of Technology', 'IIT')
+            .replace('National Institute of Technology', 'NIT')
+            .replace('Indian Institute of Information Technology', 'IIIT'));
+          const compInstValues = entries.map(i => i.avg_closing_rank);
+          const instColors = { 'IIT': '#175c4c', 'NIT': '#2e7d5b', 'IIIT': '#a87714', 'GFTI': '#bf5b3c' };
+
+          if (charts.compInsts) charts.compInsts.destroy();
+
+          charts.compInsts = new Chart(document.getElementById("chart-competitive-insts"), {
+            type: 'bar',
+            data: {
+              labels: compInstLabels,
+              datasets: [{
+                data: compInstValues,
+                backgroundColor: instColors[itype] || '#175c4c',
+                borderRadius: 4
+              }]
+            },
+            options: {
+              indexAxis: 'y',
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  callbacks: {
+                    label: function (context) {
+                      const idx = context.dataIndex;
+                      const prog = entries[idx];
+                      return ` Avg. Closing: ${Math.round(context.raw).toLocaleString()} (${prog.total_programs} programs)`;
+                    }
                   }
                 }
-              }
-            },
-            scales: {
-              x: {
-                grid: { color: '#efe8d8' },
-                ticks: { font: { family: 'Inter' }, color: '#5f5747' }
               },
-              y: {
-                grid: { display: false },
-                ticks: { font: { family: 'Inter', size: 10 }, color: '#241e12' }
+              scales: {
+                x: {
+                  grid: { color: '#efe8d8' },
+                  ticks: { font: { family: 'Inter' }, color: '#5f5747' }
+                },
+                y: {
+                  grid: { display: false },
+                  ticks: { font: { family: 'Inter', size: 10 }, color: '#241e12' }
+                }
               }
             }
-          }
-        });
+          });
+        }
+
+        window.switchCompInstTab = function (itype) {
+          document.querySelectorAll('#comp-inst-type-tabs .tab-btn').forEach(btn => {
+            btn.classList.toggle('is-active', btn.dataset.compInstTab === itype);
+          });
+          window._currentCompInstTab = itype;
+          renderCompInsts(itype);
+        };
+
+        renderCompInsts('IIT');
+
+        // Draw top competitive programs chart (filterable by type)
+        window._compProgsData = data.top_programs_by_type; // dict keyed by itype
+        window._currentCompProgTab = 'IIT';
+
+        function renderCompProgs(itype) {
+          const entries = window._compProgsData[itype] || [];
+          const labels = entries.map(e => e.program.length > 40 ? e.program.substring(0, 38) + '…' : e.program);
+          const values = entries.map(e => e.avg_closing);
+          const counts = entries.map(e => e.count);
+          const progColors = { 'IIT': '#175c4c', 'NIT': '#2e7d5b', 'IIIT': '#a87714', 'GFTI': '#bf5b3c' };
+
+          if (charts.compProgs) charts.compProgs.destroy();
+
+          charts.compProgs = new Chart(document.getElementById("chart-competitive-progs"), {
+            type: 'bar',
+            data: {
+              labels: labels,
+              datasets: [{
+                data: values,
+                backgroundColor: progColors[itype] || '#175c4c',
+                borderRadius: 4
+              }]
+            },
+            options: {
+              indexAxis: 'y',
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  callbacks: {
+                    label: function (context) {
+                      const idx = context.dataIndex;
+                      return ` Avg. Closing: ${Math.round(context.raw).toLocaleString()} (${counts[idx]} rounds)`;
+                    }
+                  }
+                }
+              },
+              scales: {
+                x: {
+                  grid: { color: '#efe8d8' },
+                  ticks: {
+                    font: { family: 'Inter' },
+                    color: '#5f5747',
+                    callback: function (value) { return value.toLocaleString(); }
+                  },
+                  title: {
+                    display: true,
+                    text: 'Avg. Closing Rank',
+                    font: { family: 'Inter', size: 11 },
+                    color: '#93897a'
+                  }
+                },
+                y: {
+                  grid: { display: false },
+                  ticks: { font: { family: 'Inter', size: 10 }, color: '#241e12' }
+                }
+              }
+            }
+          });
+        }
+
+        window.switchCompProgTab = function (itype) {
+          document.querySelectorAll('#comp-prog-type-tabs .tab-btn').forEach(btn => {
+            btn.classList.toggle('is-active', btn.dataset.compProgTab === itype);
+          });
+          window._currentCompProgTab = itype;
+          renderCompProgs(itype);
+        };
+
+        renderCompProgs('IIT');
 
         // Draw Volatility summary chart
         const volLabels = Object.keys(data.volatility_counts).map(t => {

@@ -131,25 +131,29 @@ def compute_dataset_stats() -> Dict[str, Any]:
     seat_type_counts = df["Seat Type"].value_counts().to_dict()
     gender_counts = df["Gender"].value_counts().to_dict()
 
-    # Institute Competitiveness (Average closing rank of OPEN, Gender-Neutral programs)
-    inst_competitiveness = []
+    # Institute Competitiveness — grouped by institute type (IIT/NIT/IIIT/GFTI)
+    inst_competitiveness = {}  # dict: {"IIT": [...], "NIT": [...], ...}
     if not crl_cutoffs.empty:
-        grouped = crl_cutoffs.groupby("Institute").agg(
+        crl_inst = crl_cutoffs.copy()
+        grouped = crl_inst.groupby(["Institute", "Institute_Type"]).agg(
             avg_closing=("Max_Closing", "mean"),
             min_opening=("Min_Opening", "min"),
             total_programs=("Academic Program Name", "count")
         ).reset_index()
         grouped = grouped.sort_values("avg_closing")
-        for _, row in grouped.head(15).iterrows():
-            inst_competitiveness.append({
-                "institute": row["Institute"],
-                "avg_closing_rank": round(row["avg_closing"], 1),
-                "min_opening_rank": int(row["min_opening"]),
-                "total_programs": int(row["total_programs"]),
-                "inst_type": _classify_institute_type(row["Institute"])
-            })
+        for itype in ["IIT", "NIT", "IIIT", "GFTI"]:
+            itype_df = grouped[grouped["Institute_Type"] == itype].head(10)
+            entries = []
+            for _, row in itype_df.iterrows():
+                entries.append({
+                    "institute": row["Institute"],
+                    "avg_closing_rank": round(row["avg_closing"], 1),
+                    "min_opening_rank": int(row["min_opening"]),
+                    "total_programs": int(row["total_programs"]),
+                })
+            inst_competitiveness[itype] = entries
 
-    # Popular Branches
+    # Helper: extract clean branch name (e.g. strip parenthetical suffixes)
     def _extract_branch_name(program: str) -> str:
         s = str(program).strip()
         match = re.match(r"^([^(]+)", s)
@@ -157,6 +161,39 @@ def compute_dataset_stats() -> Dict[str, Any]:
             return match.group(1).strip()
         return s
 
+    # Top 10 Competitive Programs per Institute Type (e.g. "CSE at IITB")
+    top_programs_by_type = {}
+    if not crl_cutoffs.empty:
+        crl_prog = crl_cutoffs.copy()
+        crl_prog["Branch_Clean"] = crl_prog["Academic Program Name"].apply(_extract_branch_name)
+        crl_prog["Program_Label"] = crl_prog["Branch_Clean"] + " @ " + crl_prog["Institute"].str.replace(
+            "Indian Institute of Technology", "IIT"
+        ).str.replace(
+            "National Institute of Technology", "NIT"
+        ).str.replace(
+            "Indian Institute of Information Technology", "IIIT"
+        ).str.strip()
+        for itype in ["IIT", "NIT", "IIIT", "GFTI"]:
+            itype_df = crl_prog[crl_prog["Institute_Type"] == itype]
+            if itype_df.empty:
+                top_programs_by_type[itype] = []
+                continue
+            prog_avg = itype_df.groupby(["Program_Label", "Branch_Clean"]).agg(
+                avg_closing=("Max_Closing", "mean"),
+                count=("Max_Closing", "count")
+            ).reset_index()
+            prog_avg = prog_avg.sort_values("avg_closing").head(10)
+            entries = []
+            for _, row in prog_avg.iterrows():
+                entries.append({
+                    "program": row["Program_Label"],
+                    "branch": row["Branch_Clean"],
+                    "avg_closing": round(row["avg_closing"], 1),
+                    "count": int(row["count"])
+                })
+            top_programs_by_type[itype] = entries
+
+    # Popular Branches
     df["Branch_Clean"] = df["Academic Program Name"].apply(_extract_branch_name)
     branch_counts = df["Branch_Clean"].value_counts().to_dict()
 
@@ -367,6 +404,7 @@ def compute_dataset_stats() -> Dict[str, Any]:
         "highest_cutoffs": highest_cutoffs,
         "lowest_cutoffs": lowest_cutoffs,
         "inst_competitiveness": inst_competitiveness,
+        "top_programs_by_type": top_programs_by_type,
         "popular_branches": popular_branches,
         "branch_counts": dict(list(branch_counts.items())[:15]),
         "volatility_counts": volatility_counts,
