@@ -171,31 +171,29 @@ def _categorize(rank: int, opening: int, closing: int) -> Optional[str]:
     return "Reach"
 
 
-def _calculate_probability(rank: int, closing_rank: int, history: dict[int, int]) -> float:
+def _calculate_probability(rank: int, opening_rank: int, closing_rank: int, history: dict[int, int]) -> float:
     """Calculate the probability of admission (0.0 to 100.0).
     
     Uses the historical volatility (standard deviation of closing ranks) if history is available.
-    Otherwise, defaults to a volatility of 8% of the closing rank.
+    Otherwise, defaults to a volatility based on the opening-closing span.
     """
     ranks = list(history.values())
     
-    if len(ranks) >= 2:
-        mean_rank = sum(ranks) / len(ranks)
-        variance = sum((x - mean_rank) ** 2 for x in ranks) / len(ranks)
-        std_dev = math.sqrt(variance)
-    else:
-        std_dev = 0.08 * closing_rank
-        
-    # Ensure std_dev is not too small (min 5% of closing_rank or at least 10 ranks)
-    min_std_dev = max(10, 0.05 * closing_rank)
-    if std_dev < min_std_dev:
-        std_dev = min_std_dev
-        
-    # Calculate Z-score (smaller rank = better, so positive means student rank is better than closing)
-    z = (closing_rank - rank) / std_dev
+    margin = closing_rank - rank
+    span = max(1, closing_rank - opening_rank)
+    
+    small_k = 0.10
+    floor_constant = 20.0
+    STEEPNESS = 1.5
+    
+    std_dev = small_k * span
+    min_std_dev = max(10, floor_constant)
+    std_dev = max(std_dev, min_std_dev)
+    
+    z = margin / std_dev
     
     try:
-        prob = 1.0 / (1.0 + math.exp(-1.7 * z))
+        prob = 1.0 / (1.0 + math.exp(-STEEPNESS * z))
     except OverflowError:
         prob = 1.0 if z > 0 else 0.0
         
@@ -709,7 +707,7 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
 
         # Probability calculation
         history = get_program_history(prog, effective_mode)
-        prob = _calculate_probability(rank, prog.closing_rank, history)
+        prob = _calculate_probability(rank, prog.opening_rank, prog.closing_rank, history)
         
         # Apply volatility penalty: volatility_penalty = min(0.2, movement_ratio * 0.3)
         # penalty reduces the final probability (e.g. if prob is 90% and penalty is 0.1, final prob becomes 80%)

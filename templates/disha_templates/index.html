@@ -115,11 +115,11 @@
               <path d="M19 12H5M11 18l-6-6 6-6" />
             </svg>
           </button>
-          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="6" aria-valuenow="1"
+          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1"
             id="flow-progressbar">
             <div class="flow__progress-fill" id="flow-progress-fill"></div>
           </div>
-          <span class="flow__count" id="flow-count">1 / 6</span>
+          <span class="flow__count" id="flow-count">1 / 5</span>
         </div>
 
         <form id="flow-form" novalidate>
@@ -192,19 +192,12 @@
             </div>
           </fieldset>
 
-          <!-- Step 4: Interest -->
+          <!-- Step 4: Interest (REMOVED FROM ONBOARDING FLOW) -->
+          <div id="goal-grid" hidden></div>
+          <p id="error-goal" hidden></p>
+
+          <!-- Step 4: Branch preference -->
           <fieldset class="step" data-step="3" hidden>
-            <p class="eyebrow" data-i18n="flow.s4Eyebrow">The next four years</p>
-            <h2 class="step__title" data-i18n="flow.s4Title">What pulls you?</h2>
-            <p class="step__hint" data-i18n="flow.s4Hint">There's no wrong answer — and "not sure" is a perfectly good
-              one. We'll order branches to fit.</p>
-
-            <div class="goal-grid" id="goal-grid" role="radiogroup" aria-label="Career interest"></div>
-            <p class="field__error" id="error-goal" role="alert" hidden></p>
-          </fieldset>
-
-          <!-- Step 5: Branch preference -->
-          <fieldset class="step" data-step="4" hidden>
             <p class="eyebrow" data-i18n="flow.s5Eyebrow">Branch focus</p>
             <h2 class="step__title" data-i18n="flow.s5Title">Any branch in mind?</h2>
             <p class="step__hint" data-i18n="flow.s5Hint">Pick the branch families you'd consider. Leave it on “Any” to
@@ -213,8 +206,8 @@
             <div class="branch-grid" id="branch-grid" role="group" aria-label="Branch preference"></div>
           </fieldset>
 
-          <!-- Step 6: Review -->
-          <fieldset class="step" data-step="5" hidden>
+          <!-- Step 5: Review -->
+          <fieldset class="step" data-step="4" hidden>
             <p class="eyebrow" data-i18n="flow.s6Eyebrow">One last look</p>
             <h2 class="step__title" data-i18n="flow.s6Title">Did we get this right?</h2>
             <p class="step__hint" data-i18n="flow.s6Hint">Tap any row to change it.</p>

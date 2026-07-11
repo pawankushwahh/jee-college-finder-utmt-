@@ -61,12 +61,12 @@ const state = {
   step: 0,
   gender: "male",
   brandBranchRatio: 0.5,
-  goal: null,
+  goal: "undecided",
   branchPrefs: [],          // selected branch-preference values; [] means "Any"
   lastPayload: null,
   lastData: null,
   filterText: "",
-  filterType: "",
+  filterTypes: [],
   filterRegion: "all",
   filterState: "all",
   choices: JSON.parse(localStorage.getItem("disha_choices") || "[]"),
@@ -79,7 +79,7 @@ const state = {
   sortBy: "probability",
 };
 
-const TOTAL_STEPS = 6;
+const TOTAL_STEPS = 5;
 
 const branchOptions = () => state.meta?.branches || [];
 const branchLabel = (value) => {
@@ -168,16 +168,6 @@ function validateStep(index) {
     const err = $("error-state");
     if (!$("home-state").value) {
       err.textContent = t("validation.state");
-      err.hidden = false;
-      return false;
-    }
-    err.hidden = true;
-    return true;
-  }
-  if (index === 3) {
-    const err = $("error-goal");
-    if (!state.goal) {
-      err.textContent = t("validation.goal");
       err.hidden = false;
       return false;
     }
@@ -346,8 +336,7 @@ function renderReview() {
     { key: t("review.gender"), val: escapeHtml(genderText), step: 1 },
     { key: t("review.category"), val: escapeHtml(categoryLabel()), step: 1 },
     { key: t("review.state"), val: escapeHtml($("home-state").value || t("review.dash")), step: 2 },
-    { key: t("review.goal"), val: escapeHtml(state.goal ? goalName(state.goal) : t("review.dash")), step: 3 },
-    { key: t("review.branch"), val: escapeHtml(branchReviewValue()), step: 4 },
+    { key: t("review.branch"), val: escapeHtml(branchReviewValue()), step: 3 },
   ];
 
   const list = $("review-list");
@@ -823,8 +812,7 @@ const RULER_TICKS = [
 ];
 
 const RULER_GROUPS = [
-  { id: "iit_top5", exam: "advanced", titleKey: "ruler.iitTop5Title", viaKey: "ruler.iitVia", rankKey: "adv_rank", filter: r => r.is_top_iit === true },
-  { id: "iit_rest", exam: "advanced", titleKey: "ruler.iitRestTitle", viaKey: "ruler.iitVia", rankKey: "adv_rank", filter: r => r.is_top_iit !== true },
+  { id: "iit", exam: "advanced", titleKey: "ruler.iitTitle", viaKey: "ruler.iitVia", rankKey: "adv_rank" },
   { id: "mains", exam: "mains", titleKey: "ruler.nitTitle", viaKey: "ruler.nitVia", rankKey: "mains_rank" },
 ];
 
@@ -877,12 +865,30 @@ function rulerGroupHtml(group, recs) {
     rulerZoomState[gid].defaultLogMin = autoRange.logMin;
     rulerZoomState[gid].defaultLogMax = autoRange.logMax;
   }
+  rulerZoomState[gid].dotLogs = sorted.map(r => Math.log10(r.closing_rank));
   const { logMin, logMax } = rulerZoomState[gid];
 
+  const lanes = [];
+  const numLanes = 8;
+  for (let l = 0; l < numLanes; l++) lanes[l] = -100;
+
   const dots = sorted
-    .map((r, i) => {
+    .map((r) => {
       const cat = r.category.toLowerCase();
-      return `<span class="ruler__dot ruler__dot--${cat}" style="left:${rankPosScoped(r.closing_rank, logMin, logMax).toFixed(2)}%;--lane:${i % RULER_LANES}" data-inst="${escapeHtml(r.institute)}" data-branch="${escapeHtml(r.branch)}" data-rank="${r.closing_rank}" data-cat="${cat}"></span>`;
+      const absPos = Math.log10(r.closing_rank);
+      let bestLane = 0;
+      let maxDist = -1;
+      for (let l = 0; l < numLanes; l++) {
+        const dist = absPos - lanes[l];
+        if (dist > maxDist) {
+          maxDist = dist;
+          bestLane = l;
+        }
+      }
+      lanes[bestLane] = absPos;
+      const topPct = 10 + (bestLane / (numLanes - 1)) * 80;
+      const leftPct = rankPosScoped(r.closing_rank, logMin, logMax);
+      return `<span class="ruler__dot ruler__dot--${cat}" style="left:${leftPct.toFixed(2)}%; top:${topPct.toFixed(2)}%" data-inst="${escapeHtml(r.institute)}" data-branch="${escapeHtml(r.branch)}" data-rank="${r.closing_rank}" data-cat="${cat}"></span>`;
     })
     .join("");
 
@@ -913,7 +919,7 @@ function rulerGroupHtml(group, recs) {
         ${headRight}
       </div>
       <div class="ruler__track-wrap">
-        <div class="ruler__track" data-ruler-id="${gid}">
+        <div class="ruler__track" data-ruler-id="${gid}" tabindex="0" aria-label="Interactive chart track. Use arrow keys to pan, plus/minus to zoom.">
           ${grid}
           ${dots}
           ${you}
@@ -950,6 +956,77 @@ function rerenderRulerGroup(rulerId) {
 // ── Zoom / pan helpers ──────────────────────────────────────────────────
 const MIN_LOG_SPAN = 0.4; // prevent zooming into a point
 
+function applyClampedRange(zs, newMin, newMax, action) {
+  const minAllowed = 0;
+  const maxAllowed = LOG_AXIS_MAX;
+  const maxSpan = (zs.defaultLogMax || LOG_AXIS_MAX) - (zs.defaultLogMin || 0);
+
+  let currentSpan = newMax - newMin;
+  if (currentSpan > maxSpan) {
+    const center = (newMin + newMax) / 2;
+    newMin = center - maxSpan / 2;
+    newMax = center + maxSpan / 2;
+  }
+
+  if (newMin < minAllowed) { newMax += (minAllowed - newMin); newMin = minAllowed; }
+  if (newMax > maxAllowed) { newMin -= (newMax - maxAllowed); newMax = maxAllowed; }
+  
+  newMin = Math.max(minAllowed, newMin);
+  newMax = Math.min(maxAllowed, newMax);
+  
+  if (newMax - newMin < 0.001) {
+    newMax = newMin + 0.001;
+  }
+
+  let hasDot = false;
+  if (zs.dotLogs && zs.dotLogs.length > 0) {
+    for (let i = 0; i < zs.dotLogs.length; i++) {
+      if (zs.dotLogs[i] >= newMin && zs.dotLogs[i] <= newMax) {
+        hasDot = true;
+        break;
+      }
+    }
+  } else {
+    hasDot = true;
+  }
+
+  if (!hasDot && zs.dotLogs && zs.dotLogs.length > 0) {
+    const span = newMax - newMin;
+    if (action === "pan") {
+      if (zs.dotLogs[zs.dotLogs.length - 1] < newMin) {
+        newMin = zs.dotLogs[zs.dotLogs.length - 1];
+        newMax = newMin + span;
+      } else if (zs.dotLogs[0] > newMax) {
+        newMax = zs.dotLogs[0];
+        newMin = newMax - span;
+      }
+    } else if (action === "zoomIn") {
+      const center = (newMin + newMax) / 2;
+      let closestDist = Infinity;
+      for (let i = 0; i < zs.dotLogs.length; i++) {
+        const dist = Math.abs(zs.dotLogs[i] - center);
+        if (dist < closestDist) {
+          closestDist = dist;
+        }
+      }
+      newMin = center - closestDist - 0.001;
+      newMax = center + closestDist + 0.001;
+    }
+    
+    if (newMin < minAllowed) { newMax += (minAllowed - newMin); newMin = minAllowed; }
+    if (newMax > maxAllowed) { newMin -= (newMax - maxAllowed); newMax = maxAllowed; }
+    newMin = Math.max(minAllowed, newMin);
+    newMax = Math.min(maxAllowed, newMax);
+    
+    if (newMax - newMin < 0.001) {
+      newMax = newMin + 0.001;
+    }
+  }
+
+  zs.logMin = newMin;
+  zs.logMax = newMax;
+}
+
 function applyZoom(rulerId, action) {
   const zs = rulerZoomState[rulerId];
   if (!zs) return;
@@ -957,12 +1034,10 @@ function applyZoom(rulerId, action) {
   if (action === "in") {
     const shrink = span * 0.15;
     if (span - shrink * 2 < MIN_LOG_SPAN) return;
-    zs.logMin += shrink;
-    zs.logMax -= shrink;
+    applyClampedRange(zs, zs.logMin + shrink, zs.logMax - shrink, "zoomIn");
   } else if (action === "out") {
     const grow = span * 0.2;
-    zs.logMin = Math.max(0, zs.logMin - grow);
-    zs.logMax = Math.min(LOG_AXIS_MAX, zs.logMax + grow);
+    applyClampedRange(zs, zs.logMin - grow, zs.logMax + grow, "zoomOut");
   } else if (action === "reset") {
     zs.logMin = zs.defaultLogMin;
     zs.logMax = zs.defaultLogMax;
@@ -973,16 +1048,7 @@ function applyZoom(rulerId, action) {
 function applyPan(rulerId, deltaLog) {
   const zs = rulerZoomState[rulerId];
   if (!zs) return;
-  const span = zs.logMax - zs.logMin;
-  let newMin = zs.logMin + deltaLog;
-  let newMax = zs.logMax + deltaLog;
-  // clamp
-  if (newMin < 0) { newMax -= newMin; newMin = 0; }
-  if (newMax > LOG_AXIS_MAX) { newMin -= (newMax - LOG_AXIS_MAX); newMax = LOG_AXIS_MAX; }
-  newMin = Math.max(0, newMin);
-  newMax = Math.min(LOG_AXIS_MAX, newMax);
-  zs.logMin = newMin;
-  zs.logMax = newMax;
+  applyClampedRange(zs, zs.logMin + deltaLog, zs.logMax + deltaLog, "pan");
   rerenderRulerGroup(rulerId);
 }
 
@@ -1014,6 +1080,24 @@ function bindRulerZoom() {
       const action = e.deltaY < 0 ? "in" : "out";
       applyZoom(rulerId, action);
     }, { passive: false });
+  });
+
+  // Keyboard zoom/pan on each track
+  document.querySelectorAll(".ruler__track").forEach(track => {
+    if (track._keyBound) return;
+    track._keyBound = true;
+    track.addEventListener("keydown", (e) => {
+      const rulerId = track.dataset.rulerId;
+      if (!rulerId) return;
+      const zs = rulerZoomState[rulerId];
+      if (!zs) return;
+      const span = zs.logMax - zs.logMin;
+      if (e.key === "ArrowLeft") { e.preventDefault(); applyPan(rulerId, -span * 0.1); }
+      if (e.key === "ArrowRight") { e.preventDefault(); applyPan(rulerId, span * 0.1); }
+      if (e.key === "+" || e.key === "=") { e.preventDefault(); applyZoom(rulerId, "in"); }
+      if (e.key === "-") { e.preventDefault(); applyZoom(rulerId, "out"); }
+      if (e.key === "0") { e.preventDefault(); applyZoom(rulerId, "reset"); }
+    });
   });
 
   // Drag-to-pan on each track
@@ -1048,12 +1132,7 @@ function bindRulerZoom() {
       const trackWidth = track.offsetWidth || 1;
       const span = startLogMax - startLogMin;
       const deltaLog = -(dx / trackWidth) * span;
-      let newMin = startLogMin + deltaLog;
-      let newMax = startLogMax + deltaLog;
-      if (newMin < 0) { newMax -= newMin; newMin = 0; }
-      if (newMax > LOG_AXIS_MAX) { newMin -= (newMax - LOG_AXIS_MAX); newMax = LOG_AXIS_MAX; }
-      zs.logMin = Math.max(0, newMin);
-      zs.logMax = Math.min(LOG_AXIS_MAX, newMax);
+      applyClampedRange(zs, startLogMin + deltaLog, startLogMax + deltaLog, "pan");
       rerenderRulerGroup(rulerId);
     });
 
@@ -1067,11 +1146,13 @@ function bindRulerZoom() {
 }
 
 // Built once per result render (not on filter changes) to keep typing snappy.
-function renderRuler(data) {
+function renderRuler(data, keepZoom = false) {
   const el = $("ruler");
   const recs = data?.recommendations || [];
-  // Reset zoom state for fresh renders
-  for (const key of Object.keys(rulerZoomState)) delete rulerZoomState[key];
+  if (!keepZoom) {
+    // Reset zoom state for fresh renders
+    for (const key of Object.keys(rulerZoomState)) delete rulerZoomState[key];
+  }
   const groups = RULER_GROUPS.map((g) => rulerGroupHtml(g, recs)).filter(Boolean).join("");
 
   if (!groups) {
@@ -1593,14 +1674,21 @@ function printChoices() {
 }
 
 function recPassesFilters(rec) {
-  if (state.filterType) {
-    if (state.filterType === "IIT_TOP5") {
-      if (rec.institute_type !== "IIT" || !rec.is_top_iit) return false;
-    } else if (state.filterType === "IIT_REST") {
-      if (rec.institute_type !== "IIT" || rec.is_top_iit) return false;
-    } else if (rec.institute_type !== state.filterType) {
-      return false;
+  if (state.filterTypes && state.filterTypes.length > 0) {
+    let match = false;
+    for (const type of state.filterTypes) {
+      if (type === "IIT_TOP5" && rec.institute_type === "IIT" && rec.is_top_iit) {
+        match = true;
+        break;
+      } else if (type === "IIT_REST" && rec.institute_type === "IIT" && !rec.is_top_iit) {
+        match = true;
+        break;
+      } else if (rec.institute_type === type) {
+        match = true;
+        break;
+      }
     }
+    if (!match) return false;
   }
   if (state.filterRegion && state.filterRegion !== "all") {
     if (state.filterRegion === "metro" && !rec.is_metro) return false;
@@ -1978,7 +2066,7 @@ function buildSortOptions() {
 function renderResults(data, { keepFilters = false } = {}) {
   if (!keepFilters) {
     state.filterText = "";
-    state.filterType = "";
+    state.filterTypes = [];
     state.sortBy = "probability";
     state.collapsedSections = { Safe: false, Target: false, Reach: false };
     $("filter-search").value = "";
@@ -1990,7 +2078,7 @@ function renderResults(data, { keepFilters = false } = {}) {
   buildSortOptions();
   renderProfileChips();
   renderNote(data);
-  renderRuler(data);
+  renderRuler(data, keepFilters);
 
   const byCat = data.counts?.by_category || {};
   countUp($("zone-count-safe"), byCat.Safe || 0);
@@ -2111,8 +2199,8 @@ function buildShareUrl() {
   if (state.filterText) {
     params.set("q", state.filterText);
   }
-  if (state.filterType) {
-    params.set("t", state.filterType);
+  if (state.filterTypes && state.filterTypes.length > 0) {
+    params.set("t", state.filterTypes.join(","));
   }
 
   params.set("lang", getLang());
@@ -2223,11 +2311,15 @@ function loadStateFromURL() {
   state.filterText = filterText.toLowerCase();
   $("filter-search").value = filterText;
 
-  const filterType = q.get("t") || "";
-  state.filterType = filterType;
-  document.querySelectorAll("#type-chips .chip").forEach((c) =>
-    c.classList.toggle("is-active", c.dataset.type === filterType)
-  );
+  const filterTypeStr = q.get("t") || "";
+  state.filterTypes = filterTypeStr ? filterTypeStr.split(",") : [];
+  document.querySelectorAll("#type-chips .chip").forEach((c) => {
+    if (state.filterTypes.length === 0) {
+      c.classList.toggle("is-active", c.dataset.type === "");
+    } else {
+      c.classList.toggle("is-active", state.filterTypes.includes(c.dataset.type));
+    }
+  });
 
   // Synchronize elements to make sure panel and flow inputs match
   syncPanelFromState();
@@ -2504,17 +2596,28 @@ function bindEvents() {
   $("type-chips").addEventListener("click", (e) => {
     const chip = e.target.closest(".chip");
     if (!chip) return;
-    state.filterType = chip.dataset.type;
-    document.querySelectorAll("#type-chips .chip").forEach((c) =>
-      c.classList.toggle("is-active", c === chip)
-    );
+    const type = chip.dataset.type;
+    if (type === "") {
+      state.filterTypes = [];
+    } else {
+      const idx = state.filterTypes.indexOf(type);
+      if (idx >= 0) state.filterTypes.splice(idx, 1);
+      else state.filterTypes.push(type);
+    }
+    document.querySelectorAll("#type-chips .chip").forEach((c) => {
+      if (state.filterTypes.length === 0) {
+        c.classList.toggle("is-active", c.dataset.type === "");
+      } else {
+        c.classList.toggle("is-active", state.filterTypes.includes(c.dataset.type));
+      }
+    });
     renderSections();
     saveStateToURL();
   });
 
   $("clear-filters-btn").addEventListener("click", () => {
     state.filterText = "";
-    state.filterType = "";
+    state.filterTypes = [];
     state.filterRegion = "all";
     state.filterState = "all";
     $("filter-search").value = "";
@@ -2609,9 +2712,9 @@ function bindEvents() {
   $("copy-link-btn").addEventListener("click", copyShareLink);
   $("print-btn").addEventListener("click", () => {
     // Families review the full grouped list, so clear any active filters first.
-    if (state.filterText || state.filterType) {
+    if (state.filterText || state.filterTypes.length > 0) {
       state.filterText = "";
-      state.filterType = "";
+      state.filterTypes = [];
       $("filter-search").value = "";
       document.querySelectorAll("#type-chips .chip").forEach((c) =>
         c.classList.toggle("is-active", c.dataset.type === "")

@@ -1569,7 +1569,7 @@ select.input--sm {
 .ruler {
   position: relative;
   margin-top: 18px;
-  padding: 16px 16px 14px;
+  padding: 12px 12px 8px;
   border: 1.5px solid var(--line);
   border-radius: var(--radius);
   background: var(--card);
@@ -1577,7 +1577,7 @@ select.input--sm {
 }
 
 .ruler__intro {
-  margin-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 .ruler__lede {
@@ -1588,7 +1588,7 @@ select.input--sm {
 }
 
 .ruler__group {
-  margin-top: 22px;
+  margin-top: 14px;
 }
 
 .ruler__group:first-of-type {
@@ -1600,7 +1600,7 @@ select.input--sm {
   justify-content: space-between;
   align-items: baseline;
   gap: 8px;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
 }
 
 .ruler__title {
@@ -1634,6 +1634,16 @@ select.input--sm {
   border-radius: var(--radius-sm);
   background: linear-gradient(90deg, var(--safe-bg), var(--target-bg) 55%, var(--reach-bg));
   border: 1px solid var(--line-soft);
+  overflow: hidden;
+  cursor: grab;
+  touch-action: pan-y;
+}
+.ruler__track:active {
+  cursor: grabbing;
+}
+.ruler__track:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .ruler__grid {
@@ -1703,10 +1713,10 @@ select.input--sm {
 
 .ruler__you-flag {
   position: absolute;
-  top: -15px;
+  top: -14px;
   left: 50%;
   transform: translateX(-50%);
-  padding: 1px 6px;
+  padding: 0 6px;
   font-size: 0.58rem;
   font-weight: 800;
   letter-spacing: 0.07em;
@@ -1718,8 +1728,8 @@ select.input--sm {
 
 .ruler__scale {
   position: relative;
-  height: 15px;
-  margin-top: 7px;
+  height: 12px;
+  margin-top: 2px;
 }
 
 .ruler__tick {
@@ -3249,14 +3259,14 @@ select.input--sm {
   background: var(--card);
   border: 1px solid var(--line);
   border-radius: var(--radius);
-  padding: 28px 24px 20px;
+  padding: 16px 20px 12px;
   margin-bottom: 28px;
   box-shadow: var(--shadow-sm);
   position: relative;
 }
 
 .ruler__intro {
-  margin-bottom: 22px;
+  margin-bottom: 12px;
 }
 
 .ruler__lede {
@@ -3267,10 +3277,10 @@ select.input--sm {
 }
 
 .ruler__group {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 }
 .ruler__group:last-of-type {
-  margin-bottom: 8px;
+  margin-bottom: 0px;
 }
 
 .ruler__head {
@@ -3278,7 +3288,7 @@ select.input--sm {
   align-items: baseline;
   justify-content: space-between;
   gap: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .ruler__title {
@@ -3321,7 +3331,7 @@ select.input--sm {
   background: linear-gradient(90deg,
     var(--safe-bg) 0%, var(--target-bg) 40%, var(--reach-bg) 80%, #fce9e0 100%);
   border: 1px solid var(--line-soft);
-  overflow: visible;
+  overflow: hidden;
   cursor: grab;
   user-select: none;
   -webkit-user-select: none;
@@ -3426,8 +3436,8 @@ select.input--sm {
 /* Axis labels */
 .ruler__scale {
   position: relative;
-  height: 18px;
-  margin-top: 4px;
+  height: 14px;
+  margin-top: 0px;
 }
 
 .ruler__tick {
