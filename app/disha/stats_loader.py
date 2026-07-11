@@ -336,55 +336,60 @@ def compute_dataset_stats() -> Dict[str, Any]:
             "five_year_count": five_count
         })
 
-    # 5. Options/Colleges Available by Rank (capped for cleaner display)
-    MAX_DISPLAY_PROGRAMS = 20
-    MAX_DISPLAY_INSTITUTES = 15
-    UPPER_MARGIN = 0.25
-    LOWER_MARGIN = 0.50
+    # 5. Options Available by Rank — programs where student's rank falls WITHIN
+    #    the [Min_Opening, Max_Closing] window for each seat category.
+    #
+    # Counting programs where (Min_Opening <= r <= Max_Closing) creates a natural
+    # bell-curve: at very low ranks only elite programs qualify; mid-ranks have
+    # the most options; very high ranks again have few — matching the reference
+    # JoSAA visualisation.
+    #
+    # Output:
+    #   rank_availability.advanced_by_category: { "OPEN": [...], "OBC-NCL": [...], ... }
+    #   rank_availability.mains_by_category:    { "OPEN": [...], "OBC-NCL": [...], ... }
+    # Backward-compat .advanced / .mains keys keep pointing to OPEN curves.
 
-    advanced_curve = []
-    adv_thresholds = [500, 1000, 2000, 5000, 8000, 10000, 15000, 20000, 25000]
-    iit_crl = valid_cutoffs[
+    AVAIL_CATEGORIES = ["OPEN", "OBC-NCL", "SC", "ST", "EWS"]
+
+    # Rank thresholds chosen to span the realistic range of JoSAA cutoffs with
+    # more density at the competitive (low-rank) end — matches reference image X-axis.
+    adv_thresholds  = [100, 250, 500, 1000, 2000, 3000, 5000, 7000, 10000, 15000, 20000, 25000]
+    mains_thresholds = [1000, 2000, 5000, 10000, 20000, 30000, 50000, 75000, 100000, 150000, 200000, 300000, 500000]
+
+    # Pre-filter to Gender-Neutral only (most representative CRL pool).
+    iit_gn   = valid_cutoffs[
         (valid_cutoffs["Institute_Type"] == "IIT") &
-        (valid_cutoffs["Seat Type"] == "OPEN") &
         (valid_cutoffs["Gender"].str.lower().str.contains("gender-neutral|neutral"))
     ]
-    for r in adv_thresholds:
-        available_rows = iit_crl[
-            (r <= iit_crl["Max_Closing"] * (1 + UPPER_MARGIN)) &
-            (r >= iit_crl["Min_Opening"] * (1 - LOWER_MARGIN))
-        ]
-        total_progs = len(available_rows)
-        total_insts = int(available_rows["Institute"].nunique())
-        advanced_curve.append({
-            "rank": r,
-            "program_count": min(total_progs, MAX_DISPLAY_PROGRAMS),
-            "institute_count": min(total_insts, MAX_DISPLAY_INSTITUTES),
-            "total_programs": total_progs,
-            "total_institutes": total_insts
-        })
-
-    mains_curve = []
-    mains_thresholds = [5000, 10000, 20000, 30000, 50000, 75000, 100000, 150000, 200000]
-    mains_crl = valid_cutoffs[
+    mains_gn = valid_cutoffs[
         (valid_cutoffs["Institute_Type"] != "IIT") &
-        (valid_cutoffs["Seat Type"] == "OPEN") &
         (valid_cutoffs["Gender"].str.lower().str.contains("gender-neutral|neutral"))
     ]
-    for r in mains_thresholds:
-        available_rows = mains_crl[
-            (r <= mains_crl["Max_Closing"] * (1 + UPPER_MARGIN)) &
-            (r >= mains_crl["Min_Opening"] * (1 - LOWER_MARGIN))
-        ]
-        total_progs = len(available_rows)
-        total_insts = int(available_rows["Institute"].nunique())
-        mains_curve.append({
-            "rank": r,
-            "program_count": min(total_progs, MAX_DISPLAY_PROGRAMS),
-            "institute_count": min(total_insts, MAX_DISPLAY_INSTITUTES),
-            "total_programs": total_progs,
-            "total_institutes": total_insts
-        })
+
+    def _build_curve(base_df, thresholds, seat_type):
+        """Count programs whose [Min_Opening, Max_Closing] window contains rank r."""
+        cat_df = base_df[base_df["Seat Type"] == seat_type].copy()
+        curve = []
+        for r in thresholds:
+            # Student at rank r can fill a seat when Min_Opening <= r <= Max_Closing
+            window = cat_df[(cat_df["Min_Opening"] <= r) & (cat_df["Max_Closing"] >= r)]
+            curve.append({
+                "rank": r,
+                "total_programs": int(len(window)),
+                "total_institutes": int(window["Institute"].nunique())
+            })
+        return curve
+
+    advanced_by_category = {}
+    mains_by_category    = {}
+    for cat in AVAIL_CATEGORIES:
+        advanced_by_category[cat] = _build_curve(iit_gn,   adv_thresholds,   cat)
+        mains_by_category[cat]    = _build_curve(mains_gn, mains_thresholds, cat)
+
+    # Backward-compat aliases (OPEN curves)
+    advanced_curve = advanced_by_category["OPEN"]
+    mains_curve    = mains_by_category["OPEN"]
+
 
     return {
         "summary": {
@@ -414,7 +419,9 @@ def compute_dataset_stats() -> Dict[str, Any]:
         "duration_comparison": duration_comparison,
         "rank_availability": {
             "advanced": advanced_curve,
-            "mains": mains_curve
+            "mains": mains_curve,
+            "advanced_by_category": advanced_by_category,
+            "mains_by_category": mains_by_category
         }
     }
 

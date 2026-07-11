@@ -838,6 +838,53 @@
       height: 300px;
       width: 100%;
     }
+
+    /* Category filter pills for availability charts */
+    .cat-filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      padding: 0 0 14px 0;
+      align-items: center;
+    }
+
+    .cat-filter-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-faint);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-right: 4px;
+      line-height: 1;
+      align-self: center;
+    }
+
+    .cat-pill {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 13px;
+      border-radius: 999px;
+      border: 1.5px solid var(--line);
+      background: transparent;
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: all 0.18s var(--ease-out);
+      line-height: 1;
+    }
+
+    .cat-pill:hover {
+      border-color: var(--pine);
+      color: var(--pine);
+      background: var(--pine-tint);
+    }
+
+    .cat-pill.is-active {
+      background: var(--pine);
+      border-color: var(--pine);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(23, 92, 76, 0.25);
+    }
   </style>
 </head>
 
@@ -1036,32 +1083,7 @@
           </div>
         </div>
 
-        <!-- Chart 7: Top Competitive Branches by Institute Type -->
-        <div class="card card--col-6">
-          <div class="card__header">
-            <h3 class="card__title">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 20V10M18 20V4M6 20v-6" />
-              </svg>
-              Top Competitive Branches — 2025
-            </h3>
-          </div>
-          <div class="card__body">
-            <div class="tabs-nav" id="branch-type-tabs"
-              style="margin-bottom: 12px; border-bottom-color: var(--line-soft);">
-              <button class="tab-btn is-active" onclick="switchBranchTab('IIT')" data-branch-tab="IIT">IIT</button>
-              <button class="tab-btn" onclick="switchBranchTab('NIT')" data-branch-tab="NIT">NIT</button>
-              <button class="tab-btn" onclick="switchBranchTab('IIIT')" data-branch-tab="IIIT">IIIT</button>
-            </div>
-            <div class="chart-container">
-              <canvas id="chart-top-branches"></canvas>
-            </div>
-            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
-              Top 5 hardest-to-get branches per institute type based on average OPEN closing rank (2025 data).
-            </p>
-          </div>
-        </div>
+
 
         <!-- Chart 7b: Top 10 Competitive Programs by Institute Type -->
         <div class="card card--col-6">
@@ -1116,7 +1138,7 @@
         <!-- Chart 9: JEE Advanced Rank Options Availability -->
         <div class="card card--col-6">
           <div class="card__header">
-            <h3 class="card__title">
+            <h3 class="card__title" id="title-avail-adv">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -1125,12 +1147,20 @@
             </h3>
           </div>
           <div class="card__body">
+            <div class="cat-filter-row" id="cat-filter-adv">
+              <span class="cat-filter-label">Category:</span>
+              <button class="cat-pill is-active" data-cat="OPEN" onclick="switchAvailCategory('adv', 'OPEN')">OPEN</button>
+              <button class="cat-pill" data-cat="OBC-NCL" onclick="switchAvailCategory('adv', 'OBC-NCL')">OBC-NCL</button>
+              <button class="cat-pill" data-cat="SC" onclick="switchAvailCategory('adv', 'SC')">SC</button>
+              <button class="cat-pill" data-cat="ST" onclick="switchAvailCategory('adv', 'ST')">ST</button>
+              <button class="cat-pill" data-cat="EWS" onclick="switchAvailCategory('adv', 'EWS')">EWS</button>
+            </div>
             <div class="chart-container">
               <canvas id="chart-avail-adv"></canvas>
             </div>
             <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;"
               id="desc-avail-adv">
-              Total number of eligible programs and institutes available for each rank range in JoSAA 2025.
+              Total eligible programs and IITs for each JEE Advanced rank range in JoSAA 2025 (Gender-Neutral seats).
             </p>
           </div>
         </div>
@@ -1138,7 +1168,7 @@
         <!-- Chart 10: JEE Mains Rank Options Availability -->
         <div class="card card--col-6">
           <div class="card__header">
-            <h3 class="card__title">
+            <h3 class="card__title" id="title-avail-mains">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
@@ -1147,12 +1177,20 @@
             </h3>
           </div>
           <div class="card__body">
+            <div class="cat-filter-row" id="cat-filter-mains">
+              <span class="cat-filter-label">Category:</span>
+              <button class="cat-pill is-active" data-cat="OPEN" onclick="switchAvailCategory('mains', 'OPEN')">OPEN</button>
+              <button class="cat-pill" data-cat="OBC-NCL" onclick="switchAvailCategory('mains', 'OBC-NCL')">OBC-NCL</button>
+              <button class="cat-pill" data-cat="SC" onclick="switchAvailCategory('mains', 'SC')">SC</button>
+              <button class="cat-pill" data-cat="ST" onclick="switchAvailCategory('mains', 'ST')">ST</button>
+              <button class="cat-pill" data-cat="EWS" onclick="switchAvailCategory('mains', 'EWS')">EWS</button>
+            </div>
             <div class="chart-container">
               <canvas id="chart-avail-mains"></canvas>
             </div>
             <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;"
               id="desc-avail-mains">
-              Total number of eligible programs and institutes available for each rank range in JoSAA 2025.
+              Total eligible programs and colleges for each JEE Mains rank range in JoSAA 2025 (Gender-Neutral seats).
             </p>
           </div>
         </div>
@@ -1693,81 +1731,6 @@
           }
         });
 
-        // Draw Top Competitive Branches chart (default: IIT)
-        window._topBranchesData = data.top_branches_by_type;
-        window._currentBranchTab = 'IIT';
-
-        function renderTopBranches(itype) {
-          const entries = window._topBranchesData[itype] || [];
-          const labels = entries.map(e => e.branch.length > 30 ? e.branch.substring(0, 28) + '…' : e.branch);
-          const values = entries.map(e => e.avg_closing);
-          const counts = entries.map(e => e.count);
-          const colors = {
-            'IIT': '#bf5b3c',
-            'NIT': '#2e7d5b',
-            'IIIT': '#a87714'
-          };
-
-          if (charts.topBranches) charts.topBranches.destroy();
-
-          charts.topBranches = new Chart(document.getElementById("chart-top-branches"), {
-            type: 'bar',
-            data: {
-              labels: labels,
-              datasets: [{
-                data: values,
-                backgroundColor: colors[itype] || '#175c4c',
-                borderRadius: 6
-              }]
-            },
-            options: {
-              indexAxis: 'y',
-              responsive: true,
-              maintainAspectRatio: false,
-              plugins: {
-                legend: { display: false },
-                tooltip: {
-                  callbacks: {
-                    label: function (context) {
-                      const idx = context.dataIndex;
-                      return ` Avg. Closing: ${Math.round(context.raw).toLocaleString()} (${counts[idx]} programs)`;
-                    }
-                  }
-                }
-              },
-              scales: {
-                x: {
-                  grid: { color: '#efe8d8' },
-                  ticks: {
-                    font: { family: 'Inter' },
-                    color: '#5f5747',
-                    callback: function (value) { return value.toLocaleString(); }
-                  },
-                  title: {
-                    display: true,
-                    text: 'Avg. Closing Rank',
-                    font: { family: 'Inter', size: 11 },
-                    color: '#93897a'
-                  }
-                },
-                y: {
-                  grid: { display: false },
-                  ticks: { font: { family: 'Inter', size: 10 }, color: '#241e12' }
-                }
-              }
-            }
-          });
-        }
-
-        window.switchBranchTab = function (itype) {
-          document.querySelectorAll('#branch-type-tabs .tab-btn').forEach(btn => {
-            btn.classList.toggle('is-active', btn.dataset.branchTab === itype);
-          });
-          window._currentBranchTab = itype;
-          renderTopBranches(itype);
-        };
-
-        renderTopBranches('IIT');
 
         // Draw 4-Year vs 5-Year comparison chart
         const durationLabels = data.duration_comparison.map(d => d.inst_type);
@@ -1824,151 +1787,260 @@
           }
         });
 
-        // Draw Options Availability by Rank (Advanced - IITs)
-        const advAvailLabels = data.rank_availability.advanced.map(a => a.rank.toLocaleString());
-        const advAvailProgs = data.rank_availability.advanced.map(a => a.total_programs);
-        const advAvailInsts = data.rank_availability.advanced.map(a => a.total_institutes);
+        // ─── Options Availability by Rank Charts (9 & 10) ───────────────────
+        // Both charts support per-category filtering. Selecting a category pill
+        // rebuilds the chart data and recalibrates the Y-axis to fit the new
+        // scale — keeping the axis uniform to the selected category's data range.
 
-        charts.availAdv = new Chart(document.getElementById("chart-avail-adv"), {
-          type: 'line',
-          data: {
-            labels: advAvailLabels,
-            datasets: [
-              {
-                label: 'Eligible Programs',
-                data: advAvailProgs,
-                borderColor: '#175c4c',
-                backgroundColor: 'rgba(23, 92, 76, 0.08)',
-                borderWidth: 2.5,
-                tension: 0.3,
-                fill: true,
-                pointBackgroundColor: '#175c4c',
-                pointRadius: 4,
-                pointHoverRadius: 6
+        // Store the full per-category data from the API response.
+        window._availByCategory = {
+          adv: data.rank_availability.advanced_by_category || { OPEN: data.rank_availability.advanced },
+          mains: data.rank_availability.mains_by_category  || { OPEN: data.rank_availability.mains }
+        };
+        window._activeAvailCat = { adv: 'OPEN', mains: 'OPEN' };
+
+        // Helper: compute a Y-axis max that's round and 10–20% above the data max.
+        function niceYMax(dataRows) {
+          const maxVal = Math.max(...dataRows.map(r => r.total_programs), 1);
+          const raw = maxVal * 1.18;
+          const magnitude = Math.pow(10, Math.floor(Math.log10(raw)));
+          return Math.ceil(raw / magnitude) * magnitude;
+        }
+
+        // ── Render / re-render Advanced availability chart ──
+        function renderAvailAdv(cat) {
+          const rows = (window._availByCategory.adv[cat] || []);
+          const progsData = rows.map(a => ({ x: a.rank, y: a.total_programs }));
+          const instsData = rows.map(a => ({ x: a.rank, y: a.total_institutes }));
+          const yMax = niceYMax(rows);
+
+          if (charts.availAdv) {
+            // In-place update — avoids full destroy/rebuild flicker.
+            charts.availAdv.data.datasets[0].data = progsData;
+            charts.availAdv.data.datasets[1].data = instsData;
+            charts.availAdv.options.scales.y.max = yMax;
+            charts.availAdv.options.scales.y.suggestedMax = yMax;
+            charts.availAdv.update('active');
+          } else {
+            charts.availAdv = new Chart(document.getElementById('chart-avail-adv'), {
+              type: 'line',
+              data: {
+                datasets: [
+                  {
+                    label: 'Eligible Programs',
+                    data: progsData,
+                    borderColor: '#175c4c',
+                    backgroundColor: 'rgba(23, 92, 76, 0.08)',
+                    borderWidth: 2.5,
+                    tension: 0.2,
+                    fill: true,
+                    pointBackgroundColor: '#175c4c',
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                  },
+                  {
+                    label: 'Eligible IITs',
+                    data: instsData,
+                    borderColor: '#bf5b3c',
+                    backgroundColor: 'rgba(191, 91, 60, 0.06)',
+                    borderWidth: 2.5,
+                    tension: 0.2,
+                    fill: true,
+                    pointBackgroundColor: '#bf5b3c',
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                  }
+                ]
               },
-              {
-                label: 'Eligible IITs',
-                data: advAvailInsts,
-                borderColor: '#bf5b3c',
-                backgroundColor: 'rgba(191, 91, 60, 0.06)',
-                borderWidth: 2.5,
-                tension: 0.3,
-                fill: true,
-                pointBackgroundColor: '#bf5b3c',
-                pointRadius: 4,
-                pointHoverRadius: 6
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                position: 'bottom',
-                labels: { font: { family: 'Inter', size: 11 }, color: '#241e12', padding: 15 }
-              },
-              tooltip: {
-                callbacks: {
-                  afterBody: function (tooltipItems) {
-                    const idx = tooltipItems[0].dataIndex;
-                    const item = data.rank_availability.advanced[idx];
-                    return `Total available: ${item.total_programs} programs, ${item.total_institutes} IITs`;
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {
+                    position: 'bottom',
+                    labels: { font: { family: 'Inter', size: 11 }, color: '#241e12', padding: 15 }
+                  },
+                  tooltip: {
+                    callbacks: {
+                      title: function (tooltipItems) {
+                        return 'Rank: ' + tooltipItems[0].parsed.x.toLocaleString();
+                      },
+                      afterBody: function (tooltipItems) {
+                        const rank = tooltipItems[0].parsed.x;
+                        const item = rows.find(a => a.rank === rank);
+                        if (item) return `Programs: ${item.total_programs} · IITs: ${item.total_institutes}`;
+                      }
+                    }
+                  }
+                },
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    max: yMax,
+                    suggestedMax: yMax,
+                    grid: { color: '#efe8d8' },
+                    ticks: { font: { family: 'Inter' }, color: '#5f5747' }
+                  },
+                  x: {
+                    type: 'logarithmic',
+                    grid: { color: '#efe8d8' },
+                    ticks: {
+                      font: { family: 'Inter', size: 10 },
+                      color: '#5f5747',
+                      callback: function (value) {
+                        const nice = [1, 5, 10, 50, 100, 500, 1000, 2000, 5000, 10000, 20000, 50000];
+                        if (nice.includes(value)) {
+                          return value >= 1000 ? (value / 1000) + 'K' : value;
+                        }
+                        return '';
+                      },
+                      maxTicksLimit: 12
+                    },
+                    title: {
+                      display: true,
+                      text: 'Your JEE Advanced Rank (log scale)',
+                      font: { family: 'Inter', size: 11 },
+                      color: '#93897a'
+                    }
                   }
                 }
               }
-            },
-            scales: {
-              y: {
-                grid: { color: '#efe8d8' },
-                ticks: { font: { family: 'Inter' }, color: '#5f5747' }
-              },
-              x: {
-                grid: { display: false },
-                ticks: { font: { family: 'Inter', size: 10 }, color: '#5f5747' },
-                title: {
-                  display: true,
-                  text: 'Your JEE Advanced Rank',
-                  font: { family: 'Inter', size: 11 },
-                  color: '#93897a'
-                }
-              }
-            }
+            });
           }
-        });
+        }
 
-        // Draw Options Availability by Rank (Mains - NITs/IIITs/GFTIs)
-        const mainsAvailLabels = data.rank_availability.mains.map(m => m.rank.toLocaleString());
-        const mainsAvailProgs = data.rank_availability.mains.map(m => m.total_programs);
-        const mainsAvailInsts = data.rank_availability.mains.map(m => m.total_institutes);
+        // ── Render / re-render Mains availability chart ──
+        function renderAvailMains(cat) {
+          const rows = (window._availByCategory.mains[cat] || []);
+          const progsData = rows.map(m => ({ x: m.rank, y: m.total_programs }));
+          const instsData = rows.map(m => ({ x: m.rank, y: m.total_institutes }));
+          const yMax = niceYMax(rows);
 
-        charts.availMains = new Chart(document.getElementById("chart-avail-mains"), {
-          type: 'line',
-          data: {
-            labels: mainsAvailLabels,
-            datasets: [
-              {
-                label: 'Eligible Programs',
-                data: mainsAvailProgs,
-                borderColor: '#175c4c',
-                backgroundColor: 'rgba(23, 92, 76, 0.08)',
-                borderWidth: 2.5,
-                tension: 0.3,
-                fill: true,
-                pointBackgroundColor: '#175c4c',
-                pointRadius: 4,
-                pointHoverRadius: 6
+          if (charts.availMains) {
+            charts.availMains.data.datasets[0].data = progsData;
+            charts.availMains.data.datasets[1].data = instsData;
+            charts.availMains.options.scales.y.max = yMax;
+            charts.availMains.options.scales.y.suggestedMax = yMax;
+            charts.availMains.update('active');
+          } else {
+            charts.availMains = new Chart(document.getElementById('chart-avail-mains'), {
+              type: 'line',
+              data: {
+                datasets: [
+                  {
+                    label: 'Eligible Programs',
+                    data: progsData,
+                    borderColor: '#175c4c',
+                    backgroundColor: 'rgba(23, 92, 76, 0.08)',
+                    borderWidth: 2.5,
+                    tension: 0.2,
+                    fill: true,
+                    pointBackgroundColor: '#175c4c',
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                  },
+                  {
+                    label: 'Eligible Colleges',
+                    data: instsData,
+                    borderColor: '#a87714',
+                    backgroundColor: 'rgba(168, 119, 20, 0.06)',
+                    borderWidth: 2.5,
+                    tension: 0.2,
+                    fill: true,
+                    pointBackgroundColor: '#a87714',
+                    pointRadius: 4,
+                    pointHoverRadius: 6
+                  }
+                ]
               },
-              {
-                label: 'Eligible Colleges',
-                data: mainsAvailInsts,
-                borderColor: '#a87714',
-                backgroundColor: 'rgba(168, 119, 20, 0.06)',
-                borderWidth: 2.5,
-                tension: 0.3,
-                fill: true,
-                pointBackgroundColor: '#a87714',
-                pointRadius: 4,
-                pointHoverRadius: 6
-              }
-            ]
-          },
-          options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-              legend: {
-                position: 'bottom',
-                labels: { font: { family: 'Inter', size: 11 }, color: '#241e12', padding: 15 }
-              },
-              tooltip: {
-                callbacks: {
-                  afterBody: function (tooltipItems) {
-                    const idx = tooltipItems[0].dataIndex;
-                    const item = data.rank_availability.mains[idx];
-                    return `Total available: ${item.total_programs} programs, ${item.total_institutes} colleges`;
+              options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                  legend: {
+                    position: 'bottom',
+                    labels: { font: { family: 'Inter', size: 11 }, color: '#241e12', padding: 15 }
+                  },
+                  tooltip: {
+                    callbacks: {
+                      title: function (tooltipItems) {
+                        return 'Rank: ' + tooltipItems[0].parsed.x.toLocaleString();
+                      },
+                      afterBody: function (tooltipItems) {
+                        const rank = tooltipItems[0].parsed.x;
+                        const item = rows.find(m => m.rank === rank);
+                        if (item) return `Programs: ${item.total_programs} · Colleges: ${item.total_institutes}`;
+                      }
+                    }
+                  }
+                },
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    max: yMax,
+                    suggestedMax: yMax,
+                    grid: { color: '#efe8d8' },
+                    ticks: { font: { family: 'Inter' }, color: '#5f5747' }
+                  },
+                  x: {
+                    type: 'logarithmic',
+                    grid: { color: '#efe8d8' },
+                    ticks: {
+                      font: { family: 'Inter', size: 10 },
+                      color: '#5f5747',
+                      callback: function (value) {
+                        const nice = [100, 500, 1000, 5000, 10000, 50000, 100000, 200000, 500000];
+                        if (nice.includes(value)) {
+                          return value >= 100000 ? (value / 100000).toFixed(1) + 'L'
+                               : value >= 1000   ? (value / 1000) + 'K'
+                               : value;
+                        }
+                        return '';
+                      },
+                      maxTicksLimit: 12
+                    },
+                    title: {
+                      display: true,
+                      text: 'Your JEE Mains Rank (log scale)',
+                      font: { family: 'Inter', size: 11 },
+                      color: '#93897a'
+                    }
                   }
                 }
               }
-            },
-            scales: {
-              y: {
-                grid: { color: '#efe8d8' },
-                ticks: { font: { family: 'Inter' }, color: '#5f5747' }
-              },
-              x: {
-                grid: { display: false },
-                ticks: { font: { family: 'Inter', size: 10 }, color: '#5f5747' },
-                title: {
-                  display: true,
-                  text: 'Your JEE Mains Rank',
-                  font: { family: 'Inter', size: 11 },
-                  color: '#93897a'
-                }
-              }
-            }
+            });
           }
-        });
+        }
+
+        // ── Category pill switch handler (global, called by onclick) ──
+        window.switchAvailCategory = function (chartKey, cat) {
+          window._activeAvailCat[chartKey] = cat;
+
+          // Update pill highlight
+          const filterId = chartKey === 'adv' ? 'cat-filter-adv' : 'cat-filter-mains';
+          document.querySelectorAll(`#${filterId} .cat-pill`).forEach(pill => {
+            pill.classList.toggle('is-active', pill.dataset.cat === cat);
+          });
+
+          // Update chart title to reflect active category
+          const titleId = chartKey === 'adv' ? 'title-avail-adv' : 'title-avail-mains';
+          const examLabel = chartKey === 'adv' ? 'JEE Advanced' : 'JEE Mains';
+          const titleEl = document.getElementById(titleId);
+          if (titleEl) {
+            // Preserve the SVG icon (first child), replace text
+            const svg = titleEl.querySelector('svg');
+            titleEl.textContent = `${examLabel}: Available Options — ${cat} — 2025`;
+            if (svg) titleEl.prepend(svg);
+          }
+
+          // Re-render with new category data and rescaled Y-axis
+          if (chartKey === 'adv') renderAvailAdv(cat);
+          else renderAvailMains(cat);
+        };
+
+        // Initial render (defaults to OPEN)
+        renderAvailAdv('OPEN');
+        renderAvailMains('OPEN');
 
         // ═══ Populate: Popular Branches (mini stat card grid) ═══
         const gridBranches = document.getElementById("grid-branches");
