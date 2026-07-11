@@ -705,16 +705,10 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         region = _get_region(prog.institute_state)
         is_metro = _is_metro(prog.institute, prog.institute_state)
 
-        # Probability calculation
+        # Probability calculation (purely based on opening, closing, and student rank)
         history = get_program_history(prog, effective_mode)
         prob = _calculate_probability(rank, prog.opening_rank, prog.closing_rank, history)
         
-        # Apply volatility penalty: volatility_penalty = min(0.2, movement_ratio * 0.3)
-        # penalty reduces the final probability (e.g. if prob is 90% and penalty is 0.1, final prob becomes 80%)
-        volatility_penalty = min(0.2, prog.movement_ratio * 0.3)
-        prob = max(0.0, prob - (volatility_penalty * 100.0))
-        prob = round(prob, 1)
-
         results.append(
             Recommendation(
                 institute=prog.institute,
