@@ -752,11 +752,12 @@ function userRankFor(rec) {
 
 // ── Rank ruler (hero) ─────────────────────────────────────────────────────
 /*
-  DESIGN CHOICE — TWO stacked rulers, not one.
+  DESIGN CHOICE — THREE stacked rulers, not one.
   JEE Advanced (IIT) and JEE Main (NIT/IIIT/GFTI) ranks come from different
-  exams and different candidate pools, so they sit on separate scales; plotting
-  both against a single "YOU" marker would be meaningless. We draw one ruler per
-  exam the student actually has a rank for, each with its own YOU line.
+  exams and different candidate pools, so they sit on separate scales. IITs are
+  further split into Top 5 (Bombay, Delhi, Madras, Kanpur, Kharagpur) and Rest
+  so students can see where they stand in each tier. Each ruler has its own YOU
+  line. The axis autoscales to fit the data, with zoom/pan controls.
   HOW TO READ IT — the axis is logarithmic (rank 1 → 10 lakh) so the crowded
   low-rank end stays legible; each dot is one program coloured Safe/Target/Reach,
   and the black "YOU" line is the student's rank: dots to its LEFT closed at a
@@ -822,8 +823,9 @@ const RULER_TICKS = [
 ];
 
 const RULER_GROUPS = [
-  { exam: "advanced", titleKey: "ruler.iitTitle", viaKey: "ruler.iitVia", rankKey: "adv_rank" },
-  { exam: "mains", titleKey: "ruler.nitTitle", viaKey: "ruler.nitVia", rankKey: "mains_rank" },
+  { id: "iit_top5", exam: "advanced", titleKey: "ruler.iitTop5Title", viaKey: "ruler.iitVia", rankKey: "adv_rank", filter: r => r.is_top_iit === true },
+  { id: "iit_rest", exam: "advanced", titleKey: "ruler.iitRestTitle", viaKey: "ruler.iitVia", rankKey: "adv_rank", filter: r => r.is_top_iit !== true },
+  { id: "mains", exam: "mains", titleKey: "ruler.nitTitle", viaKey: "ruler.nitVia", rankKey: "mains_rank" },
 ];
 
 const RULER_LANES = 4; // vertical jitter lanes to de-clutter dense clusters
@@ -847,7 +849,9 @@ function computeAutoRange(items, youRank) {
 }
 
 function rulerGroupHtml(group, recs) {
-  const items = recs.filter((r) => r.exam === group.exam);
+  let items = recs.filter((r) => r.exam === group.exam);
+  // Apply optional sub-filter (e.g. Top 5 IITs vs Rest)
+  if (group.filter) items = items.filter(group.filter);
   if (!items.length) return "";
 
   const title = t(group.titleKey);
@@ -859,13 +863,21 @@ function rulerGroupHtml(group, recs) {
 
   // Compute autoscaled range
   const autoRange = computeAutoRange(items, youRank);
-  const zs = rulerZoomState[group.exam] || autoRange;
-  rulerZoomState[group.exam] = {
-    ...zs,
-    defaultLogMin: autoRange.logMin,
-    defaultLogMax: autoRange.logMax,
-  };
-  const { logMin, logMax } = zs;
+  const gid = group.id;
+  if (!rulerZoomState[gid]) {
+    // First render: use autoscale as both current and default range
+    rulerZoomState[gid] = {
+      logMin: autoRange.logMin,
+      logMax: autoRange.logMax,
+      defaultLogMin: autoRange.logMin,
+      defaultLogMax: autoRange.logMax,
+    };
+  } else {
+    // Re-render (e.g. live update): keep zoomed position, update defaults
+    rulerZoomState[gid].defaultLogMin = autoRange.logMin;
+    rulerZoomState[gid].defaultLogMax = autoRange.logMax;
+  }
+  const { logMin, logMax } = rulerZoomState[gid];
 
   const dots = sorted
     .map((r, i) => {
@@ -895,21 +907,21 @@ function rulerGroupHtml(group, recs) {
   const aria = `${title} ${via}: ${items.length}`;
 
   return `
-    <div class="ruler__group" role="img" aria-label="${escapeHtml(aria)}" data-exam="${group.exam}">
+    <div class="ruler__group" role="img" aria-label="${escapeHtml(aria)}" data-ruler-id="${gid}">
       <div class="ruler__head">
         <span class="ruler__title">${escapeHtml(title)} <span class="ruler__via">${escapeHtml(via)}</span></span>
         ${headRight}
       </div>
       <div class="ruler__track-wrap">
-        <div class="ruler__track" data-exam="${group.exam}">
+        <div class="ruler__track" data-ruler-id="${gid}">
           ${grid}
           ${dots}
           ${you}
         </div>
         <div class="ruler__zoom-controls">
-          <button type="button" class="ruler__zoom-btn" data-action="in" data-exam="${group.exam}" title="Zoom in">+</button>
-          <button type="button" class="ruler__zoom-btn" data-action="out" data-exam="${group.exam}" title="Zoom out">−</button>
-          <button type="button" class="ruler__zoom-btn" data-action="reset" data-exam="${group.exam}" title="Reset zoom">⟲</button>
+          <button type="button" class="ruler__zoom-btn" data-action="in" data-ruler-id="${gid}" title="Zoom in">+</button>
+          <button type="button" class="ruler__zoom-btn" data-action="out" data-ruler-id="${gid}" title="Zoom out">−</button>
+          <button type="button" class="ruler__zoom-btn" data-action="reset" data-ruler-id="${gid}" title="Reset zoom">⟲</button>
         </div>
       </div>
       <div class="ruler__scale">${scale}</div>
@@ -917,13 +929,13 @@ function rulerGroupHtml(group, recs) {
 }
 
 // Re-render a single ruler group in-place after zoom/pan
-function rerenderRulerGroup(exam) {
+function rerenderRulerGroup(rulerId) {
   const data = state.lastData;
   if (!data) return;
   const recs = data.recommendations || [];
-  const group = RULER_GROUPS.find(g => g.exam === exam);
+  const group = RULER_GROUPS.find(g => g.id === rulerId);
   if (!group) return;
-  const groupEl = document.querySelector(`.ruler__group[data-exam="${exam}"]`);
+  const groupEl = document.querySelector(`.ruler__group[data-ruler-id="${rulerId}"]`);
   if (!groupEl) return;
   const newHtml = rulerGroupHtml(group, recs);
   if (!newHtml) return;
@@ -931,6 +943,127 @@ function rerenderRulerGroup(exam) {
   temp.innerHTML = newHtml;
   const newGroup = temp.firstElementChild;
   groupEl.replaceWith(newGroup);
+  // Re-wire zoom/pan on the fresh DOM nodes
+  bindRulerZoom();
+}
+
+// ── Zoom / pan helpers ──────────────────────────────────────────────────
+const MIN_LOG_SPAN = 0.4; // prevent zooming into a point
+
+function applyZoom(rulerId, action) {
+  const zs = rulerZoomState[rulerId];
+  if (!zs) return;
+  const span = zs.logMax - zs.logMin;
+  if (action === "in") {
+    const shrink = span * 0.15;
+    if (span - shrink * 2 < MIN_LOG_SPAN) return;
+    zs.logMin += shrink;
+    zs.logMax -= shrink;
+  } else if (action === "out") {
+    const grow = span * 0.2;
+    zs.logMin = Math.max(0, zs.logMin - grow);
+    zs.logMax = Math.min(LOG_AXIS_MAX, zs.logMax + grow);
+  } else if (action === "reset") {
+    zs.logMin = zs.defaultLogMin;
+    zs.logMax = zs.defaultLogMax;
+  }
+  rerenderRulerGroup(rulerId);
+}
+
+function applyPan(rulerId, deltaLog) {
+  const zs = rulerZoomState[rulerId];
+  if (!zs) return;
+  const span = zs.logMax - zs.logMin;
+  let newMin = zs.logMin + deltaLog;
+  let newMax = zs.logMax + deltaLog;
+  // clamp
+  if (newMin < 0) { newMax -= newMin; newMin = 0; }
+  if (newMax > LOG_AXIS_MAX) { newMin -= (newMax - LOG_AXIS_MAX); newMax = LOG_AXIS_MAX; }
+  newMin = Math.max(0, newMin);
+  newMax = Math.min(LOG_AXIS_MAX, newMax);
+  zs.logMin = newMin;
+  zs.logMax = newMax;
+  rerenderRulerGroup(rulerId);
+}
+
+// Wire zoom buttons + wheel + drag on every .ruler__group currently in the DOM.
+// Called after renderRuler and after each rerenderRulerGroup.
+function bindRulerZoom() {
+  // Zoom buttons (direct binding, not delegation)
+  document.querySelectorAll(".ruler__zoom-btn").forEach(btn => {
+    // Avoid double-binding
+    if (btn._zoomBound) return;
+    btn._zoomBound = true;
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const action = btn.dataset.action;
+      const rulerId = btn.dataset.rulerId;
+      applyZoom(rulerId, action);
+    });
+  });
+
+  // Wheel zoom on each track
+  document.querySelectorAll(".ruler__track").forEach(track => {
+    if (track._wheelBound) return;
+    track._wheelBound = true;
+    track.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      const rulerId = track.dataset.rulerId;
+      if (!rulerId) return;
+      // Scroll up / pinch out = zoom in, scroll down = zoom out
+      const action = e.deltaY < 0 ? "in" : "out";
+      applyZoom(rulerId, action);
+    }, { passive: false });
+  });
+
+  // Drag-to-pan on each track
+  document.querySelectorAll(".ruler__track").forEach(track => {
+    if (track._dragBound) return;
+    track._dragBound = true;
+    let dragging = false;
+    let startX = 0;
+    let startLogMin = 0;
+    let startLogMax = 0;
+
+    track.addEventListener("pointerdown", (e) => {
+      // Ignore if clicking a dot
+      if (e.target.closest(".ruler__dot") || e.target.closest(".ruler__you")) return;
+      const rulerId = track.dataset.rulerId;
+      const zs = rulerZoomState[rulerId];
+      if (!zs) return;
+      dragging = true;
+      startX = e.clientX;
+      startLogMin = zs.logMin;
+      startLogMax = zs.logMax;
+      track.setPointerCapture(e.pointerId);
+      track.style.cursor = "grabbing";
+    });
+
+    track.addEventListener("pointermove", (e) => {
+      if (!dragging) return;
+      const rulerId = track.dataset.rulerId;
+      const zs = rulerZoomState[rulerId];
+      if (!zs) return;
+      const dx = e.clientX - startX;
+      const trackWidth = track.offsetWidth || 1;
+      const span = startLogMax - startLogMin;
+      const deltaLog = -(dx / trackWidth) * span;
+      let newMin = startLogMin + deltaLog;
+      let newMax = startLogMax + deltaLog;
+      if (newMin < 0) { newMax -= newMin; newMin = 0; }
+      if (newMax > LOG_AXIS_MAX) { newMin -= (newMax - LOG_AXIS_MAX); newMax = LOG_AXIS_MAX; }
+      zs.logMin = Math.max(0, newMin);
+      zs.logMax = Math.min(LOG_AXIS_MAX, newMax);
+      rerenderRulerGroup(rulerId);
+    });
+
+    const stopDrag = () => {
+      dragging = false;
+      track.style.cursor = "";
+    };
+    track.addEventListener("pointerup", stopDrag);
+    track.addEventListener("pointercancel", stopDrag);
+  });
 }
 
 // Built once per result render (not on filter changes) to keep typing snappy.
@@ -955,6 +1088,8 @@ function renderRuler(data) {
     ${groups}
     <div class="ruler__tip" id="ruler-tip" aria-hidden="true"></div>`;
   el.hidden = false;
+  // Wire zoom/pan on the freshly rendered DOM
+  bindRulerZoom();
 }
 
 // Cheap tooltip via event delegation: hover (pointer) or tap (touch) a dot.
@@ -991,7 +1126,7 @@ function bindRulerTooltip() {
   el.addEventListener("click", (e) => {
     const dot = e.target.closest(".ruler__dot");
     if (dot) showTip(dot);
-    else hideTip();
+    else if (!e.target.closest(".ruler__zoom-btn")) hideTip();
   });
 }
 

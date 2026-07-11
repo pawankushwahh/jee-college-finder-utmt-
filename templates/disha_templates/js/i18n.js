@@ -257,6 +257,7 @@ const I18N = {
     ruler: {
       introEyebrow: "The whole picture",
       lede: "Every match on one rank ruler — the dark line is you. The scale is logarithmic, so the crowded top ranks stay readable.",
+      iitTop5Title: "IITs — Top 5", iitRestTitle: "IITs — Rest",
       iitTitle: "IITs", iitVia: "via JEE Advanced",
       nitTitle: "NITs · IIITs · GFTIs", nitVia: "via JEE Main",
       options: "options",
@@ -553,6 +554,7 @@ const I18N = {
     ruler: {
       introEyebrow: "पूरी तस्वीर",
       lede: "हर मैच एक ही रैंक रूलर पर — गहरी रेखा आप हैं। पैमाना logarithmic है, इसलिए भीड़ भरी ऊपरी रैंक भी पढ़ने लायक रहती हैं।",
+      iitTop5Title: "IITs — Top 5", iitRestTitle: "IITs — बाक़ी",
       iitTitle: "IITs", iitVia: "JEE Advanced से",
       nitTitle: "NITs · IIITs · GFTIs", nitVia: "JEE Main से",
       options: "विकल्प",
@@ -845,6 +847,7 @@ const I18N = {
     ruler: {
       introEyebrow: "આખી ચિત્ર",
       lede: "એક જ સ્કેલ પર તમામ પરિણામો — ડાર્ક લાઇન તમે છો. સ્કેલ logarithmic છે, જેથી ગીચ ટોચના રેન્ક પણ વાંચી શકાય.",
+      iitTop5Title: "IITs — Top 5", iitRestTitle: "IITs — બાકી",
       iitTitle: "IITs", iitVia: "JEE Advanced દ્વારા",
       nitTitle: "NITs · IIITs · GFTIs", nitVia: "JEE Main દ્વારા",
       options: "વિકલ્પો",
@@ -1136,6 +1139,7 @@ const I18N = {
     ruler: {
       introEyebrow: "ಸಂಪೂರ್ಣ ಚಿತ್ರಣ",
       lede: "ಒಂದೇ ಸ್ಕೇಲ್‌ನಲ್ಲಿ ಎಲ್ಲಾ ಫಲಿತಾಂಶಗಳು — ಕಡು ಬಣ್ಣದ ಗೆರೆ ನಿಮ್ಮದು. ಸ್ಕೇಲ್ logarithmic ಆಗಿದೆ, ಇದರಿಂದಾಗಿ ಗೀಚು ರ‍್ಯಾಂಕ್‌ಗಳೂ ಓದಲು ಸುಲಭವಾಗಿವೆ.",
+      iitTop5Title: "IITs — Top 5", iitRestTitle: "IITs — ಉಳಿದವು",
       iitTitle: "IITs", iitVia: "JEE Advanced ಮೂಲಕ",
       nitTitle: "NITs · IIITs · GFTIs", nitVia: "JEE Main ಮೂಲಕ",
       options: "ಆಯ್ಕೆಗಳು",

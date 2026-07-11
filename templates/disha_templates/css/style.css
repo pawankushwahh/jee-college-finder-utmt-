@@ -3242,3 +3242,256 @@ select.input--sm {
   border-width: 1px 1px 1px 4px !important;
   background: var(--paper) !important;
 }
+
+/* ── Rank ruler (hero visualisation) ───────────────────────────────────── */
+
+.ruler {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 28px 24px 20px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-sm);
+  position: relative;
+}
+
+.ruler__intro {
+  margin-bottom: 22px;
+}
+
+.ruler__lede {
+  font-size: 0.88rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+  max-width: 600px;
+}
+
+.ruler__group {
+  margin-bottom: 24px;
+}
+.ruler__group:last-of-type {
+  margin-bottom: 8px;
+}
+
+.ruler__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.ruler__title {
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.ruler__via {
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+}
+
+.ruler__you-rank {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
+.ruler__count {
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+}
+
+/* Track wrapper: bar + zoom buttons side by side */
+.ruler__track-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.ruler__track {
+  position: relative;
+  height: 44px;
+  flex: 1;
+  border-radius: 6px;
+  background: linear-gradient(90deg,
+    var(--safe-bg) 0%, var(--target-bg) 40%, var(--reach-bg) 80%, #fce9e0 100%);
+  border: 1px solid var(--line-soft);
+  overflow: visible;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Vertical grid lines */
+.ruler__grid {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: var(--line);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* Dots: each result on the ruler */
+.ruler__dot {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid #fff;
+  transform: translate(-50%, -50%);
+  /* vertical jitter: 4 lanes evenly spread across the 44px track */
+  top: calc(25% + var(--lane, 0) * 16.6%);
+  cursor: pointer;
+  transition: transform 0.15s var(--ease-out), box-shadow 0.15s;
+  z-index: 2;
+}
+.ruler__dot:hover {
+  transform: translate(-50%, -50%) scale(1.45);
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+}
+
+.ruler__dot--safe   { background: var(--safe); }
+.ruler__dot--target,
+.ruler__dot--achievable { background: var(--target); }
+.ruler__dot--reach  { background: var(--reach); }
+
+/* "You" marker: vertical line + flag */
+.ruler__you {
+  position: absolute;
+  top: -6px;
+  bottom: -6px;
+  width: 2.5px;
+  background: var(--ink);
+  border-radius: 2px;
+  transform: translateX(-50%);
+  z-index: 5;
+}
+
+.ruler__you-flag {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--ink);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 4px;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+/* Zoom controls */
+.ruler__zoom-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.ruler__zoom-btn {
+  width: 26px;
+  height: 26px;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--card);
+  color: var(--ink-soft);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, border-color 0.15s;
+  padding: 0;
+  line-height: 1;
+}
+.ruler__zoom-btn:hover {
+  background: var(--paper-deep);
+  border-color: var(--ink-faint);
+  color: var(--ink);
+}
+
+/* Axis labels */
+.ruler__scale {
+  position: relative;
+  height: 18px;
+  margin-top: 4px;
+}
+
+.ruler__tick {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+/* Tooltip on dot hover */
+.ruler__tip {
+  position: absolute;
+  pointer-events: none;
+  background: var(--ink);
+  color: #faf6ee;
+  padding: 7px 11px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.45;
+  max-width: 280px;
+  opacity: 0;
+  transform: translateX(-50%) translateY(-100%) translateY(-10px);
+  transition: opacity 0.18s;
+  z-index: 50;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.ruler__tip.is-on {
+  opacity: 1;
+}
+.ruler__tip strong {
+  font-weight: 600;
+  color: #fff;
+}
+.ruler__tip em {
+  font-style: normal;
+  opacity: 0.72;
+  font-size: 11px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 600px) {
+  .ruler {
+    padding: 20px 14px 14px;
+  }
+  .ruler__track {
+    height: 36px;
+  }
+  .ruler__dot {
+    width: 7px;
+    height: 7px;
+  }
+  .ruler__zoom-btn {
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+  }
+  .ruler__you-flag {
+    font-size: 9px;
+    padding: 1px 5px;
+    top: -17px;
+  }
+}
