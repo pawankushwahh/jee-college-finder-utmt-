@@ -131,25 +131,29 @@ def compute_dataset_stats() -> Dict[str, Any]:
     seat_type_counts = df["Seat Type"].value_counts().to_dict()
     gender_counts = df["Gender"].value_counts().to_dict()
 
-    # Institute Competitiveness (Average closing rank of OPEN, Gender-Neutral programs)
-    inst_competitiveness = []
+    # Institute Competitiveness — grouped by institute type (IIT/NIT/IIIT/GFTI)
+    inst_competitiveness = {}  # dict: {"IIT": [...], "NIT": [...], ...}
     if not crl_cutoffs.empty:
-        grouped = crl_cutoffs.groupby("Institute").agg(
+        crl_inst = crl_cutoffs.copy()
+        grouped = crl_inst.groupby(["Institute", "Institute_Type"]).agg(
             avg_closing=("Max_Closing", "mean"),
             min_opening=("Min_Opening", "min"),
             total_programs=("Academic Program Name", "count")
         ).reset_index()
         grouped = grouped.sort_values("avg_closing")
-        for _, row in grouped.head(15).iterrows():
-            inst_competitiveness.append({
-                "institute": row["Institute"],
-                "avg_closing_rank": round(row["avg_closing"], 1),
-                "min_opening_rank": int(row["min_opening"]),
-                "total_programs": int(row["total_programs"]),
-                "inst_type": _classify_institute_type(row["Institute"])
-            })
+        for itype in ["IIT", "NIT", "IIIT", "GFTI"]:
+            itype_df = grouped[grouped["Institute_Type"] == itype].head(10)
+            entries = []
+            for _, row in itype_df.iterrows():
+                entries.append({
+                    "institute": row["Institute"],
+                    "avg_closing_rank": round(row["avg_closing"], 1),
+                    "min_opening_rank": int(row["min_opening"]),
+                    "total_programs": int(row["total_programs"]),
+                })
+            inst_competitiveness[itype] = entries
 
-    # Popular Branches
+    # Helper: extract clean branch name (e.g. strip parenthetical suffixes)
     def _extract_branch_name(program: str) -> str:
         s = str(program).strip()
         match = re.match(r"^([^(]+)", s)
@@ -157,6 +161,39 @@ def compute_dataset_stats() -> Dict[str, Any]:
             return match.group(1).strip()
         return s
 
+    # Top 10 Competitive Programs per Institute Type (e.g. "CSE at IITB")
+    top_programs_by_type = {}
+    if not crl_cutoffs.empty:
+        crl_prog = crl_cutoffs.copy()
+        crl_prog["Branch_Clean"] = crl_prog["Academic Program Name"].apply(_extract_branch_name)
+        crl_prog["Program_Label"] = crl_prog["Branch_Clean"] + " @ " + crl_prog["Institute"].str.replace(
+            "Indian Institute of Technology", "IIT"
+        ).str.replace(
+            "National Institute of Technology", "NIT"
+        ).str.replace(
+            "Indian Institute of Information Technology", "IIIT"
+        ).str.strip()
+        for itype in ["IIT", "NIT", "IIIT", "GFTI"]:
+            itype_df = crl_prog[crl_prog["Institute_Type"] == itype]
+            if itype_df.empty:
+                top_programs_by_type[itype] = []
+                continue
+            prog_avg = itype_df.groupby(["Program_Label", "Branch_Clean"]).agg(
+                avg_closing=("Max_Closing", "mean"),
+                count=("Max_Closing", "count")
+            ).reset_index()
+            prog_avg = prog_avg.sort_values("avg_closing").head(10)
+            entries = []
+            for _, row in prog_avg.iterrows():
+                entries.append({
+                    "program": row["Program_Label"],
+                    "branch": row["Branch_Clean"],
+                    "avg_closing": round(row["avg_closing"], 1),
+                    "count": int(row["count"])
+                })
+            top_programs_by_type[itype] = entries
+
+    # Popular Branches
     df["Branch_Clean"] = df["Academic Program Name"].apply(_extract_branch_name)
     branch_counts = df["Branch_Clean"].value_counts().to_dict()
 
@@ -299,55 +336,60 @@ def compute_dataset_stats() -> Dict[str, Any]:
             "five_year_count": five_count
         })
 
-    # 5. Options/Colleges Available by Rank (capped for cleaner display)
-    MAX_DISPLAY_PROGRAMS = 20
-    MAX_DISPLAY_INSTITUTES = 15
-    UPPER_MARGIN = 0.25
-    LOWER_MARGIN = 0.50
+    # 5. Options Available by Rank — programs where student's rank falls WITHIN
+    #    the [Min_Opening, Max_Closing] window for each seat category.
+    #
+    # Counting programs where (Min_Opening <= r <= Max_Closing) creates a natural
+    # bell-curve: at very low ranks only elite programs qualify; mid-ranks have
+    # the most options; very high ranks again have few — matching the reference
+    # JoSAA visualisation.
+    #
+    # Output:
+    #   rank_availability.advanced_by_category: { "OPEN": [...], "OBC-NCL": [...], ... }
+    #   rank_availability.mains_by_category:    { "OPEN": [...], "OBC-NCL": [...], ... }
+    # Backward-compat .advanced / .mains keys keep pointing to OPEN curves.
 
-    advanced_curve = []
-    adv_thresholds = [500, 1000, 2000, 5000, 8000, 10000, 15000, 20000, 25000]
-    iit_crl = valid_cutoffs[
+    AVAIL_CATEGORIES = ["OPEN", "OBC-NCL", "SC", "ST", "EWS"]
+
+    # Rank thresholds chosen to span the realistic range of JoSAA cutoffs with
+    # more density at the competitive (low-rank) end — matches reference image X-axis.
+    adv_thresholds  = [100, 250, 500, 1000, 2000, 3000, 5000, 7000, 10000, 15000, 20000, 25000]
+    mains_thresholds = [1000, 2000, 5000, 10000, 20000, 30000, 50000, 75000, 100000, 150000, 200000, 300000, 500000]
+
+    # Pre-filter to Gender-Neutral only (most representative CRL pool).
+    iit_gn   = valid_cutoffs[
         (valid_cutoffs["Institute_Type"] == "IIT") &
-        (valid_cutoffs["Seat Type"] == "OPEN") &
         (valid_cutoffs["Gender"].str.lower().str.contains("gender-neutral|neutral"))
     ]
-    for r in adv_thresholds:
-        available_rows = iit_crl[
-            (r <= iit_crl["Max_Closing"] * (1 + UPPER_MARGIN)) &
-            (r >= iit_crl["Min_Opening"] * (1 - LOWER_MARGIN))
-        ]
-        total_progs = len(available_rows)
-        total_insts = int(available_rows["Institute"].nunique())
-        advanced_curve.append({
-            "rank": r,
-            "program_count": min(total_progs, MAX_DISPLAY_PROGRAMS),
-            "institute_count": min(total_insts, MAX_DISPLAY_INSTITUTES),
-            "total_programs": total_progs,
-            "total_institutes": total_insts
-        })
-
-    mains_curve = []
-    mains_thresholds = [5000, 10000, 20000, 30000, 50000, 75000, 100000, 150000, 200000]
-    mains_crl = valid_cutoffs[
+    mains_gn = valid_cutoffs[
         (valid_cutoffs["Institute_Type"] != "IIT") &
-        (valid_cutoffs["Seat Type"] == "OPEN") &
         (valid_cutoffs["Gender"].str.lower().str.contains("gender-neutral|neutral"))
     ]
-    for r in mains_thresholds:
-        available_rows = mains_crl[
-            (r <= mains_crl["Max_Closing"] * (1 + UPPER_MARGIN)) &
-            (r >= mains_crl["Min_Opening"] * (1 - LOWER_MARGIN))
-        ]
-        total_progs = len(available_rows)
-        total_insts = int(available_rows["Institute"].nunique())
-        mains_curve.append({
-            "rank": r,
-            "program_count": min(total_progs, MAX_DISPLAY_PROGRAMS),
-            "institute_count": min(total_insts, MAX_DISPLAY_INSTITUTES),
-            "total_programs": total_progs,
-            "total_institutes": total_insts
-        })
+
+    def _build_curve(base_df, thresholds, seat_type):
+        """Count programs whose [Min_Opening, Max_Closing] window contains rank r."""
+        cat_df = base_df[base_df["Seat Type"] == seat_type].copy()
+        curve = []
+        for r in thresholds:
+            # Student at rank r can fill a seat when Min_Opening <= r <= Max_Closing
+            window = cat_df[(cat_df["Min_Opening"] <= r) & (cat_df["Max_Closing"] >= r)]
+            curve.append({
+                "rank": r,
+                "total_programs": int(len(window)),
+                "total_institutes": int(window["Institute"].nunique())
+            })
+        return curve
+
+    advanced_by_category = {}
+    mains_by_category    = {}
+    for cat in AVAIL_CATEGORIES:
+        advanced_by_category[cat] = _build_curve(iit_gn,   adv_thresholds,   cat)
+        mains_by_category[cat]    = _build_curve(mains_gn, mains_thresholds, cat)
+
+    # Backward-compat aliases (OPEN curves)
+    advanced_curve = advanced_by_category["OPEN"]
+    mains_curve    = mains_by_category["OPEN"]
+
 
     return {
         "summary": {
@@ -367,6 +409,7 @@ def compute_dataset_stats() -> Dict[str, Any]:
         "highest_cutoffs": highest_cutoffs,
         "lowest_cutoffs": lowest_cutoffs,
         "inst_competitiveness": inst_competitiveness,
+        "top_programs_by_type": top_programs_by_type,
         "popular_branches": popular_branches,
         "branch_counts": dict(list(branch_counts.items())[:15]),
         "volatility_counts": volatility_counts,
@@ -376,7 +419,9 @@ def compute_dataset_stats() -> Dict[str, Any]:
         "duration_comparison": duration_comparison,
         "rank_availability": {
             "advanced": advanced_curve,
-            "mains": mains_curve
+            "mains": mains_curve,
+            "advanced_by_category": advanced_by_category,
+            "mains_by_category": mains_by_category
         }
     }
 
