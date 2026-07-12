@@ -66,10 +66,22 @@ def compute_dataset_stats() -> Dict[str, Any]:
     df["Institute_Type"] = df["Institute"].apply(_classify_institute_type)
     inst_type_counts = df["Institute_Type"].value_counts().to_dict()
 
-    # State-wise distribution of programs
+    # State-wise distribution — rich per-state breakdown
     from . import states
     df["State"] = df["Institute"].apply(states.get_institute_state)
-    state_counts = df["State"].value_counts().to_dict()
+    state_stats = {}
+    for state, grp in df.groupby("State"):
+        state_stats[state] = {
+            "institutes": int(grp["Institute"].nunique()),
+            "programs": int(grp["Academic Program Name"].nunique()),
+            "seat_entries": int(len(grp))
+        }
+    # Sort by number of institutes descending
+    state_stats = dict(
+        sorted(state_stats.items(), key=lambda x: x[1]["institutes"], reverse=True)
+    )
+    # Backward-compat alias (institute count per state)
+    state_counts = {s: v["institutes"] for s, v in state_stats.items()}
 
     # Round-wise closing rank columns
     closing_cols = [f"Closing_R{i}" for i in range(1, 7) if f"Closing_R{i}" in df.columns]
@@ -353,8 +365,8 @@ def compute_dataset_stats() -> Dict[str, Any]:
 
     # Rank thresholds chosen to span the realistic range of JoSAA cutoffs with
     # more density at the competitive (low-rank) end — matches reference image X-axis.
-    adv_thresholds  = [100, 250, 500, 1000, 2000, 3000, 5000, 7000, 10000, 15000, 20000, 25000]
-    mains_thresholds = [1000, 2000, 5000, 10000, 20000, 30000, 50000, 75000, 100000, 150000, 200000, 300000, 500000]
+    adv_thresholds  = list(range(0, 20001, 500))   # 0, 500, 1000, … 20000 (uniform 500-step)
+    mains_thresholds = list(range(0, 500001, 10000)) # 0, 10k, 20k, … 500k  (uniform 10k-step)
 
     # Pre-filter to Gender-Neutral only (most representative CRL pool).
     iit_gn   = valid_cutoffs[
