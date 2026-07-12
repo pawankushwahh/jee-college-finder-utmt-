@@ -207,6 +207,7 @@ const I18N = {
     },
     results: {
       standingTitle: "Your standing",
+      standingNote: "<strong>Safe:</strong> In top 25% of last year's class. &nbsp; <strong>Target:</strong> Inside last year's cutoff. &nbsp; <strong>Reach:</strong> Outside last year's cutoff, but possible.",
       byBranch: "By branch",
       byCollege: "By college",
       expandAll: "Expand all",
@@ -256,7 +257,7 @@ const I18N = {
     },
     ruler: {
       introEyebrow: "The whole picture",
-      lede: "Every match on one rank ruler — the dark line is you. The scale is logarithmic, so the crowded top ranks stay readable.",
+      lede: "Every match on one rank ruler — the dark line is you. Colors indicate chances: <strong>Green (Safe)</strong>, <strong>Yellow (Target)</strong>, <strong>Red (Reach)</strong>. The scale is logarithmic, so the crowded top ranks stay readable.",
       iitTop5Title: "IITs — Top 5", iitRestTitle: "IITs — Rest",
       iitTitle: "IITs", iitVia: "via JEE Advanced",
       nitTitle: "NITs · IIITs · GFTIs", nitVia: "via JEE Main",
@@ -504,6 +505,7 @@ const I18N = {
     },
     results: {
       standingTitle: "आपकी स्थिति",
+      standingNote: "<strong>Safe:</strong> पिछले साल की क्लास के टॉप 25% में। &nbsp; <strong>Target:</strong> पिछले साल के कटऑफ के अंदर। &nbsp; <strong>Reach:</strong> पिछले साल के कटऑफ के बाहर, लेकिन संभव।",
       byBranch: "ब्रांच के अनुसार",
       byCollege: "कॉलेज के अनुसार",
       expandAll: "सभी खोलें",
@@ -553,7 +555,7 @@ const I18N = {
     },
     ruler: {
       introEyebrow: "पूरी तस्वीर",
-      lede: "हर मैच एक ही रैंक रूलर पर — गहरी रेखा आप हैं। पैमाना logarithmic है, इसलिए भीड़ भरी ऊपरी रैंक भी पढ़ने लायक रहती हैं।",
+      lede: "हर मैच एक ही रैंक रूलर पर — गहरी रेखा आप हैं। रंग संभावना दर्शाते हैं: <strong>हरा (Safe)</strong>, <strong>पीला (Target)</strong>, <strong>लाल (Reach)</strong>। पैमाना logarithmic है, इसलिए भीड़ भरी ऊपरी रैंक भी पढ़ने लायक रहती हैं।",
       iitTop5Title: "IITs — Top 5", iitRestTitle: "IITs — बाक़ी",
       iitTitle: "IITs", iitVia: "JEE Advanced से",
       nitTitle: "NITs · IIITs · GFTIs", nitVia: "JEE Main से",
@@ -798,6 +800,7 @@ const I18N = {
     },
     results: {
       standingTitle: "તમારું સ્થાન",
+      standingNote: "<strong>Safe:</strong> ગયા વર્ષના ક્લાસના ટોપ 25% માં. &nbsp; <strong>Target:</strong> ગયા વર્ષના કટઓફની અંદર. &nbsp; <strong>Reach:</strong> ગયા વર્ષના કટઓફની બહાર, પરંતુ શક્ય.",
       byBranch: "બ્રાન્ચ મુજબ",
       byCollege: "કૉલેજ મુજબ",
       expandAll: "બધા વિસ્તૃત કરો",
@@ -846,7 +849,7 @@ const I18N = {
     },
     ruler: {
       introEyebrow: "આખી ચિત્ર",
-      lede: "એક જ સ્કેલ પર તમામ પરિણામો — ડાર્ક લાઇન તમે છો. સ્કેલ logarithmic છે, જેથી ગીચ ટોચના રેન્ક પણ વાંચી શકાય.",
+      lede: "એક જ સ્કેલ પર તમામ પરિણામો — ડાર્ક લાઇન તમે છો. રંગો તકો દર્શાવે છે: <strong>લીલો (Safe)</strong>, <strong>પીળો (Target)</strong>, <strong>લાલ (Reach)</strong>. સ્કેલ logarithmic છે, જેથી ગીચ ટોચના રેન્ક પણ વાંચી શકાય.",
       iitTop5Title: "IITs — Top 5", iitRestTitle: "IITs — બાકી",
       iitTitle: "IITs", iitVia: "JEE Advanced દ્વારા",
       nitTitle: "NITs · IIITs · GFTIs", nitVia: "JEE Main દ્વારા",
@@ -1090,6 +1093,7 @@ const I18N = {
     },
     results: {
       standingTitle: "ನಿಮ್ಮ ಸ್ಥಾನಮಾನ",
+      standingNote: "<strong>Safe:</strong> ಕಳೆದ ವರ್ಷದ ಕ್ಲಾಸ್‌ನ ಟಾಪ್ 25% ರಲ್ಲಿದೆ. &nbsp; <strong>Target:</strong> ಕಳೆದ ವರ್ಷದ ಕಟ್-ಆಫ್‌ನೊಳಗೆ. &nbsp; <strong>Reach:</strong> ಕಳೆದ ವರ್ಷದ ಕಟ್-ಆಫ್‌ನಿಂದ ಹೊರಗಿದೆ, ಆದರೆ ಸಾಧ್ಯತೆ ಇದೆ.",
       byBranch: "ಬ್ರಾಂಚ್ ಪ್ರಕಾರ",
       byCollege: "ಕಾಲೇಜು ಪ್ರಕಾರ",
       expandAll: "ಎಲ್ಲವನ್ನೂ ವಿಸ್ತರಿಸಿ",
@@ -1138,7 +1142,7 @@ const I18N = {
     },
     ruler: {
       introEyebrow: "ಸಂಪೂರ್ಣ ಚಿತ್ರಣ",
-      lede: "ಒಂದೇ ಸ್ಕೇಲ್‌ನಲ್ಲಿ ಎಲ್ಲಾ ಫಲಿತಾಂಶಗಳು — ಕಡು ಬಣ್ಣದ ಗೆರೆ ನಿಮ್ಮದು. ಸ್ಕೇಲ್ logarithmic ಆಗಿದೆ, ಇದರಿಂದಾಗಿ ಗೀಚು ರ‍್ಯಾಂಕ್‌ಗಳೂ ಓದಲು ಸುಲಭವಾಗಿವೆ.",
+      lede: "ಒಂದೇ ಸ್ಕೇಲ್‌ನಲ್ಲಿ ಎಲ್ಲಾ ಫಲಿತಾಂಶಗಳು — ಕಡು ಬಣ್ಣದ ಗೆರೆ ನಿಮ್ಮದು. ಬಣ್ಣಗಳು ಅವಕಾಶಗಳನ್ನು ಸೂಚಿಸುತ್ತವೆ: <strong>ಹಸಿರು (Safe)</strong>, <strong>ಹಳದಿ (Target)</strong>, <strong>ಕೆಂಪು (Reach)</strong>. ಸ್ಕೇಲ್ logarithmic ಆಗಿದೆ, ಇದರಿಂದಾಗಿ ಗೀಚು ರ‍್ಯಾಂಕ್‌ಗಳೂ ಓದಲು ಸುಲಭವಾಗಿವೆ.",
       iitTop5Title: "IITs — Top 5", iitRestTitle: "IITs — ಉಳಿದವು",
       iitTitle: "IITs", iitVia: "JEE Advanced ಮೂಲಕ",
       nitTitle: "NITs · IIITs · GFTIs", nitVia: "JEE Main ಮೂಲಕ",

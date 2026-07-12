@@ -312,10 +312,7 @@
               <select class="input input--sm" id="panel-home-state"></select>
             </div>
 
-            <div class="panel-field">
-              <label class="panel-field__label" for="panel-goal" data-i18n="panel.goalLabel">Career goal</label>
-              <select class="input input--sm" id="panel-goal"></select>
-            </div>
+
 
 
 
@@ -427,6 +424,11 @@
               <span class="zone__sub" data-i18n="zones.reachSub">worth a try</span>
             </button>
           </div>
+          <p class="spectrum-note" style="font-size: 13px; color: var(--color-text-muted); margin-top: 12px; margin-bottom: 24px; text-align: center;" data-i18n-html="results.standingNote">
+            <strong>Safe:</strong> In top 25% of last year's class. &nbsp;
+            <strong>Target:</strong> Inside last year's cutoff. &nbsp;
+            <strong>Reach:</strong> Outside last year's cutoff, but possible.
+          </p>
 
           <!-- Rank ruler — zoomed-out hero: every eligible pick on one log rank axis -->
           <section class="ruler" id="ruler" role="group" aria-label="Rank ruler: where you stand against every match"
@@ -445,6 +447,7 @@
                   placeholder="Search institute or branch…" data-i18n-aria="results.searchAria"
                   aria-label="Search results" />
               </div>
+              <select class="sort-select" id="panel-goal" aria-label="Career goal"></select>
               <div class="type-chips" id="type-chips" role="group" aria-label="Filter by institute type">
                 <button type="button" class="chip is-active" data-type="" data-i18n="results.typeAll">All</button>
                 <button type="button" class="chip" data-type="IIT_TOP5">IIT Top 5</button>

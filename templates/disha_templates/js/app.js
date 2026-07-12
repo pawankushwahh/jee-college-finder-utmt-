@@ -1164,7 +1164,7 @@ function renderRuler(data, keepZoom = false) {
   el.innerHTML = `
     <div class="ruler__intro">
       <p class="eyebrow">${escapeHtml(t("ruler.introEyebrow"))}</p>
-      <p class="ruler__lede">${escapeHtml(t("ruler.lede"))}</p>
+      <p class="ruler__lede">${t("ruler.lede")}</p>
     </div>
     ${groups}
     <div class="ruler__tip" id="ruler-tip" aria-hidden="true"></div>`;
