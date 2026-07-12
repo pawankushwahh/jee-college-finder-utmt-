@@ -76,7 +76,7 @@ const state = {
   view: localStorage.getItem("disha_view") || "branch", // "branch" or "college"
   expandedColleges: {}, // in-memory accordion toggle state
   collapsedSections: { Safe: false, Target: false, Reach: false },
-  sortBy: "probability",
+  sortBy: "rank",
 };
 
 const TOTAL_STEPS = 5;
@@ -2043,7 +2043,7 @@ window.updateExpandAllButtonUI = function() {
 function buildSortOptions() {
   const sortSel = $("results-sort");
   if (!sortSel) return;
-  const prev = sortSel.value || state.sortBy || "probability";
+  const prev = sortSel.value || state.sortBy || "rank";
   sortSel.innerHTML = "";
 
   const options = [
@@ -2067,7 +2067,7 @@ function renderResults(data, { keepFilters = false } = {}) {
   if (!keepFilters) {
     state.filterText = "";
     state.filterTypes = [];
-    state.sortBy = "probability";
+    state.sortBy = "rank";
     state.collapsedSections = { Safe: false, Target: false, Reach: false };
     $("filter-search").value = "";
     document.querySelectorAll("#type-chips .chip").forEach((c) =>
