@@ -1225,6 +1225,10 @@
 
             <!-- Tab: State-wise summary -->
             <div class="tab-pane" id="tab-states">
+              <p style="font-size:12px;color:var(--pine-deep);margin-bottom:14px;background:var(--pine-tint);border-left:3px solid var(--pine);border-radius:6px;padding:8px 12px;display:flex;align-items:center;gap:7px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                Each number = total <strong>&nbsp;college–branch–quota seat combinations&nbsp;</strong> available in that state (JoSAA 2025 data).
+              </p>
               <div class="tile-grid" id="grid-states">
                 <!-- Populated dynamically -->
               </div>
@@ -1243,6 +1247,10 @@
                     </div>
                     <span class="tab-section-head__text" style="color: var(--pine-deep);">Quota Distribution</span>
                   </div>
+                  <p style="font-size:12px;color:var(--pine-deep);margin:8px 0 12px;background:var(--pine-tint);border-left:3px solid var(--pine);border-radius:6px;padding:7px 11px;display:flex;align-items:center;gap:7px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    No. of seat entries under each admission quota (AI = All India, HS = Home State, OS = Other State…)
+                  </p>
                   <div class="tile-grid" id="grid-quotas"
                     style="grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));">
                     <!-- Populated dynamically -->
@@ -1258,6 +1266,10 @@
                     </div>
                     <span class="tab-section-head__text" style="color: #8a6210;">Seat Categories</span>
                   </div>
+                  <p style="font-size:12px;color:#8a6210;margin:8px 0 12px;background:var(--target-bg);border-left:3px solid var(--target);border-radius:6px;padding:7px 11px;display:flex;align-items:center;gap:7px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                    No. of seat entries per reservation category (OPEN, OBC-NCL, SC, ST, EWS…)
+                  </p>
                   <div class="tile-grid" id="grid-categories"
                     style="grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));">
                     <!-- Populated dynamically -->
@@ -1835,8 +1847,8 @@
                     tension: 0.2,
                     fill: true,
                     pointBackgroundColor: '#175c4c',
-                    pointRadius: 4,
-                    pointHoverRadius: 6
+                    pointRadius: 2.5,
+                    pointHoverRadius: 4
                   },
                   {
                     label: 'Eligible IITs',
@@ -1847,8 +1859,8 @@
                     tension: 0.2,
                     fill: true,
                     pointBackgroundColor: '#bf5b3c',
-                    pointRadius: 4,
-                    pointHoverRadius: 6
+                    pointRadius: 2.5,
+                    pointHoverRadius: 4
                   }
                 ]
               },
@@ -1882,23 +1894,22 @@
                     ticks: { font: { family: 'Inter' }, color: '#5f5747' }
                   },
                   x: {
-                    type: 'logarithmic',
+                    type: 'linear',
+                    min: 0,
+                    max: 20000,
                     grid: { color: '#efe8d8' },
                     ticks: {
                       font: { family: 'Inter', size: 10 },
                       color: '#5f5747',
+                      stepSize: 5000,
                       callback: function (value) {
-                        const nice = [1, 5, 10, 50, 100, 500, 1000, 2000, 5000, 10000, 20000, 50000];
-                        if (nice.includes(value)) {
-                          return value >= 1000 ? (value / 1000) + 'K' : value;
-                        }
-                        return '';
+                        return value >= 1000 ? (value / 1000) + 'k' : value;
                       },
-                      maxTicksLimit: 12
+                      maxTicksLimit: 10
                     },
                     title: {
                       display: true,
-                      text: 'Your JEE Advanced Rank (log scale)',
+                      text: 'Closing JEE Advanced Rank',
                       font: { family: 'Inter', size: 11 },
                       color: '#93897a'
                     }
@@ -1936,8 +1947,8 @@
                     tension: 0.2,
                     fill: true,
                     pointBackgroundColor: '#175c4c',
-                    pointRadius: 4,
-                    pointHoverRadius: 6
+                    pointRadius: 2.5,
+                    pointHoverRadius: 4
                   },
                   {
                     label: 'Eligible Colleges',
@@ -1948,8 +1959,8 @@
                     tension: 0.2,
                     fill: true,
                     pointBackgroundColor: '#a87714',
-                    pointRadius: 4,
-                    pointHoverRadius: 6
+                    pointRadius: 2.5,
+                    pointHoverRadius: 4
                   }
                 ]
               },
@@ -1983,25 +1994,21 @@
                     ticks: { font: { family: 'Inter' }, color: '#5f5747' }
                   },
                   x: {
-                    type: 'logarithmic',
+                    type: 'linear',
+                    min: 0,
+                    max: 300000,
                     grid: { color: '#efe8d8' },
                     ticks: {
                       font: { family: 'Inter', size: 10 },
                       color: '#5f5747',
+                      stepSize: 10000,
                       callback: function (value) {
-                        const nice = [100, 500, 1000, 5000, 10000, 50000, 100000, 200000, 500000];
-                        if (nice.includes(value)) {
-                          return value >= 100000 ? (value / 100000).toFixed(1) + 'L'
-                               : value >= 1000   ? (value / 1000) + 'K'
-                               : value;
-                        }
-                        return '';
-                      },
-                      maxTicksLimit: 12
+                        return value >= 1000 ? (value / 1000) + 'k' : value;
+                      }
                     },
                     title: {
                       display: true,
-                      text: 'Your JEE Mains Rank (log scale)',
+                      text: 'Closing JEE Mains Rank',
                       font: { family: 'Inter', size: 11 },
                       color: '#93897a'
                     }
@@ -2068,7 +2075,6 @@
           tile.innerHTML = `
             <div class="tile__label">${state}</div>
             <div class="tile__value">${count.toLocaleString()}</div>
-            <div class="tile__sub">Program Options</div>
           `;
           gridStates.appendChild(tile);
         });
@@ -2082,7 +2088,6 @@
           tile.innerHTML = `
             <div class="tile__label">${quota}</div>
             <div class="tile__value">${count.toLocaleString()}</div>
-            <div class="tile__sub">Program Options</div>
           `;
           gridQuotas.appendChild(tile);
         });
@@ -2095,7 +2100,6 @@
           tile.innerHTML = `
             <div class="tile__label">${cat}</div>
             <div class="tile__value">${count.toLocaleString()}</div>
-            <div class="tile__sub">Program Options</div>
           `;
           gridCategories.appendChild(tile);
         });
