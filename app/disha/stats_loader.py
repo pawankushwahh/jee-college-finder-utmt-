@@ -80,8 +80,8 @@ def compute_dataset_stats() -> Dict[str, Any]:
     state_stats = dict(
         sorted(state_stats.items(), key=lambda x: x[1]["institutes"], reverse=True)
     )
-    # Backward-compat alias (institute count per state)
-    state_counts = {s: v["institutes"] for s, v in state_stats.items()}
+    # state_counts = college–branch–quota seat combinations per state (matches UI label)
+    state_counts = {s: v["seat_entries"] for s, v in state_stats.items()}
 
     # Round-wise closing rank columns
     closing_cols = [f"Closing_R{i}" for i in range(1, 7) if f"Closing_R{i}" in df.columns]
