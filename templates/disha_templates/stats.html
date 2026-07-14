@@ -1462,20 +1462,35 @@
         window._currentCompInstTab = 'IIT';
 
         /**
-         * Shorten a full institute name to a compact label.
-         * 1. Replace long official names with standard abbreviations.
-         * 2. Remove any redundant parenthetical acronym that the substitution
-         *    leaves behind (e.g. "IIIT (IIIT) Pune" → "IIIT Pune").
+         * Shorten a full institute name to a compact, fully-visible label.
+         *
+         * Steps:
+         *  1. Replace long official names with standard abbreviations (IIT/NIT/IIIT).
+         *  2. Remove ANY parenthetical acronym left behind — including variants like
+         *     (IIITDM), (IIITP), (ABV-IIITM) — using a broad IIT/NIT prefix regex.
+         *  3. If the result is still > 22 chars, split into a 2-line array at the
+         *     nearest word boundary to the midpoint so Chart.js renders it on two
+         *     rows and nothing gets clipped on the left.
          */
-        function shortenInstituteName(name) {
+        function shortenInstituteName(name, maxLineLen = 22) {
           let s = name
             .replace('Indian Institute of Technology', 'IIT')
             .replace('National Institute of Technology', 'NIT')
             .replace('Indian Institute of Information Technology', 'IIIT');
-          // Remove any parenthetical repetition of the acronym, e.g. "(IIIT)", "(IIT)", "(NIT)"
-          s = s.replace(/\s*\((?:IIT|NIT|IIIT|GFTI)\)\s*/g, ' ').trim();
-          // Collapse accidental double-spaces
-          s = s.replace(/\s{2,}/g, ' ');
+          // Remove parenthetical acronyms: (IIIT), (IIITDM), (IIITP), (IIT), (NIT), (GFTI), etc.
+          s = s.replace(/\s*\((?:IIT|NIT|IIIT)[A-Z0-9-]*\)\s*/gi, ' ')
+               .replace(/\s*\(GFTI\)\s*/gi, ' ')
+               .trim()
+               .replace(/\s{2,}/g, ' ');
+          // Split into two lines if label is still too long to fit without clipping
+          if (s.length > maxLineLen) {
+            const mid = Math.ceil(s.length * 0.42); // slightly before midpoint looks balanced
+            let splitAt = s.lastIndexOf(' ', mid);
+            if (splitAt < 3) splitAt = s.indexOf(' ', mid); // fallback: split after mid
+            if (splitAt > 0) {
+              return [s.substring(0, splitAt).trim(), s.substring(splitAt + 1).trim()];
+            }
+          }
           return s;
         }
 
@@ -1486,9 +1501,9 @@
           const instColors = { 'IIT': '#175c4c', 'NIT': '#2e7d5b', 'IIIT': '#a87714', 'GFTI': '#bf5b3c' };
 
           if (charts.compInsts) charts.compInsts.destroy();
-          // Resize container based on entry count for full visibility
+          // 2-line labels need ~52px per bar; single-line needs ~36px
           const instContainer = document.getElementById('chart-inst-container');
-          if (instContainer) instContainer.style.height = Math.max(300, entries.length * 36) + 'px';
+          if (instContainer) instContainer.style.height = Math.max(320, entries.length * 52) + 'px';
 
           charts.compInsts = new Chart(document.getElementById("chart-competitive-insts"), {
             type: 'bar',
@@ -1526,7 +1541,8 @@
                   grid: { display: false },
                   ticks: { font: { family: 'Inter', size: 10 }, color: '#241e12' },
                   afterFit: function (scale) {
-                    scale.width = Math.max(scale.width, 240);
+                    // With 2-line labels, each line is ≤22 chars → ~150px is sufficient
+                    scale.width = Math.max(scale.width, 160);
                   }
                 }
               }
