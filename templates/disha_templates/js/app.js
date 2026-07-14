@@ -614,7 +614,7 @@ async function runLiveRequest(payload) {
     const data = await fetchRecommendations(payload);
     if (seq !== requestSeq) return;
     state.lastData = data;
-    renderResults(data);
+    renderResults(data, { keepFilters: true });
   } catch (err) {
     if (seq !== requestSeq) return;
     // Soft-fail: keep the last good results rather than wiping the dashboard.
@@ -627,6 +627,44 @@ async function runLiveRequest(payload) {
 // Copy the current profile (flow inputs + state) into the panel controls. Run
 // when first arriving at results, not on every keystroke, so we never fight the
 // control the user is editing.
+function updatePriorityStateUI() {
+  // 1. Update priority segmented toggle buttons active classes
+  const priorityButtons = {
+    "0.2": $("priority-branch"),
+    "0.5": $("priority-balanced"),
+    "0.8": $("priority-college")
+  };
+  const activeRatio = state.brandBranchRatio !== undefined ? state.brandBranchRatio : 0.5;
+  Object.entries(priorityButtons).forEach(([val, btn]) => {
+    if (btn) {
+      const active = Math.abs(activeRatio - parseFloat(val)) < 0.15;
+      btn.classList.toggle("is-active", active);
+    }
+  });
+
+  // 2. Update toggle labels based on selected goal
+  const branchBtnFull = document.querySelector("#priority-branch .full-label");
+  const branchBtnShort = document.querySelector("#priority-branch .short-label");
+  if (branchBtnFull && branchBtnShort) {
+    if (state.goal && state.goal !== "undecided") {
+      const currentGoalName = goalName(state.goal);
+      branchBtnFull.textContent = `${t("results.priorityBranchFull")} (${currentGoalName})`;
+      branchBtnShort.textContent = `${t("results.priorityBranchShort")} (${currentGoalName})`;
+    } else {
+      branchBtnFull.textContent = t("results.priorityBranchFull");
+      branchBtnShort.textContent = t("results.priorityBranchShort");
+    }
+  }
+
+  // 3. Update warning tooltip for undecided career goal
+  const tooltip = $("priority-goal-tooltip");
+  if (tooltip) {
+    const isFavourBranchActive = Math.abs(activeRatio - 0.2) < 0.15;
+    const isGoalUndecided = (state.goal === "undecided" || !state.goal);
+    tooltip.hidden = !(isFavourBranchActive && isGoalUndecided);
+  }
+}
+
 function syncPanelFromState() {
   if ($("panel-mains-rank")) $("panel-mains-rank").value = $("mains-rank").value;
   if ($("panel-adv-rank")) $("panel-adv-rank").value = $("adv-rank").value;
@@ -635,7 +673,9 @@ function syncPanelFromState() {
     $("panel-seat-category").value = $("seat-category").value || "OPEN";
   }
   if ($("panel-goal") && state.goal) $("panel-goal").value = state.goal;
-  if ($("panel-brand-branch-slider")) $("panel-brand-branch-slider").value = state.brandBranchRatio !== undefined ? state.brandBranchRatio : 0.5;
+
+  updatePriorityStateUI();
+
   if ($("filter-region")) $("filter-region").value = state.filterRegion || "all";
   if ($("filter-state")) $("filter-state").value = state.filterState || "all";
   syncGenderRows();
@@ -1377,7 +1417,7 @@ function cardHtml(rec, index) {
             data-branch="${escapeHtml(rec.branch)}"
             onclick="toggleBookmark(event, ${index}, '${escapeHtml(rec.institute)}', '${escapeHtml(rec.branch)}')"
             aria-label="Add to preference list">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bookmark-icon">
         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
       </svg>
     </button>`;
@@ -1452,14 +1492,13 @@ window.toggleBookmark = function (event, index, institute, branch) {
     event.preventDefault();
     event.stopPropagation();
   }
-  const recommendations = state.lastData?.recommendations || [];
-  const rec = recommendations.find(r => r.institute === institute && r.branch === branch);
-  if (!rec) return;
-
   const idx = state.choices.findIndex(c => c.institute === institute && c.branch === branch);
   if (idx > -1) {
     state.choices.splice(idx, 1);
   } else {
+    const recommendations = state.lastData?.recommendations || [];
+    const rec = recommendations.find(r => r.institute === institute && r.branch === branch);
+    if (!rec) return;
     state.choices.push({
       institute: rec.institute,
       institute_type: rec.institute_type,
@@ -1481,11 +1520,25 @@ window.toggleBookmark = function (event, index, institute, branch) {
   updateChoiceUI();
 };
 
+window.moveChoice = function (index, direction) {
+  const targetIndex = index + direction;
+  if (targetIndex < 0 || targetIndex >= state.choices.length) return;
+  const temp = state.choices[index];
+  state.choices[index] = state.choices[targetIndex];
+  state.choices[targetIndex] = temp;
+  localStorage.setItem("disha_choices", JSON.stringify(state.choices));
+  updateChoiceUI();
+};
+
 function updateChoiceUI() {
   const trigger = $("choice-list-trigger");
   const count = $("choice-count");
+  const clearBtn = $("choice-clear-all");
 
   if (count) count.textContent = state.choices.length;
+  if (clearBtn) {
+    clearBtn.style.display = state.choices.length > 0 ? "inline-block" : "none";
+  }
 
   const inResultsView = $("view-results").classList.contains("is-active");
   if (trigger) {
@@ -1522,17 +1575,25 @@ function renderChoiceDrawerList() {
     li.dataset.index = idx;
 
     li.innerHTML = `
-      <div class="choice-drawer__handle" aria-label="Drag to reorder">
+      <div class="choice-drawer__actions">
+        <button type="button" class="choice-drawer__action-btn choice-drawer__action-btn--up" onclick="moveChoice(${idx}, -1)" aria-label="Move Up" ${idx === 0 ? "disabled" : ""}>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+        <button type="button" class="choice-drawer__action-btn choice-drawer__action-btn--down" onclick="moveChoice(${idx}, 1)" aria-label="Move Down" ${idx === state.choices.length - 1 ? "disabled" : ""}>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+      <div class="choice-drawer__handle" aria-label="Drag to reorder" style="display: none;">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="9" cy="5" r="1"/><circle cx="9" cy="12" r="1"/><circle cx="9" cy="19" r="1"/><circle cx="15" cy="5" r="1"/><circle cx="15" cy="12" r="1"/><circle cx="15" cy="19" r="1"/></svg>
       </div>
       <div class="choice-drawer__item-info">
         <span class="choice-drawer__item-rank">#${idx + 1}</span>
         <div>
-          <strong class="choice-drawer__item-inst">${escapeHtml(c.institute)}</strong>
-          <span class="choice-drawer__item-branch">${escapeHtml(c.branch)}</span>
+          <strong class="choice-drawer__item-inst">${escapeHtml(c.institute || "")}</strong>
+          <span class="choice-drawer__item-branch">${escapeHtml(c.branch || "")}</span>
         </div>
       </div>
-      <button type="button" class="choice-drawer__item-remove" onclick="toggleBookmark(event, null, '${escapeHtml(c.institute)}', '${escapeHtml(c.branch)}')">&times;</button>
+      <button type="button" class="choice-drawer__item-remove" onclick="toggleBookmark(event, null, '${escapeHtml(c.institute || "")}', '${escapeHtml(c.branch || "")}')">&times;</button>
     `;
 
     // Drag and Drop Event Listeners
@@ -1571,6 +1632,16 @@ function renderChoiceDrawerList() {
   });
 }
 
+window.clearChoices = function () {
+  if (state.choices.length === 0) return;
+  if (confirm("Are you sure you want to clear your entire preference list?")) {
+    state.choices = [];
+    localStorage.setItem("disha_choices", JSON.stringify(state.choices));
+    updateChoiceUI();
+    $("choice-drawer").hidden = true;
+  }
+};
+
 function exportChoicesCSV() {
   if (state.choices.length === 0) return;
   const hasFees = state.choices.some(c => c.estimated_fees !== undefined);
@@ -1583,15 +1654,15 @@ function exportChoicesCSV() {
   state.choices.forEach((c, idx) => {
     const row = [
       idx + 1,
-      `"${c.institute.replace(/"/g, '""')}"`,
-      `"${c.branch.replace(/"/g, '""')}"`,
-      `"${c.degree.replace(/"/g, '""')}"`
+      `"${(c.institute || "").replace(/"/g, '""')}"`,
+      `"${(c.branch || "").replace(/"/g, '""')}"`,
+      `"${(c.degree || "").replace(/"/g, '""')}"`
     ];
     if (hasFees) {
       const feeStr = c.estimated_fees > 0 ? `₹${(c.estimated_fees / 1000).toFixed(0)}k/year` : "Free / Fully Waived";
       row.push(`"${feeStr}"`, `"${(c.fee_note || "").replace(/"/g, '""')}"`);
     }
-    row.push(`"${c.category}"`);
+    row.push(`"${c.category || ""}"`);
     csv += row.join(",") + "\n";
   });
 
@@ -1618,9 +1689,9 @@ function printChoices() {
   let rowsHtml = state.choices.map((c, idx) => `
     <tr>
       <td>${idx + 1}</td>
-      <td><strong>${escapeHtml(c.institute)}</strong></td>
-      <td>${escapeHtml(c.branch)}</td>
-      <td>${escapeHtml(c.degree)}</td>
+      <td><strong>${escapeHtml(c.institute || "")}</strong></td>
+      <td>${escapeHtml(c.branch || "")}</td>
+      <td>${escapeHtml(c.degree || "")}</td>
       ${hasFees ? `<td>${c.estimated_fees > 0 ? `₹${(c.estimated_fees / 1000).toFixed(0)}k/yr` : "Fully Waived"}</td>` : ""}
     </tr>
   `).join("");
@@ -1777,7 +1848,7 @@ function branchRowCardHtml(r, index) {
             data-branch="${escapeHtml(r.branch)}"
             onclick="toggleBookmark(event, ${index}, '${escapeHtml(r.institute)}', '${escapeHtml(r.branch)}')"
             aria-label="Add to preference list">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bookmark-icon">
         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
       </svg>
     </button>`;
@@ -2068,11 +2139,16 @@ function renderResults(data, { keepFilters = false } = {}) {
     state.filterText = "";
     state.filterTypes = [];
     state.sortBy = "rank";
+    state.filterRegion = "all";
+    state.filterState = "all";
     state.collapsedSections = { Safe: false, Target: false, Reach: false };
+    state.expandedColleges = {};
     $("filter-search").value = "";
     document.querySelectorAll("#type-chips .chip").forEach((c) =>
       c.classList.toggle("is-active", c.dataset.type === "")
     );
+    if ($("filter-region")) $("filter-region").value = "all";
+    if ($("filter-state")) $("filter-state").value = "all";
   }
 
   buildSortOptions();
@@ -2130,9 +2206,9 @@ function applyLanguage(lang, { rerun = true } = {}) {
   if ($("view-results").classList.contains("is-active") && state.lastPayload) {
     state.lastPayload.lang = lang;
     if (rerun) {
-      runRequest(state.lastPayload);
+      runRequest(state.lastPayload, { keepFilters: true });
     } else if (state.lastData) {
-      renderResults(state.lastData);
+      renderResults(state.lastData, { keepFilters: true });
     }
   }
 }
@@ -2300,9 +2376,6 @@ function loadStateFromURL() {
     const parsedRatio = parseFloat(ratio);
     if (!isNaN(parsedRatio)) {
       state.brandBranchRatio = parsedRatio;
-      if ($("panel-brand-branch-slider")) {
-        $("panel-brand-branch-slider").value = ratio;
-      }
     }
   }
 
@@ -2478,6 +2551,7 @@ function bindPanelEvents() {
       panelGoal.addEventListener("change", () => {
         state.goal = panelGoal.value;
         buildGoalCards();           // keep the flow's goal cards in sync
+        updatePriorityStateUI();
         schedulePanelUpdate();
         saveStateToURL();
       });
@@ -2485,12 +2559,34 @@ function bindPanelEvents() {
 
     // panel-family-income event listener removed to focus on admission probability insights.
 
-    const panelSlider = $("panel-brand-branch-slider");
-    if (panelSlider) {
-      panelSlider.addEventListener("input", () => {
-        state.brandBranchRatio = parseFloat(panelSlider.value);
+    const priorityToggle = $("priority-toggle");
+    if (priorityToggle) {
+      priorityToggle.addEventListener("click", (e) => {
+        const btn = e.target.closest(".view-toggle-btn");
+        if (!btn) return;
+        const ratioVal = parseFloat(btn.dataset.ratio);
+        state.brandBranchRatio = ratioVal;
+        
+        updatePriorityStateUI();
+
         schedulePanelUpdate();
         saveStateToURL();
+      });
+    }
+
+    const goalFocusBtn = $("priority-goal-focus");
+    if (goalFocusBtn) {
+      goalFocusBtn.addEventListener("click", () => {
+        const pg = $("panel-goal");
+        if (pg) {
+          pg.focus();
+          pg.style.outline = "2px solid #eab308";
+          pg.style.boxShadow = "0 0 10px rgba(234, 179, 8, 0.5)";
+          setTimeout(() => {
+            pg.style.outline = "";
+            pg.style.boxShadow = "";
+          }, 1500);
+        }
       });
     }
 
@@ -2576,6 +2672,11 @@ function bindEvents() {
   const pdfBtn = $("choice-export-pdf");
   if (pdfBtn) {
     pdfBtn.addEventListener("click", printChoices);
+  }
+
+  const clearAllBtn = $("choice-clear-all");
+  if (clearAllBtn) {
+    clearAllBtn.addEventListener("click", clearChoices);
   }
 
   $("filter-search").addEventListener("input", (e) => {
