@@ -1007,7 +1007,7 @@
               <button class="tab-btn" onclick="switchCompInstTab('IIIT')" data-comp-inst-tab="IIIT">IIIT</button>
               <button class="tab-btn" onclick="switchCompInstTab('GFTI')" data-comp-inst-tab="GFTI">GFTI</button>
             </div>
-            <div class="chart-container">
+            <div class="chart-container" id="chart-inst-container" style="height:360px;">
               <canvas id="chart-competitive-insts"></canvas>
             </div>
             <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
@@ -1104,7 +1104,7 @@
               <button class="tab-btn" onclick="switchCompProgTab('IIIT')" data-comp-prog-tab="IIIT">IIIT</button>
               <button class="tab-btn" onclick="switchCompProgTab('GFTI')" data-comp-prog-tab="GFTI">GFTI</button>
             </div>
-            <div class="chart-container">
+            <div class="chart-container" id="chart-prog-container" style="height:420px;">
               <canvas id="chart-competitive-progs"></canvas>
             </div>
             <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
@@ -1486,6 +1486,9 @@
           const instColors = { 'IIT': '#175c4c', 'NIT': '#2e7d5b', 'IIIT': '#a87714', 'GFTI': '#bf5b3c' };
 
           if (charts.compInsts) charts.compInsts.destroy();
+          // Resize container based on entry count for full visibility
+          const instContainer = document.getElementById('chart-inst-container');
+          if (instContainer) instContainer.style.height = Math.max(300, entries.length * 36) + 'px';
 
           charts.compInsts = new Chart(document.getElementById("chart-competitive-insts"), {
             type: 'bar',
@@ -1501,7 +1504,7 @@
               indexAxis: 'y',
               responsive: true,
               maintainAspectRatio: false,
-              layout: { padding: { left: 10 } },
+              layout: { padding: { left: 0 } },
               plugins: {
                 legend: { display: false },
                 tooltip: {
@@ -1523,8 +1526,7 @@
                   grid: { display: false },
                   ticks: { font: { family: 'Inter', size: 10 }, color: '#241e12' },
                   afterFit: function (scale) {
-                    // Ensure label area is wide enough to prevent left clipping
-                    scale.width = Math.max(scale.width, 180);
+                    scale.width = Math.max(scale.width, 240);
                   }
                 }
               }
@@ -1548,18 +1550,26 @@
 
         function renderCompProgs(itype) {
           const entries = window._compProgsData[itype] || [];
-          // Program labels already contain the shortened institute name from the backend.
-          // Apply the same parenthetical-cleanup pass for safety.
+          // Split label at " @ " into a two-line array so both the branch name
+          // and the institute name are fully visible without any truncation.
           const labels = entries.map(e => {
-            let lbl = e.program.length > 40 ? e.program.substring(0, 38) + '…' : e.program;
-            lbl = lbl.replace(/\s*\((?:IIT|NIT|IIIT|GFTI)\)\s*/g, ' ').trim().replace(/\s{2,}/g, ' ');
-            return lbl;
+            let prog = e.program
+              .replace(/\s*\((?:IIT|NIT|IIIT|GFTI)\)\s*/g, ' ').trim()
+              .replace(/\s{2,}/g, ' ');
+            const atIdx = prog.indexOf(' @ ');
+            if (atIdx !== -1) {
+              return [prog.substring(0, atIdx), '@ ' + prog.substring(atIdx + 3)];
+            }
+            return prog;
           });
           const values = entries.map(e => e.avg_closing);
           const counts = entries.map(e => e.count);
           const progColors = { 'IIT': '#175c4c', 'NIT': '#2e7d5b', 'IIIT': '#a87714', 'GFTI': '#bf5b3c' };
 
           if (charts.compProgs) charts.compProgs.destroy();
+          // Resize container: 2-line labels need more height per bar
+          const progContainer = document.getElementById('chart-prog-container');
+          if (progContainer) progContainer.style.height = Math.max(360, entries.length * 46) + 'px';
 
           charts.compProgs = new Chart(document.getElementById("chart-competitive-progs"), {
             type: 'bar',
@@ -1575,7 +1585,7 @@
               indexAxis: 'y',
               responsive: true,
               maintainAspectRatio: false,
-              layout: { padding: { left: 10 } },
+              layout: { padding: { left: 0 } },
               plugins: {
                 legend: { display: false },
                 tooltip: {
@@ -1606,8 +1616,7 @@
                   grid: { display: false },
                   ticks: { font: { family: 'Inter', size: 10 }, color: '#241e12' },
                   afterFit: function (scale) {
-                    // Ensure label area is wide enough to prevent left clipping
-                    scale.width = Math.max(scale.width, 180);
+                    scale.width = Math.max(scale.width, 260);
                   }
                 }
               }
