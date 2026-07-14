@@ -885,6 +885,81 @@
       color: #fff;
       box-shadow: 0 2px 8px rgba(23, 92, 76, 0.25);
     }
+    /* ── Mobile-only Cutoff Toggle ───────────────────────────────────────── */
+    .cutoff-toggle-row {
+      display: none; /* hidden on desktop */
+    }
+
+    @media (max-width: 767px) {
+      /* Show toggle buttons on mobile */
+      .cutoff-toggle-row {
+        display: flex;
+        gap: 0;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1.5px solid var(--pine);
+        margin-bottom: 16px;
+      }
+
+      .cutoff-toggle-btn {
+        flex: 1;
+        padding: 9px 6px;
+        font-family: var(--sans);
+        font-size: 13px;
+        font-weight: 600;
+        border: none;
+        background: transparent;
+        color: var(--pine);
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        letter-spacing: 0.01em;
+      }
+
+      .cutoff-toggle-btn.is-active {
+        background: var(--pine);
+        color: #fff;
+      }
+
+      .cutoff-toggle-btn:not(.is-active):hover {
+        background: var(--pine-tint);
+      }
+
+      /* Hide the desktop 2-column grid on mobile */
+      .cutoff-desktop-grid {
+        display: none !important;
+      }
+
+      /* Mobile panels — stacked, one visible at a time */
+      .cutoff-mobile-panel {
+        display: block;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        pointer-events: none;
+        position: absolute;
+        width: 100%;
+      }
+
+      .cutoff-mobile-panel.is-active {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+        position: relative;
+      }
+
+      /* Wrapper keeps relative positioning context */
+      .cutoff-mobile-panels {
+        position: relative;
+        min-height: 120px;
+      }
+    }
+
+    /* On desktop: never show mobile panels */
+    @media (min-width: 768px) {
+      .cutoff-mobile-panels { display: none; }
+      .cutoff-toggle-row    { display: none; }
+    }
+
   </style>
 </head>
 
@@ -1281,7 +1356,56 @@
 
             <!-- Tab: Highest and Lowest cutoffs -->
             <div class="tab-pane" id="tab-extremes">
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px;">
+
+              <!-- ── Mobile toggle (hidden on desktop via CSS) ─────────────── -->
+              <div class="cutoff-toggle-row" id="cutoff-toggle-row">
+                <button class="cutoff-toggle-btn is-active" id="btn-lowest"
+                  onclick="switchCutoffPanel('lowest')">
+                  ⬇ Lowest Cutoffs
+                </button>
+                <button class="cutoff-toggle-btn" id="btn-highest"
+                  onclick="switchCutoffPanel('highest')">
+                  ⬆ Highest Cutoffs
+                </button>
+              </div>
+
+              <!-- ── Mobile panels (hidden on desktop via CSS) ─────────────── -->
+              <div class="cutoff-mobile-panels">
+                <!-- Panel A: Most Competitive (Lowest Ranks) -->
+                <div class="cutoff-mobile-panel is-active" id="mobile-panel-lowest">
+                  <div class="tab-section-head tab-section-head--reach">
+                    <div class="tab-section-head__icon tab-section-head__icon--reach">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                      </svg>
+                    </div>
+                    <span class="tab-section-head__text">Most Competitive (Lowest Ranks)</span>
+                  </div>
+                  <div class="tile-grid tile-grid--cutoffs" id="mobile-grid-highest">
+                    <!-- Populated dynamically (mirrors grid-highest) -->
+                  </div>
+                </div>
+
+                <!-- Panel B: Least Competitive (Highest Ranks) -->
+                <div class="cutoff-mobile-panel" id="mobile-panel-highest">
+                  <div class="tab-section-head tab-section-head--safe">
+                    <div class="tab-section-head__icon tab-section-head__icon--safe">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      </svg>
+                    </div>
+                    <span class="tab-section-head__text">Least Competitive (Highest Ranks)</span>
+                  </div>
+                  <div class="tile-grid tile-grid--cutoffs" id="mobile-grid-lowest">
+                    <!-- Populated dynamically (mirrors grid-lowest) -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── Desktop 2-column grid (hidden on mobile via CSS) ──────── -->
+              <div class="cutoff-desktop-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px;">
                 <div>
                   <div class="tab-section-head tab-section-head--reach">
                     <div class="tab-section-head__icon tab-section-head__icon--reach">
@@ -1311,6 +1435,7 @@
                   </div>
                 </div>
               </div>
+
             </div>
 
           </div>
@@ -2166,12 +2291,11 @@
           gridCategories.appendChild(tile);
         });
 
-        // ═══ Populate: Highest & Lowest Cutoffs (mini stat card grid) ═══
-        const gridHighest = document.getElementById("grid-highest");
-        gridHighest.innerHTML = "";
-        data.highest_cutoffs.forEach(item => {
+        // ═══ Populate: Highest & Lowest Cutoffs ═══
+        // Helper to build a single cutoff tile element
+        function buildCutoffTile(item, mod) {
           const tile = document.createElement("div");
-          tile.className = "tile tile--cutoff tile--hot";
+          tile.className = `tile tile--cutoff tile--${mod}`;
           tile.innerHTML = `
             <div class="tile__label">${item.program}</div>
             <div class="tile--cutoff tile__institute">${item.institute}</div>
@@ -2182,25 +2306,27 @@
               <span class="tile__sub">${item.quota}</span>
             </div>
           `;
-          gridHighest.appendChild(tile);
+          return tile;
+        }
+
+        // Populate desktop grid-highest + mobile mirror
+        const gridHighest       = document.getElementById("grid-highest");
+        const mobileGridHighest = document.getElementById("mobile-grid-highest");
+        gridHighest.innerHTML = "";
+        mobileGridHighest.innerHTML = "";
+        data.highest_cutoffs.forEach(item => {
+          gridHighest.appendChild(buildCutoffTile(item, 'hot'));
+          mobileGridHighest.appendChild(buildCutoffTile(item, 'hot'));
         });
 
-        const gridLowest = document.getElementById("grid-lowest");
+        // Populate desktop grid-lowest + mobile mirror
+        const gridLowest       = document.getElementById("grid-lowest");
+        const mobileGridLowest = document.getElementById("mobile-grid-lowest");
         gridLowest.innerHTML = "";
+        mobileGridLowest.innerHTML = "";
         data.lowest_cutoffs.forEach(item => {
-          const tile = document.createElement("div");
-          tile.className = "tile tile--cutoff tile--cool";
-          tile.innerHTML = `
-            <div class="tile__label">${item.program}</div>
-            <div class="tile--cutoff tile__institute">${item.institute}</div>
-            <div class="tile__value">${item.closing_rank.toLocaleString()}</div>
-            <div class="tile__sub" style="text-align:center;font-size:11px;color:var(--ink-faint);margin-bottom:4px;">Avg. Closing Rank</div>
-            <div class="tile--cutoff tile__meta">
-              <span class="${badgeClass(item.inst_type)}">${item.inst_type}</span>
-              <span class="tile__sub">${item.quota}</span>
-            </div>
-          `;
-          gridLowest.appendChild(tile);
+          gridLowest.appendChild(buildCutoffTile(item, 'cool'));
+          mobileGridLowest.appendChild(buildCutoffTile(item, 'cool'));
         });
 
         // Show dashboard, hide loading
@@ -2216,6 +2342,20 @@
         `;
       }
     });
+
+    /**
+     * Mobile-only: switch between "Lowest Cutoffs" and "Highest Cutoffs" panels.
+     * Called by the toggle buttons inside #cutoff-toggle-row.
+     */
+    window.switchCutoffPanel = function (panel) {
+      // Update button active state
+      document.getElementById('btn-lowest').classList.toggle('is-active', panel === 'lowest');
+      document.getElementById('btn-highest').classList.toggle('is-active', panel === 'highest');
+
+      // Swap panel visibility with CSS transition
+      document.getElementById('mobile-panel-lowest').classList.toggle('is-active', panel === 'lowest');
+      document.getElementById('mobile-panel-highest').classList.toggle('is-active', panel === 'highest');
+    };
   </script>
 </body>
 
