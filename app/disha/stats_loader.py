@@ -43,6 +43,9 @@ def _classify_branch_family(branch_clean: str) -> str:
         return "Chemical & Materials"
     return "Others"
 
+# Keywords used to identify and exclude Planning & Architecture programs
+_EXCLUDED_PROGRAM_KEYWORDS = ["planning", "architecture"]
+
 def compute_dataset_stats() -> Dict[str, Any]:
     """Load settings.resolved_basic_merged_data_path and compute statistical insights."""
     csv_path = settings.resolved_basic_merged_data_path
@@ -54,6 +57,13 @@ def compute_dataset_stats() -> Dict[str, Any]:
     df["Quota"] = df["Quota"].fillna("").astype(str).str.strip()
     df["Seat Type"] = df["Seat Type"].fillna("").astype(str).str.strip()
     df["Gender"] = df["Gender"].fillna("").astype(str).str.strip()
+
+    # Exclude Planning and Architecture programs — they are not standard
+    # engineering/technology programs and should not appear in stats.
+    _excl_pattern = "|".join(_EXCLUDED_PROGRAM_KEYWORDS)
+    df = df[~df["Academic Program Name"].str.lower().str.contains(_excl_pattern, na=False)]
+    # Also exclude School of Planning & Architecture institutes entirely
+    df = df[~df["Institute"].str.lower().str.contains("planning", na=False)]
 
     total_records = len(df)
     unique_institutes = int(df["Institute"].nunique())
@@ -179,11 +189,15 @@ def compute_dataset_stats() -> Dict[str, Any]:
         crl_prog = crl_cutoffs.copy()
         crl_prog["Branch_Clean"] = crl_prog["Academic Program Name"].apply(_extract_branch_name)
         crl_prog["Program_Label"] = crl_prog["Branch_Clean"] + " @ " + crl_prog["Institute"].str.replace(
-            "Indian Institute of Technology", "IIT"
+            "Indian Institute of Technology", "IIT", regex=False
         ).str.replace(
-            "National Institute of Technology", "NIT"
+            "National Institute of Technology", "NIT", regex=False
         ).str.replace(
-            "Indian Institute of Information Technology", "IIIT"
+            "Indian Institute of Information Technology", "IIIT", regex=False
+        ).str.replace(
+            # Remove any redundant parenthetical acronym left by the substitution above,
+            # e.g. "IIIT (IIIT) Pune" → "IIIT Pune", "IIT (IIT) Something" → "IIT Something"
+            r"\s*\((?:IIT|NIT|IIIT|GFTI)\)\s*", " ", regex=True
         ).str.strip()
         for itype in ["IIT", "NIT", "IIIT", "GFTI"]:
             itype_df = crl_prog[crl_prog["Institute_Type"] == itype]

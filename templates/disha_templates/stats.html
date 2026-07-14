@@ -1119,7 +1119,8 @@
             <h3 class="card__title">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                <path d="M8 12h4M8 16h8M8 8h2"/>
               </svg>
               Course Type Cutoff Comparison
             </h3>
@@ -1460,12 +1461,27 @@
         window._compInstsData = data.inst_competitiveness; // dict keyed by itype
         window._currentCompInstTab = 'IIT';
 
-        function renderCompInsts(itype) {
-          const entries = window._compInstsData[itype] || [];
-          const compInstLabels = entries.map(i => i.institute
+        /**
+         * Shorten a full institute name to a compact label.
+         * 1. Replace long official names with standard abbreviations.
+         * 2. Remove any redundant parenthetical acronym that the substitution
+         *    leaves behind (e.g. "IIIT (IIIT) Pune" → "IIIT Pune").
+         */
+        function shortenInstituteName(name) {
+          let s = name
             .replace('Indian Institute of Technology', 'IIT')
             .replace('National Institute of Technology', 'NIT')
-            .replace('Indian Institute of Information Technology', 'IIIT'));
+            .replace('Indian Institute of Information Technology', 'IIIT');
+          // Remove any parenthetical repetition of the acronym, e.g. "(IIIT)", "(IIT)", "(NIT)"
+          s = s.replace(/\s*\((?:IIT|NIT|IIIT|GFTI)\)\s*/g, ' ').trim();
+          // Collapse accidental double-spaces
+          s = s.replace(/\s{2,}/g, ' ');
+          return s;
+        }
+
+        function renderCompInsts(itype) {
+          const entries = window._compInstsData[itype] || [];
+          const compInstLabels = entries.map(i => shortenInstituteName(i.institute));
           const compInstValues = entries.map(i => i.avg_closing_rank);
           const instColors = { 'IIT': '#175c4c', 'NIT': '#2e7d5b', 'IIIT': '#a87714', 'GFTI': '#bf5b3c' };
 
@@ -1485,6 +1501,7 @@
               indexAxis: 'y',
               responsive: true,
               maintainAspectRatio: false,
+              layout: { padding: { left: 10 } },
               plugins: {
                 legend: { display: false },
                 tooltip: {
@@ -1504,7 +1521,11 @@
                 },
                 y: {
                   grid: { display: false },
-                  ticks: { font: { family: 'Inter', size: 10 }, color: '#241e12' }
+                  ticks: { font: { family: 'Inter', size: 10 }, color: '#241e12' },
+                  afterFit: function (scale) {
+                    // Ensure label area is wide enough to prevent left clipping
+                    scale.width = Math.max(scale.width, 180);
+                  }
                 }
               }
             }
@@ -1527,7 +1548,13 @@
 
         function renderCompProgs(itype) {
           const entries = window._compProgsData[itype] || [];
-          const labels = entries.map(e => e.program.length > 40 ? e.program.substring(0, 38) + '…' : e.program);
+          // Program labels already contain the shortened institute name from the backend.
+          // Apply the same parenthetical-cleanup pass for safety.
+          const labels = entries.map(e => {
+            let lbl = e.program.length > 40 ? e.program.substring(0, 38) + '…' : e.program;
+            lbl = lbl.replace(/\s*\((?:IIT|NIT|IIIT|GFTI)\)\s*/g, ' ').trim().replace(/\s{2,}/g, ' ');
+            return lbl;
+          });
           const values = entries.map(e => e.avg_closing);
           const counts = entries.map(e => e.count);
           const progColors = { 'IIT': '#175c4c', 'NIT': '#2e7d5b', 'IIIT': '#a87714', 'GFTI': '#bf5b3c' };
@@ -1548,6 +1575,7 @@
               indexAxis: 'y',
               responsive: true,
               maintainAspectRatio: false,
+              layout: { padding: { left: 10 } },
               plugins: {
                 legend: { display: false },
                 tooltip: {
@@ -1576,7 +1604,11 @@
                 },
                 y: {
                   grid: { display: false },
-                  ticks: { font: { family: 'Inter', size: 10 }, color: '#241e12' }
+                  ticks: { font: { family: 'Inter', size: 10 }, color: '#241e12' },
+                  afterFit: function (scale) {
+                    // Ensure label area is wide enough to prevent left clipping
+                    scale.width = Math.max(scale.width, 180);
+                  }
                 }
               }
             }
@@ -2052,7 +2084,12 @@
         // ═══ Populate: Popular Branches (mini stat card grid) ═══
         const gridBranches = document.getElementById("grid-branches");
         gridBranches.innerHTML = "";
-        data.popular_branches.forEach(b => {
+        // Filter out generic entries like bare 'B.Tech' or 'B. Tech' which are
+        // degree types, not actual branch/discipline names.
+        const EXCLUDED_BRANCH_NAMES = new Set(["b.tech", "b. tech", "btech"]);
+        data.popular_branches
+          .filter(b => !EXCLUDED_BRANCH_NAMES.has(b.branch.trim().toLowerCase()))
+          .forEach(b => {
           const rank = Math.round(b.avg_closing_rank);
           const mod = rank < 5000 ? 'hot' : rank < 15000 ? 'warm' : 'cool';
           const tile = document.createElement("div");
@@ -2114,6 +2151,7 @@
             <div class="tile__label">${item.program}</div>
             <div class="tile--cutoff tile__institute">${item.institute}</div>
             <div class="tile__value">${item.closing_rank.toLocaleString()}</div>
+            <div class="tile__sub" style="text-align:center;font-size:11px;color:var(--ink-faint);margin-bottom:4px;">Avg. Closing Rank</div>
             <div class="tile--cutoff tile__meta">
               <span class="${badgeClass(item.inst_type)}">${item.inst_type}</span>
               <span class="tile__sub">${item.quota}</span>
@@ -2131,6 +2169,7 @@
             <div class="tile__label">${item.program}</div>
             <div class="tile--cutoff tile__institute">${item.institute}</div>
             <div class="tile__value">${item.closing_rank.toLocaleString()}</div>
+            <div class="tile__sub" style="text-align:center;font-size:11px;color:var(--ink-faint);margin-bottom:4px;">Avg. Closing Rank</div>
             <div class="tile--cutoff tile__meta">
               <span class="${badgeClass(item.inst_type)}">${item.inst_type}</span>
               <span class="tile__sub">${item.quota}</span>

@@ -334,14 +334,25 @@ def _load_basic_dataframe() -> pd.DataFrame:
     return compute_best_ranks(df)
 
 
+# Program name keywords that identify non-engineering programs to exclude.
+_EXCLUDED_PROGRAM_KEYWORDS = ("planning", "architecture")
+
+
 @lru_cache(maxsize=1)
 def load_programs_basic() -> List[Program]:
     df = _load_basic_dataframe()
     programs: List[Program] = []
     for row in df.itertuples(index=False):
         institute = str(row.institute).strip()
+        # Skip School of Planning & Architecture institutes entirely
+        if "planning" in institute.lower():
+            continue
         itype = _classify_institute_type(institute)
         full = str(row.program).strip()
+        # Skip Planning and Architecture programs — they are not standard
+        # engineering/technology programs and should not appear anywhere.
+        if any(kw in full.lower() for kw in _EXCLUDED_PROGRAM_KEYWORDS):
+            continue
         short, degree = _clean_branch(full)
         seat_type = str(getattr(row, "seat_type", "OPEN")).strip()
         flag_r = getattr(row, "flag_round", None)
