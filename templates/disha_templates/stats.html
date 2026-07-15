@@ -1311,7 +1311,7 @@
             </h3>
           </div>
           <div class="card__body">
-            <div class="chart-container">
+            <div class="chart-container" style="display: flex; justify-content: center; align-items: center;">
               <canvas id="chart-inst-types"></canvas>
             </div>
           </div>
@@ -1563,7 +1563,7 @@
           </div>
 
           <div class="card__body" style="padding-top: 12px;">
-            <div class="tabs-nav">
+            <div class="tabs-nav" id="metrics-tabs-nav">
               <button class="tab-btn is-active" onclick="switchTab('tab-popular')">Popular Branches</button>
               <button class="tab-btn" onclick="switchTab('tab-states')">State-wise Distribution</button>
               <button class="tab-btn" onclick="switchTab('tab-quotas')">Quotas & Categories</button>
@@ -1759,7 +1759,7 @@
     let charts = {};
 
     function switchTab(tabId) {
-      document.querySelectorAll('.tab-btn').forEach(btn => {
+      document.querySelectorAll('#metrics-tabs-nav .tab-btn').forEach(btn => {
         btn.classList.remove('is-active');
       });
       document.querySelectorAll('.tab-pane').forEach(pane => {
@@ -1767,7 +1767,7 @@
       });
 
       // Find the button which has onclick containing the tabId
-      const targetBtn = Array.from(document.querySelectorAll('.tab-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
+      const targetBtn = Array.from(document.querySelectorAll('#metrics-tabs-nav .tab-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
       if (targetBtn) targetBtn.classList.add('is-active');
 
       const pane = document.getElementById(tabId);
