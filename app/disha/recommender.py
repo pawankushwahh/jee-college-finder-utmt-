@@ -160,7 +160,7 @@ def _categorize(rank: int, opening: int, closing: int) -> Optional[str]:
     if rank > closing * (1 + UPPER_MARGIN):
         return None  # no realistic chance
     if rank < opening * (1 - LOWER_MARGIN):
-        return None  # heavily overqualified - aim higher
+        return "Safe"  # heavily overqualified, but still a Safe option
     
     # Safe: rank is in the top 25% of the opening-closing gap
     safe_threshold = opening + 0.25 * (closing - opening)
