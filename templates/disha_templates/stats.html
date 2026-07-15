@@ -484,8 +484,12 @@
       gap: 8px;
     }
 
+    .tile--cutoff .tile__value {
+      text-align: center;
+    }
+
     .tile--cutoff .tile__label {
-      min-height: auto;
+      min-height: 51px;
       -webkit-line-clamp: 3;
     }
 
@@ -493,6 +497,11 @@
       font-size: 12px;
       color: var(--ink-soft);
       line-height: 1.3;
+      min-height: 32px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .tile--cutoff .tile__meta {
@@ -835,8 +844,35 @@
 
     .chart-container {
       position: relative;
-      height: 300px;
+      height: 270px;
       width: 100%;
+    }
+
+    /* External HTML tooltip for charts — never clipped by card overflow */
+    .chart-ext-tooltip {
+      position: fixed;
+      pointer-events: none;
+      background: rgba(30, 26, 20, 0.92);
+      color: #fff;
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-family: 'Inter', sans-serif;
+      font-size: 12px;
+      line-height: 1.5;
+      max-width: 360px;
+      word-wrap: break-word;
+      white-space: normal;
+      z-index: 9999;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+      transition: opacity 0.15s ease;
+    }
+    .chart-ext-tooltip .tooltip-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .chart-ext-tooltip .tooltip-body {
+      font-weight: 400;
+      opacity: 0.9;
     }
 
     /* Category filter pills for availability charts */
@@ -884,6 +920,300 @@
       border-color: var(--pine);
       color: #fff;
       box-shadow: 0 2px 8px rgba(23, 92, 76, 0.25);
+    }
+
+    /* ── Mobile-only Cutoff Toggle ───────────────────────────────────────── */
+    .cutoff-toggle-row {
+      display: none;
+      /* hidden on desktop */
+    }
+
+    @media (max-width: 767px) {
+
+      /* Show toggle buttons on mobile */
+      .cutoff-toggle-row {
+        display: flex;
+        gap: 0;
+        border-radius: 10px;
+        overflow: hidden;
+        border: 1.5px solid var(--pine);
+        margin-bottom: 16px;
+      }
+
+      .cutoff-toggle-btn {
+        flex: 1;
+        padding: 9px 6px;
+        font-family: var(--sans);
+        font-size: 13px;
+        font-weight: 600;
+        border: none;
+        background: transparent;
+        color: var(--pine);
+        cursor: pointer;
+        transition: background 0.2s, color 0.2s;
+        letter-spacing: 0.01em;
+      }
+
+      .cutoff-toggle-btn.is-active {
+        background: var(--pine);
+        color: #fff;
+      }
+
+      .cutoff-toggle-btn:not(.is-active):hover {
+        background: var(--pine-tint);
+      }
+
+      /* Hide the desktop 2-column grid on mobile */
+      .cutoff-desktop-grid {
+        display: none !important;
+      }
+
+      /* Mobile panels — stacked, one visible at a time */
+      .cutoff-mobile-panel {
+        display: block;
+        opacity: 0;
+        transform: translateY(6px);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        pointer-events: none;
+        position: absolute;
+        width: 100%;
+      }
+
+      .cutoff-mobile-panel.is-active {
+        opacity: 1;
+        transform: translateY(0);
+        pointer-events: auto;
+        position: relative;
+      }
+
+      /* Wrapper keeps relative positioning context */
+      .cutoff-mobile-panels {
+        position: relative;
+        min-height: 120px;
+      }
+    }
+
+    /* On desktop: never show mobile panels */
+    @media (min-width: 768px) {
+      .cutoff-mobile-panels {
+        display: none;
+      }
+
+      .cutoff-toggle-row {
+        display: none;
+      }
+    }
+
+    /* ═══ Mobile Responsive Enhancements ═══ */
+    @media (max-width: 600px) {
+
+      /* --- Container & Hero --- */
+      .container {
+        padding: 20px 12px;
+      }
+
+      .hero {
+        margin-bottom: 24px;
+      }
+
+      .hero__title {
+        font-size: 26px;
+      }
+
+      .hero__lede {
+        font-size: 14px;
+      }
+
+      /* --- Topbar --- */
+      .topbar {
+        padding: 0 12px;
+        height: 54px;
+      }
+
+      .wordmark {
+        font-size: 16px;
+        gap: 7px;
+      }
+
+      .btn--ghost span {
+        display: none;
+      }
+
+      /* --- Metrics Cards --- */
+      .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        margin-bottom: 24px;
+      }
+
+      .metric-card {
+        padding: 14px 12px;
+      }
+
+      .metric-card__label {
+        font-size: 11px;
+        margin-bottom: 4px;
+      }
+
+      .metric-card__value {
+        font-size: 24px;
+      }
+
+      /* --- Dashboard Grid --- */
+      .dashboard-grid {
+        gap: 16px;
+        margin-bottom: 24px;
+      }
+
+      /* --- Cards --- */
+      .card__header {
+        padding: 14px 14px;
+      }
+
+      .card__title {
+        font-size: 14px;
+        gap: 6px;
+        line-height: 1.35;
+      }
+
+      .card__body {
+        padding: 14px;
+      }
+
+      .card--detail .card__header {
+        padding: 16px 14px;
+        border-left-width: 3px;
+      }
+
+      .card--detail .card__title {
+        font-size: 17px;
+      }
+
+      /* --- Tabs --- */
+      .tabs-nav {
+        gap: 4px;
+        padding: 4px;
+        margin-bottom: 16px;
+        border-radius: 10px;
+      }
+
+      .tab-btn {
+        padding: 8px 12px;
+        font-size: 12px;
+        border-radius: 7px;
+      }
+
+      /* --- Chart containers on mobile: taller for horizontal bars --- */
+      .chart-container {
+        height: 250px;
+      }
+
+      /* Competitive inst/prog charts need extra height on mobile */
+      #chart-inst-container,
+      #chart-prog-container {
+        min-height: 320px !important;
+      }
+
+      /* --- Cat filter pills --- */
+      .cat-filter-row {
+        gap: 5px;
+        padding-bottom: 10px;
+      }
+
+      .cat-filter-label {
+        font-size: 11px;
+        margin-right: 2px;
+      }
+
+      .cat-pill {
+        font-size: 11px;
+        padding: 4px 10px;
+      }
+
+      /* --- Tile grid on mobile --- */
+      .tile-grid {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 8px;
+      }
+
+      .tile-grid--cutoffs {
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+      }
+
+      .tile {
+        padding: 14px 12px 12px;
+        gap: 8px;
+      }
+
+      .tile__label {
+        font-size: 12px;
+        min-height: 28px;
+      }
+
+      .tile__value {
+        font-size: 20px;
+      }
+
+      .tile__sub {
+        font-size: 10.5px;
+      }
+
+      /* --- Tables --- */
+      .table th,
+      .table td {
+        padding: 10px 12px;
+      }
+
+      .table {
+        font-size: 12.5px;
+      }
+
+      /* --- Metrics Panel --- */
+      .metric-row {
+        padding: 10px 14px;
+      }
+
+      .metric-row__label {
+        font-size: 13px;
+      }
+
+      .metric-row__value {
+        font-size: 13px;
+      }
+
+      /* --- Highlight list --- */
+      .highlight-item {
+        gap: 10px;
+        padding-bottom: 10px;
+      }
+
+      .highlight-number {
+        font-size: 20px;
+        width: 60px;
+      }
+
+      .highlight-name {
+        font-size: 13px;
+      }
+
+      .highlight-sub {
+        font-size: 11px;
+      }
+
+      /* --- Footer --- */
+      .footer {
+        padding: 20px 12px;
+        font-size: 12px;
+      }
+
+      .footer__sep {
+        margin: 0 4px;
+      }
+
+      /* --- Chart descriptions --- */
+      .card__body > p[style*="font-size: 12px"] {
+        font-size: 11px !important;
+      }
     }
   </style>
 </head>
@@ -963,7 +1293,7 @@
               <canvas id="chart-rounds"></canvas>
             </div>
             <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
-              Average closing rank for each round. A rising line shows how cutoffs relax in subsequent rounds, allowing
+              Closing rank for each round. A rising line shows how cutoffs relax in subsequent rounds, allowing
               higher ranks to secure admission.
             </p>
           </div>
@@ -1007,11 +1337,11 @@
               <button class="tab-btn" onclick="switchCompInstTab('IIIT')" data-comp-inst-tab="IIIT">IIIT</button>
               <button class="tab-btn" onclick="switchCompInstTab('GFTI')" data-comp-inst-tab="GFTI">GFTI</button>
             </div>
-            <div class="chart-container">
+            <div class="chart-container" id="chart-inst-container" style="height:270px;">
               <canvas id="chart-competitive-insts"></canvas>
             </div>
             <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
-              Ranked by average closing rank of OPEN, Gender-Neutral programs (lower is more competitive).
+              Ranked by closing rank of OPEN, Gender-Neutral programs (lower is more competitive).
             </p>
           </div>
         </div>
@@ -1028,10 +1358,28 @@
             </h3>
           </div>
           <div class="card__body">
-            <div class="chart-container">
+            <div class="chart-container" style="display: flex; justify-content: center; align-items: center;">
               <canvas id="chart-volatility"></canvas>
             </div>
-            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
+            <div class="chart-legend" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 12px; margin-top: 10px; font-size: 11px; color: var(--ink-soft); font-weight: 500;">
+              <div style="display: flex; align-items: center; gap: 5px;">
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: rgba(20, 90, 60, 0.9);"></span>
+                <span>Volatile Erratic</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 5px;">
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: rgba(140, 95, 10, 0.9);"></span>
+                <span>Volatile Vacancy</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 5px;">
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: rgba(160, 60, 35, 0.9);"></span>
+                <span>Highly Stable</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 5px;">
+                <span style="display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: rgba(55, 50, 42, 0.95);"></span>
+                <span>Stable Drift</span>
+              </div>
+            </div>
+            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 10px; text-align: center;">
               Classification of programs based on the rate of rank changes across counselling rounds.
             </p>
           </div>
@@ -1054,7 +1402,7 @@
               <canvas id="chart-gender-multiplier"></canvas>
             </div>
             <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
-              Average relaxation ratio of female closing ranks compared to gender-neutral ranks (e.g. 1.3x means female
+              Relaxation ratio of female closing ranks compared to gender-neutral ranks (e.g. 1.3x means female
               cutoff is 30% higher/easier rank).
             </p>
           </div>
@@ -1077,7 +1425,7 @@
               <canvas id="chart-cse-premium"></canvas>
             </div>
             <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
-              How much harder is Computer Science to get into? Average closing rank for CSE vs Non-CSE branches (lower
+              How much harder is Computer Science to get into? Closing rank for CSE vs Non-CSE branches (lower
               rank = more competitive).
             </p>
           </div>
@@ -1091,7 +1439,8 @@
             <h3 class="card__title">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
-                <path d="M9 11l3 3L22 4" /><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+                <path d="M9 11l3 3L22 4" />
+                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
               </svg>
               Top 10 Competitive Programs — 2025
             </h3>
@@ -1104,11 +1453,11 @@
               <button class="tab-btn" onclick="switchCompProgTab('IIIT')" data-comp-prog-tab="IIIT">IIIT</button>
               <button class="tab-btn" onclick="switchCompProgTab('GFTI')" data-comp-prog-tab="GFTI">GFTI</button>
             </div>
-            <div class="chart-container">
+            <div class="chart-container" id="chart-prog-container" style="height:270px;">
               <canvas id="chart-competitive-progs"></canvas>
             </div>
             <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
-              Top 10 hardest-to-get programs (e.g. CSE at IITB) based on average OPEN closing rank (2025 data).
+              Top 10 hardest-to-get programs (e.g. CSE at IITB) based on OPEN closing rank (2025 data).
             </p>
           </div>
         </div>
@@ -1119,7 +1468,8 @@
             <h3 class="card__title">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                <path d="M8 12h4M8 16h8M8 8h2" />
               </svg>
               Course Type Cutoff Comparison
             </h3>
@@ -1129,7 +1479,7 @@
               <canvas id="chart-duration-comp"></canvas>
             </div>
             <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
-              Average closing rank for 4-Year B.Tech vs 5-Year Dual/Integrated programs (for OPEN, Gender-Neutral).
+              Closing rank for 4-Year B.Tech vs 5-Year Dual/Integrated programs (for OPEN, Gender-Neutral).
             </p>
           </div>
         </div>
@@ -1149,8 +1499,10 @@
           <div class="card__body">
             <div class="cat-filter-row" id="cat-filter-adv">
               <span class="cat-filter-label">Category:</span>
-              <button class="cat-pill is-active" data-cat="OPEN" onclick="switchAvailCategory('adv', 'OPEN')">OPEN</button>
-              <button class="cat-pill" data-cat="OBC-NCL" onclick="switchAvailCategory('adv', 'OBC-NCL')">OBC-NCL</button>
+              <button class="cat-pill is-active" data-cat="OPEN"
+                onclick="switchAvailCategory('adv', 'OPEN')">OPEN</button>
+              <button class="cat-pill" data-cat="OBC-NCL"
+                onclick="switchAvailCategory('adv', 'OBC-NCL')">OBC-NCL</button>
               <button class="cat-pill" data-cat="SC" onclick="switchAvailCategory('adv', 'SC')">SC</button>
               <button class="cat-pill" data-cat="ST" onclick="switchAvailCategory('adv', 'ST')">ST</button>
               <button class="cat-pill" data-cat="EWS" onclick="switchAvailCategory('adv', 'EWS')">EWS</button>
@@ -1179,8 +1531,10 @@
           <div class="card__body">
             <div class="cat-filter-row" id="cat-filter-mains">
               <span class="cat-filter-label">Category:</span>
-              <button class="cat-pill is-active" data-cat="OPEN" onclick="switchAvailCategory('mains', 'OPEN')">OPEN</button>
-              <button class="cat-pill" data-cat="OBC-NCL" onclick="switchAvailCategory('mains', 'OBC-NCL')">OBC-NCL</button>
+              <button class="cat-pill is-active" data-cat="OPEN"
+                onclick="switchAvailCategory('mains', 'OPEN')">OPEN</button>
+              <button class="cat-pill" data-cat="OBC-NCL"
+                onclick="switchAvailCategory('mains', 'OBC-NCL')">OBC-NCL</button>
               <button class="cat-pill" data-cat="SC" onclick="switchAvailCategory('mains', 'SC')">SC</button>
               <button class="cat-pill" data-cat="ST" onclick="switchAvailCategory('mains', 'ST')">ST</button>
               <button class="cat-pill" data-cat="EWS" onclick="switchAvailCategory('mains', 'EWS')">EWS</button>
@@ -1225,6 +1579,17 @@
 
             <!-- Tab: State-wise summary -->
             <div class="tab-pane" id="tab-states">
+              <p
+                style="font-size:12px;color:var(--pine-deep);margin-bottom:14px;background:var(--pine-tint);border-left:3px solid var(--pine);border-radius:6px;padding:8px 12px;display:flex;align-items:center;gap:7px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                  stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <circle cx="12" cy="12" r="10" />
+                  <line x1="12" y1="8" x2="12" y2="12" />
+                  <line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                Each number = total <strong>&nbsp;college–branch–quota seat combinations&nbsp;</strong> available in
+                that state (JoSAA 2025 data).
+              </p>
               <div class="tile-grid" id="grid-states">
                 <!-- Populated dynamically -->
               </div>
@@ -1243,6 +1608,16 @@
                     </div>
                     <span class="tab-section-head__text" style="color: var(--pine-deep);">Quota Distribution</span>
                   </div>
+                  <p
+                    style="font-size:12px;color:var(--pine-deep);margin:8px 0 12px;background:var(--pine-tint);border-left:3px solid var(--pine);border-radius:6px;padding:7px 11px;display:flex;align-items:center;gap:7px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="8" x2="12" y2="12" />
+                      <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    No. of seat entries under each admission quota (AI = All India, HS = Home State, OS = Other State…)
+                  </p>
                   <div class="tile-grid" id="grid-quotas"
                     style="grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));">
                     <!-- Populated dynamically -->
@@ -1258,6 +1633,16 @@
                     </div>
                     <span class="tab-section-head__text" style="color: #8a6210;">Seat Categories</span>
                   </div>
+                  <p
+                    style="font-size:12px;color:#8a6210;margin:8px 0 12px;background:var(--target-bg);border-left:3px solid var(--target);border-radius:6px;padding:7px 11px;display:flex;align-items:center;gap:7px;">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                      stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                      <circle cx="12" cy="12" r="10" />
+                      <line x1="12" y1="8" x2="12" y2="12" />
+                      <line x1="12" y1="16" x2="12.01" y2="16" />
+                    </svg>
+                    No. of seat entries per reservation category (OPEN, OBC-NCL, SC, ST, EWS…)
+                  </p>
                   <div class="tile-grid" id="grid-categories"
                     style="grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));">
                     <!-- Populated dynamically -->
@@ -1268,7 +1653,54 @@
 
             <!-- Tab: Highest and Lowest cutoffs -->
             <div class="tab-pane" id="tab-extremes">
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px;">
+
+              <!-- ── Mobile toggle (hidden on desktop via CSS) ─────────────── -->
+              <div class="cutoff-toggle-row" id="cutoff-toggle-row">
+                <button class="cutoff-toggle-btn is-active" id="btn-lowest" onclick="switchCutoffPanel('lowest')">
+                  ⬇ Lowest Cutoffs
+                </button>
+                <button class="cutoff-toggle-btn" id="btn-highest" onclick="switchCutoffPanel('highest')">
+                  ⬆ Highest Cutoffs
+                </button>
+              </div>
+
+              <!-- ── Mobile panels (hidden on desktop via CSS) ─────────────── -->
+              <div class="cutoff-mobile-panels">
+                <!-- Panel A: Most Competitive (Lowest Ranks) -->
+                <div class="cutoff-mobile-panel is-active" id="mobile-panel-lowest">
+                  <div class="tab-section-head tab-section-head--reach">
+                    <div class="tab-section-head__icon tab-section-head__icon--reach">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                      </svg>
+                    </div>
+                    <span class="tab-section-head__text">Most Competitive (Lowest Ranks)</span>
+                  </div>
+                  <div class="tile-grid tile-grid--cutoffs" id="mobile-grid-highest">
+                    <!-- Populated dynamically (mirrors grid-highest) -->
+                  </div>
+                </div>
+
+                <!-- Panel B: Least Competitive (Highest Ranks) -->
+                <div class="cutoff-mobile-panel" id="mobile-panel-highest">
+                  <div class="tab-section-head tab-section-head--safe">
+                    <div class="tab-section-head__icon tab-section-head__icon--safe">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      </svg>
+                    </div>
+                    <span class="tab-section-head__text">Least Competitive (Highest Ranks)</span>
+                  </div>
+                  <div class="tile-grid tile-grid--cutoffs" id="mobile-grid-lowest">
+                    <!-- Populated dynamically (mirrors grid-lowest) -->
+                  </div>
+                </div>
+              </div>
+
+              <!-- ── Desktop 2-column grid (hidden on mobile via CSS) ──────── -->
+              <div class="cutoff-desktop-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px;">
                 <div>
                   <div class="tab-section-head tab-section-head--reach">
                     <div class="tab-section-head__icon tab-section-head__icon--reach">
@@ -1298,6 +1730,7 @@
                   </div>
                 </div>
               </div>
+
             </div>
 
           </div>
@@ -1371,7 +1804,7 @@
           data: {
             labels: roundsLabels,
             datasets: [{
-              label: 'Average Closing Rank',
+              label: 'Closing Rank',
               data: roundsValues,
               borderColor: '#175c4c',
               backgroundColor: 'rgba(23, 92, 76, 0.08)',
@@ -1429,14 +1862,14 @@
           },
           options: {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             plugins: {
               legend: {
                 position: 'bottom',
                 labels: {
                   font: { family: 'Inter', size: 11 },
                   color: '#241e12',
-                  padding: 15
+                  padding: 8
                 }
               }
             },
@@ -1448,16 +1881,198 @@
         window._compInstsData = data.inst_competitiveness; // dict keyed by itype
         window._currentCompInstTab = 'IIT';
 
+        /**
+         * External HTML tooltip handler for Chart.js.
+         * Renders as a DOM element (not on canvas) so it never gets clipped.
+         */
+        (function createTooltipEl() {
+          if (!document.getElementById('chart-tooltip')) {
+            const el = document.createElement('div');
+            el.id = 'chart-tooltip';
+            el.className = 'chart-ext-tooltip';
+            el.style.opacity = '0';
+            document.body.appendChild(el);
+          }
+        })();
+
+        function externalTooltipHandler(context) {
+          const tooltip = context.tooltip;
+          const el = document.getElementById('chart-tooltip');
+          if (!el) return;
+          // Hide tooltip when not active
+          if (tooltip.opacity === 0) {
+            el.style.opacity = '0';
+            el.style.display = 'none';
+            return;
+          }
+          // Build content
+          let html = '';
+          if (tooltip.title && tooltip.title.length) {
+            html += '<div class="tooltip-title">' + tooltip.title.join('<br>') + '</div>';
+          }
+          if (tooltip.body && tooltip.body.length) {
+            const bodyLines = tooltip.body.map(b => b.lines);
+            html += '<div class="tooltip-body">';
+            bodyLines.forEach(lines => { html += lines.join('<br>'); });
+            html += '</div>';
+          }
+          el.innerHTML = html;
+          el.style.display = 'block';
+          // Position: center tooltip above the hovered data point
+          const canvasRect = context.chart.canvas.getBoundingClientRect();
+          const elW = el.offsetWidth || 300;
+          const elH = el.offsetHeight || 60;
+          let left = canvasRect.left + tooltip.caretX - (elW / 2);
+          let top = canvasRect.top + tooltip.caretY - elH - 12;
+          // Keep within viewport
+          if (left + elW > window.innerWidth - 10) left = window.innerWidth - elW - 10;
+          if (left < 10) left = 10;
+          if (top < 10) top = canvasRect.top + tooltip.caretY + 12; // flip below if no room above
+          el.style.opacity = '1';
+          el.style.left = left + 'px';
+          el.style.top = top + 'px';
+        }
+
+        /**
+         * Abbreviate common branch / program names to compact labels.
+         * e.g. "Computer Science and Engineering" → "CSE"
+         * Full name is shown on hover via Chart.js tooltip.
+         */
+        const BRANCH_ABBREV = [
+          [/Computer Science and Engineering/i, 'CSE'],
+          [/Computer Science \& Engineering/i, 'CSE'],
+          [/Computer Science Engineering/i, 'CSE'],
+          [/Computer Science/i, 'CS'],
+          [/Computer Engineering/i, 'CE'],
+          [/Artificial Intelligence and Data Analytics/i, 'AI & DA'],
+          [/Artificial Intelligence and Machine Learning/i, 'AI & ML'],
+          [/Artificial Intelligence/i, 'AI'],
+          [/Data Science and Artificial Intelligence/i, 'DS & AI'],
+          [/DS and AI/i, 'DS & AI'],
+          [/Mathematics and Computing/i, 'M&C'],
+          [/Mathematics \& Computing/i, 'M&C'],
+          [/Maths and Computing/i, 'M&C'],
+          [/Maths \& Computing/i, 'M&C'],
+          [/Electronics and Telecommunication Engineering/i, 'E&TC'],
+          [/Electronics \& Telecommunication Engineering/i, 'E&TC'],
+          [/Electronics and Communication Engineering/i, 'ECE'],
+          [/Electronics \& Communication Engineering/i, 'ECE'],
+          [/Electronics and Instrumentation Engineering/i, 'E&I'],
+          [/Electrical and Electronics Engineering/i, 'EEE'],
+          [/Electrical Engineering/i, 'EE'],
+          [/Mechanical Engineering/i, 'ME'],
+          [/Civil Engineering/i, 'Civil Engg.'],
+          [/Chemical Engineering/i, 'Chem Engg.'],
+          [/Aerospace Engineering/i, 'Aero Engg.'],
+          [/Metallurgical and Materials Engineering/i, 'Met & Mat Engg.'],
+          [/Metallurgical Engineering/i, 'Met Engg.'],
+          [/Materials Engineering/i, 'Mat Engg.'],
+          [/Engineering Physics/i, 'Engg. Physics'],
+          [/Biotechnology/i, 'Biotech'],
+          [/Bio ?-?Technology/i, 'Biotech'],
+          [/Information Technology/i, 'IT'],
+          [/Data Science and Engineering/i, 'DS & Engg.'],
+          [/Data Science/i, 'DS'],
+          [/Mining Engineering/i, 'Mining Engg.'],
+          [/Production and Industrial Engineering/i, 'Prod & Ind Engg.'],
+          [/Industrial Engineering/i, 'Ind Engg.'],
+          [/Instrumentation and Control Engineering/i, 'I & C Engg.'],
+          [/Instrumentation Engineering/i, 'Instr Engg.'],
+          [/Environmental Engineering/i, 'Env Engg.'],
+          [/B\.?\s*Tech\s*in\s*/i, ''],
+        ];
+
+        function shortenBranchName(name) {
+          let s = name;
+          for (const [pattern, replacement] of BRANCH_ABBREV) {
+            s = s.replace(pattern, replacement);
+          }
+          return s.trim().replace(/\s{2,}/g, ' ');
+        }
+
+        /**
+         * Truncate any string to maxLen chars, appending "..." if trimmed.
+         */
+        function truncateLabel(s, maxLen) {
+          if (typeof s === 'string' && s.length > maxLen) {
+            let cut = s.lastIndexOf(' ', maxLen - 3);
+            if (cut < maxLen * 0.4) cut = maxLen - 3;
+            return s.substring(0, cut).trim() + '...';
+          }
+          return s;
+        }
+
+        /**
+         * Shorten a full institute name to a compact, fully-visible label.
+         * Covers IIT/NIT/IIIT AND common GFTI / long college names.
+         */
+        function shortenInstituteName(name, maxLen) {
+          if (maxLen === undefined) maxLen = window.innerWidth <= 768 ? 20 : 30;
+          let s = name;
+          // --- Specific full-name abbreviations FIRST (before generic rules) ---
+          const INST_SPECIFIC = [
+            [/Indian Institute of Engineering Science and Technology/gi, 'IIEST'],
+            [/Shri G\.\s*S\.\s*Institute of Technology and Science/gi, 'SGSITS'],
+            [/J\.\s*K\.\s*Institute of Applied Physics and Technology/gi, 'JK Inst.'],
+            [/J\.\s*K\.\s*Institute/gi, 'JK Inst.'],
+            [/National Institute of Foundry and Forge Technology/gi, 'NIFFT'],
+            [/Maulana Azad National Institute of Technology/gi, 'MANIT'],
+            [/Motilal Nehru National Institute of Technology/gi, 'MNNIT'],
+            [/Visvesvaraya National Institute of Technology/gi, 'VNIT'],
+            [/Sardar Vallabhbhai National Institute of Technology/gi, 'SVNIT'],
+            [/Malaviya National Institute of Technology/gi, 'MNIT'],
+            [/Jawaharlal Nehru University/gi, 'JNU'],
+            [/Jawaharlal Nehru Technological University/gi, 'JNTU'],
+            [/Jawaharlal Nehru/gi, 'JN'],
+            [/Indian Institute of Technology/gi, 'IIT'],
+            [/National Institute of Technology/gi, 'NIT'],
+            [/Indian Institute of Information Technology/gi, 'IIIT'],
+            [/International Institute of Information Technology/gi, 'IIIT'],
+          ];
+          for (const [pat, rep] of INST_SPECIFIC) {
+            s = s.replace(pat, rep);
+          }
+          // --- Generic abbreviations (only if not already shortened above) ---
+          s = s
+            .replace(/International Institute/gi, 'Intl. Inst.')
+            .replace(/Institute of Engineering and Technology/gi, 'IET')
+            .replace(/Institute of Technology/gi, 'IT')
+            .replace(/Engineering College/gi, 'EC')
+            .replace(/School of Planning and Architecture/gi, 'SPA')
+            .replace(/University Institute of/gi, 'UI of')
+            .replace(/University of/gi, 'Univ.')
+            .replace(/University/gi, 'Univ.')
+            .replace(/Government/gi, 'Govt.')
+            .replace(/Punjab\s+EC/gi, 'PEC');
+          // Strip tags
+          s = s.replace(/\s*\((?:IIT|NIT|IIIT)[A-Z0-9-]*\)\s*/gi, ' ')
+            .replace(/\s*\(GFTI\)\s*/gi, ' ')
+            .trim()
+            .replace(/\s{2,}/g, ' ');
+          // Only strip city (after comma) if the name before comma is long enough
+          // to be distinctive on its own (> 8 chars). Keeps "IIIT, Naya Raipur" etc.
+          const commaIdx = s.indexOf(',');
+          if (commaIdx !== -1 && commaIdx > 8) {
+            s = s.substring(0, commaIdx).trim();
+          }
+          return truncateLabel(s, maxLen);
+        }
+
         function renderCompInsts(itype) {
           const entries = window._compInstsData[itype] || [];
-          const compInstLabels = entries.map(i => i.institute
-            .replace('Indian Institute of Technology', 'IIT')
-            .replace('National Institute of Technology', 'NIT')
-            .replace('Indian Institute of Information Technology', 'IIIT'));
+          const maxInstLabel = window.innerWidth <= 768 ? 20 : 30;
+          const compInstLabels = entries.map(i => shortenInstituteName(i.institute, maxInstLabel));
+          // Keep full names for tooltip hover display
+          const compInstFullNames = entries.map(i => i.institute);
           const compInstValues = entries.map(i => i.avg_closing_rank);
           const instColors = { 'IIT': '#175c4c', 'NIT': '#2e7d5b', 'IIIT': '#a87714', 'GFTI': '#bf5b3c' };
 
           if (charts.compInsts) charts.compInsts.destroy();
+          // Make chart height responsive — taller per entry on mobile for readability
+          const isMobile = window.innerWidth <= 768;
+          const pxPerEntry = isMobile ? 38 : 27;
+          const instContainer = document.getElementById('chart-inst-container');
+          if (instContainer) instContainer.style.height = Math.max(isMobile ? 320 : 270, entries.length * pxPerEntry) + 'px';
 
           charts.compInsts = new Chart(document.getElementById("chart-competitive-insts"), {
             type: 'bar',
@@ -1473,14 +2088,20 @@
               indexAxis: 'y',
               responsive: true,
               maintainAspectRatio: false,
+              layout: { padding: { left: 0 } },
               plugins: {
                 legend: { display: false },
                 tooltip: {
+                  enabled: false,
+                  external: externalTooltipHandler,
                   callbacks: {
+                    title: function (items) {
+                      return compInstFullNames[items[0].dataIndex];
+                    },
                     label: function (context) {
                       const idx = context.dataIndex;
                       const prog = entries[idx];
-                      return ` Avg. Closing: ${Math.round(context.raw).toLocaleString()} (${prog.total_programs} programs)`;
+                      return ` Closing Rank: ${Math.round(context.raw).toLocaleString()} (${prog.total_programs} programs)`;
                     }
                   }
                 }
@@ -1492,7 +2113,11 @@
                 },
                 y: {
                   grid: { display: false },
-                  ticks: { font: { family: 'Inter', size: 10 }, color: '#241e12' }
+                  ticks: {
+                    font: { family: 'Inter', size: window.innerWidth <= 768 ? 9 : 11 },
+                    color: '#241e12',
+                    autoSkip: false
+                  }
                 }
               }
             }
@@ -1515,12 +2140,40 @@
 
         function renderCompProgs(itype) {
           const entries = window._compProgsData[itype] || [];
-          const labels = entries.map(e => e.program.length > 40 ? e.program.substring(0, 38) + '…' : e.program);
+          // Store full program names for tooltip hover display
+          const fullNames = entries.map(e => {
+            return e.program
+              .replace(/\s*\((?:IIT|NIT|IIIT|GFTI)\)\s*/g, ' ').trim()
+              .replace(/\s{2,}/g, ' ');
+          });
+          // Create compact abbreviated labels for chart axis
+          // e.g. "Computer Science and Engineering @ IIT Bombay" -> "CSE @ IIT Bombay"
+          // Strip city names after comma for compactness (full name shown in tooltip)
+          const maxProgLabel = window.innerWidth <= 768 ? 22 : 36;
+          const labels = fullNames.map(prog => {
+            const atIdx = prog.indexOf(' @ ');
+            if (atIdx !== -1) {
+              const branch = shortenBranchName(prog.substring(0, atIdx));
+              let instPart = prog.substring(atIdx + 3);
+              // Strip city name after first comma for compactness
+              const commaIdx = instPart.indexOf(',');
+              if (commaIdx !== -1) instPart = instPart.substring(0, commaIdx).trim();
+              const inst = shortenInstituteName(instPart);
+              const combined = branch + ' @ ' + inst;
+              return truncateLabel(combined, maxProgLabel);
+            }
+            return truncateLabel(shortenBranchName(prog), maxProgLabel);
+          });
           const values = entries.map(e => e.avg_closing);
           const counts = entries.map(e => e.count);
           const progColors = { 'IIT': '#175c4c', 'NIT': '#2e7d5b', 'IIIT': '#a87714', 'GFTI': '#bf5b3c' };
 
           if (charts.compProgs) charts.compProgs.destroy();
+          // Make chart height responsive — taller per entry on mobile for readability
+          const isMobileProg = window.innerWidth <= 768;
+          const pxPerProg = isMobileProg ? 36 : 27;
+          const progContainer = document.getElementById('chart-prog-container');
+          if (progContainer) progContainer.style.height = Math.max(isMobileProg ? 340 : 270, entries.length * pxPerProg) + 'px';
 
           charts.compProgs = new Chart(document.getElementById("chart-competitive-progs"), {
             type: 'bar',
@@ -1536,13 +2189,19 @@
               indexAxis: 'y',
               responsive: true,
               maintainAspectRatio: false,
+              layout: { padding: { left: 0 } },
               plugins: {
                 legend: { display: false },
                 tooltip: {
+                  enabled: false,
+                  external: externalTooltipHandler,
                   callbacks: {
+                    title: function (items) {
+                      return fullNames[items[0].dataIndex];
+                    },
                     label: function (context) {
                       const idx = context.dataIndex;
-                      return ` Avg. Closing: ${Math.round(context.raw).toLocaleString()} (${counts[idx]} rounds)`;
+                      return ` Closing Rank: ${Math.round(context.raw).toLocaleString()} (${counts[idx]} rounds)`;
                     }
                   }
                 }
@@ -1557,14 +2216,18 @@
                   },
                   title: {
                     display: true,
-                    text: 'Avg. Closing Rank',
+                    text: 'Closing Rank',
                     font: { family: 'Inter', size: 11 },
                     color: '#93897a'
                   }
                 },
                 y: {
                   grid: { display: false },
-                  ticks: { font: { family: 'Inter', size: 10 }, color: '#241e12' }
+                  ticks: {
+                    font: { family: 'Inter', size: window.innerWidth <= 768 ? 9 : 11 },
+                    color: '#241e12',
+                    autoSkip: false
+                  }
                 }
               }
             }
@@ -1594,10 +2257,10 @@
             datasets: [{
               data: volValues,
               backgroundColor: [
-                'rgba(46, 125, 91, 0.75)',  // green / highly stable
-                'rgba(168, 119, 20, 0.75)', // ochre / moderately stable
-                'rgba(191, 91, 60, 0.75)',   // terracotta / volatile
-                'rgba(147, 137, 122, 0.75)'  // grey / details
+                'rgba(20, 90, 60, 0.9)',    // deep green
+                'rgba(140, 95, 10, 0.9)',   // deep ochre
+                'rgba(160, 60, 35, 0.9)',    // deep terracotta
+                'rgba(55, 50, 42, 0.95)'     // dark grey for stable drift
               ],
               borderWidth: 1.5,
               borderColor: '#fffdf8'
@@ -1605,17 +2268,17 @@
           },
           options: {
             responsive: true,
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             plugins: {
               legend: {
-                position: 'bottom',
-                labels: { font: { family: 'Inter', size: 11 }, color: '#241e12' }
+                display: false
               }
             },
             scales: {
               r: {
                 ticks: { display: false },
-                grid: { color: '#efe8d8' }
+                grid: { color: '#d2c8af' },
+                angleLines: { color: '#d2c8af' }
               }
             }
           }
@@ -1646,7 +2309,7 @@
                 callbacks: {
                   label: function (context) {
                     const idx = context.dataIndex;
-                    return ` Multiplier: ${context.raw}x (Avg +${Math.round(femaleDiffs[idx]).toLocaleString()} Ranks)`;
+                    return ` Multiplier: ${context.raw}x (+${Math.round(femaleDiffs[idx]).toLocaleString()} Ranks)`;
                   }
                 }
               }
@@ -1703,7 +2366,7 @@
                     const idx = context.dataIndex;
                     const item = data.cse_premium[idx];
                     const count = context.datasetIndex === 0 ? item.cse_programs : item.non_cse_programs;
-                    return ` ${context.dataset.label}: Avg. Closing ${Math.round(context.raw).toLocaleString()} (${count} programs)`;
+                    return ` ${context.dataset.label}: Closing Rank ${Math.round(context.raw).toLocaleString()} (${count} programs)`;
                   }
                 }
               }
@@ -1718,7 +2381,7 @@
                 },
                 title: {
                   display: true,
-                  text: 'Avg. Closing Rank (lower = harder)',
+                  text: 'Closing Rank (lower = harder)',
                   font: { family: 'Inter', size: 11 },
                   color: '#93897a'
                 }
@@ -1769,7 +2432,7 @@
               tooltip: {
                 callbacks: {
                   label: function (context) {
-                    return ` ${context.dataset.label}: Avg. Closing ${Math.round(context.raw).toLocaleString()}`;
+                    return ` ${context.dataset.label}: Closing Rank ${Math.round(context.raw).toLocaleString()}`;
                   }
                 }
               }
@@ -1795,7 +2458,7 @@
         // Store the full per-category data from the API response.
         window._availByCategory = {
           adv: data.rank_availability.advanced_by_category || { OPEN: data.rank_availability.advanced },
-          mains: data.rank_availability.mains_by_category  || { OPEN: data.rank_availability.mains }
+          mains: data.rank_availability.mains_by_category || { OPEN: data.rank_availability.mains }
         };
         window._activeAvailCat = { adv: 'OPEN', mains: 'OPEN' };
 
@@ -1835,8 +2498,8 @@
                     tension: 0.2,
                     fill: true,
                     pointBackgroundColor: '#175c4c',
-                    pointRadius: 4,
-                    pointHoverRadius: 6
+                    pointRadius: 2.5,
+                    pointHoverRadius: 4
                   },
                   {
                     label: 'Eligible IITs',
@@ -1847,8 +2510,8 @@
                     tension: 0.2,
                     fill: true,
                     pointBackgroundColor: '#bf5b3c',
-                    pointRadius: 4,
-                    pointHoverRadius: 6
+                    pointRadius: 2.5,
+                    pointHoverRadius: 4
                   }
                 ]
               },
@@ -1879,26 +2542,31 @@
                     max: yMax,
                     suggestedMax: yMax,
                     grid: { color: '#efe8d8' },
-                    ticks: { font: { family: 'Inter' }, color: '#5f5747' }
+                    ticks: { font: { family: 'Inter' }, color: '#5f5747' },
+                    title: {
+                      display: true,
+                      text: 'Number of Options',
+                      font: { family: 'Inter', size: 11 },
+                      color: '#93897a'
+                    }
                   },
                   x: {
-                    type: 'logarithmic',
+                    type: 'linear',
+                    min: 0,
+                    max: 20000,
                     grid: { color: '#efe8d8' },
                     ticks: {
                       font: { family: 'Inter', size: 10 },
                       color: '#5f5747',
+                      stepSize: 5000,
                       callback: function (value) {
-                        const nice = [1, 5, 10, 50, 100, 500, 1000, 2000, 5000, 10000, 20000, 50000];
-                        if (nice.includes(value)) {
-                          return value >= 1000 ? (value / 1000) + 'K' : value;
-                        }
-                        return '';
+                        return value >= 1000 ? (value / 1000) + 'k' : value;
                       },
-                      maxTicksLimit: 12
+                      maxTicksLimit: 10
                     },
                     title: {
                       display: true,
-                      text: 'Your JEE Advanced Rank (log scale)',
+                      text: 'Closing JEE Advanced Rank',
                       font: { family: 'Inter', size: 11 },
                       color: '#93897a'
                     }
@@ -1936,8 +2604,8 @@
                     tension: 0.2,
                     fill: true,
                     pointBackgroundColor: '#175c4c',
-                    pointRadius: 4,
-                    pointHoverRadius: 6
+                    pointRadius: 2.5,
+                    pointHoverRadius: 4
                   },
                   {
                     label: 'Eligible Colleges',
@@ -1948,8 +2616,8 @@
                     tension: 0.2,
                     fill: true,
                     pointBackgroundColor: '#a87714',
-                    pointRadius: 4,
-                    pointHoverRadius: 6
+                    pointRadius: 2.5,
+                    pointHoverRadius: 4
                   }
                 ]
               },
@@ -1980,28 +2648,30 @@
                     max: yMax,
                     suggestedMax: yMax,
                     grid: { color: '#efe8d8' },
-                    ticks: { font: { family: 'Inter' }, color: '#5f5747' }
+                    ticks: { font: { family: 'Inter' }, color: '#5f5747' },
+                    title: {
+                      display: true,
+                      text: 'Number of Options',
+                      font: { family: 'Inter', size: 11 },
+                      color: '#93897a'
+                    }
                   },
                   x: {
-                    type: 'logarithmic',
+                    type: 'linear',
+                    min: 0,
+                    max: 300000,
                     grid: { color: '#efe8d8' },
                     ticks: {
                       font: { family: 'Inter', size: 10 },
                       color: '#5f5747',
+                      stepSize: 10000,
                       callback: function (value) {
-                        const nice = [100, 500, 1000, 5000, 10000, 50000, 100000, 200000, 500000];
-                        if (nice.includes(value)) {
-                          return value >= 100000 ? (value / 100000).toFixed(1) + 'L'
-                               : value >= 1000   ? (value / 1000) + 'K'
-                               : value;
-                        }
-                        return '';
-                      },
-                      maxTicksLimit: 12
+                        return value >= 1000 ? (value / 1000) + 'k' : value;
+                      }
                     },
                     title: {
                       display: true,
-                      text: 'Your JEE Mains Rank (log scale)',
+                      text: 'Closing JEE Mains Rank',
                       font: { family: 'Inter', size: 11 },
                       color: '#93897a'
                     }
@@ -2045,18 +2715,23 @@
         // ═══ Populate: Popular Branches (mini stat card grid) ═══
         const gridBranches = document.getElementById("grid-branches");
         gridBranches.innerHTML = "";
-        data.popular_branches.forEach(b => {
-          const rank = Math.round(b.avg_closing_rank);
-          const mod = rank < 5000 ? 'hot' : rank < 15000 ? 'warm' : 'cool';
-          const tile = document.createElement("div");
-          tile.className = `tile tile--${mod}`;
-          tile.innerHTML = `
+        // Filter out generic entries like bare 'B.Tech' or 'B. Tech' which are
+        // degree types, not actual branch/discipline names.
+        const EXCLUDED_BRANCH_NAMES = new Set(["b.tech", "b. tech", "btech"]);
+        data.popular_branches
+          .filter(b => !EXCLUDED_BRANCH_NAMES.has(b.branch.trim().toLowerCase()))
+          .forEach(b => {
+            const rank = Math.round(b.avg_closing_rank);
+            const mod = rank < 5000 ? 'hot' : rank < 15000 ? 'warm' : 'cool';
+            const tile = document.createElement("div");
+            tile.className = `tile tile--${mod}`;
+            tile.innerHTML = `
             <div class="tile__label">${b.branch}</div>
             <div class="tile__value">${rank.toLocaleString()}</div>
-            <div class="tile__sub">${b.total_programs} programs · Avg. Rank</div>
+            <div class="tile__sub">${b.total_programs} programs · Closing Rank</div>
           `;
-          gridBranches.appendChild(tile);
-        });
+            gridBranches.appendChild(tile);
+          });
 
         // ═══ Populate: State Distribution (mini stat card grid) ═══
         const gridStates = document.getElementById("grid-states");
@@ -2068,7 +2743,6 @@
           tile.innerHTML = `
             <div class="tile__label">${state}</div>
             <div class="tile__value">${count.toLocaleString()}</div>
-            <div class="tile__sub">Program Options</div>
           `;
           gridStates.appendChild(tile);
         });
@@ -2082,7 +2756,6 @@
           tile.innerHTML = `
             <div class="tile__label">${quota}</div>
             <div class="tile__value">${count.toLocaleString()}</div>
-            <div class="tile__sub">Program Options</div>
           `;
           gridQuotas.appendChild(tile);
         });
@@ -2095,44 +2768,46 @@
           tile.innerHTML = `
             <div class="tile__label">${cat}</div>
             <div class="tile__value">${count.toLocaleString()}</div>
-            <div class="tile__sub">Program Options</div>
           `;
           gridCategories.appendChild(tile);
         });
 
-        // ═══ Populate: Highest & Lowest Cutoffs (mini stat card grid) ═══
-        const gridHighest = document.getElementById("grid-highest");
-        gridHighest.innerHTML = "";
-        data.highest_cutoffs.forEach(item => {
+        // ═══ Populate: Highest & Lowest Cutoffs ═══
+        // Helper to build a single cutoff tile element
+        function buildCutoffTile(item, mod) {
           const tile = document.createElement("div");
-          tile.className = "tile tile--cutoff tile--hot";
+          tile.className = `tile tile--cutoff tile--${mod}`;
           tile.innerHTML = `
             <div class="tile__label">${item.program}</div>
             <div class="tile--cutoff tile__institute">${item.institute}</div>
             <div class="tile__value">${item.closing_rank.toLocaleString()}</div>
+            <div class="tile__sub" style="text-align:center;font-size:11px;color:var(--ink-faint);margin-bottom:4px;">Closing Rank</div>
             <div class="tile--cutoff tile__meta">
               <span class="${badgeClass(item.inst_type)}">${item.inst_type}</span>
               <span class="tile__sub">${item.quota}</span>
             </div>
           `;
-          gridHighest.appendChild(tile);
+          return tile;
+        }
+
+        // Populate desktop grid-highest + mobile mirror
+        const gridHighest = document.getElementById("grid-highest");
+        const mobileGridHighest = document.getElementById("mobile-grid-highest");
+        gridHighest.innerHTML = "";
+        mobileGridHighest.innerHTML = "";
+        data.highest_cutoffs.forEach(item => {
+          gridHighest.appendChild(buildCutoffTile(item, 'hot'));
+          mobileGridHighest.appendChild(buildCutoffTile(item, 'hot'));
         });
 
+        // Populate desktop grid-lowest + mobile mirror
         const gridLowest = document.getElementById("grid-lowest");
+        const mobileGridLowest = document.getElementById("mobile-grid-lowest");
         gridLowest.innerHTML = "";
+        mobileGridLowest.innerHTML = "";
         data.lowest_cutoffs.forEach(item => {
-          const tile = document.createElement("div");
-          tile.className = "tile tile--cutoff tile--cool";
-          tile.innerHTML = `
-            <div class="tile__label">${item.program}</div>
-            <div class="tile--cutoff tile__institute">${item.institute}</div>
-            <div class="tile__value">${item.closing_rank.toLocaleString()}</div>
-            <div class="tile--cutoff tile__meta">
-              <span class="${badgeClass(item.inst_type)}">${item.inst_type}</span>
-              <span class="tile__sub">${item.quota}</span>
-            </div>
-          `;
-          gridLowest.appendChild(tile);
+          gridLowest.appendChild(buildCutoffTile(item, 'cool'));
+          mobileGridLowest.appendChild(buildCutoffTile(item, 'cool'));
         });
 
         // Show dashboard, hide loading
@@ -2148,6 +2823,20 @@
         `;
       }
     });
+
+    /**
+     * Mobile-only: switch between "Lowest Cutoffs" and "Highest Cutoffs" panels.
+     * Called by the toggle buttons inside #cutoff-toggle-row.
+     */
+    window.switchCutoffPanel = function (panel) {
+      // Update button active state
+      document.getElementById('btn-lowest').classList.toggle('is-active', panel === 'lowest');
+      document.getElementById('btn-highest').classList.toggle('is-active', panel === 'highest');
+
+      // Swap panel visibility with CSS transition
+      document.getElementById('mobile-panel-lowest').classList.toggle('is-active', panel === 'lowest');
+      document.getElementById('mobile-panel-highest').classList.toggle('is-active', panel === 'highest');
+    };
   </script>
 </body>
 
