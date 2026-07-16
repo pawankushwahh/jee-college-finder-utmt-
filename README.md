@@ -290,7 +290,7 @@ jee-college-finder-utmt/
 ├── LICENSE                       # Project license
 ├── README.md                     # Project documentation
 ├── app/
-│   └── disha/
+│   └── jee_college_finder_utmt/
 │       ├── __init__.py
 │       ├── config.py             # Environment variables and configuration
 │       ├── data_loader.py        # Core data loading and processing logic
@@ -307,7 +307,7 @@ jee-college-finder-utmt/
 │   ├── jee_cutoff_last_round.csv # Raw JEE cutoff dataset
 │   └── josaa_merged_2025.csv     # Cleaned dataset (source for app data)
 ├── templates/
-│   └── disha_templates/          # Web UI codebase
+│   └── jee_college_finder_utmt_templates/          # Web UI codebase
 │       ├── index.html            # Main application layout and script mounts
 │       ├── stats.html            # Statistics dashboard layout
 │       ├── manifest.json         # PWA manifest file
