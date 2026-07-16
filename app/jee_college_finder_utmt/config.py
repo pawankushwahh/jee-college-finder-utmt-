@@ -26,16 +26,16 @@ class Settings(BaseSettings):
     cors_origins: str = "*"
 
     # Path to the basic cutoff workbook (legacy, kept for reference).
-    data_path: str = "app/disha/data/JEE_2025_Cutoffs.xlsx"
+    data_path: str = "app/jee_college_finder_utmt/data/JEE_2025_Cutoffs.xlsx"
 
     # Path to the round-wise merged CSV for Basic (2025) mode.
     # Has columns Opening_R1..Closing_R6; Opening/Closing Rank are
     # computed at runtime as MIN/MAX across rounds.
-    basic_merged_data_path: str = "app/disha/data/josaa_merged_2025.csv"
+    basic_merged_data_path: str = "app/jee_college_finder_utmt/data/josaa_merged_2025.csv"
 
     # Path to the extended merged CSV (all categories, 2018–2025).
     # REMOVED — fully dependent on the multi-year dataset which is no longer used.
-    # extended_data_path: str = "app/disha/data/merged_jee_cutoff_2018_2025.csv"
+    # extended_data_path: str = "app/jee_college_finder_utmt/data/merged_jee_cutoff_2018_2025.csv"
 
     # Active data mode: always "basic" (2025 round-wise merged CSV).
     # Extended mode has been removed — this setting is kept for API compatibility.
@@ -65,7 +65,7 @@ class Settings(BaseSettings):
         """REMOVED — returns a non-existent path; kept only to avoid AttributeError
         in any code not yet updated to stop referencing this property.
         """
-        return Path("app/disha/data/merged_jee_cutoff_2018_2025.csv")  # no longer used
+        return Path("app/jee_college_finder_utmt/data/merged_jee_cutoff_2018_2025.csv")  # no longer used
 
 
 settings = Settings()

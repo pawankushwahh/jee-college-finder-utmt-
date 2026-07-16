@@ -7,22 +7,22 @@ through the FastAPI app.
 
 import pytest
 
-from app.disha import data_loader, recommender
-from app.disha.data_loader import (
+from app.jee_college_finder_utmt import data_loader, recommender
+from app.jee_college_finder_utmt.data_loader import (
     Program,
     female_seat_advantage_index,
     home_state_advantage_index,
     load_programs,
     compute_stable_and_volatility,
 )
-from app.disha.recommender import (
+from app.jee_college_finder_utmt.recommender import (
     _categorize,
     _passes_gender,
     _passes_quota,
     _relevant_rank,
     recommend,
 )
-from app.disha.schemas import RecommendRequest
+from app.jee_college_finder_utmt.schemas import RecommendRequest
 
 
 def make_program(**kw) -> Program:

@@ -67,7 +67,7 @@ To understand how Disha thinks, let’s follow **Ayush**, a student from **Madhy
 
 ### 2. Technical Detail & Core Logic
 
-This section outlines the exact mathematical formulas, thresholds, and variables implemented in the backend pipeline (`app/disha/recommender.py` and `app/disha/states.py`).
+This section outlines the exact mathematical formulas, thresholds, and variables implemented in the backend pipeline (`app/jee_college_finder_utmt/recommender.py` and `app/jee_college_finder_utmt/states.py`).
 
 #### A. Rank Categorization Thresholds
 For a student rank $R$, opening rank $OR$, and closing rank $CR$, the category is determined by the following constants:
@@ -278,47 +278,53 @@ Submits a student profile and returns filtered, categorized, and sorted recommen
 
 ## Project Structure
 
-```
-.
+```text
+jee-college-finder-utmt/
+├── main.py                       # FastAPI server & portal entry point
+├── requirements.txt              # Python package dependencies
+├── render.yaml                   # Render deployment configuration
+├── run.bat                       # Windows quick launch script
+├── conftest.py                   # Pytest configuration and fixtures
+├── .env.example                  # Environment variables template
+├── .gitignore                    # Git ignore file
+├── LICENSE                       # Project license
+├── README.md                     # Project documentation
 ├── app/
-│   ├── __init__.py
-│   └── disha/               # Backend recommender engine
+│   └── disha/
 │       ├── __init__.py
-│       ├── config.py        # Environment variables and configuration
-│       ├── data_loader.py   # Excel & CSV data ingestion and caching
-│       ├── recommender.py   # Core filtering, scoring, and probability math
-│       ├── schemas.py       # Pydantic request and response models
-│       ├── states.py        # Quota rules, state mappings, and career weights
-│       └── data/
-│           ├── JEE_2025_Cutoffs.xlsx
-│           └── merged_jee_cutoff_2018_2025.csv
+│       ├── config.py             # Environment variables and configuration
+│       ├── data_loader.py        # Core data loading and processing logic
+│       ├── recommender.py        # Recommendation engine algorithm
+│       ├── schemas.py            # Pydantic data models for validation
+│       ├── states.py             # State mappings for Indian states
+│       ├── stats_loader.py       # Statistics generation and data analysis
+│       └── data/                 # Data storage for backend
+│           └── josaa_merged_2025.csv # Primary college dataset
+├── Data/                         # Scripts and notebooks for data preprocessing
+│   ├── analysis.ipynb            # Jupyter notebook for exploratory data analysis
+│   ├── analyze_criteria.py       # Script for specific criteria analysis
+│   ├── clean.py                  # Data cleaning and formatting script
+│   ├── jee_cutoff_last_round.csv # Raw JEE cutoff dataset
+│   └── josaa_merged_2025.csv     # Cleaned dataset (source for app data)
 ├── templates/
-│   └── disha_templates/     # PWA Frontend (Vanilla HTML, CSS, and JS)
-│       ├── assets/
-│       │   └── favicon.svg
-│       ├── css/
-│       │   └── style.css
-│       ├── js/
-│       │   ├── api.js
-│       │   ├── app.js
-│       │   ├── config.js
-│       │   └── i18n.js
-│       ├── index.html
-│       ├── manifest.json
-│       └── sw.js
-├── tests/                   # Automated test suite
-│   ├── test_api.py
-│   ├── test_recommender.py
-│   └── test_enhancements.py
-├── .env.example
-├── .gitignore
-├── conftest.py
-├── LICENSE
-├── main.py                  # Unified FastAPI entry point
-├── README.md
-├── render.yaml
-├── requirements.txt
-└── run.bat
+│   └── disha_templates/          # Web UI codebase
+│       ├── index.html            # Main application layout and script mounts
+│       ├── stats.html            # Statistics dashboard layout
+│       ├── manifest.json         # PWA manifest file
+│       ├── sw.js                 # Service worker for offline capabilities
+│       ├── assets/               # Static assets and icons
+│       │   └── favicon.svg       # Website favicon
+│       ├── css/                  # Stylesheets
+│       │   └── style.css         # Core visual styling & responsive rules
+│       └── js/                   # Component modules
+│           ├── api.js            # API client for backend communication
+│           ├── app.js            # Main frontend application logic
+│           ├── config.js         # API URL resolver and configurations
+│           └── i18n.js           # Internationalization/localization setup
+└── tests/                        # Automated test suite
+    ├── test_api.py               # Tests for REST API endpoints
+    ├── test_enhancements.py      # Tests for specific enhanced features
+    └── test_recommender.py       # Tests for recommendation engine accuracy
 ```
 
 ---
@@ -330,8 +336,8 @@ The application is configured using environment variables (which can be placed i
 | Env Variable | Default | Description |
 |--------------|---------|-------------|
 | `CORS_ORIGINS` | `*` | Comma-separated list of origins allowed to make API requests, or `*` for all. |
-| `DATA_PATH` | `app/disha/data/JEE_2025_Cutoffs.xlsx` | Path to the JoSAA 2025 OPEN seats Excel sheet. |
-| `EXTENDED_DATA_PATH` | `app/disha/data/merged_jee_cutoff_2018_2025.csv` | Path to the multi-year, multi-category historical CSV. |
+| `DATA_PATH` | `app/jee_college_finder_utmt/data/JEE_2025_Cutoffs.xlsx` | Path to the JoSAA 2025 OPEN seats Excel sheet. |
+| `EXTENDED_DATA_PATH` | `app/jee_college_finder_utmt/data/merged_jee_cutoff_2018_2025.csv` | Path to the multi-year, multi-category historical CSV. |
 | `DATA_MODE` | `basic` | Default data mode. `basic` uses the Excel sheet; `extended` uses the historical CSV. |
 | `ALLOW_USER_DATA_TOGGLE` | `True` | If `True`, displays a toggle in the UI allowing users to switch between Basic and Extended data sources. |
 

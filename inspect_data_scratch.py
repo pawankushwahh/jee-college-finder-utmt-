@@ -1,7 +1,7 @@
 import sys
 sys.path.append("/Users/pawankushwah/Library/Python/3.9/lib/python/site-packages")
 import pandas as pd
-df = pd.read_csv("app/disha/data/josaa_merged_2025.csv")
+df = pd.read_csv("app/jee_college_finder_utmt/data/josaa_merged_2025.csv")
 print("Columns:")
 print(df.columns.tolist())
 print("\nShape:", df.shape)

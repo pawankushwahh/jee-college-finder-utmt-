@@ -1,8 +1,8 @@
 """FastAPI application entry point.
 
 Disha lives under:
-  - Backend:  app/disha/
-  - Frontend: templates/disha_templates/
+  - Backend:  app/jee_college_finder_utmt/
+  - Frontend: templates/jee_college_finder_utmt_templates/
 
 Run: uvicorn main:app --reload --port 8000
 """
@@ -20,17 +20,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.disha import states
-from app.disha.config import settings
-from app.disha.data_loader import load_programs, load_programs_basic
-from app.disha.stats_loader import compute_dataset_stats
-from app.disha.recommender import recommend
-from app.disha.schemas import MetaResponse, RecommendRequest, RecommendResponse
+from app.jee_college_finder_utmt import states
+from app.jee_college_finder_utmt.config import settings
+from app.jee_college_finder_utmt.data_loader import load_programs, load_programs_basic
+from app.jee_college_finder_utmt.stats_loader import compute_dataset_stats
+from app.jee_college_finder_utmt.recommender import recommend
+from app.jee_college_finder_utmt.schemas import MetaResponse, RecommendRequest, RecommendResponse
 
 logger = logging.getLogger(__name__)
 
 _PROJECT_ROOT = Path(__file__).resolve().parent
-_TEMPLATES_DIR = _PROJECT_ROOT / "templates" / "disha_templates"
+_TEMPLATES_DIR = _PROJECT_ROOT / "templates" / "jee_college_finder_utmt_templates"
 
 
 def _static_file_response(path: Path) -> FileResponse:
