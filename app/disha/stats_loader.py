@@ -178,6 +178,17 @@ def compute_dataset_stats() -> Dict[str, Any]:
     # Helper: extract clean branch name (e.g. strip parenthetical suffixes)
     def _extract_branch_name(program: str) -> str:
         s = str(program).strip()
+        
+        # Clean up cases where the branch name is inside parentheses after degree
+        m = re.match(r"^(?:B\.?\s*Tech\.?|B\.?\s*Sc\.?|B\.?\s*Arch\.?|B\.?\s*Des\.?)\s*\(([^)]+)\)", s, flags=re.IGNORECASE)
+        if m:
+            s = m.group(1).strip()
+        else:
+            # Strip prefixes like "B.Tech in ", "B. Tech in ", etc.
+            m = re.match(r"^(?:B\.?\s*Tech\.?|B\.?\s*Sc\.?|B\.?\s*Arch\.?|B\.?\s*Des\.?)\s+in\s+(.+)", s, flags=re.IGNORECASE)
+            if m:
+                s = m.group(1).strip()
+
         match = re.match(r"^([^(]+)", s)
         if match:
             return match.group(1).strip()
