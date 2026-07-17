@@ -11,11 +11,11 @@ Here is the step-by-step guide designed for you to pick up one task at a time, r
 ### 1. Change "Target" and "Reach" to something more appropriate (Task 6)
 **What to do:** Decide on new terminology (e.g., "Moderate", "Ambitious").
 **Files to edit:**
-- `app/disha/recommender.py`: Update the dictionary keys in `CATEGORY_ORDER`, `FIT_LABELS`, `CATEGORY_BLURBS`, and the string returns in `_categorize`.
-- `templates/disha_templates/js/app.js`: Search for `"Target"` and `"Reach"` and replace them (especially in `SECTION_ORDER`, `byCat` tracking, and UI strings).
-- `templates/disha_templates/js/i18n.js`: Update all translations.
-- `templates/disha_templates/index.html`: Update the Welcome screen legend (`.dot--target`, `.dot--reach`).
-- `templates/disha_templates/css/style.css`: Update any CSS classes (e.g., `.tone-target`, `.dot--target`) if you decide to change the CSS class names as well.
+- `app/body_quest/recommender.py`: Update the dictionary keys in `CATEGORY_ORDER`, `FIT_LABELS`, `CATEGORY_BLURBS`, and the string returns in `_categorize`.
+- `templates/body_quest_templates/js/app.js`: Search for `"Target"` and `"Reach"` and replace them (especially in `SECTION_ORDER`, `byCat` tracking, and UI strings).
+- `templates/body_quest_templates/js/i18n.js`: Update all translations.
+- `templates/body_quest_templates/index.html`: Update the Welcome screen legend (`.dot--target`, `.dot--reach`).
+- `templates/body_quest_templates/css/style.css`: Update any CSS classes (e.g., `.tone-target`, `.dot--target`) if you decide to change the CSS class names as well.
 
 ### 2. Fix logic for "Safe" (Task 5)
 *(✅ Completed - See Discussion section below)*
@@ -26,25 +26,25 @@ Here is the step-by-step guide designed for you to pick up one task at a time, r
 ### 4. Ensure "Whole Picture" sliders show dots on both sides (Task 7)
 **What to do:** The rank scale (ruler) sometimes has dots perfectly flush against the edge, making it hard to see. You need to add a mathematical buffer to the minimum and maximum scale values.
 **Files to edit:**
-- `templates/disha_templates/js/app.js`: Locate the `renderRuler()` or `drawRuler()` logic. Find where `minRank` and `maxRank` are calculated and subtract/add a padding value (e.g., `minRank * 0.8` and `maxRank * 1.2`) so the dots sit comfortably within the line.
+- `templates/body_quest_templates/js/app.js`: Locate the `renderRuler()` or `drawRuler()` logic. Find where `minRank` and `maxRank` are calculated and subtract/add a padding value (e.g., `minRank * 0.8` and `maxRank * 1.2`) so the dots sit comfortably within the line.
 
 ### 5. Move the filter below to be just above the college table (Task 8)
 **What to do:** Move the filter panel from its current layout position to sit horizontally directly above the college result cards.
 **Files to edit:**
-- `templates/disha_templates/index.html`: Cut the `<aside class="results-panel">` block and paste it inside the results container just before the `<ul class="college-list">`.
-- `templates/disha_templates/css/style.css`: Refactor the CSS grid/flexbox for `.results-layout` and `.results-panel` to ensure it looks good horizontally.
+- `templates/body_quest_templates/index.html`: Cut the `<aside class="results-panel">` block and paste it inside the results container just before the `<ul class="college-list">`.
+- `templates/body_quest_templates/css/style.css`: Refactor the CSS grid/flexbox for `.results-layout` and `.results-panel` to ensure it looks good horizontally.
 
 ### 6. Add "State" filter separately (Task 9)
 **What to do:** Add a standalone state filter for the results page so users can filter recommended colleges by their location.
 **Files to edit:**
-- `templates/disha_templates/index.html`: Add a new `<select id="filter-state">` inside the `#panel-body` filter panel.
-- `templates/disha_templates/js/app.js`: Add an event listener for this dropdown and update the `applyFilters()` logic to hide college cards that don't match the selected state.
+- `templates/body_quest_templates/index.html`: Add a new `<select id="filter-state">` inside the `#panel-body` filter panel.
+- `templates/body_quest_templates/js/app.js`: Add an event listener for this dropdown and update the `applyFilters()` logic to hide college cards that don't match the selected state.
 
 ### 7. Review the algo and logic for all decisions & Create Flowchart (Tasks 2 & 11)
 **What to do:** Sit down and map out exactly how a student's profile translates into a final list of colleges. 
 **Files to edit:**
-- `app/disha/states.py`: Review `GOAL_TAG_WEIGHTS` and how interests map to specific branches.
-- `app/disha/recommender.py`: Review `_interest_score` and `_calculate_probability`.
+- `app/body_quest/states.py`: Review `GOAL_TAG_WEIGHTS` and how interests map to specific branches.
+- `app/body_quest/recommender.py`: Review `_interest_score` and `_calculate_probability`.
 - Draw out the flowchart using a tool like Whimsical, Excalidraw, or Mermaid.md to present to your superior.
 
 ---
@@ -53,11 +53,11 @@ Here is the step-by-step guide designed for you to pick up one task at a time, r
 
 ### Task 5: Fix logic for "Safe"
 **Discussion:** The previous logic required a student's rank to be strictly better than the absolute best person who got in last year (`rank <= opening`). This was far too conservative.
-**Resolution:** We updated `app/disha/recommender.py` to use a 25% threshold on the opening-closing gap: `safe_threshold = opening + 0.25 * (closing - opening)`. This makes the "Safe" bucket much more realistic and forgiving.
+**Resolution:** We updated `app/body_quest/recommender.py` to use a 25% threshold on the opening-closing gap: `safe_threshold = opening + 0.25 * (closing - opening)`. This makes the "Safe" bucket much more realistic and forgiving.
 
 ### Task 10: Instis for "Reach" and "Safe" not showing
-**Discussion:** It was suspected that the frontend `app.js` was improperly slicing the array. However, the root cause was discovered in the backend (`app/disha/recommender.py`). The code sorted all colleges by category (Target -> Reach -> Safe) and then blindly truncated the list to 60 items (`max_results`). If a student had 100 Target matches, all Reach and Safe matches were completely discarded before reaching the frontend!
-**Resolution:** We updated `app/disha/recommender.py` to distribute the `max_results` quota proportionally: up to 25% of slots are reserved for Reach, 25% are reserved for Safe, and the rest for Target. This guarantees a balanced mix.
+**Discussion:** It was suspected that the frontend `app.js` was improperly slicing the array. However, the root cause was discovered in the backend (`app/body_quest/recommender.py`). The code sorted all colleges by category (Target -> Reach -> Safe) and then blindly truncated the list to 60 items (`max_results`). If a student had 100 Target matches, all Reach and Safe matches were completely discarded before reaching the frontend!
+**Resolution:** We updated `app/body_quest/recommender.py` to distribute the `max_results` quota proportionally: up to 25% of slots are reserved for Reach, 25% are reserved for Safe, and the rest for Target. This guarantees a balanced mix.
 
 ### Task 7 (Investigation): "Whole Picture" Ruler Logic
 We reviewed how `renderRuler()` plots the dots and answered your specific questions:

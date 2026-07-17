@@ -1,7 +1,7 @@
 import pandas as pd
 import re
 
-df = pd.read_csv("app/disha/data/josaa_merged_2025.csv")
+df = pd.read_csv("app/body_quest/data/josaa_merged_2025.csv")
 df["cr"] = pd.to_numeric(df["Closing_R6"], errors="coerce")
 crl = df[(df["Seat Type"] == "OPEN") & (df["Gender"].str.contains("Neutral", case=False, na=False))]
 

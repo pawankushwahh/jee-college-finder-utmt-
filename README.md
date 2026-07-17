@@ -67,7 +67,7 @@ To understand how Disha thinks, let’s follow **Ayush**, a student from **Madhy
 
 ### 2. Technical Detail & Core Logic
 
-This section outlines the exact mathematical formulas, thresholds, and variables implemented in the backend pipeline (`app/jee_college_finder_utmt/recommender.py` and `app/jee_college_finder_utmt/states.py`).
+This section outlines the exact mathematical formulas, thresholds, and variables implemented in the backend pipeline (`app/body_quest/recommender.py` and `app/body_quest/states.py`).
 
 #### A. Rank Categorization Thresholds
 For a student rank $R$, opening rank $OR$, and closing rank $CR$, the category is determined by the following constants:
@@ -290,7 +290,7 @@ jee-college-finder-utmt/
 ├── LICENSE                       # Project license
 ├── README.md                     # Project documentation
 ├── app/
-│   └── jee_college_finder_utmt/
+│   └── disha/
 │       ├── __init__.py
 │       ├── config.py             # Environment variables and configuration
 │       ├── data_loader.py        # Core data loading and processing logic
@@ -307,7 +307,7 @@ jee-college-finder-utmt/
 │   ├── jee_cutoff_last_round.csv # Raw JEE cutoff dataset
 │   └── josaa_merged_2025.csv     # Cleaned dataset (source for app data)
 ├── templates/
-│   └── jee_college_finder_utmt_templates/          # Web UI codebase
+│   └── body_quest_templates/          # Web UI codebase
 │       ├── index.html            # Main application layout and script mounts
 │       ├── stats.html            # Statistics dashboard layout
 │       ├── manifest.json         # PWA manifest file
@@ -336,8 +336,8 @@ The application is configured using environment variables (which can be placed i
 | Env Variable | Default | Description |
 |--------------|---------|-------------|
 | `CORS_ORIGINS` | `*` | Comma-separated list of origins allowed to make API requests, or `*` for all. |
-| `DATA_PATH` | `app/jee_college_finder_utmt/data/JEE_2025_Cutoffs.xlsx` | Path to the JoSAA 2025 OPEN seats Excel sheet. |
-| `EXTENDED_DATA_PATH` | `app/jee_college_finder_utmt/data/merged_jee_cutoff_2018_2025.csv` | Path to the multi-year, multi-category historical CSV. |
+| `DATA_PATH` | `app/body_quest/data/JEE_2025_Cutoffs.xlsx` | Path to the JoSAA 2025 OPEN seats Excel sheet. |
+| `EXTENDED_DATA_PATH` | `app/body_quest/data/merged_jee_cutoff_2018_2025.csv` | Path to the multi-year, multi-category historical CSV. |
 | `DATA_MODE` | `basic` | Default data mode. `basic` uses the Excel sheet; `extended` uses the historical CSV. |
 | `ALLOW_USER_DATA_TOGGLE` | `True` | If `True`, displays a toggle in the UI allowing users to switch between Basic and Extended data sources. |
 

@@ -4,12 +4,12 @@ This includes fee waivers, region classification, metro status, and the ratio-bl
 """
 
 import pytest
-from app.jee_college_finder_utmt.recommender import (
+from app.body_quest.recommender import (
     _get_region,
     _is_metro,
     _interest_score,
 )
-from app.jee_college_finder_utmt.data_loader import Program
+from app.body_quest.data_loader import Program
 
 
 def make_test_program(**kw) -> Program:
