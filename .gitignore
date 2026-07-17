@@ -20,3 +20,7 @@ dist/
 .idea/
 .vscode/
 .env
+
+# Local tests & config (ignored in production/Github)
+conftest.py
+tests/
