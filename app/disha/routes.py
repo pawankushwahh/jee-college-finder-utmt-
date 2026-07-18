@@ -1,7 +1,7 @@
 """
 Disha API routes — JEE College Recommendation engine.
 
-All API endpoints are defined on an APIRouter so the client's UTMT portal
+All API endpoints are defined on an APIRouter so Sir's UTMT portal
 can plug them in with:
 
     from app.disha.routes import router as disha_router
@@ -13,8 +13,10 @@ For standalone development, main.py includes this router at the root.
 from __future__ import annotations
 
 import logging
+from pathlib import Path
 
 from fastapi import APIRouter
+from fastapi.responses import FileResponse
 
 from app.disha import states
 from app.disha.config import settings
@@ -25,7 +27,20 @@ from app.disha.schemas import MetaResponse, RecommendRequest, RecommendResponse
 
 logger = logging.getLogger(__name__)
 
+_TEMPLATES_DIR = Path(__file__).resolve().parent.parent.parent / "templates" / "disha_templates"
+
 router = APIRouter()
+
+
+# ── Page routes (extension-less clean URLs) ──────────────────────────────
+# StaticFiles(html=True) auto-resolves index.html for directory paths but
+# does NOT resolve other pages by clean URL.  We add explicit routes here
+# so they work under Sir's prefix (e.g. /learning_games/stats).
+
+@router.get("/stats", include_in_schema=False)
+def stats_page() -> FileResponse:
+    """Serve the Statistical Insights page at the clean URL /stats."""
+    return FileResponse(str(_TEMPLATES_DIR / "stats.html"))
 
 
 @router.get("/api/health", tags=["meta"])

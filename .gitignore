@@ -24,3 +24,5 @@ dist/
 # Local tests & config (ignored in production/Github)
 conftest.py
 tests/
+mock_portal.py
+DISHA_INTEGRATION_QA.md

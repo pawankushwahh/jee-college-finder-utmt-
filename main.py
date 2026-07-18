@@ -5,7 +5,7 @@ Disha lives under:
   - Frontend: templates/disha_templates/
 
 UTMT Integration:
-  The client's main.py plugs Disha in with:
+  Sir's main.py plugs Disha in with:
       from app.disha.routes import router as disha_router
       app.include_router(disha_router, prefix="/learning_games", tags=["learning_games"])
       app.mount("/learning_games", StaticFiles(..., html=True), name="disha")
@@ -79,7 +79,7 @@ app.add_middleware(
 # ---------------------------------------------------------------------------
 # API routes — imported from app/disha/routes.py
 # In standalone mode these live at the root (no prefix).
-# On UTMT portal the client adds prefix="/learning_games".
+# On UTMT portal Sir adds prefix="/learning_games".
 # ---------------------------------------------------------------------------
 app.include_router(disha_router)
 

@@ -4,33 +4,26 @@ Static **HTML + CSS + vanilla JavaScript** portal for the JEE College Recommende
 Newton School–inspired layout with a centered predictor form, light theme, and
 marketing sections (testimonials, features, FAQ). No build step required.
 
-The frontend is fully decoupled from the backend and talks to it exclusively over
-the JSON API in the sibling [`backend/`](../backend) project.
+The frontend is served directly as static files by the FastAPI backend, but it is fully decoupled structurally, communicating via API.
 
 ## Configuration
 
-Set the backend API URL in `js/config.js`:
+The backend API URL is configured in `js/config.js`. It dynamically auto-detects the mounting prefix (e.g. `/learning_games`) based on the URL from which the script is loaded:
 
 ```js
-window.APP_CONFIG = {
-  API_BASE_URL: "http://127.0.0.1:8000",
-};
+// Standalone: prefix is "" (relative to root)
+// Sub-app: prefix is "/learning_games" (relative to mount path)
+// Local filesystem: falls back to "http://127.0.0.1:8000"
 ```
 
-For production, point `API_BASE_URL` at your deployed API origin and ensure the
-backend's `CORS_ORIGINS` includes your frontend URL.
+No manual editing of `API_BASE_URL` is required for different deployment environments.
 
 ## Running locally
 
-1. Start the backend (see [`backend/README.md`](../backend/README.md)).
-2. Serve this folder with any static file server:
-
+Refer to the main `README.md` in the root folder to run the unified FastAPI application using:
 ```bash
-cd frontend
-python3 -m http.server 5173
+uvicorn main:app --reload --port 8000
 ```
-
-Then open <http://localhost:5173>.
 
 ## Deployment
 

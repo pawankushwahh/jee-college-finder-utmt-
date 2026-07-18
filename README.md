@@ -386,6 +386,7 @@ jee-college-finder-utmt/
 │       ├── config.py             # Configuration for backend variables
 │       ├── data_loader.py        # Core data loading and processing logic
 │       ├── recommender.py        # Recommendation engine algorithm
+│       ├── routes.py             # APIRouter for sub-app integration
 │       ├── schemas.py            # Pydantic data models for validation
 │       ├── states.py             # State mappings and career weights
 │       ├── stats_loader.py       # Statistics generation and data analysis
@@ -416,6 +417,44 @@ jee-college-finder-utmt/
     ├── test_api.py               # Tests for REST API endpoints
     ├── test_enhancements.py      # Tests for specific enhanced features
     └── test_recommender.py       # Tests for recommendation engine accuracy
+```
+
+---
+
+## Portal Integration
+
+To deploy **Disha** on the master UTMT portal, integrate it as a FastAPI sub-app matching the existing format:
+
+### 1. Backend Integration (Router)
+Include the disha router from `app/disha/routes` using the desired URL prefix:
+```python
+from app.disha.routes import router as disha_router
+
+# Include API routes & clean-URL page routes
+app.include_router(disha_router, prefix="/learning_games", tags=["learning_games"])
+```
+
+### 2. Frontend Integration (Static Files Mount)
+Mount the static templates directory under the same URL prefix:
+```python
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
+
+DISHA_TEMPLATES_DIR = Path(__file__).resolve().parent / "templates" / "disha_templates"
+app.mount(
+    "/learning_games",
+    StaticFiles(directory=str(DISHA_TEMPLATES_DIR), html=True),
+    name="disha",
+)
+```
+
+### 3. Merging Dependencies
+Ensure the following packages are merged into the main portal's `requirements.txt`:
+```text
+pandas>=2.3.1
+openpyxl==3.1.5
+aiofiles==23.2.1
+pydantic==2.7.4
 ```
 
 ---
