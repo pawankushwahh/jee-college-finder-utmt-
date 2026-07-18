@@ -1,10 +1,18 @@
-"""FastAPI application entry point.
+"""FastAPI application entry point — standalone development & UTMT integration.
 
 Disha lives under:
   - Backend:  app/disha/
   - Frontend: templates/disha_templates/
 
-Run: uvicorn main:app --reload --port 8000
+UTMT Integration:
+  The client's main.py plugs Disha in with:
+      from app.disha.routes import router as disha_router
+      app.include_router(disha_router, prefix="/learning_games", tags=["learning_games"])
+      app.mount("/learning_games", StaticFiles(..., html=True), name="disha")
+
+Standalone:
+  Run: uvicorn main:app --reload --port 8000
+  Open: http://127.0.0.1:8000/
 """
 
 from __future__ import annotations
@@ -20,12 +28,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
-from app.disha import states
+from app.disha.routes import router as disha_router
 from app.disha.config import settings
-from app.disha.data_loader import load_programs, load_programs_basic
-from app.disha.stats_loader import compute_dataset_stats
-from app.disha.recommender import recommend
-from app.disha.schemas import MetaResponse, RecommendRequest, RecommendResponse
+from app.disha.data_loader import load_programs_basic
 
 logger = logging.getLogger(__name__)
 
@@ -72,42 +77,11 @@ app.add_middleware(
 )
 
 # ---------------------------------------------------------------------------
-# API routes  (/api/*)
+# API routes — imported from app/disha/routes.py
+# In standalone mode these live at the root (no prefix).
+# On UTMT portal the client adds prefix="/learning_games".
 # ---------------------------------------------------------------------------
-
-@app.get("/api/health", tags=["meta"])
-def health() -> dict:
-    return {"status": "ok", "programs": len(load_programs())}
-
-
-@app.get("/api/meta", response_model=MetaResponse, tags=["meta"])
-def meta() -> MetaResponse:
-    """Form metadata: valid states, goals, genders, categories and dataset size."""
-    # All categories are now available in the 2025 basic dataset.
-    categories = states.VALID_CATEGORIES
-    return MetaResponse(
-        states=states.INDIAN_STATES,
-        goals=[{"value": g, "label": states.GOAL_LABELS[g]} for g in states.VALID_GOALS],
-        genders=states.VALID_GENDERS,
-        categories=categories,
-        branches=[{"value": b["value"], "label": b["label"]} for b in states.BRANCH_PREFERENCES],
-        total_programs=len(load_programs(settings.data_mode)),
-        data_mode=settings.data_mode,
-        allow_toggle=False,       # extended toggle removed
-        extended_available=False, # extended dataset no longer used
-    )
-
-
-@app.post("/api/recommend", response_model=RecommendResponse, tags=["recommend"])
-def recommend_endpoint(req: RecommendRequest) -> RecommendResponse:
-    """Return filtered, categorized and interest-ranked recommendations."""
-    return recommend(req)
-
-
-@app.get("/api/stats", tags=["meta"])
-def stats_endpoint() -> dict:
-    """Return dynamically computed statistical insights on the active dataset."""
-    return compute_dataset_stats()
+app.include_router(disha_router)
 
 
 # ---------------------------------------------------------------------------

@@ -14,20 +14,24 @@
    Bump CACHE when shipping changes so old caches are purged on activate.
    ════════════════════════════════════════════════════════════════════════ */
 
-const CACHE = "disha-shell-v3";
+const CACHE = "disha-shell-v4";
+
+// Resolve paths relative to the service worker's actual location
+// so it works both at root (/) and in sub-apps (/learning_games/)
+const basePath = self.location.pathname.replace(/\/sw\.js$/, '') || '';
 
 const APP_SHELL = [
-  "/",
-  "/index.html",
-  "/stats",
-  "/css/style.css",
-  "/js/config.js",
-  "/js/i18n.js",
-  "/js/api.js",
-  "/js/app.js",
-  "/assets/favicon.svg",
-  "/manifest.json",
-  "/sw.js",
+  `${basePath}/`,
+  `${basePath}/index.html`,
+  `${basePath}/stats`,
+  `${basePath}/css/style.css`,
+  `${basePath}/js/config.js`,
+  `${basePath}/js/i18n.js`,
+  `${basePath}/js/api.js`,
+  `${basePath}/js/app.js`,
+  `${basePath}/assets/favicon.svg`,
+  `${basePath}/manifest.json`,
+  `${basePath}/sw.js`,
 ];
 
 self.addEventListener("install", (event) => {
@@ -77,11 +81,11 @@ function isAppShellAsset(url) {
   if (url.origin !== self.location.origin) return false;
   const p = url.pathname;
   return (
-    p === "/index.html" ||
-    p === "/stats" ||
+    p === `${basePath}/index.html` ||
+    p === `${basePath}/stats` ||
     p.endsWith(".js") ||
     p.endsWith(".css") ||
-    p === "/manifest.json"
+    p === `${basePath}/manifest.json`
   );
 }
 
@@ -92,17 +96,17 @@ self.addEventListener("fetch", (event) => {
   const url = new URL(req.url);
 
   // API: network-first, never block on cache, no offline compute.
-  if (url.origin === self.location.origin && url.pathname.startsWith("/api/")) {
+  if (url.origin === self.location.origin && url.pathname.startsWith(`${basePath}/api/`)) {
     event.respondWith(fetch(req).catch(() => caches.match(req)));
     return;
   }
 
   // SPA navigations: network-first so deploys show up immediately.
   if (req.mode === "navigate") {
-    if (url.pathname === "/stats") {
-      event.respondWith(networkFirst(new Request("/stats", { cache: "no-store" })));
+    if (url.pathname === `${basePath}/stats` || url.pathname.endsWith("/stats")) {
+      event.respondWith(networkFirst(new Request(`${basePath}/stats`, { cache: "no-store" })));
     } else {
-      event.respondWith(networkFirst(new Request("/index.html", { cache: "no-store" })));
+      event.respondWith(networkFirst(new Request(`${basePath}/index.html`, { cache: "no-store" })));
     }
     return;
   }

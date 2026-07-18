@@ -7,7 +7,7 @@
   <title>Statistical Insights — Disha</title>
   <meta name="description"
     content="Dynamic statistics, trends, and analytical insights computed directly from the JoSAA JEE cutoff dataset.">
-  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -1222,14 +1222,14 @@
 
   <!-- Header -->
   <header class="topbar">
-    <a class="wordmark" href="/">
+    <a class="wordmark" href=".">
       <svg class="wordmark__mark" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
         <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6" />
         <path d="M15.5 8.5l-2.2 5.1-5.1 2.2 2.2-5.1 5.1-2.2z" fill="currentColor" />
       </svg>
       <span class="wordmark__text">Disha <span class="wordmark__devanagari">दिशा</span></span>
     </a>
-    <a href="/" class="btn btn--ghost">
+    <a href="." class="btn btn--ghost">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
         <path d="M19 12H5M12 19l-7-7 7-7" />
       </svg>
@@ -1754,6 +1754,7 @@
   </footer>
 
   <!-- Charting & Data Rendering Script -->
+  <script src="js/config.js"></script>
   <script>
     let activeTabId = 'tab-popular';
     let charts = {};
@@ -1785,7 +1786,8 @@
 
     document.addEventListener("DOMContentLoaded", async () => {
       try {
-        const response = await fetch("/api/stats");
+        const basePath = window.APP_CONFIG?.API_BASE_URL || "";
+        const response = await fetch(`${basePath}/api/stats`);
         if (!response.ok) throw new Error("Failed to load statistics api");
         const data = await response.json();
 

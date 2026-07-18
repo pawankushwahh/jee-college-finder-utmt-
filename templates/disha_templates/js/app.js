@@ -2487,7 +2487,7 @@ function registerServiceWorker() {
   if (location.protocol === "file:") return;
   window.addEventListener("load", () => {
     navigator.serviceWorker
-      .register("/sw.js")
+      .register("sw.js")
       .then((reg) => {
         reg.addEventListener("updatefound", () => {
           const worker = reg.installing;
