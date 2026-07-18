@@ -90,7 +90,7 @@ const I18N = {
     validation: {
       ranks: "Enter at least one rank — JEE Main or Advanced — to continue.",
       state: "Pick your home state — it changes which NIT seats you can claim.",
-      goal: "Pick one — \u201cNot sure yet\u201d counts.",
+      goal: "Pick one — \u201cGeneral / Undecided\u201d counts.",
     },
     gender: {
       male: "Male", female: "Female", other: "Other",
@@ -107,7 +107,7 @@ const I18N = {
       pure_science: { name: "Pure Science", desc: "Physics, Chemistry, Maths pathways" },
       mba: { name: "MBA & management", desc: "Brand, network, placements" },
       core: { name: "Core engineering", desc: "Practice the discipline you study" },
-      undecided: { name: "Not sure yet", desc: "Keep as many doors open as possible" },
+      undecided: { name: "General / Undecided", desc: "Keep as many doors open as possible" },
     },
     goalTips: {
       coding: [
@@ -399,7 +399,7 @@ const I18N = {
     validation: {
       ranks: "आगे बढ़ने के लिए कम से कम एक रैंक डालें — JEE Main या Advanced।",
       state: "अपना होम स्टेट चुनें — इससे तय होता है कि कौन-सी NIT सीटें आप पा सकते हैं।",
-      goal: "कोई एक चुनें — \u201cपक्का नहीं\u201d भी चलेगा।",
+      goal: "कोई एक चुनें — \u201cसामान्य / तय नहीं\u201d भी चलेगा।",
     },
     gender: {
       male: "पुरुष", female: "महिला", other: "अन्य",
@@ -416,7 +416,7 @@ const I18N = {
       pure_science: { name: "Pure Science", desc: "Physics, Chemistry, Maths के रास्ते" },
       mba: { name: "MBA और management", desc: "ब्रांड, network, placements" },
       core: { name: "Core engineering", desc: "अपनी पढ़ी हुई शाखा में काम करें" },
-      undecided: { name: "अभी पक्का नहीं", desc: "ज़्यादा से ज़्यादा रास्ते खुले रखें" },
+      undecided: { name: "सामान्य / तय नहीं", desc: "ज़्यादा से ज़्यादा रास्ते खुले रखें" },
     },
     goalTips: {
       coding: [
@@ -701,7 +701,7 @@ const I18N = {
     validation: {
       ranks: "આગળ વધવા માટે ઓછામાં ઓછો એક રેન્ક — JEE Main અથવા Advanced — દાખલ કરો.",
       state: "તમારું હોમ સ્ટેટ પસંદ કરો — આ NIT સીટો માટે મહત્વનું છે.",
-      goal: "કોઈપણ એક વિકલ્પ પસંદ કરો — \u201cખબર નથી\u201d પણ ચાલશે.",
+      goal: "કોઈપણ એક વિકલ્પ પસંદ કરો — \u201cસામાન્ય / નક્કી નથી\u201d પણ ચાલશે.",
     },
     gender: {
       male: "પુરુષ", female: "સ્ત્રી", other: "અન્ય",
@@ -718,7 +718,7 @@ const I18N = {
       pure_science: { name: "Pure Science", desc: "Physics, Chemistry, Maths માટેના રસ્તાઓ" },
       mba: { name: "MBA અને મેનેજમેન્ટ", desc: "બ્રાન્ડ, નેટવર્ક, પ્લેસમેન્ટ્સ" },
       core: { name: "કોર એન્જિનિયરિંગ", desc: "તમે જે વિષય ભણો છો તેની પ્રેક્ટિસ કરો" },
-      undecided: { name: "હજી નક્કી નથી", desc: "બને તેટલા દરવાજા ખુલ્લા રાખો" },
+      undecided: { name: "સામાન્ય / નક્કી નથી", desc: "બને તેટલા દરવાજા ખુલ્લા રાખો" },
     },
     goalTips: {
       coding: [
@@ -1001,7 +1001,7 @@ const I18N = {
     validation: {
       ranks: "ಮುಂದುವರಿಯಲು ಕನಿಷ್ಠ ಒಂದು ರ‍್ಯಾಂಕ್ — JEE Main ಅಥವಾ Advanced — ನಮೂದಿಸಿ.",
       state: "ನಿಮ್ಮ ತವರು ರಾಜ್ಯವನ್ನು ಆರಿಸಿ — ಇದು NIT ಸೀಟುಗಳಿಗೆ ಮುಖ್ಯವಾಗಿದೆ.",
-      goal: "ಯಾವುದಾದರೂ ಒಂದು ಆಯ್ಕೆಯನ್ನು ಆರಿಸಿ — \u201cಖಚಿತವಾಗಿ ಗೊತ್ತಿಲ್ಲ\u201d ಕೂಡ ಓಕೆ.",
+      goal: "ಯಾವುದಾದರೂ ಒಂದು ಆಯ್ಕೆಯನ್ನು ಆರಿಸಿ — \u201cಸಾಮಾನ್ಯ / ಇನ್ನೂ ನಿರ್ಧರಿಸಿಲ್ಲ\u201d ಕೂಡ ಓಕೆ.",
     },
     gender: {
       male: "ಪುರುಷ", female: "ಮಹಿಳೆ", other: "ಇತರ",
@@ -1018,7 +1018,7 @@ const I18N = {
       pure_science: { name: "Pure Science", desc: "Physics, Chemistry, Maths ಮಾರ್ಗಗಳು" },
       mba: { name: "MBA ಮತ್ತು ನಿರ್ವಹಣೆ", desc: "ಬ್ರಾಂಡ್, ನೆಟ್‌ವರ್ಕ್, ಪ್ಲೇಸ್‌ಮೆಂಟ್ಸ್" },
       core: { name: "ಕೋರ್ ಇಂಜಿನಿಯರಿಂಗ್", desc: "ನೀವು ಓದುವ ವಿಷಯದಲ್ಲೇ ವೃತ್ತಿಪರರಾಗಿ" },
-      undecided: { name: "ಇನ್ನೂ ನಿರ್ಧರಿಸಿಲ್ಲ", desc: "ಹೆಚ್ಚಿನ ಆಯ್ಕೆಗಳನ್ನು ತೆರೆದಿಡಿ" },
+      undecided: { name: "ಸಾಮಾನ್ಯ / ಇನ್ನೂ ನಿರ್ಧರಿಸಿಲ್ಲ", desc: "ಹೆಚ್ಚಿನ ಆಯ್ಕೆಗಳನ್ನು ತೆರೆದಿಡಿ" },
     },
     goalTips: {
       coding: [
