@@ -1,6 +1,6 @@
-# Disha (दिशा) — JEE College Recommender
+# Disha (दिशा) — JEE College Recommender & Analytics Portal
 
-Disha is an open-source intelligent counselling pipeline and interactive portal designed to help JEE Main and Advanced aspirants navigate the complex JoSAA/CSAB seat allocation process. By inputting their ranks, gender, home state, and career aspirations, students receive a personalized, mathematically backed list of eligible college and branch options. Unlike static PDF cutoff tables, Disha groups recommendations into intuitive categories (Safe, Target, and Reach), calculates the statistical probability of admission based on historical volatility, and aligns choices with the student's personal career interests.
+Disha is an open-source intelligent counselling pipeline and interactive portal designed to help JEE Main and Advanced aspirants navigate the complex JoSAA/CSAB seat allocation process. By inputting their ranks, gender, home state, and career aspirations, students receive a personalized, mathematically backed list of eligible college and branch options. Unlike static PDF cutoff tables, Disha groups recommendations into intuitive categories (Safe, Target, and Reach), calculates the statistical probability of admission based on historical round-wise volatility, and aligns choices with the student's career interests.
 
 **Live Application**: [jee-college-finder-utmt-asov.onrender.com](https://jee-college-finder-utmt-asov.onrender.com/)
 
@@ -11,8 +11,9 @@ On the technical side, **Disha** is built as a unified **FastAPI** application i
 *   **Scores** every option using a weighted tag-interest model per career goal.
 *   **Calculates admission probability** using a sigmoid function over last-year cutoffs, adjusted by a **Volatility Penalty** derived from round-to-round movement ratio.
 *   **Returns** categorised, ranked results through a clean REST API.
+*   **Dataset Analytics**: Precomputes and serves detailed statistics, quota breakdowns, gender cushion multipliers, CSE cutoff premiums, and category-wise student rank availability curves via a dedicated analytics endpoint.
 
-The frontend is pure **HTML, CSS, and vanilla JavaScript** — no frameworks — served from the same server as the API. The entire UI works in both **English and Hindi** (as well as Gujarati and Kannada) — switching languages with a single click. The API is fully documented with **Swagger UI**. It also works as a **Progressive Web App (PWA)**, meaning it can be installed directly on a phone or desktop.
+The frontend is pure **HTML, CSS, and vanilla JavaScript** — no frameworks — served from the same server as the API. The entire UI works in multiple languages (**English, Hindi, Gujarati, and Kannada**), switching with a single click. The API is fully documented with **Swagger UI**. The application also functions as an offline-capable **Progressive Web App (PWA)** that can be installed on mobile devices and desktops.
 
 ![Disha Portal — Desktop and Mobile View](./screenshots/hero.png)
 
@@ -23,8 +24,8 @@ The frontend is pure **HTML, CSS, and vanilla JavaScript** — no frameworks —
 1. **Set up a virtual environment and install dependencies**:
    ```bash
    # From the repository root
-   python -m venv .venv
-   source .venv/bin/activate   # On Windows: .venv\Scripts\activate
+   python -m venv venv
+   source venv/bin/activate   # On Windows: venv\Scripts\activate
    pip install -r requirements.txt
    ```
 
@@ -34,8 +35,9 @@ The frontend is pure **HTML, CSS, and vanilla JavaScript** — no frameworks —
    ```
 
 3. **Access the portal**:
-   Open your browser and navigate to [http://127.0.0.1:8000](http://127.0.0.1:8000).
-   The interactive API documentation is available at [http://127.0.0.1:8000/api/docs](http://127.0.0.1:8000/api/docs).
+   - Main Recommender Portal: Open your browser and navigate to [http://127.0.0.1:8000](http://127.0.0.1:8000).
+   - Statistical Insights Dashboard: Navigate to [http://127.0.0.1:8000/stats](http://127.0.0.1:8000/stats).
+   - Interactive API Documentation: Available at [http://127.0.0.1:8000/api/docs](http://127.0.0.1:8000/api/docs).
 
 *Note: On Windows, you can also double-click the `run.bat` file in the root directory to automatically set up the virtual environment, install dependencies, and launch the server.*
 
@@ -58,7 +60,7 @@ To understand how Disha thinks, let’s follow **Ayush**, a student from **Madhy
     Ayush selected "Coding & software". Disha looks at its internal career-weight mapping: Computer Science (CSE) gets a maximum interest weight of 10, Mathematics & Computing gets 9, ECE gets 6, while Civil Engineering gets 0. 
     Disha also calculates a brand score for each college (e.g., top-tier older NITs get a higher brand weight than newer ones). Since Ayush left the **Brand-vs-Branch Slider** at the default 50/50 setting, Disha blends the branch interest score and the college brand score to calculate a personalized **Interest Score** for every option.
 *   **Stage 4: Calculating Admission Probability**
-    Instead of just giving a binary "yes" or "no", Disha analyzes the historical volatility of cutoffs. If a branch's closing rank has fluctuated wildly over the last few years, Disha calculates a wider margin of error. Using this volatility, Disha estimates Ayush's actual chance of getting in: he has a **23.5% chance** for MANIT Bhopal CSE (Reach) and an **88.2% chance** for NIT Jalandhar CSE (Target).
+    Instead of just giving a binary "yes" or "no", Disha analyzes the historical volatility of cutoffs. If a branch's closing rank has fluctuated wildly over the last few rounds, Disha calculates a wider margin of error. Using this volatility, Disha estimates Ayush's actual chance of getting in: he has a **23.5% chance** for MANIT Bhopal CSE (Reach) and an **88.2% chance** for NIT Jalandhar CSE (Target).
 *   **Stage 5: Designing the Final List**
     Finally, Disha sorts Ayush’s matches. It shows all his **Targets** first (sorted by his personalized interest score), followed by his **Reaches**, and then his **Safes**. For each card, it generates a natural explanation in his chosen language: 
     > *"Target for you – strong fit for your goal (Computer Science and Engineering at NIT Jalandhar). Your home-state quota gives roughly a 1,200-rank cushion. Cutoff has been fairly steady. (88.2% chance)"*
@@ -67,7 +69,7 @@ To understand how Disha thinks, let’s follow **Ayush**, a student from **Madhy
 
 ### 2. Technical Detail & Core Logic
 
-This section outlines the exact mathematical formulas, thresholds, and variables implemented in the backend pipeline (`app/body_quest/recommender.py` and `app/body_quest/states.py`).
+This section outlines the exact mathematical formulas, thresholds, and variables implemented in the backend pipeline (`app/disha/recommender.py` and `app/disha/states.py`).
 
 #### A. Rank Categorization Thresholds
 For a student rank $R$, opening rank $OR$, and closing rank $CR$, the category is determined by the following constants:
@@ -90,11 +92,12 @@ When a student selects a career goal, the branch interest score ($S_{\text{branc
 ```python
 # Weights from states.py
 GOAL_TAG_WEIGHTS = {
-    "coding":     {"cse": 10, "math_computing": 9, "ai_ds": 9, "it": 8, "ece": 6, "electrical": 4},
-    "research":   {"physics": 10, "bs_science": 9, "math_science": 9, "chemistry": 8, "math_computing": 7, "economics": 6, "cse": 5, "ece": 5, "materials": 5, "mechanical": 4, "chemical": 4},
-    "mba":        {"economics": 8, "cse": 6, "math_computing": 6, "ece": 5, "mechanical": 5, "electrical": 5, "civil": 4, "chemical": 4},
-    "core":       {"mechanical": 10, "civil": 9, "electrical": 9, "chemical": 9, "aerospace": 9, "materials": 8, "energy": 8, "production": 8, "ece": 6, "cse": 3},
-    "undecided":  {"cse": 7, "ece": 7, "math_computing": 7, "ai_ds": 7, "electrical": 6, "mechanical": 6, "chemical": 5, "civil": 5, "it": 6, "economics": 5}
+    "coding":        {"cse": 10, "math_computing": 9, "ai_ds": 9, "it": 8, "ece": 6, "electrical": 4},
+    "research":      {"physics": 10, "bs_science": 9, "math_science": 9, "chemistry": 8, "math_computing": 7, "economics": 6, "cse": 5, "ece": 5, "materials": 5, "mechanical": 4, "chemical": 4},
+    "pure_science":  {"physics": 10, "chemistry": 10, "math_science": 10, "bs_science": 9, "biotech": 7, "materials": 4, "chemical": 3},
+    "mba":           {"economics": 8, "cse": 6, "math_computing": 6, "ece": 5, "mechanical": 5, "electrical": 5, "civil": 4, "chemical": 4},
+    "core":          {"mechanical": 10, "civil": 9, "electrical": 9, "chemical": 9, "aerospace": 9, "materials": 8, "energy": 8, "production": 8, "ece": 6, "cse": 3},
+    "undecided":     {"cse": 7, "ece": 7, "math_computing": 7, "ai_ds": 7, "electrical": 6, "mechanical": 6, "chemical": 5, "civil": 5, "it": 6, "economics": 5}
 }
 ```
 
@@ -149,6 +152,11 @@ Recommended programs are sorted by a tuple containing five keys:
 4.  **Institute Name**: Alphabetically (A-Z).
 5.  **Branch Name**: Alphabetically (A-Z).
 
+#### F. Preparatory Ranks (PwD candidates) Handling
+For candidates applying under PwD categories, JoSAA issues **Preparatory ranks** (suffixed with a trailing 'P', e.g. `151P`, `2P`) when candidates score below the standard cutoff but meet the bridge-course criteria. To prevent these distinct rank scales from corrupting standard statistics:
+*   **Detection & Separation**: `_split_col_by_suffix()` detects P-suffixed cells, strips the suffix, and stores them in separate `preparatory_opening_rank` and `preparatory_closing_rank` columns.
+*   **Pruning**: Pure preparatory rows (where all round entries are preparatory) are excluded from the main recommender pipeline to prevent mismatched rank recommendations.
+
 ---
 
 ## API Reference
@@ -160,7 +168,7 @@ Returns the status of the API and the number of loaded programs.
 ```json
 {
   "status": "ok",
-  "programs": 2410
+  "programs": 12143
 }
 ```
 
@@ -175,6 +183,7 @@ Returns metadata required to populate the frontend form dropdowns and sliders.
   "states": ["Andhra Pradesh", "Rajasthan", "..."],
   "goals": [
     { "value": "coding", "label": "Software / coding career" },
+    { "value": "pure_science", "label": "Pure Science (Physics, Chemistry, Maths)" },
     { "value": "research", "label": "Research / higher studies" },
     "..."
   ],
@@ -192,6 +201,89 @@ Returns metadata required to populate the frontend form dropdowns and sliders.
   "data_mode": "basic",
   "allow_toggle": false,
   "extended_available": false
+}
+```
+
+---
+
+### GET `/api/stats`
+Returns dynamically computed statistical insights and distributions on the active dataset.
+
+**Response Body**:
+```json
+{
+  "summary": {
+    "total_records": 12143,
+    "unique_institutes": 118,
+    "unique_programs": 150,
+    "unique_quotas": 6,
+    "unique_seat_types": 10,
+    "unique_genders": 2
+  },
+  "inst_type_counts": { "IIT": 3200, "NIT": 5000, "IIIT": 2500, "GFTI": 1443 },
+  "state_counts": { "Rajasthan": 1200, "Bihar": 800, "...": 0 },
+  "quota_counts": { "AI": 5000, "HS": 3500, "OS": 3500, "...": 143 },
+  "seat_type_counts": { "OPEN": 6000, "OBC-NCL": 3000, "...": 0 },
+  "gender_counts": { "Gender-Neutral": 9000, "Female-only": 3143 },
+  "round_averages": { "Closing_R1": 15200.5, "Closing_R6": 17800.2 },
+  "highest_cutoffs": [
+    {
+      "institute": "Indian Institute of Technology Bombay",
+      "program": "Computer Science and Engineering (4 Years, Bachelor of Technology)",
+      "quota": "AI",
+      "gender": "Gender-Neutral",
+      "opening_rank": 1,
+      "closing_rank": 68,
+      "inst_type": "IIT"
+    }
+  ],
+  "lowest_cutoffs": [ ... ],
+  "inst_competitiveness": {
+    "IIT": [
+      {
+        "institute": "Indian Institute of Technology Bombay",
+        "avg_closing_rank": 540.2,
+        "min_opening_rank": 1,
+        "total_programs": 15
+      }
+    ],
+    "...": []
+  },
+  "top_programs_by_type": { ... },
+  "popular_branches": [ ... ],
+  "volatility_counts": {
+    "highly_stable": 5420,
+    "stable_drift": 3200,
+    "volatile_vacancy": 1800,
+    "volatile_erratic": 1723
+  },
+  "gender_advantage": [
+    {
+      "inst_type": "IIT",
+      "avg_multiplier": 1.45,
+      "avg_rank_difference": 3200.5
+    }
+  ],
+  "cse_premium": [
+    {
+      "inst_type": "IIT",
+      "cse_avg": 2500.5,
+      "non_cse_avg": 7800.3,
+      "overall_avg": 6200.1,
+      "cse_programs": 23,
+      "non_cse_programs": 95
+    }
+  ],
+  "top_branches_by_type": { ... },
+  "duration_comparison": [ ... ],
+  "rank_availability": {
+    "advanced": [
+      { "rank": 500, "total_programs": 4, "total_institutes": 2 }
+    ],
+    "mains": [ ... ],
+    "advanced_by_category": { "OPEN": [ ... ], "OBC-NCL": [ ... ] },
+    "mains_by_category": { ... }
+  }
 }
 ```
 
@@ -221,9 +313,9 @@ Submits a student profile and returns filtered, categorized, and sorted recommen
 *   `mains_rank` (integer, optional): JEE Mains CRL rank. Required to see NITs/IIITs/GFTIs.
 *   `gender` (string): `male` | `female`.
 *   `home_state` (string): Must match one of the canonical Indian states.
-*   `goal` (string): `coding` | `research` | `mba` | `core` | `undecided`.
-*   `data_mode` (string, optional): `basic` | `extended`.
-*   `seat_category` (string, optional): `OPEN` | `OBC-NCL` | `SC` | `ST` | `EWS` | `PwD`.
+*   `goal` (string): `coding` | `research` | `pure_science` | `mba` | `core` | `undecided`.
+*   `data_mode` (string, optional): Default `"basic"`. ("extended" is accepted for backwards compatibility).
+*   `seat_category` (string, optional): Must match a canonical JoSAA category (e.g. `OPEN`, `OBC-NCL`, `SC`, `ST`, `EWS`).
 *   `brand_branch_ratio` (float, optional): Priority slider value between `0.0` and `1.0`.
 *   `branch_preferences` (array of strings, optional): List of branch family codes to filter by.
 *   `max_results` (integer, optional): Maximum recommendations to return (default 60, max 300).
@@ -285,18 +377,17 @@ jee-college-finder-utmt/
 ├── render.yaml                   # Render deployment configuration
 ├── run.bat                       # Windows quick launch script
 ├── conftest.py                   # Pytest configuration and fixtures
-├── .env.example                  # Environment variables template
 ├── .gitignore                    # Git ignore file
 ├── LICENSE                       # Project license
-├── README.md                     # Project documentation
+├── README.md                     # Project documentation (this file)
 ├── app/
 │   └── disha/
 │       ├── __init__.py
-│       ├── config.py             # Environment variables and configuration
+│       ├── config.py             # Configuration for backend variables
 │       ├── data_loader.py        # Core data loading and processing logic
 │       ├── recommender.py        # Recommendation engine algorithm
 │       ├── schemas.py            # Pydantic data models for validation
-│       ├── states.py             # State mappings for Indian states
+│       ├── states.py             # State mappings and career weights
 │       ├── stats_loader.py       # Statistics generation and data analysis
 │       └── data/                 # Data storage for backend
 │           └── josaa_merged_2025.csv # Primary college dataset
@@ -307,9 +398,9 @@ jee-college-finder-utmt/
 │   ├── jee_cutoff_last_round.csv # Raw JEE cutoff dataset
 │   └── josaa_merged_2025.csv     # Cleaned dataset (source for app data)
 ├── templates/
-│   └── body_quest_templates/          # Web UI codebase
-│       ├── index.html            # Main application layout and script mounts
-│       ├── stats.html            # Statistics dashboard layout
+│   └── disha_templates/          # Web UI codebase
+│       ├── index.html            # Main recommender portal frontend
+│       ├── stats.html            # Statistics dashboard frontend
 │       ├── manifest.json         # PWA manifest file
 │       ├── sw.js                 # Service worker for offline capabilities
 │       ├── assets/               # Static assets and icons
@@ -331,15 +422,14 @@ jee-college-finder-utmt/
 
 ## Configuration
 
-The application is configured using environment variables (which can be placed in a `.env` file in the root directory):
+The application settings are statically configured inside `app/disha/config.py` using the `Settings` class:
 
-| Env Variable | Default | Description |
-|--------------|---------|-------------|
-| `CORS_ORIGINS` | `*` | Comma-separated list of origins allowed to make API requests, or `*` for all. |
-| `DATA_PATH` | `app/body_quest/data/JEE_2025_Cutoffs.xlsx` | Path to the JoSAA 2025 OPEN seats Excel sheet. |
-| `EXTENDED_DATA_PATH` | `app/body_quest/data/merged_jee_cutoff_2018_2025.csv` | Path to the multi-year, multi-category historical CSV. |
-| `DATA_MODE` | `basic` | Default data mode. `basic` uses the Excel sheet; `extended` uses the historical CSV. |
-| `ALLOW_USER_DATA_TOGGLE` | `True` | If `True`, displays a toggle in the UI allowing users to switch between Basic and Extended data sources. |
+| Setting | Type & Default | Description |
+|---------|----------------|-------------|
+| `cors_origins` | `str = "*"` | Comma-separated list of origins allowed to make API requests, or `*` for all. |
+| `data_path` | `str = "app/disha/data/JEE_2025_Cutoffs.xlsx"` | Path to the legacy Excel cutoff workbook (kept for reference). |
+| `basic_merged_data_path` | `str = "app/disha/data/josaa_merged_2025.csv"` | Path to the 2025 round-wise merged CSV containing all categories and rounds. |
+| `data_mode` | `str = "basic"` | Active data mode. Defaults to `"basic"`; extended mode has been fully removed. |
 
 ---
 
@@ -351,7 +441,7 @@ The test suite is located in the `tests/` directory and can be run using `pytest
 *   **`tests/test_recommender.py`**: Unit tests for the core recommendation pipeline. Verifies rank selection, gender-pool filtering, home-state and other-state quota matching, rank categorization boundary conditions, overqualification pruning, and language-specific text generation.
 *   **`tests/test_enhancements.py`**: Unit tests verifying geographic region classification, metro status, and the mathematical correctness of the ratio-blended interest scoring model.
 
-To run all tests, execute:
+To run all tests, activate the virtual environment and execute:
 ```bash
 pytest tests/ -v
 ```

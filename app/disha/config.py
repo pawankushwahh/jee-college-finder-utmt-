@@ -17,12 +17,12 @@ class Settings:
     cors_origins: str = "*"
 
     # Path to the basic cutoff workbook (legacy, kept for reference).
-    data_path: str = "app/body_quest/data/JEE_2025_Cutoffs.xlsx"
+    data_path: str = "app/disha/data/JEE_2025_Cutoffs.xlsx"
 
     # Path to the round-wise merged CSV for Basic (2025) mode.
     # Has columns Opening_R1..Closing_R6; Opening/Closing Rank are
     # computed at runtime as MIN/MAX across rounds.
-    basic_merged_data_path: str = "app/body_quest/data/josaa_merged_2025.csv"
+    basic_merged_data_path: str = "app/disha/data/josaa_merged_2025.csv"
 
     # Active data mode: always "basic" (2025 round-wise merged CSV).
     # Extended mode has been removed — this setting is kept for API compatibility.
@@ -48,7 +48,7 @@ class Settings:
         """REMOVED — returns a non-existent path; kept only to avoid AttributeError
         in any code not yet updated to stop referencing this property.
         """
-        return Path("app/body_quest/data/merged_jee_cutoff_2018_2025.csv")  # no longer used
+        return Path("app/disha/data/merged_jee_cutoff_2018_2025.csv")  # no longer used
 
 
 settings = Settings()
