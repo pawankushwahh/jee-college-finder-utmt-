@@ -41,7 +41,7 @@ const I18N = {
         "An open-source initiative by <a href=\"https://www.utmt.org\" target=\"_blank\" rel=\"noopener\">UTMT</a> — learn to build AI products",
       legendSafe: "Safe", legendSafeSub: "very likely",
       legendTarget: "Target", legendTargetSub: "realistic fit",
-      legendReach: "Dream", legendReachSub: "worth a try",
+      legendReach: "Dream", legendReachSub: "Ambitious choices",
       offline: "We couldn't reach the recommendation service. Make sure the backend is running, then try again.",
       retry: "Retry",
     },
@@ -261,7 +261,7 @@ const I18N = {
     zones: {
       safeName: "Safe", safeSub: "strong backups",
       targetName: "Target", targetSub: "your best-fit zone",
-      reachName: "Dream", reachSub: "worth a try",
+      reachName: "Dream", reachSub: "Ambitious choices",
     },
     ruler: {
       introEyebrow: "The whole picture",
