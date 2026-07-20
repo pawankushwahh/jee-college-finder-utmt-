@@ -530,7 +530,7 @@ VALID_GENDERS = ["male", "female"]
 # The current dataset (JEE_2025_Cutoffs.xlsx) contains OPEN seats only.
 # Entries marked available=False are shown in the UI with a "coming soon" note.
 VALID_CATEGORIES: list = [
-    {"value": "OPEN", "label": "OPEN (General / CRL)", "available": True},
+    {"value": "OPEN", "label": "General (OPEN / CRL Category Rank)", "available": True},
     {"value": "OBC-NCL", "label": "OBC-NCL", "available": True},
     {"value": "SC", "label": "SC (Scheduled Caste)", "available": True},
     {"value": "ST", "label": "ST (Scheduled Tribe)", "available": True},
