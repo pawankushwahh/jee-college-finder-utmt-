@@ -386,7 +386,10 @@ def compute_dataset_stats() -> Dict[str, Any]:
     #   rank_availability.mains_by_category:    { "OPEN": [...], "OBC-NCL": [...], ... }
     # Backward-compat .advanced / .mains keys keep pointing to OPEN curves.
 
-    AVAIL_CATEGORIES = ["OPEN", "OBC-NCL", "SC", "ST", "EWS"]
+    AVAIL_CATEGORIES = [
+        "OPEN", "OBC-NCL", "SC", "ST", "EWS",
+        "OPEN (PwD)", "OBC-NCL (PwD)", "SC (PwD)", "ST (PwD)", "EWS (PwD)"
+    ]
 
     # Rank thresholds chosen to span the realistic range of JoSAA cutoffs with
     # more density at the competitive (low-rank) end — matches reference image X-axis.
@@ -403,9 +406,39 @@ def compute_dataset_stats() -> Dict[str, Any]:
         (valid_cutoffs["Gender"].str.lower().str.contains("gender-neutral|neutral"))
     ]
 
-    def _build_curve(base_df, thresholds, seat_type):
+    def _build_curve(base_df, default_thresholds, seat_type):
         """Count programs whose [Min_Opening, Max_Closing] window contains rank r."""
         cat_df = base_df[base_df["Seat Type"] == seat_type].copy()
+
+        # Compute dynamic thresholds based on the actual maximum closing rank for this seat category
+        if cat_df.empty:
+            max_rank = 0
+        else:
+            max_rank = cat_df["Max_Closing"].max()
+
+        if base_df is iit_gn:  # Advanced
+            if max_rank <= 100:
+                thresholds = list(range(0, int(max_rank) + 10, 2))
+            elif max_rank <= 500:
+                thresholds = list(range(0, int(max_rank) + 50, 10))
+            elif max_rank <= 2000:
+                thresholds = list(range(0, int(max_rank) + 100, 50))
+            elif max_rank <= 10000:
+                thresholds = list(range(0, int(max_rank) + 500, 250))
+            else:
+                thresholds = default_thresholds
+        else:  # Mains
+            if max_rank <= 1000:
+                thresholds = list(range(0, int(max_rank) + 100, 20))
+            elif max_rank <= 5000:
+                thresholds = list(range(0, int(max_rank) + 500, 100))
+            elif max_rank <= 20000:
+                thresholds = list(range(0, int(max_rank) + 1000, 500))
+            elif max_rank <= 100000:
+                thresholds = list(range(0, int(max_rank) + 5000, 2500))
+            else:
+                thresholds = default_thresholds
+
         curve = []
         for r in thresholds:
             # Student at rank r can fill a seat when Min_Opening <= r <= Max_Closing

@@ -4,7 +4,15 @@ from __future__ import annotations
 
 from typing import List, Literal, Optional
 
-from pydantic import BaseModel, Field, model_validator
+import pydantic
+from pydantic import BaseModel, Field
+
+IS_PYDANTIC_V2 = pydantic.__version__.startswith("2")
+
+if IS_PYDANTIC_V2:
+    from pydantic import model_validator
+else:
+    from pydantic import root_validator
 
 from .config import settings
 
@@ -44,10 +52,12 @@ class RecommendRequest(BaseModel):
     seat_category: str = Field(
         default="OPEN",
         description=(
-            "Reservation category for seat allocation: OPEN, OBC-NCL, SC, ST, EWS, or PwD. "
-            "The current dataset contains OPEN seats only; support for reserved categories "
-            "will be added when multi-category cutoff data becomes available."
+            "Reservation category for seat allocation: OPEN, OBC-NCL, SC, ST, or EWS."
         ),
+    )
+    is_pwd: bool = Field(
+        default=False,
+        description="Whether the candidate belongs to Persons with Disabilities (PwD) subcategory.",
     )
     # family_income is removed to focus exclusively on admission probability insights.
     brand_branch_ratio: float = Field(
@@ -78,20 +88,35 @@ class RecommendRequest(BaseModel):
         ),
     )
 
-    @model_validator(mode="after")
-    def _check(self) -> "RecommendRequest":
-        if self.adv_rank is None and self.mains_rank is None:
-            raise ValueError(
-                "Provide at least one of adv_rank or mains_rank."
+    # Pydantic v1 / v2 compatibility for model validation
+    if IS_PYDANTIC_V2:
+        @model_validator(mode="after")
+        def _check_v2(self) -> "RecommendRequest":
+            if self.adv_rank is None and self.mains_rank is None:
+                raise ValueError("Provide at least one of adv_rank or mains_rank.")
+            match = next(
+                (s for s in states.INDIAN_STATES if s.lower() == self.home_state.strip().lower()),
+                None,
             )
-        # Normalise home_state to the canonical casing if it matches a known state.
-        match = next(
-            (s for s in states.INDIAN_STATES if s.lower() == self.home_state.strip().lower()),
-            None,
-        )
-        if match:
-            self.home_state = match
-        return self
+            if match:
+                self.home_state = match
+            return self
+    else:
+        @root_validator(pre=False)
+        def _check_v1(cls, values):
+            adv_rank = values.get("adv_rank")
+            mains_rank = values.get("mains_rank")
+            if adv_rank is None and mains_rank is None:
+                raise ValueError("Provide at least one of adv_rank or mains_rank.")
+            home_state = values.get("home_state")
+            if home_state:
+                match = next(
+                    (s for s in states.INDIAN_STATES if s.lower() == home_state.strip().lower()),
+                    None,
+                )
+                if match:
+                    values["home_state"] = match
+            return values
 
 
 class Recommendation(BaseModel):
@@ -125,6 +150,8 @@ class Recommendation(BaseModel):
     is_top_iit: bool = False  # true for Top 5 IITs (Bombay, Delhi, Madras, Kanpur, Kharagpur)
     history: Optional[dict[int, int]] = None  # historical closing ranks by year
     admission_probability: Optional[float] = None  # calculated admission probability %
+    is_preparatory: bool = False
+    has_preparatory_rounds: bool = False
 
 
 class CategoryGuidance(BaseModel):

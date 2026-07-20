@@ -1215,6 +1215,140 @@
         font-size: 11px !important;
       }
     }
+
+    /* Premium Blog Link Card (Rich Link Preview) styling */
+    .blog-preview-card {
+      display: flex;
+      flex-direction: row;
+      align-items: stretch;
+      background: var(--card);
+      border: 1px solid var(--line-soft);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      margin: 40px auto 24px auto;
+      max-width: 900px;
+      min-height: 280px;
+      text-decoration: none;
+      color: inherit;
+      overflow: hidden;
+      transition: transform 0.25s var(--ease-out), box-shadow 0.25s var(--ease-out), border-color 0.25s ease;
+      cursor: pointer;
+    }
+    .blog-preview-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--line);
+    }
+    .blog-preview-card__content {
+      flex: 1;
+      padding: 32px 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 14px;
+    }
+    .blog-preview-card__meta {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: var(--pine);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .blog-preview-card__meta-dot {
+      opacity: 0.4;
+    }
+    .blog-preview-card__source {
+      color: var(--ink-faint);
+    }
+    .blog-preview-card__title {
+      font-family: var(--serif);
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.35;
+      margin: 0;
+      transition: color 0.2s ease;
+    }
+    .blog-preview-card:hover .blog-preview-card__title {
+      color: var(--pine-deep);
+    }
+    .blog-preview-card__desc {
+      font-size: 14.5px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin: 0;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .blog-preview-card__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      background: var(--pine);
+      color: #ffffff;
+      border-radius: var(--radius-sm);
+      font-weight: 600;
+      font-size: 14px;
+      transition: background-color 0.2s var(--ease-out), transform 0.2s var(--ease-out);
+      align-self: flex-start;
+      margin-top: 4px;
+      box-shadow: 0 1px 2px rgba(23, 92, 76, 0.15);
+    }
+    .blog-preview-card:hover .blog-preview-card__btn {
+      background: var(--pine-deep);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(14, 66, 55, 0.25);
+    }
+    .blog-preview-card__thumbnail {
+      width: 40%;
+      position: relative;
+      overflow: hidden;
+      background: var(--paper-deep);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      flex-shrink: 0;
+    }
+    .blog-preview-card__image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transition: transform 0.4s var(--ease-out);
+    }
+    .blog-preview-card:hover .blog-preview-card__image {
+      transform: scale(1.02);
+    }
+
+    @media (max-width: 768px) {
+      .blog-preview-card {
+        flex-direction: column;
+        margin: 24px auto 16px auto;
+        min-height: auto;
+      }
+      .blog-preview-card__thumbnail {
+        width: 100%;
+        height: 220px;
+        padding: 12px;
+      }
+      .blog-preview-card__content {
+        padding: 24px 20px;
+        gap: 12px;
+      }
+      .blog-preview-card__title {
+        font-size: 20px;
+      }
+      .blog-preview-card__btn {
+        width: 100%;
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 
@@ -1497,7 +1631,7 @@
             </h3>
           </div>
           <div class="card__body">
-            <div class="cat-filter-row" id="cat-filter-adv">
+            <div class="cat-filter-row" id="cat-filter-adv" style="flex-wrap: wrap; gap: 6px;">
               <span class="cat-filter-label">Category:</span>
               <button class="cat-pill is-active" data-cat="OPEN"
                 onclick="switchAvailCategory('adv', 'OPEN')">OPEN</button>
@@ -1506,6 +1640,11 @@
               <button class="cat-pill" data-cat="SC" onclick="switchAvailCategory('adv', 'SC')">SC</button>
               <button class="cat-pill" data-cat="ST" onclick="switchAvailCategory('adv', 'ST')">ST</button>
               <button class="cat-pill" data-cat="EWS" onclick="switchAvailCategory('adv', 'EWS')">EWS</button>
+              <button class="cat-pill" data-cat="OPEN (PwD)" onclick="switchAvailCategory('adv', 'OPEN (PwD)')">OPEN (PwD)</button>
+              <button class="cat-pill" data-cat="OBC-NCL (PwD)" onclick="switchAvailCategory('adv', 'OBC-NCL (PwD)')">OBC-NCL (PwD)</button>
+              <button class="cat-pill" data-cat="SC (PwD)" onclick="switchAvailCategory('adv', 'SC (PwD)')">SC (PwD)</button>
+              <button class="cat-pill" data-cat="ST (PwD)" onclick="switchAvailCategory('adv', 'ST (PwD)')">ST (PwD)</button>
+              <button class="cat-pill" data-cat="EWS (PwD)" onclick="switchAvailCategory('adv', 'EWS (PwD)')">EWS (PwD)</button>
             </div>
             <div class="chart-container">
               <canvas id="chart-avail-adv"></canvas>
@@ -1529,7 +1668,7 @@
             </h3>
           </div>
           <div class="card__body">
-            <div class="cat-filter-row" id="cat-filter-mains">
+            <div class="cat-filter-row" id="cat-filter-mains" style="flex-wrap: wrap; gap: 6px;">
               <span class="cat-filter-label">Category:</span>
               <button class="cat-pill is-active" data-cat="OPEN"
                 onclick="switchAvailCategory('mains', 'OPEN')">OPEN</button>
@@ -1538,6 +1677,11 @@
               <button class="cat-pill" data-cat="SC" onclick="switchAvailCategory('mains', 'SC')">SC</button>
               <button class="cat-pill" data-cat="ST" onclick="switchAvailCategory('mains', 'ST')">ST</button>
               <button class="cat-pill" data-cat="EWS" onclick="switchAvailCategory('mains', 'EWS')">EWS</button>
+              <button class="cat-pill" data-cat="OPEN (PwD)" onclick="switchAvailCategory('mains', 'OPEN (PwD)')">OPEN (PwD)</button>
+              <button class="cat-pill" data-cat="OBC-NCL (PwD)" onclick="switchAvailCategory('mains', 'OBC-NCL (PwD)')">OBC-NCL (PwD)</button>
+              <button class="cat-pill" data-cat="SC (PwD)" onclick="switchAvailCategory('mains', 'SC (PwD)')">SC (PwD)</button>
+              <button class="cat-pill" data-cat="ST (PwD)" onclick="switchAvailCategory('mains', 'ST (PwD)')">ST (PwD)</button>
+              <button class="cat-pill" data-cat="EWS (PwD)" onclick="switchAvailCategory('mains', 'EWS (PwD)')">EWS (PwD)</button>
             </div>
             <div class="chart-container">
               <canvas id="chart-avail-mains"></canvas>
@@ -1738,6 +1882,40 @@
 
       </div>
     </div>
+
+    <!-- Insights Blog Link Card (Rich Link Preview) -->
+    <a href="https://bekushal.medium.com/the-myth-of-the-indian-engineering-herd-what-iit-jee-josaa-data-actually-reveals-5d1d6b621e42" 
+       target="_blank" 
+       rel="noopener" 
+       class="blog-preview-card"
+       id="insights-blog-card">
+      <div class="blog-preview-card__thumbnail">
+        <img src="https://miro.medium.com/v2/resize:fit:1200/1*zbpiFO4I6NtxPUAq73BOKw.png" 
+             alt="The Myth of the Indian Engineering Herd" 
+             class="blog-preview-card__image" 
+             loading="lazy">
+      </div>
+      <div class="blog-preview-card__content">
+        <div class="blog-preview-card__meta">
+          <span class="blog-preview-card__source">bekushal.medium.com</span>
+          <span class="blog-preview-card__meta-dot">·</span>
+          <span>Featured Analysis</span>
+        </div>
+        <h4 class="blog-preview-card__title">
+          The Myth of the Indian Engineering Herd: What IIT-JEE & JoSAA Data Actually Reveals
+        </h4>
+        <p class="blog-preview-card__desc">
+          Every year, after the dust settles on the JEE Advanced exams, a familiar narrative emerges. Pundits, educators, and parents look at the JoSAA admission data and make assumptions. This data-backed analysis challenges popular perceptions and reveals how candidate choices, branch allocations, and career preferences actually evolve.
+        </p>
+        <span class="blog-preview-card__btn">
+          <span>Read Analysis</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="margin-left: 2px;">
+            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"/>
+          </svg>
+        </span>
+      </div>
+    </a>
+
   </main>
 
   <!-- Footer -->
@@ -2469,7 +2647,41 @@
           const maxVal = Math.max(...dataRows.map(r => r.total_programs), 1);
           const raw = maxVal * 1.18;
           const magnitude = Math.pow(10, Math.floor(Math.log10(raw)));
-          return Math.ceil(raw / magnitude) * magnitude;
+          const rounded = Math.ceil(raw / magnitude) * magnitude;
+          return Math.max(rounded, 5);
+        }
+
+        // Helper: compute a clean X-axis max based on actual active range of the category.
+        function niceXMax(dataRows, defaultMax) {
+          const activeRows = dataRows.filter(r => r.total_programs > 0);
+          if (activeRows.length === 0) return defaultMax;
+          const maxActive = Math.max(...activeRows.map(r => r.rank));
+          
+          // Add 10% padding
+          const raw = maxActive * 1.10;
+          if (raw >= defaultMax) return defaultMax;
+          
+          // Round to a clean number based on magnitude
+          const magnitude = Math.pow(10, Math.floor(Math.log10(raw)));
+          const step = magnitude >= 10000 ? 10000 : 1000;
+          const rounded = Math.ceil(raw / step) * step;
+          return Math.max(rounded, step);
+        }
+
+        // Helper: compute optimal step size for Advanced X-axis based on max rank
+        function niceStepSizeAdv(xMax) {
+          if (xMax <= 2000) return 500;
+          if (xMax <= 5000) return 1000;
+          if (xMax <= 10000) return 2000;
+          return 5000;
+        }
+
+        // Helper: compute optimal step size for Mains X-axis based on max rank
+        function niceStepSizeMains(xMax) {
+          if (xMax <= 20000) return 5000;
+          if (xMax <= 50000) return 10000;
+          if (xMax <= 100000) return 20000;
+          return 50000;
         }
 
         // ── Render / re-render Advanced availability chart ──
@@ -2478,6 +2690,8 @@
           const progsData = rows.map(a => ({ x: a.rank, y: a.total_programs }));
           const instsData = rows.map(a => ({ x: a.rank, y: a.total_institutes }));
           const yMax = niceYMax(rows);
+          const xMax = niceXMax(rows, 20000);
+          const xStep = niceStepSizeAdv(xMax);
 
           if (charts.availAdv) {
             // In-place update — avoids full destroy/rebuild flicker.
@@ -2485,7 +2699,9 @@
             charts.availAdv.data.datasets[1].data = instsData;
             charts.availAdv.options.scales.y.max = yMax;
             charts.availAdv.options.scales.y.suggestedMax = yMax;
-            charts.availAdv.update('active');
+            charts.availAdv.options.scales.x.max = xMax;
+            charts.availAdv.options.scales.x.ticks.stepSize = xStep;
+            charts.availAdv.update();
           } else {
             charts.availAdv = new Chart(document.getElementById('chart-avail-adv'), {
               type: 'line',
@@ -2555,12 +2771,12 @@
                   x: {
                     type: 'linear',
                     min: 0,
-                    max: 20000,
+                    max: xMax,
                     grid: { color: '#efe8d8' },
                     ticks: {
                       font: { family: 'Inter', size: 10 },
                       color: '#5f5747',
-                      stepSize: 5000,
+                      stepSize: xStep,
                       callback: function (value) {
                         return value >= 1000 ? (value / 1000) + 'k' : value;
                       },
@@ -2585,13 +2801,17 @@
           const progsData = rows.map(m => ({ x: m.rank, y: m.total_programs }));
           const instsData = rows.map(m => ({ x: m.rank, y: m.total_institutes }));
           const yMax = niceYMax(rows);
+          const xMax = niceXMax(rows, 300000);
+          const xStep = niceStepSizeMains(xMax);
 
           if (charts.availMains) {
             charts.availMains.data.datasets[0].data = progsData;
             charts.availMains.data.datasets[1].data = instsData;
             charts.availMains.options.scales.y.max = yMax;
             charts.availMains.options.scales.y.suggestedMax = yMax;
-            charts.availMains.update('active');
+            charts.availMains.options.scales.x.max = xMax;
+            charts.availMains.options.scales.x.ticks.stepSize = xStep;
+            charts.availMains.update();
           } else {
             charts.availMains = new Chart(document.getElementById('chart-avail-mains'), {
               type: 'line',
@@ -2661,12 +2881,12 @@
                   x: {
                     type: 'linear',
                     min: 0,
-                    max: 300000,
+                    max: xMax,
                     grid: { color: '#efe8d8' },
                     ticks: {
                       font: { family: 'Inter', size: 10 },
                       color: '#5f5747',
-                      stepSize: 10000,
+                      stepSize: xStep,
                       callback: function (value) {
                         return value >= 1000 ? (value / 1000) + 'k' : value;
                       }

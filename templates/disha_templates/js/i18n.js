@@ -34,14 +34,14 @@ const I18N = {
         "Tell us your rank and what you want from the next four years. " +
         "We'll show you the IITs, NITs, IIITs and GFTIs where you genuinely stand a chance — " +
         "sorted into <strong class=\"tone-safe\">Safe</strong>, <strong class=\"tone-target\">Target</strong> " +
-        "and <strong class=\"tone-reach\">Reach</strong> — with honest guidance for your goals.",
+        "and <strong class=\"tone-reach\">Dream</strong> — with honest guidance for your goals.",
       cta: "Find where I stand",
       trust: "Takes about a minute · Free · Nothing is stored",
       utmtHtml:
         "An open-source initiative by <a href=\"https://www.utmt.org\" target=\"_blank\" rel=\"noopener\">UTMT</a> — learn to build AI products",
       legendSafe: "Safe", legendSafeSub: "very likely",
       legendTarget: "Target", legendTargetSub: "realistic fit",
-      legendReach: "Reach", legendReachSub: "worth a try",
+      legendReach: "Dream", legendReachSub: "worth a try",
       offline: "We couldn't reach the recommendation service. Make sure the backend is running, then try again.",
       retry: "Retry",
     },
@@ -65,6 +65,7 @@ const I18N = {
       s2Hint: "This decides which seat pools and quotas apply to you.",
       genderLabel: "Gender",
       categoryLabel: "Reservation category",
+      pwdLabel: "Persons with Disabilities (PwD)",
       s3Eyebrow: "Where you're from",
       s3Title: "Your home state",
       s3Hint: "The state where you passed Class 12. NITs reserve half their seats for home-state students, so this genuinely changes your options.",
@@ -148,7 +149,7 @@ const I18N = {
     loading: [
       "Reading last year's cutoffs…",
       "Matching programs to your profile…",
-      "Sorting Safe, Target and Reach…",
+      "Sorting Safe, Target and Dream…",
     ],
     error: {
       title: "That didn't work",
@@ -207,7 +208,7 @@ const I18N = {
     },
     results: {
       standingTitle: "Your standing",
-      standingNote: "<strong>Safe:</strong> In top 25% of last year's class. &nbsp; <strong>Target:</strong> Inside last year's cutoff. &nbsp; <strong>Reach:</strong> Outside last year's cutoff, but possible.",
+      standingNote: "<strong>Safe:</strong> In top 25% of last year's class. &nbsp; <strong>Target:</strong> Inside last year's cutoff. &nbsp; <strong>Dream:</strong> Outside last year's cutoff, but possible.",
       byBranch: "By branch",
       byCollege: "By college",
       priorityBranchFull: "Favour Branch",
@@ -260,11 +261,11 @@ const I18N = {
     zones: {
       safeName: "Safe", safeSub: "strong backups",
       targetName: "Target", targetSub: "your best-fit zone",
-      reachName: "Reach", reachSub: "worth a try",
+      reachName: "Dream", reachSub: "worth a try",
     },
     ruler: {
       introEyebrow: "The whole picture",
-      lede: "Every match on one rank ruler — the dark line is you. Colors indicate chances: <strong>Green (Safe)</strong>, <strong>Yellow (Target)</strong>, <strong>Red (Reach)</strong>. The scale is logarithmic, so the crowded top ranks stay readable.",
+      lede: "Every match on one rank ruler — the dark line is you. Colors indicate chances: <strong>Green (Safe)</strong>, <strong>Yellow (Target)</strong>, <strong>Red (Dream)</strong>. The scale is logarithmic, so the crowded top ranks stay readable.",
       iitTop5Title: "IITs — Top 5", iitRestTitle: "IITs — Rest",
       iitTitle: "IITs", iitVia: "via JEE Advanced",
       nitTitle: "NITs · IIITs · GFTIs", nitVia: "via JEE Main",
@@ -274,7 +275,7 @@ const I18N = {
       closes: "closes",
     },
     section: {
-      Target: "Target", Reach: "Reach", Safe: "Safe",
+      Target: "Target", Reach: "Dream", Safe: "Safe",
     },
     rankbar: {
       opens: "opens", closes: "closes",
@@ -317,7 +318,7 @@ const I18N = {
     share: {
       title: "Disha — my JEE college matches",
       targetLine: "Target ({count}): {picks}",
-      countsLine: "Safe {safe} · Reach {reach}",
+      countsLine: "Safe {safe} · Dream {reach}",
       noTarget: "Top picks: {picks}",
       open: "Open Disha:",
       copyFail: "Couldn't copy. Long-press the address bar to copy the link.",
@@ -343,14 +344,14 @@ const I18N = {
         "हमें अपनी रैंक बताएँ और यह भी कि अगले चार साल आप क्या चाहते हैं। " +
         "हम आपको वे IITs, NITs, IIITs और GFTIs दिखाएँगे जहाँ आपके पास सच में मौक़ा है — " +
         "<strong class=\"tone-safe\">Safe</strong>, <strong class=\"tone-target\">Target</strong> " +
-        "और <strong class=\"tone-reach\">Reach</strong> में बँटे हुए — आपके लक्ष्यों के लिए ईमानदार सलाह के साथ।",
+        "और <strong class=\"tone-reach\">Dream</strong> में बँटे हुए — आपके लक्ष्यों के लिए ईमानदार सलाह के साथ।",
       cta: "देखें मैं कहाँ खड़ा हूँ",
       trust: "लगभग एक मिनट · मुफ़्त · कुछ भी सेव नहीं होता",
       utmtHtml:
         "<a href=\"https://www.utmt.org\" target=\"_blank\" rel=\"noopener\">UTMT</a> की एक ओपन-सोर्स पहल — AI products बनाना सीखें",
       legendSafe: "Safe", legendSafeSub: "पूरी संभावना",
       legendTarget: "Target", legendTargetSub: "उपयुक्त मेल",
-      legendReach: "Reach", legendReachSub: "कोशिश लायक",
+      legendReach: "Dream", legendReachSub: "कोशिश लायक",
       offline: "हम recommendation सेवा तक नहीं पहुँच सके। पक्का करें कि backend चल रहा है, फिर दोबारा कोशिश करें।",
       retry: "दोबारा कोशिश करें",
     },
@@ -374,6 +375,7 @@ const I18N = {
       s2Hint: "इससे तय होता है कि आप पर कौन-से सीट पूल और कोटा लागू होंगे।",
       genderLabel: "जेंडर",
       categoryLabel: "आरक्षण श्रेणी",
+      pwdLabel: "दिव्यांग (PwD)",
       s3Eyebrow: "आप कहाँ से हैं",
       s3Title: "आपका होम स्टेट",
       s3Hint: "वह राज्य जहाँ आपने 12वीं पास की। NITs अपनी आधी सीटें होम-स्टेट छात्रों के लिए रखती हैं, इसलिए यह सचमुच आपके विकल्प बदल देता है।",
@@ -453,7 +455,7 @@ const I18N = {
     loading: [
       "पिछले साल के कटऑफ़ पढ़ रहे हैं…",
       "प्रोग्राम आपकी प्रोफ़ाइल से मिला रहे हैं…",
-      "Safe, Target और Reach में क्रमबद्ध कर रहे हैं…",
+      "Safe, Target और Dream में क्रमबद्ध कर रहे हैं…",
     ],
     error: {
       title: "यह काम नहीं आया",
@@ -512,7 +514,7 @@ const I18N = {
     },
     results: {
       standingTitle: "आपकी स्थिति",
-      standingNote: "<strong>Safe:</strong> पिछले साल की क्लास के टॉप 25% में। &nbsp; <strong>Target:</strong> पिछले साल के कटऑफ के अंदर। &nbsp; <strong>Reach:</strong> पिछले साल के कटऑफ के बाहर, लेकिन संभव।",
+      standingNote: "<strong>Safe:</strong> पिछले साल की क्लास के टॉप 25% में। &nbsp; <strong>Target:</strong> पिछले साल के कटऑफ के अंदर। &nbsp; <strong>Dream:</strong> पिछले साल के कटऑफ के बाहर, लेकिन संभव।",
       byBranch: "ब्रांच के अनुसार",
       byCollege: "कॉलेज के अनुसार",
       priorityBranchFull: "ब्रांच को प्राथमिकता",
@@ -565,11 +567,11 @@ const I18N = {
     zones: {
       safeName: "Safe", safeSub: "मज़बूत बैकअप",
       targetName: "Target", targetSub: "आपका सबसे उपयुक्त ज़ोन",
-      reachName: "Reach", reachSub: "कोशिश लायक",
+      reachName: "Dream", reachSub: "कोशिश लायक",
     },
     ruler: {
       introEyebrow: "पूरी तस्वीर",
-      lede: "हर मैच एक ही रैंक रूलर पर — गहरी रेखा आप हैं। रंग संभावना दर्शाते हैं: <strong>हरा (Safe)</strong>, <strong>पीला (Target)</strong>, <strong>लाल (Reach)</strong>। पैमाना logarithmic है, इसलिए भीड़ भरी ऊपरी रैंक भी पढ़ने लायक रहती हैं।",
+      lede: "हर मैच एक ही रैंक रूलर पर — गहरी रेखा आप हैं। रंग संभावना दर्शाते हैं: <strong>हरा (Safe)</strong>, <strong>पीला (Target)</strong>, <strong>लाल (Dream)</strong>। पैमाना logarithmic है, इसलिए भीड़ भरी ऊपरी रैंक भी पढ़ने लायक रहती हैं।",
       iitTop5Title: "IITs — Top 5", iitRestTitle: "IITs — बाक़ी",
       iitTitle: "IITs", iitVia: "JEE Advanced से",
       nitTitle: "NITs · IIITs · GFTIs", nitVia: "JEE Main से",
@@ -579,7 +581,7 @@ const I18N = {
       closes: "बंद होती है",
     },
     section: {
-      Target: "Target", Reach: "Reach", Safe: "Safe",
+      Target: "Target", Reach: "Dream", Safe: "Safe",
     },
     rankbar: {
       opens: "खुलती", closes: "बंद होती",
@@ -622,7 +624,7 @@ const I18N = {
     share: {
       title: "Disha — मेरे JEE कॉलेज मैच",
       targetLine: "Target ({count}): {picks}",
-      countsLine: "Safe {safe} · Reach {reach}",
+      countsLine: "Safe {safe} · Dream {reach}",
       noTarget: "टॉप विकल्प: {picks}",
       open: "Disha खोलें:",
       copyFail: "कॉपी नहीं हो सका। लिंक कॉपी करने के लिए address bar को लॉन्ग-प्रेस करें।",
@@ -645,14 +647,14 @@ const I18N = {
         "અમને તમારો રેન્ક અને આગામી ચાર વર્ષ માટે તમારી પસંદગી જણાવો. " +
         "અમે તમને એવી IITs, NITs, IIITs અને GFTIs બતાવીશું જ્યાં તમને ખરેખર તક છે — " +
         "જેને <strong class=\"tone-safe\">Safe</strong>, <strong class=\"tone-target\">Target</strong> " +
-        "અને <strong class=\"tone-reach\">Reach</strong> માં વર્ગીકૃત કરવામાં આવ્યા છે — તમારા લક્ષ્યો માટે સાચી ગાઈડન્સ સાથે.",
+        "અને <strong class=\"tone-reach\">Dream</strong> માં વર્ગીકૃત કરવામાં આવ્યા છે — તમારા લક્ષ્યો માટે સાચી ગાઈડન્સ સાથે.",
       cta: "મારી તક શોધો",
       trust: "આશરે એક મિનિટ લાગે છે · મફત · કંઈપણ સંગ્રહિત થતું નથી",
       utmtHtml:
         "આ એક ઓપન-સોર્સ પહેલ છે <a href=\"https://www.utmt.org\" target=\"_blank\" rel=\"noopener\">UTMT</a> દ્વારા — AI પ્રોડક્ટ્સ બનાવતા શીખો",
       legendSafe: "Safe", legendSafeSub: "ખૂબ જ સંભવિત",
       legendTarget: "Target", legendTargetSub: "વાસ્તવિક ફિટ",
-      legendReach: "Reach", legendReachSub: "પ્રયત્ન કરવા જેવું",
+      legendReach: "Dream", legendReachSub: "પ્રયત્ન કરવા જેવું",
       offline: "અમે ભલામણ સેવા સુધી પહોંચી શક્યા નથી. ખાતરી કરો કે બેકએન્ડ ચાલુ છે, પછી ફરી પ્રયાસ કરો.",
       retry: "ફરી પ્રયાસ કરો",
     },
@@ -676,6 +678,7 @@ const I18N = {
       s2Hint: "આનાથી નક્કી થાય છે કે કઈ સીટ પૂલ અને ક્વોટા તમને લાગુ પડે છે.",
       genderLabel: "જાતિ",
       categoryLabel: "અનામત કેટેગરી",
+      pwdLabel: "દિવ્યાંગ વ્યક્તિઓ (PwD)",
       s3Eyebrow: "તમે ક્યાંથી છો",
       s3Title: "તમારું હોમ સ્ટેટ",
       s3Hint: "જે રાજ્યમાંથી તમે ધોરણ 12 પાસ કર્યું છે. NITs હોમ-સ્ટેટ વિદ્યાર્થીઓ માટે અડધી સીટો અનામત રાખે છે, જેથી આ તમારી તકોને ખરેખર બદલી નાખે છે.",
@@ -755,7 +758,7 @@ const I18N = {
     loading: [
       "ગયા વર્ષના કટઓફ વાંચી રહ્યા છીએ…",
       "તમારી પ્રોફાઇલ સાથે મેળ ખાતા પ્રોગ્રામ્સ શોધી રહ્યા છીએ…",
-      "Safe, Target અને Reach સૉર્ટ કરી રહ્યા છીએ…",
+      "Safe, Target અને Dream સૉર્ટ કરી રહ્યા છીએ…",
     ],
     error: {
       title: "કંઈક ખોટું થયું",
@@ -814,7 +817,7 @@ const I18N = {
     },
     results: {
       standingTitle: "તમારું સ્થાન",
-      standingNote: "<strong>Safe:</strong> ગયા વર્ષના ક્લાસના ટોપ 25% માં. &nbsp; <strong>Target:</strong> ગયા વર્ષના કટઓફની અંદર. &nbsp; <strong>Reach:</strong> ગયા વર્ષના કટઓફની બહાર, પરંતુ શક્ય.",
+      standingNote: "<strong>Safe:</strong> ગયા વર્ષના ક્લાસના ટોપ 25% માં. &nbsp; <strong>Target:</strong> ગયા વર્ષના કટઓફની અંદર. &nbsp; <strong>Dream:</strong> ગયા વર્ષના કટઓફની બહાર, પરંતુ શક્ય.",
       byBranch: "બ્રાન્ચ મુજબ",
       byCollege: "કૉલેજ મુજબ",
       priorityBranchFull: "બ્રાન્ચને પ્રાધાન્ય",
@@ -866,11 +869,11 @@ const I18N = {
     zones: {
       safeName: "Safe", safeSub: "મજબૂત બેકઅપ",
       targetName: "Target", targetSub: "તમારો શ્રેષ્ઠ-ફિટ ઝોન",
-      reachName: "Reach", reachSub: "પ્રયત્ન કરવા જેવું",
+      reachName: "Dream", reachSub: "પ્રયત્ન કરવા જેવું",
     },
     ruler: {
       introEyebrow: "આખી ચિત્ર",
-      lede: "એક જ સ્કેલ પર તમામ પરિણામો — ડાર્ક લાઇન તમે છો. રંગો તકો દર્શાવે છે: <strong>લીલો (Safe)</strong>, <strong>પીળો (Target)</strong>, <strong>લાલ (Reach)</strong>. સ્કેલ logarithmic છે, જેથી ગીચ ટોચના રેન્ક પણ વાંચી શકાય.",
+      lede: "એક જ સ્કેલ પર તમામ પરિણામો — ડાર્ક લાઇન તમે છો. રંગો તકો દર્શાવે છે: <strong>લીલો (Safe)</strong>, <strong>પીળો (Target)</strong>, <strong>લાલ (Dream)</strong>. સ્કેલ logarithmic છે, જેથી ગીચ ટોચના રેન્ક પણ વાંચી શકાય.",
       iitTop5Title: "IITs — Top 5", iitRestTitle: "IITs — બાકી",
       iitTitle: "IITs", iitVia: "JEE Advanced દ્વારા",
       nitTitle: "NITs · IIITs · GFTIs", nitVia: "JEE Main દ્વારા",
@@ -880,7 +883,7 @@ const I18N = {
       closes: "બંધ થાય છે",
     },
     section: {
-      Target: "Target", Reach: "Reach", Safe: "Safe",
+      Target: "Target", Reach: "Dream", Safe: "Safe",
     },
     rankbar: {
       opens: "ખુલે છે", closes: "બંધ થાય છે",
@@ -922,7 +925,7 @@ const I18N = {
     share: {
       title: "Disha — મારા JEE કૉલેજ મેચ",
       targetLine: "Target ({count}): {picks}",
-      countsLine: "Safe {safe} · Reach {reach}",
+      countsLine: "Safe {safe} · Dream {reach}",
       noTarget: "ટોચની કૉલેજો: {picks}",
       open: "Disha ખોલો:",
       copyFail: "કોપી થઈ શક્યું નથી. એડ્રેસ બાર પરથી લિંક કોપી કરો.",
@@ -945,14 +948,14 @@ const I18N = {
         "ನಿಮ್ಮ ರ‍್ಯಾಂಕ್ ಮತ್ತು ಮುಂದಿನಹಾಲು ವರ್ಷಗಳ ನಿಮ್ಮ ಆಸಕ್ತಿಯನ್ನು ತಿಳಿಸಿ. " +
         "ನಿಮಗೆ ನಿಜವಾಗಿಯೂ ಅವಕಾಶವಿರುವ IITs, NITs, IIITs ಮತ್ತು GFTIs ಗಳನ್ನು ನಾವು ತೋರಿಸುತ್ತೇವೆ — " +
         "ಅವುಗಳನ್ನು <strong class=\"tone-safe\">Safe</strong>, <strong class=\"tone-target\">Target</strong> " +
-        "ಮತ್ತು <strong class=\"tone-reach\">Reach</strong> ಎಂದು ವಿಂಗಡಿಸಲಾಗಿದೆ — ನಿಮ್ಮ ಗುರಿಗಳಿಗೆ ಪ್ರಾಮಾಣಿಕ ಮಾರ್ಗದರ್ಶನದೊಂದಿಗೆ.",
+        "ಮತ್ತು <strong class=\"tone-reach\">Dream</strong> ಎಂದು ವಿಂಗಡಿಸಲಾಗಿದೆ — ನಿಮ್ಮ ಗುರಿಗಳಿಗೆ ಪ್ರಾಮಾಣಿಕ ಮಾರ್ಗದರ್ಶನದೊಂದಿಗೆ.",
       cta: "ನನ್ನ ಅವಕಾಶಗಳನ್ನು ಹುಡುಕಿ",
       trust: "ಸುಮಾರು ಒಂದು ನಿಮಿಷ ತಗಲುತ್ತದೆ · ಉಚಿತ · ಯಾವುದೇ ಮಾಹಿತಿ ಉಳಿಯುವುದಿಲ್ಲ",
       utmtHtml:
         "<a href=\"https://www.utmt.org\" target=\"_blank\" rel=\"noopener\">UTMT</a> ನ ಮುಕ್ತ ಆಕರ ಉಪಕ್ರಮ — AI ಉತ್ಪನ್ನಗಳನ್ನು ನಿರ್ಮಿಸಲು ಕಲಿಯಿರಿ",
       legendSafe: "Safe", legendSafeSub: "ಬಹಳಷ್ಟು ಸಾಧ್ಯತೆ",
       legendTarget: "Target", legendTargetSub: "ಸೂಕ್ತ ಹೊಂದಾಣಿಕೆ",
-      legendReach: "Reach", legendReachSub: "ಪ್ರಯತ್ನಿಸಬಹುದಾದ",
+      legendReach: "Dream", legendReachSub: "ಪ್ರಯತ್ನಿಸಬಹುದಾದ",
       offline: "ಶಿಫಾರಸು ಸೇವೆಯನ್ನು ಸಂಪರ್ಕಿಸಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ಬ್ಯಾಕೆಂಡ್ ರನ್ ಆಗುತ್ತಿದೆಯೇ ಎಂದು ಖಚಿತಪಡಿಸಿಕೊಂಡು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
       retry: "ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ",
     },
@@ -976,6 +979,7 @@ const I18N = {
       s2Hint: "ಇದು ನಿಮಗೆ ಅನ್ವಯವಾಗುವ ಸೀಟುಗಳ ವರ್ಗ ಮತ್ತು ಕೋಟಾಗಳನ್ನು ನಿರ್ಧರಿಸುತ್ತದೆ.",
       genderLabel: "ಲಿಂಗ",
       categoryLabel: "ಮೀಸಲಾತಿ ವರ್ಗ",
+      pwdLabel: "ವಿಕಲಚೇತನರು (PwD)",
       s3Eyebrow: "ನಿಮ್ಮ ಸ್ಥಳ",
       s3Title: "ನಿಮ್ಮ ತವರು ರಾಜ್ಯ",
       s3Hint: "ನೀವು 12 ನೇ ತರಗತಿ ತೇರ್ಗಡೆಯಾದ ರಾಜ್ಯ. NITs ಅರ್ಧದಷ್ಟು ಸೀಟುಗಳನ್ನು ತವರು ರಾಜ್ಯದ ವಿದ್ಯಾರ್ಥಿಗಳಿಗೆ ಕಾಯ್ದಿರಿಸುತ್ತವೆ, ಆದ್ದರಿಂದ ಇದು ನಿಮ್ಮ ಅವಕಾಶಗಳನ್ನು ಧನಾತ್ಮಕವಾಗಿ ಬದಲಾಯಿಸುತ್ತದೆ.",
@@ -1055,7 +1059,7 @@ const I18N = {
     loading: [
       "ಕಡೆ ವರ್ಷದ ಕಟ್‌ಆಫ್ ಓದಲಾಗುತ್ತಿದೆ…",
       "ನಿಮ್ಮ ಪ್ರೊಫೈಲ್‌ಗೆ ಹೊಂದಾಣಿಕೆಯಾಗುವ ಕಾಲೇಜುಗಳನ್ನು ಹುಡುಕಲಾಗುತ್ತಿದೆ…",
-      "Safe, Target ಮತ್ತು Reach ವರ್ಗೀಕರಿಸಲಾಗುತ್ತಿದೆ…",
+      "Safe, Target ಮತ್ತು Dream ವರ್ಗೀಕರಿಸಲಾಗುತ್ತಿದೆ…",
     ],
     error: {
       title: "ಪ್ರಕ್ರಿಯೆ ಪೂರ್ಣಗೊಳ್ಳಲಿಲ್ಲ",
@@ -1114,7 +1118,7 @@ const I18N = {
     },
     results: {
       standingTitle: "ನಿಮ್ಮ ಸ್ಥಾನಮಾನ",
-      standingNote: "<strong>Safe:</strong> ಕಳೆದ ವರ್ಷದ ಕ್ಲಾಸ್‌ನ ಟಾಪ್ 25% ರಲ್ಲಿದೆ. &nbsp; <strong>Target:</strong> ಕಳೆದ ವರ್ಷದ ಕಟ್-ಆಫ್‌ನೊಳಗೆ. &nbsp; <strong>Reach:</strong> ಕಳೆದ ವರ್ಷದ ಕಟ್-ಆಫ್‌ನಿಂದ ಹೊರಗಿದೆ, ಆದರೆ ಸಾಧ್ಯತೆ ಇದೆ.",
+      standingNote: "<strong>Safe:</strong> ಕಳೆದ ವರ್ಷದ ಕ್ಲಾಸ್‌ನ ಟಾಪ್ 25% ರಲ್ಲಿದೆ. &nbsp; <strong>Target:</strong> ಕಳೆದ ವರ್ಷದ ಕಟ್-ಆಫ್‌ನೊಳಗೆ. &nbsp; <strong>Dream:</strong> ಕಳೆದ ವರ್ಷದ ಕಟ್-ಆಫ್‌ನಿಂದ ಹೊರಗಿದೆ, ಆದರೆ ಸಾಧ್ಯತೆ ಇದೆ.",
       byBranch: "ಬ್ರಾಂಚ್ ಪ್ರಕಾರ",
       byCollege: "ಕಾಲೇಜು ಪ್ರಕಾರ",
       priorityBranchFull: "ಬ್ರಾಂಚ್ ಆದ್ಯತೆ",
@@ -1166,11 +1170,11 @@ const I18N = {
     zones: {
       safeName: "Safe", safeSub: "ಬಲವಾದ ಬ್ಯಾಕಪ್",
       targetName: "Target", targetSub: "ನಿಮ್ಮ ಉತ್ತಮ ಹೊಂದಾಣಿಕೆ ವಲಯ",
-      reachName: "Reach", reachSub: "ಪ್ರಯತ್ನಿಸಬಹುದಾದ",
+      reachName: "Dream", reachSub: "ಪ್ರಯತ್ನಿಸಬಹುದಾದ",
     },
     ruler: {
       introEyebrow: "ಸಂಪೂರ್ಣ ಚಿತ್ರಣ",
-      lede: "ಒಂದೇ ಸ್ಕೇಲ್‌ನಲ್ಲಿ ಎಲ್ಲಾ ಫಲಿತಾಂಶಗಳು — ಕಡು ಬಣ್ಣದ ಗೆರೆ ನಿಮ್ಮದು. ಬಣ್ಣಗಳು ಅವಕಾಶಗಳನ್ನು ಸೂಚಿಸುತ್ತವೆ: <strong>ಹಸಿರು (Safe)</strong>, <strong>ಹಳದಿ (Target)</strong>, <strong>ಕೆಂಪು (Reach)</strong>. ಸ್ಕೇಲ್ logarithmic ಆಗಿದೆ, ಇದರಿಂದಾಗಿ ಗೀಚು ರ‍್ಯಾಂಕ್‌ಗಳೂ ಓದಲು ಸುಲಭವಾಗಿವೆ.",
+      lede: "ಒಂದೇ ಸ್ಕೇಲ್‌ನಲ್ಲಿ ಎಲ್ಲಾ ಫಲಿತಾಂಶಗಳು — ಕಡು ಬಣ್ಣದ ಗೆರೆ ನಿಮ್ಮದು. ಬಣ್ಣಗಳು ಅವಕಾಶಗಳನ್ನು ಸೂಚಿಸುತ್ತವೆ: <strong>ಹಸಿರು (Safe)</strong>, <strong>ಹಳದಿ (Target)</strong>, <strong>ಕೆಂಪು (Dream)</strong>. ಸ್ಕೇಲ್ logarithmic ಆಗಿದೆ, ಇದರಿಂದಾಗಿ ಗೀಚು ರ‍್ಯಾಂಕ್‌ಗಳೂ ಓದಲು ಸುಲಭವಾಗಿವೆ.",
       iitTop5Title: "IITs — Top 5", iitRestTitle: "IITs — ಉಳಿದವು",
       iitTitle: "IITs", iitVia: "JEE Advanced ಮೂಲಕ",
       nitTitle: "NITs · IIITs · GFTIs", nitVia: "JEE Main ಮೂಲಕ",
@@ -1180,7 +1184,7 @@ const I18N = {
       closes: "ಮುಚ್ಚುತ್ತದೆ",
     },
     section: {
-      Target: "Target", Reach: "Reach", Safe: "Safe",
+      Target: "Target", Reach: "Dream", Safe: "Safe",
     },
     rankbar: {
       opens: "ತೆರೆಯುತ್ತದೆ", closes: "ಮುಚ್ಚುತ್ತದೆ",
@@ -1222,7 +1226,7 @@ const I18N = {
     share: {
       title: "Disha — ನನ್ನ JEE ಕಾಲೇಜು ಪಂದ್ಯಗಳು",
       targetLine: "Target ({count}): {picks}",
-      countsLine: "Safe {safe} · Reach {reach}",
+      countsLine: "Safe {safe} · Dream {reach}",
       noTarget: "ಉನ್ನತ ಕಾಲೇಜುಗಳು: {picks}",
       open: "Disha ತೆರೆಯಿರಿ:",
       copyFail: "ಕಾಪಿ ಮಾಡಲು ಸಾಧ್ಯವಾಗಲಿಲ್ಲ. ಲಿಂಕ್ ಕಾಪಿ ಮಾಡಲು ಅಡ್ರೆಸ್ ಬಾರ್ ಪ್ರೆಸ್ ಮಾಡಿ ಹಿಡಿಯಿರಿ.",

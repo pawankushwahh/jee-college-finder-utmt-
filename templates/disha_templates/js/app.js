@@ -508,23 +508,51 @@ function buildCategoryOptions(catSel) {
   catSel = catSel || $("seat-category");
   if (!catSel) return;
   const prev = catSel.value || "OPEN";
-  const cats = state.meta?.categories?.length
-    ? state.meta.categories
-    : [{ value: "OPEN", label: "General", available: true }];
-  catSel.innerHTML = "";
-  for (const c of cats) {
-    const opt = document.createElement("option");
-    opt.value = c.value;
-    const label = c.value === "OPEN"
-      ? t("category.general")
-      : String(c.label || c.value);
+  
+  if (catSel.id === "panel-seat-category") {
+    // Selector B
+    const cats = [
+      { value: "ALL", label: "All Categories" },
+      { value: "OPEN", label: "General (OPEN)" },
+      { value: "OBC-NCL", label: "OBC-NCL" },
+      { value: "SC", label: "SC (Scheduled Caste)" },
+      { value: "ST", label: "ST (Scheduled Tribe)" },
+      { value: "EWS", label: "EWS (Economically Weaker Section)" },
+      { value: "OPEN (PwD)", label: "OPEN (PwD)" },
+      { value: "OBC-NCL (PwD)", label: "OBC-NCL (PwD)" },
+      { value: "SC (PwD)", label: "SC (PwD)" },
+      { value: "ST (PwD)", label: "ST (PwD)" },
+      { value: "EWS (PwD)", label: "EWS (PwD)" }
+    ];
+    catSel.innerHTML = "";
+    for (const c of cats) {
+      const opt = document.createElement("option");
+      opt.value = c.value;
+      opt.textContent = c.label;
+      catSel.appendChild(opt);
+    }
+  } else {
+    // Selector A
+    const cats = state.meta?.categories?.length
+      ? state.meta.categories
+      : [{ value: "OPEN", label: "General", available: true }];
+    catSel.innerHTML = "";
+    for (const c of cats) {
+      const opt = document.createElement("option");
+      opt.value = c.value;
+      const label = c.value === "OPEN"
+        ? t("category.general")
+        : String(c.label || c.value);
 
-    opt.textContent = label;
-    opt.disabled = false;
-    catSel.appendChild(opt);
+      opt.textContent = label;
+      opt.disabled = false;
+      catSel.appendChild(opt);
+    }
   }
   catSel.value = prev;
-  if (!catSel.value) catSel.value = "OPEN";
+  if (!catSel.value) {
+    catSel.value = (catSel.id === "panel-seat-category") ? "ALL" : "OPEN";
+  }
   const note = $("category-note");
   if (note) note.textContent = t("category.note");
 }
@@ -558,6 +586,7 @@ function buildPayload() {
     home_state: $("home-state").value,
     goal: state.goal,
     seat_category: $("seat-category").value || "OPEN",
+    is_pwd: $("seat-category-pwd") ? $("seat-category-pwd").checked : false,
     brand_branch_ratio: state.brandBranchRatio !== undefined ? state.brandBranchRatio : 0.5,
     max_results: 150,
     lang: getLang(),
@@ -670,7 +699,15 @@ function syncPanelFromState() {
   if ($("panel-adv-rank")) $("panel-adv-rank").value = $("adv-rank").value;
   if ($("panel-home-state")) $("panel-home-state").value = $("home-state").value;
   if ($("panel-seat-category")) {
-    $("panel-seat-category").value = $("seat-category").value || "OPEN";
+    const primary = $("seat-category").value || "OPEN";
+    const pwdCheckbox = $("seat-category-pwd");
+    if (primary === "ALL") {
+      $("panel-seat-category").value = "ALL";
+    } else if (pwdCheckbox && pwdCheckbox.checked) {
+      $("panel-seat-category").value = `${primary} (PwD)`;
+    } else {
+      $("panel-seat-category").value = primary;
+    }
   }
   if ($("panel-goal") && state.goal) $("panel-goal").value = state.goal;
 
@@ -1336,6 +1373,13 @@ function confidenceChipHtml(rec) {
 
 function advantageBadgesHtml(rec) {
   const badges = [];
+  if (rec.is_preparatory) {
+    badges.push(
+      `<span class="adv-badge adv-badge--prep" style="background-color: #6d28d9; color: white; border-color: #5b21b6;" title="IIT Preparatory Courses represent 1-year bridge options before standard admission.">
+         Preparatory Rank
+       </span>`
+    );
+  }
   if (rec.home_state_advantage) {
     badges.push(
       `<span class="adv-badge adv-badge--home" title="${escapeHtml(t("card.homeBadgeTitle"))}">
@@ -2243,6 +2287,12 @@ function buildShareUrl() {
   // 5. category
   const cat = $("seat-category").value || "OPEN";
   params.set("cat", cat);
+  const pwdCheckbox = $("seat-category-pwd");
+  if (pwdCheckbox && pwdCheckbox.checked) {
+    params.set("pwd", "1");
+  } else {
+    params.delete("pwd");
+  }
 
   // 6. home state
   const hs = $("home-state").value;
@@ -2333,6 +2383,11 @@ function loadStateFromURL() {
   const cat = q.get("cat") || "OPEN";
   if ($("seat-category").querySelector(`option[value="${CSS.escape(cat)}"]`)) {
     $("seat-category").value = cat;
+  }
+  const pwdVal = q.get("pwd") === "1";
+  const pwdCheckbox = $("seat-category-pwd");
+  if (pwdCheckbox) {
+    pwdCheckbox.checked = pwdVal;
   }
 
   // Restore home state
@@ -2542,7 +2597,18 @@ function bindPanelEvents() {
   const panelCat = $("panel-seat-category");
   if (panelCat) {
     panelCat.addEventListener("change", () => {
-      $("seat-category").value = panelCat.value;
+      const val = panelCat.value;
+      const pwdCheckbox = $("seat-category-pwd");
+      if (val === "ALL") {
+        $("seat-category").value = "ALL";
+        if (pwdCheckbox) pwdCheckbox.checked = false;
+      } else if (val.endsWith(" (PwD)")) {
+        $("seat-category").value = val.replace(" (PwD)", "");
+        if (pwdCheckbox) pwdCheckbox.checked = true;
+      } else {
+        $("seat-category").value = val;
+        if (pwdCheckbox) pwdCheckbox.checked = false;
+      }
       schedulePanelUpdate();
       saveStateToURL();
     });
@@ -2766,7 +2832,33 @@ function bindEvents() {
 
   $("seat-category").addEventListener("change", () => {
     saveStateToURL();
+    const panelCat = $("panel-seat-category");
+    if (panelCat) {
+      const primary = $("seat-category").value || "OPEN";
+      const pwdCheckbox = $("seat-category-pwd");
+      if (primary === "ALL") {
+        panelCat.value = "ALL";
+      } else if (pwdCheckbox && pwdCheckbox.checked) {
+        panelCat.value = `${primary} (PwD)`;
+      } else {
+        panelCat.value = primary;
+      }
+    }
   });
+
+  const seatCategoryPwd = $("seat-category-pwd");
+  if (seatCategoryPwd) {
+    seatCategoryPwd.addEventListener("change", () => {
+      saveStateToURL();
+      const panelCat = $("panel-seat-category");
+      if (panelCat) {
+        const primary = $("seat-category").value || "OPEN";
+        if (primary !== "ALL") {
+          panelCat.value = seatCategoryPwd.checked ? `${primary} (PwD)` : primary;
+        }
+      }
+    });
+  }
 
   const btnBranch = $("view-by-branch");
   const btnCollege = $("view-by-college");

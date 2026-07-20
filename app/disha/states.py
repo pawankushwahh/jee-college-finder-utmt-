@@ -535,7 +535,6 @@ VALID_CATEGORIES: list = [
     {"value": "SC", "label": "SC (Scheduled Caste)", "available": True},
     {"value": "ST", "label": "ST (Scheduled Tribe)", "available": True},
     {"value": "EWS", "label": "EWS (Economically Weaker Section)", "available": True},
-    {"value": "PwD", "label": "PwD (Person with Disability)", "available": True},
 ]
 
 # ---------------------------------------------------------------------------

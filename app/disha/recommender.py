@@ -587,7 +587,7 @@ _GUIDANCE = {
         ),
         "found": (
             "Found {total} eligible institute-branch options for your profile "
-            "(showing {shown}). They are grouped into Target, Reach and Safe, and "
+            "(showing {shown}). They are grouped into Target, Dream and Safe, and "
             "ordered to match your stated interest."
         ),
     },
@@ -599,7 +599,7 @@ _GUIDANCE = {
         ),
         "found": (
             "आपकी प्रोफ़ाइल के लिए {total} योग्य संस्थान-ब्रांच विकल्प मिले "
-            "({shown} दिखाए जा रहे हैं)। इन्हें Target, Reach और Safe में बाँटा गया है "
+            "({shown} दिखाए जा रहे हैं)। इन्हें Target, Dream और Safe में बाँटा गया है "
             "और आपकी बताई रुचि के अनुसार क्रम में लगाया गया है।"
         ),
     },
@@ -610,7 +610,7 @@ _GUIDANCE = {
         ),
         "found": (
             "તમારી પ્રોફાઇલ માટે {total} પાત્ર સંસ્થા-બ્રાન્ચ વિકલ્પો મળ્યા "
-            "({shown} બતાવી રહ્યા છીએ). તેઓ Target, Reach અને Safe માં વર્ગીકૃત થયેલ છે "
+            "({shown} બતાવી રહ્યા છીએ). તેઓ Target, Dream અને Safe માં વર્ગીકૃત થયેલ છે "
             "અને તમારી જણાવેલી રુચિ અનુસાર ગોઠવાયેલા છે."
         ),
     },
@@ -621,7 +621,7 @@ _GUIDANCE = {
         ),
         "found": (
             "ನಿಮ್ಮ ಪ್ರೊಫೈಲ್‌ಗೆ ಹೊಂದುವ {total} ಕಾಲೇಜು-ಬ್ರಾಂಚ್ ಆಯ್ಕೆಗಳು ಕಂಡುಬಂದಿವೆ "
-            "({shown} ತೋರಿಸಲಾಗುತ್ತಿದೆ). ಇವುಗಳನ್ನು Target, Reach ಮತ್ತು Safe ಎಂದು ವರ್ಗೀಕರಿಸಿ, "
+            "({shown} ತೋರಿಸಲಾಗುತ್ತಿದೆ). ಇವುಗಳನ್ನು Target, Dream ಮತ್ತು Safe ಎಂದು ವರ್ಗೀಕರಿಸಿ, "
             "ನಿಮ್ಮ ಆಸಕ್ತಿಗೆ ತಕ್ಕಂತೆ ಜೋಡಿಸಲಾಗಿದೆ."
         ),
     },
@@ -653,20 +653,29 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
     hs_index = home_state_advantage_index(effective_mode)
     female_index = female_seat_advantage_index(effective_mode)
 
-    seat_filter = req.seat_category  # always filter now
+    category = req.seat_category
+    is_pwd = req.is_pwd
+    if category.endswith(" (PwD)"):
+        category = category[:-6]
+        is_pwd = True
 
     results: List[Recommendation] = []
     for prog in programs:
         rank = _relevant_rank(prog, req)
         if rank is None:
             continue
-        # Filter by seat_type (OPEN / OBC-NCL / SC / ST / EWS / PwD variants)
-        if seat_filter:
-            if seat_filter == "PwD":
-                if not prog.seat_type.endswith("(PwD)"):
+        # Filter by seat_type
+        if category and category != "ALL":
+            if is_pwd:
+                # PwD candidates match their category PwD seats and OPEN PwD seats
+                allowed_seats = {f"{category} (PwD)", "OPEN (PwD)"}
+                if prog.seat_type not in allowed_seats:
                     continue
-            elif prog.seat_type != seat_filter:
-                continue
+            else:
+                # Regular candidates match their category seats and OPEN seats
+                allowed_seats = {category, "OPEN"}
+                if prog.seat_type not in allowed_seats:
+                    continue
         if not _passes_gender(prog, req.gender):
             continue
         if not _passes_quota(prog, req.home_state):
@@ -741,6 +750,8 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
                 is_top_iit=getattr(prog, 'is_top_iit', False),
                 history=history,
                 admission_probability=prob,
+                is_preparatory=prog.is_preparatory,
+                has_preparatory_rounds=prog.has_preparatory_rounds,
             )
         )
 

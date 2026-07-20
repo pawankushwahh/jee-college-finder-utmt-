@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Disha — Find your direction after JEE</title>
   <meta name="description"
-    content="Disha, a UTMT initiative — a calm, guided college counsellor for JEE aspirants. Enter your rank and goals, and see which IITs, NITs, IIITs and GFTIs realistically fit — grouped into Safe, Target and Reach with personal guidance." />
+    content="Disha, a UTMT initiative — a calm, guided college counsellor for JEE aspirants. Enter your rank and goals, and see which IITs, NITs, IIITs and GFTIs realistically fit — grouped into Safe, Target and Dream with personal guidance." />
   <meta name="theme-color" content="#faf6ee" />
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
   <link rel="apple-touch-icon" href="assets/favicon.svg" />
@@ -70,7 +70,7 @@
           Tell us your rank and what you want from the next four years.
           We'll show you the IITs, NITs, IIITs and GFTIs where you genuinely stand a chance —
           sorted into <strong class="tone-safe">Safe</strong>, <strong class="tone-target">Target</strong>
-          and <strong class="tone-reach">Reach</strong> — with honest guidance for your goals.
+          and <strong class="tone-reach">Dream</strong> — with honest guidance for your goals.
         </p>
         <button type="button" class="btn btn--primary btn--lg welcome__cta" id="begin-btn">
           <span data-i18n="welcome.cta">Find where I stand</span>
@@ -90,7 +90,7 @@
               data-i18n="welcome.legendTarget">Target</span> <small data-i18n="welcome.legendTargetSub">realistic
               fit</small></div>
           <div class="legend-chip"><span class="dot dot--reach"></span><span
-              data-i18n="welcome.legendReach">Reach</span> <small data-i18n="welcome.legendReachSub">worth a try</small>
+              data-i18n="welcome.legendReach">Dream</span> <small data-i18n="welcome.legendReachSub">worth a try</small>
           </div>
         </div>
       </div>
@@ -171,6 +171,10 @@
               <label class="field__label" for="seat-category" data-i18n="flow.categoryLabel">Reservation
                 category</label>
               <select class="input" id="seat-category"></select>
+              <div class="checkbox-container">
+                <input type="checkbox" id="seat-category-pwd" />
+                <label for="seat-category-pwd" data-i18n="flow.pwdLabel">Persons with Disabilities (PwD)</label>
+              </div>
               <p class="field__note" id="category-note"></p>
             </div>
           </fieldset>
@@ -408,14 +412,14 @@
             </button>
             <button type="button" class="zone zone--reach" data-zone="Reach">
               <span class="zone__count" id="zone-count-reach">0</span>
-              <span class="zone__name" data-i18n="zones.reachName">Reach</span>
+              <span class="zone__name" data-i18n="zones.reachName">Dream</span>
               <span class="zone__sub" data-i18n="zones.reachSub">worth a try</span>
             </button>
           </div>
           <p class="spectrum-note" style="font-size: 13px; color: var(--color-text-muted); margin-top: 12px; margin-bottom: 24px; text-align: center;" data-i18n-html="results.standingNote">
             <strong>Safe:</strong> In top 25% of last year's class. &nbsp;
             <strong>Target:</strong> Inside last year's cutoff. &nbsp;
-            <strong>Reach:</strong> Outside last year's cutoff, but possible.
+            <strong>Dream:</strong> Outside last year's cutoff, but possible.
           </p>
 
           <!-- Rank ruler — zoomed-out hero: every eligible pick on one log rank axis -->

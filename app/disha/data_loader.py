@@ -80,6 +80,8 @@ class Program:
     flag_round: Optional[int] = None
     is_top_iit: bool = False
     tags: Set[str] = field(default_factory=set)
+    is_preparatory: bool = False
+    has_preparatory_rounds: bool = False
 
 
 def _classify_institute_type(name: str) -> str:
@@ -287,14 +289,36 @@ def compute_best_ranks(df: pd.DataFrame) -> pd.DataFrame:
     out["preparatory_opening_rank"] = pd.DataFrame(open_prep).min(axis=1)
     out["preparatory_closing_rank"] = pd.DataFrame(close_prep).max(axis=1)
 
+    # Identify preparatory flags:
+    # 1. has_preparatory_rounds: True if there is any preparatory rank in any round (opening or closing)
+    has_prep_rounds = pd.DataFrame(open_prep).notna().any(axis=1) | pd.DataFrame(close_prep).notna().any(axis=1)
+    
+    # 2. is_preparatory: True if both regular opening and closing ranks are NaN AND it has preparatory ranks AND seat_type ends with "(PwD)"
+    is_prep_only = out["opening_rank"].isna() & out["closing_rank"].isna() & has_prep_rounds & out["seat_type"].str.endswith("(PwD)")
+    
+    # Backfill opening_rank and closing_rank for the preparatory-only rows
+    out.loc[is_prep_only, "opening_rank"] = out.loc[is_prep_only, "preparatory_opening_rank"]
+    out.loc[is_prep_only, "closing_rank"] = out.loc[is_prep_only, "preparatory_closing_rank"]
+    
+    # Add flags to out
+    out["is_preparatory"] = is_prep_only
+    out["has_preparatory_rounds"] = has_prep_rounds
+
     # Calculate stable cutoff and volatility metrics row-by-row
     close_reg_df = pd.DataFrame(close_reg)
+    close_prep_df = pd.DataFrame(close_prep)
+    
+    vol_results = []
     round_nums = [int(c.split("_R")[-1]) for c in close_reg_df.columns]
     
-    vol_results = [
-        compute_stable_and_volatility(list(zip(round_nums, row)))
-        for row in close_reg_df.itertuples(index=False)
-    ]
+    # Explicitly compute volatility on the appropriate rank scale
+    for idx in range(len(df)):
+        if is_prep_only.iloc[idx]:
+            row_vals = close_prep_df.iloc[idx].tolist()
+        else:
+            row_vals = close_reg_df.iloc[idx].tolist()
+        vol_results.append(compute_stable_and_volatility(list(zip(round_nums, row_vals))))
+        
     vol_df = pd.DataFrame(vol_results, index=df.index)
 
     out["stable_cutoff"] = vol_df["stable_cutoff"]
@@ -303,9 +327,8 @@ def compute_best_ranks(df: pd.DataFrame) -> pd.DataFrame:
     out["volatility_tag"] = vol_df["tag"]
     out["flag_round"] = vol_df["flag_round"]
 
-    # Pure-prep rows (all round values P-suffixed) have NaN regular ranks; drop them
-    # from regular processing since they represent bridge-course seats, not normal
-    # allotment seats.  The preparatory columns carry their data for future use.
+    # Only drop a row if neither regular nor preparatory ranks are usable.
+    # After backfilling, valid preparatory-only rows are preserved.
     out = out.dropna(subset=["opening_rank", "closing_rank"])
     out["opening_rank"] = out["opening_rank"].astype(int)
     out["closing_rank"] = out["closing_rank"].astype(int)
@@ -378,6 +401,8 @@ def load_programs_basic() -> List[Program]:
                 volatility_tag=str(row.volatility_tag),
                 flag_round=None if pd.isna(flag_r) else int(flag_r),
                 tags=states.classify_branch(full),
+                is_preparatory=bool(row.is_preparatory),
+                has_preparatory_rounds=bool(row.has_preparatory_rounds),
             )
         )
     return programs
