@@ -1,6 +1,6 @@
 # Disha (दिशा) — JEE College Recommender & Analytics Portal
 
-Disha is an open-source intelligent counselling pipeline and interactive portal designed to help JEE Main and Advanced aspirants navigate the complex JoSAA/CSAB seat allocation process. By inputting their ranks, gender, home state, and career aspirations, students receive a personalized, mathematically backed list of eligible college and branch options. Unlike static PDF cutoff tables, Disha groups recommendations into intuitive categories (Safe, Target, and Reach), calculates the statistical probability of admission based on historical round-wise volatility, and aligns choices with the student's career interests.
+Disha is an open-source intelligent counselling pipeline and interactive portal designed to help JEE Main and Advanced aspirants navigate the complex JoSAA/CSAB seat allocation process. By inputting their ranks, gender, home state, and career aspirations, students receive a personalized, mathematically backed list of eligible college and branch options. Unlike static PDF cutoff tables, Disha groups recommendations into intuitive categories (Safe, Target, and Dream—referred to as Reach in backend models and API payloads), calculates the statistical probability of admission based on historical round-wise volatility, and aligns choices with the student's career interests.
 
 **Live Application**: [jee-college-finder-utmt-asov.onrender.com](https://jee-college-finder-utmt-asov.onrender.com/)
 
@@ -51,18 +51,18 @@ To understand how Disha thinks, let’s follow **Ayush**, a student from **Madhy
 
 *   **Stage 1: Filtering Out the Impossible**
     First, Disha looks at Ayush's exam type. Since he only entered a JEE Main rank, Disha immediately filters out all IITs (which require a JEE Advanced rank) and keeps NITs, IIITs, and GFTIs. Next, because Ayush is male, Disha filters out all female-only (supernumerary) seats. Finally, Disha checks the geographic quotas: since Ayush’s home state is Madhya Pradesh, he gets the **Home State (HS)** quota at MANIT Bhopal, but falls under the **Other State (OS)** quota for NITs in other states (like NIT Trichy or NIT Warangal).
-*   **Stage 2: Sorting into Buckets (Safe, Target, Reach)**
+*   **Stage 2: Sorting into Buckets (Safe, Target, and Dream/Reach)**
     Disha compares Ayush’s rank of 6,500 against last year's opening and closing ranks for every remaining branch:
-    *   **Reach (Ambitious)**: For *Computer Science at MANIT Bhopal*, last year's home-state cutoff window was 3,200 (Opening) to 5,800 (Closing). Ayush's rank of 6,500 is slightly past the closing rank, but since it is within a 25% margin, Disha places it in his **Reach** bucket—it's tough, but cutoffs fluctuate, so it's worth a shot.
+    *   **Dream (Ambitious)**: For *Computer Science at MANIT Bhopal*, last year's home-state cutoff window was 3,200 (Opening) to 5,800 (Closing). Ayush's rank of 6,500 is slightly past the closing rank, but since it is within a 25% margin, Disha places it in his **Dream** bucket (internally classified as **Reach**)—it's tough, but cutoffs fluctuate, so it is an ambitious choice.
     *   **Target (Realistic)**: For *Computer Science at NIT Jalandhar*, the cutoff window was 6,200 to 9,500. Ayush's rank of 6,500 sits comfortably inside this range, making it a highly realistic **Target**.
     *   **Safe (Backups)**: For *Civil Engineering at NIT Kurukshetra*, the cutoff window was 12,000 to 22,000. Ayush's rank of 6,500 easily beats the opening rank of 12,000. However, because Ayush is *too* overqualified (his rank is less than half of the opening rank), Disha automatically prunes this option. This keeps Ayush's list clean and prevents him from wasting choices on branches far below his potential.
 *   **Stage 3: Personalizing by Career Goal**
     Ayush selected "Coding & software". Disha looks at its internal career-weight mapping: Computer Science (CSE) gets a maximum interest weight of 10, Mathematics & Computing gets 9, ECE gets 6, while Civil Engineering gets 0. 
     Disha also calculates a brand score for each college (e.g., top-tier older NITs get a higher brand weight than newer ones). Since Ayush left the **Brand-vs-Branch Slider** at the default 50/50 setting, Disha blends the branch interest score and the college brand score to calculate a personalized **Interest Score** for every option.
 *   **Stage 4: Calculating Admission Probability**
-    Instead of just giving a binary "yes" or "no", Disha analyzes the historical volatility of cutoffs. If a branch's closing rank has fluctuated wildly over the last few rounds, Disha calculates a wider margin of error. Using this volatility, Disha estimates Ayush's actual chance of getting in: he has a **23.5% chance** for MANIT Bhopal CSE (Reach) and an **88.2% chance** for NIT Jalandhar CSE (Target).
+    Instead of just giving a binary "yes" or "no", Disha analyzes the historical volatility of cutoffs. If a branch's closing rank has fluctuated wildly over the last few rounds, Disha calculates a wider margin of error. Using this volatility, Disha estimates Ayush's actual chance of getting in: he has a **23.5% chance** for MANIT Bhopal CSE (Dream) and an **88.2% chance** for NIT Jalandhar CSE (Target).
 *   **Stage 5: Designing the Final List**
-    Finally, Disha sorts Ayush’s matches. It shows all his **Targets** first (sorted by his personalized interest score), followed by his **Reaches**, and then his **Safes**. For each card, it generates a natural explanation in his chosen language: 
+    Finally, Disha sorts Ayush’s matches. It shows all his **Targets** first (sorted by his personalized interest score), followed by his **Dreams**, and then his **Safes**. For each card, it generates a natural explanation in his chosen language: 
     > *"Target for you – strong fit for your goal (Computer Science and Engineering at NIT Jalandhar). Your home-state quota gives roughly a 1,200-rank cushion. Cutoff has been fairly steady. (88.2% chance)"*
 
 ---
@@ -73,7 +73,7 @@ This section outlines the exact mathematical formulas, thresholds, and variables
 
 #### A. Rank Categorization Thresholds
 For a student rank $R$, opening rank $OR$, and closing rank $CR$, the category is determined by the following constants:
-*   `UPPER_MARGIN = 0.25` (Allows ranks up to 25% worse than last year's closing rank to be considered a **Reach**).
+*   `UPPER_MARGIN = 0.25` (Allows ranks up to 25% worse than last year's closing rank to be considered a **Reach** / **Dream** option).
 *   `LOWER_MARGIN = 0.50` (Prunes any option where the student's rank is more than 50% better than the opening rank to avoid overqualification).
 
 $$\text{Category} = \begin{cases} 
@@ -146,7 +146,7 @@ Cutoffs are classified dynamically by analyzing the round-wise closing ranks (`C
 
 #### E. Sorting Hierarchy
 Recommended programs are sorted by a tuple containing five keys:
-1.  **Category Order**: `Target` (0) $\to$ `Reach` (1) $\to$ `Safe` (2).
+1.  **Category Order**: `Target` (0) $\to$ `Reach` (1, displayed as `Dream` in UI) $\to$ `Safe` (2).
 2.  **Interest Score**: Descending (aligning with career goals and the brand/branch slider).
 3.  **Closing Rank**: Ascending (placing more competitive branches first).
 4.  **Institute Name**: Alphabetically (A-Z).
