@@ -145,14 +145,14 @@ kbd {
 }
 
 /* Accessibility Focus Rings */
-.btn:focus-visible, 
-.choice:focus-visible, 
-.chip:focus-visible, 
-.view-toggle-btn:focus-visible, 
-.zone:focus-visible, 
-.panel-toggle:focus-visible, 
-.data-mode-btn:focus-visible, 
-.rsection__toggle-btn:focus-visible, 
+.btn:focus-visible,
+.choice:focus-visible,
+.chip:focus-visible,
+.view-toggle-btn:focus-visible,
+.zone:focus-visible,
+.panel-toggle:focus-visible,
+.data-mode-btn:focus-visible,
+.rsection__toggle-btn:focus-visible,
 .ccard__history-btn:focus-visible,
 .choice-drawer__close:focus-visible,
 .choice-drawer__item-remove:focus-visible,
@@ -327,6 +327,7 @@ kbd {
 }
 
 @media (max-width: 480px) {
+
   .topbar__data-note,
   .utmt-badge {
     display: none;
@@ -1308,6 +1309,17 @@ select.input--sm {
   grid-column: 1 / -1;
 }
 
+/* Collapsible Toolbar controls */
+.toolbar-toggle {
+  display: none;
+}
+.toolbar-body {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0;
+}
+
 /* Stack the panel above the results on narrow screens; collapse it behind a
    "Filter / Edit" toggle so it stays out of the way until needed. */
 @media (max-width: 900px) {
@@ -1370,6 +1382,79 @@ select.input--sm {
 
   .branch-grid--compact {
     grid-template-columns: 1fr 1fr;
+  }
+
+  .toolbar {
+    position: sticky;
+    top: 48px; /* sits below the collapsed results-panel toggle bar */
+    z-index: 100;
+    background: var(--paper);
+    border-bottom: 1.5px solid var(--line);
+    padding: 0; /* remove default vertical padding of toolbar on mobile */
+    margin-top: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .toolbar-toggle {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--ink);
+    background: var(--paper);
+    border: none;
+    border-radius: 0;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: background-color 0.15s, color 0.15s, transform 0.1s;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .toolbar-toggle:hover {
+    background: var(--pine-tint);
+    color: var(--pine-deep);
+  }
+
+  .toolbar-toggle:active {
+    transform: scale(0.98);
+  }
+
+  .toolbar-toggle__chevron {
+    margin-left: auto;
+    transition: transform 0.2s var(--ease-out);
+  }
+
+  .toolbar.is-open .toolbar-toggle__chevron {
+    transform: rotate(180deg);
+  }
+
+  .toolbar-body {
+    display: flex;
+    flex-direction: column;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transition: max-height 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms ease, opacity 200ms ease, visibility 250ms;
+    padding: 0 16px;
+  }
+
+  .toolbar.is-open .toolbar-body {
+    max-height: 500px; /* plenty of height for the contents */
+    opacity: 1;
+    visibility: visible;
+    padding: 12px 16px;
+    overflow-y: auto;
+  }
+
+  /* Adjust internal toolbar sections for cleaner layout inside grid */
+  .toolbar-section {
+    padding: 10px 0;
   }
 }
 
@@ -1639,9 +1724,11 @@ select.input--sm {
   cursor: grab;
   touch-action: pan-y;
 }
+
 .ruler__track:active {
   cursor: grabbing;
 }
+
 .ruler__track:focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 2px;
@@ -2422,7 +2509,8 @@ select.input--sm {
 }
 
 .ccard__bookmark svg {
-  fill: none !important; /* empty by default */
+  fill: none !important;
+  /* empty by default */
   stroke: currentColor;
   transition: transform 0.2s ease;
 }
@@ -2443,7 +2531,8 @@ select.input--sm {
 }
 
 .ccard__bookmark.is-selected svg {
-  fill: #eab308 !important; /* completely filled with color only when bookmarked */
+  fill: #eab308 !important;
+  /* completely filled with color only when bookmarked */
   stroke: #d97706;
 }
 
@@ -2493,6 +2582,7 @@ select.input--sm {
     opacity: 0;
     transform: translate(-50%, 4px);
   }
+
   to {
     opacity: 1;
     transform: translate(-50%, 0);
@@ -2503,6 +2593,7 @@ select.input--sm {
   #priority-toggle .full-label {
     display: none;
   }
+
   #priority-toggle .short-label {
     display: inline;
   }
@@ -2514,13 +2605,16 @@ select.input--sm {
     flex-direction: column;
     align-items: stretch !important;
   }
+
   .priority-group .sort-select {
     width: 100%;
   }
+
   .priority-group .view-toggle {
     width: 100%;
     justify-content: space-around;
   }
+
   .priority-tooltip {
     white-space: normal;
     text-align: center;
@@ -3241,7 +3335,7 @@ select.input--sm {
   color: #fdfbf4;
 }
 
-.spectrum-header + .spectrum {
+.spectrum-header+.spectrum {
   margin-top: 0;
 }
 
@@ -3388,6 +3482,7 @@ select.input--sm {
 .ruler__group {
   margin-bottom: 16px;
 }
+
 .ruler__group:last-of-type {
   margin-bottom: 0px;
 }
@@ -3438,7 +3533,7 @@ select.input--sm {
   flex: 1;
   border-radius: 6px;
   background: linear-gradient(90deg,
-    var(--safe-bg) 0%, var(--target-bg) 40%, var(--reach-bg) 80%, #fce9e0 100%);
+      var(--safe-bg) 0%, var(--target-bg) 40%, var(--reach-bg) 80%, #fce9e0 100%);
   border: 1px solid var(--line-soft);
   overflow: hidden;
   cursor: grab;
@@ -3471,16 +3566,25 @@ select.input--sm {
   transition: transform 0.15s var(--ease-out), box-shadow 0.15s;
   z-index: 2;
 }
+
 .ruler__dot:hover {
   transform: translate(-50%, -50%) scale(1.45);
   box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08);
   z-index: 10;
 }
 
-.ruler__dot--safe   { background: var(--safe); }
+.ruler__dot--safe {
+  background: var(--safe);
+}
+
 .ruler__dot--target,
-.ruler__dot--achievable { background: var(--target); }
-.ruler__dot--reach  { background: var(--reach); }
+.ruler__dot--achievable {
+  background: var(--target);
+}
+
+.ruler__dot--reach {
+  background: var(--reach);
+}
 
 /* "You" marker: vertical line + flag */
 .ruler__you {
@@ -3536,6 +3640,7 @@ select.input--sm {
   padding: 0;
   line-height: 1;
 }
+
 .ruler__zoom-btn:hover {
   background: var(--paper-deep);
   border-color: var(--ink-faint);
@@ -3573,18 +3678,21 @@ select.input--sm {
   transform: translateX(-50%) translateY(-100%) translateY(-10px);
   transition: opacity 0.18s;
   z-index: 50;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.18);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
+
 .ruler__tip.is-on {
   opacity: 1;
 }
+
 .ruler__tip strong {
   font-weight: 600;
   color: #fff;
 }
+
 .ruler__tip em {
   font-style: normal;
   opacity: 0.72;
@@ -3596,18 +3704,22 @@ select.input--sm {
   .ruler {
     padding: 20px 14px 14px;
   }
+
   .ruler__track {
     height: 36px;
   }
+
   .ruler__dot {
     width: 7px;
     height: 7px;
   }
+
   .ruler__zoom-btn {
     width: 22px;
     height: 22px;
     font-size: 12px;
   }
+
   .ruler__you-flag {
     font-size: 9px;
     padding: 1px 5px;
@@ -3628,10 +3740,12 @@ select.input--sm {
   transition: background-color 0.2s, border-color 0.2s;
   cursor: pointer;
 }
+
 .checkbox-container:hover {
   background: rgba(23, 92, 76, 0.07);
   border-color: rgba(23, 92, 76, 0.24);
 }
+
 .checkbox-container input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
@@ -3649,16 +3763,20 @@ select.input--sm {
   outline: none;
   flex-shrink: 0;
 }
+
 .checkbox-container input[type="checkbox"]:hover {
   border-color: var(--pine);
 }
+
 .checkbox-container input[type="checkbox"]:focus-visible {
   box-shadow: 0 0 0 3px rgba(23, 92, 76, 0.2);
 }
+
 .checkbox-container input[type="checkbox"]:checked {
   background-color: var(--pine);
   border-color: var(--pine);
 }
+
 .checkbox-container input[type="checkbox"]::after {
   content: "";
   position: absolute;
@@ -3670,9 +3788,11 @@ select.input--sm {
   opacity: 0;
   transition: opacity 0.15s ease;
 }
+
 .checkbox-container input[type="checkbox"]:checked::after {
   opacity: 1;
 }
+
 .checkbox-container label {
   cursor: pointer;
   font-size: 13.5px;

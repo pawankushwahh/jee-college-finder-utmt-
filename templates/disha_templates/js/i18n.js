@@ -207,6 +207,7 @@ const I18N = {
       done: "Done",
     },
     results: {
+      controlsToggle: "Search & Sort",
       standingTitle: "Your standing",
       standingNote: "<strong>Safe:</strong> In top 25% of last year's class. &nbsp; <strong>Target:</strong> Inside last year's cutoff. &nbsp; <strong>Dream:</strong> Outside last year's cutoff, but possible.",
       byBranch: "By branch",
@@ -512,6 +513,7 @@ const I18N = {
       done: "हो गया",
     },
     results: {
+      controlsToggle: "खोजें और सॉर्ट करें",
       standingTitle: "आपकी स्थिति",
       standingNote: "<strong>Safe:</strong> पिछले साल की क्लास के टॉप 25% में। &nbsp; <strong>Target:</strong> पिछले साल के कटऑफ के अंदर। &nbsp; <strong>Dream:</strong> पिछले साल के कटऑफ के बाहर, लेकिन संभव।",
       byBranch: "ब्रांच के अनुसार",
@@ -814,6 +816,7 @@ const I18N = {
       done: "થઈ ગયું",
     },
     results: {
+      controlsToggle: "શોધો અને ક્રમબદ્ધ કરો",
       standingTitle: "તમારું સ્થાન",
       standingNote: "<strong>Safe:</strong> ગયા વર્ષના ક્લાસના ટોપ 25% માં. &nbsp; <strong>Target:</strong> ગયા વર્ષના કટઓફની અંદર. &nbsp; <strong>Dream:</strong> ગયા વર્ષના કટઓફની બહાર, પરંતુ શક્ય.",
       byBranch: "બ્રાન્ચ મુજબ",
@@ -1115,6 +1118,7 @@ const I18N = {
       done: "ಮುಗಿಯಿತು",
     },
     results: {
+      controlsToggle: "ಹುಡುಕಿ ಮತ್ತು ವಿಂಗಡಿಸಿ",
       standingTitle: "ನಿಮ್ಮ ಸ್ಥಾನಮಾನ",
       standingNote: "<strong>Safe:</strong> ಕಳೆದ ವರ್ಷದ ಕ್ಲಾಸ್‌ನ ಟಾಪ್ 25% ರಲ್ಲಿದೆ. &nbsp; <strong>Target:</strong> ಕಳೆದ ವರ್ಷದ ಕಟ್-ಆಫ್‌ನೊಳಗೆ. &nbsp; <strong>Dream:</strong> ಕಳೆದ ವರ್ಷದ ಕಟ್-ಆಫ್‌ನಿಂದ ಹೊರಗಿದೆ, ಆದರೆ ಸಾಧ್ಯತೆ ಇದೆ.",
       byBranch: "ಬ್ರಾಂಚ್ ಪ್ರಕಾರ",

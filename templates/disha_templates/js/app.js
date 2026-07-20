@@ -97,6 +97,17 @@ function showView(name) {
   }
   $("restart-btn").hidden = name === "welcome";
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+  
+  if (name === "results") {
+    const tb = $("toolbar");
+    const tbToggle = $("toolbar-toggle");
+    if (window.innerWidth <= 900 && tb && tbToggle) {
+      tb.classList.add("is-open");
+      tbToggle.setAttribute("aria-expanded", "true");
+      tb.dataset.autoOpened = "true";
+    }
+  }
+  
   saveStateToURL();
 }
 
@@ -508,7 +519,7 @@ function buildCategoryOptions(catSel) {
   catSel = catSel || $("seat-category");
   if (!catSel) return;
   const prev = catSel.value || "OPEN";
-  
+
   if (catSel.id === "panel-seat-category") {
     // Selector B
     const cats = [
@@ -1047,10 +1058,10 @@ function applyClampedRange(zs, newMin, newMax, action) {
 
   if (newMin < minAllowed) { newMax += (minAllowed - newMin); newMin = minAllowed; }
   if (newMax > maxAllowed) { newMin -= (newMax - maxAllowed); newMax = maxAllowed; }
-  
+
   newMin = Math.max(minAllowed, newMin);
   newMax = Math.min(maxAllowed, newMax);
-  
+
   if (newMax - newMin < 0.001) {
     newMax = newMin + 0.001;
   }
@@ -1089,12 +1100,12 @@ function applyClampedRange(zs, newMin, newMax, action) {
       newMin = center - closestDist - 0.001;
       newMax = center + closestDist + 0.001;
     }
-    
+
     if (newMin < minAllowed) { newMax += (minAllowed - newMin); newMin = minAllowed; }
     if (newMax > maxAllowed) { newMin -= (newMax - maxAllowed); newMax = maxAllowed; }
     newMin = Math.max(minAllowed, newMin);
     newMax = Math.min(maxAllowed, newMax);
-    
+
     if (newMax - newMin < 0.001) {
       newMax = newMin + 0.001;
     }
@@ -1847,14 +1858,14 @@ function getCollegeDomId(instName) {
   return "college-" + instName.toLowerCase().replace(/[^a-z0-9]/g, "-");
 }
 
-window.toggleCollegeCard = function(event, instName) {
+window.toggleCollegeCard = function (event, instName) {
   if (event) {
     event.preventDefault();
     event.stopPropagation();
   }
   const isExpanded = !state.expandedColleges[instName];
   state.expandedColleges[instName] = isExpanded;
-  
+
   const domId = getCollegeDomId(instName);
   const collapseEl = document.getElementById(`collapse-${domId}`);
   const headerEl = collapseEl ? collapseEl.previousElementSibling : null;
@@ -1946,7 +1957,7 @@ function collegeCardHtml(group, catName, index) {
   const branchCount = group.branches.length;
   const isExpanded = !!state.expandedColleges[instName];
   const catClass = catName.toLowerCase();
-  
+
   const delay = prefersReducedMotion ? 0 : Math.min(index * 45, 420);
   const viaExamText = firstRec.exam === "advanced" ? t("card.viaAdvanced") : t("card.viaMains");
   const domId = getCollegeDomId(instName);
@@ -2112,7 +2123,7 @@ function renderSections() {
   }
 }
 
-window.toggleSection = function(catName) {
+window.toggleSection = function (catName) {
   state.collapsedSections[catName] = !state.collapsedSections[catName];
   const sectionEl = $(`section-${catName.toLowerCase()}`);
   if (sectionEl) {
@@ -2131,7 +2142,7 @@ window.toggleSection = function(catName) {
   updateExpandAllButtonUI();
 };
 
-window.updateExpandAllButtonUI = function() {
+window.updateExpandAllButtonUI = function () {
   const btn = $("expand-collapse-all-btn");
   if (!btn) return;
 
@@ -2572,6 +2583,35 @@ function bindPanelEvents() {
     });
   }
 
+  const tbToggle = $("toolbar-toggle");
+  if (tbToggle) {
+    tbToggle.addEventListener("click", () => {
+      const tb = $("toolbar");
+      const open = tb.classList.toggle("is-open");
+      tbToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      if (tb) {
+        delete tb.dataset.autoOpened;
+      }
+    });
+  }
+
+  // Mobile scroll collapse behavior for toolbar
+  window.addEventListener("scroll", () => {
+    if (window.innerWidth <= 900) {
+      const tb = $("toolbar");
+      const tbToggle = $("toolbar-toggle");
+      if (tb && tb.classList.contains("is-open")) {
+        if (window.scrollY > 150 && tb.dataset.autoOpened === "true") {
+          tb.classList.remove("is-open");
+          if (tbToggle) {
+            tbToggle.setAttribute("aria-expanded", "false");
+          }
+          delete tb.dataset.autoOpened;
+        }
+      }
+    }
+  });
+
   const mirrorRank = (panelEl, flowEl) => {
     if (!panelEl || !flowEl) return;
     panelEl.addEventListener("input", () => {
@@ -2632,7 +2672,7 @@ function bindPanelEvents() {
         if (!btn) return;
         const ratioVal = parseFloat(btn.dataset.ratio);
         state.brandBranchRatio = ratioVal;
-        
+
         updatePriorityStateUI();
 
         schedulePanelUpdate();
