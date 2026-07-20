@@ -246,10 +246,9 @@ const I18N = {
       profileMain: "Main",
       profileAdvanced: "Advanced",
       disclaimerHtml:
-        "Based on JoSAA 2025 Round-6 closing ranks for OPEN (CRL) seats. Cutoffs move every year — " +
-        "treat this as a compass, not a contract. Verify on <strong>josaa.nic.in</strong> before locking choices. " +
-        "Note: We focus on providing accurate admission insights based on official JEE cutoff data, so fee details " +
-        "are not provided here. Please refer to the official websites of individual institutes for their verified fee structures.",
+        "Based on actual JoSAA 2025 round-wise cutoff data (R1 to R6) across all reservation categories. " +
+        "These recommendations are for guidance purposes and should be verified with the official JoSAA counselling data on <strong>josaa.nic.in</strong> before finalizing choices. " +
+        "Fee details are not included; please refer to the respective institute's official website for the latest fee structure.",
     },
     headlines: {
       adjust: "Let's adjust the compass.",
@@ -552,10 +551,9 @@ const I18N = {
       profileMain: "Main",
       profileAdvanced: "Advanced",
       disclaimerHtml:
-        "OPEN (CRL) सीटों के लिए JoSAA 2025 राउंड-6 क्लोज़िंग रैंक पर आधारित। कटऑफ़ हर साल बदलते हैं — " +
-        "इसे एक कम्पास मानें, अनुबंध नहीं। चुनाव लॉक करने से पहले <strong>josaa.nic.in</strong> पर जाँच लें। " +
-        "नोट: हम केवल आधिकारिक JEE कटऑफ़ डेटा के आधार पर सटीक प्रवेश संभावनाओं की जानकारी देने पर ध्यान केंद्रित करते हैं, " +
-        "इसलिए यहाँ शुल्क (fees) का विवरण नहीं दिया गया है। नवीनतम और सत्यापित शुल्क विवरण के लिए आप संस्थानों की आधिकारिक वेबसाइट देख सकते हैं।",
+        "सभी आरक्षण श्रेणियों के लिए वास्तविक JoSAA 2025 राउंड-वार कटऑफ़ डेटा (R1 से R6) पर आधारित। " +
+        "ये सिफ़ारिशें केवल मार्गदर्शन के लिए हैं और विकल्पों को अंतिम रूप देने से पहले <strong>josaa.nic.in</strong> पर आधिकारिक JoSAA काउंसलिंग डेटा से सत्यापित की जानी चाहिए। " +
+        "शुल्क (fees) का विवरण शामिल नहीं है; कृपया नवीनतम शुल्क संरचना के लिए संबंधित संस्थान की आधिकारिक वेबसाइट देखें।",
     },
     headlines: {
       adjust: "आइए कम्पास को थोड़ा ठीक करें।",
@@ -855,9 +853,9 @@ const I18N = {
       profileMain: "Main",
       profileAdvanced: "Advanced",
       disclaimerHtml:
-        "OPEN (CRL) સીટો માટે JoSAA 2025 રાઉન્ડ-6 ના કટઓફ પર આધારિત. કટઓફ દર વર્ષે બદલાય છે — " +
-        "આને દિશા સૂચક માનો, કરાર નહીં. પસંદગી લોક કરતા પહેલાં <strong>josaa.nic.in</strong> પર ખાતરી કરો. " +
-        "નોંધ: અમે સત્તાવાર JEE કટઓફ ડેટા પર આધારિત સચોટ માહિતી આપવા પર ધ્યાન કેન્દ્રિત કરીએ છીએ, તેથી અહીં ફી વિગતો શામેલ નથી. સત્તાવાર ફી વિગતો માટે સંસ્થાઓની વેબસાઇટ જુઓ.",
+        "તમામ અનામત કેટેગરીઓ માટે વાસ્તવિક JoSAA 2025 રાઉન્ડ-વાર કટઓફ ડેટા (R1 થી R6) પર આધારિત. " +
+        "આ ભલામણો માત્ર માર્ગદર્શન માટે છે અને પસંદગીઓને અંતિમ સ્વરૂપ આપતા પહેલાં <strong>josaa.nic.in</strong> પર સત્તાવાર JoSAA કાઉન્સિલિંગ ડેટા સાથે ચકાસવી જોઈએ. " +
+        "ફીની વિગતો શામેલ નથી; કૃપા કરીને નવીનતમ ફી માળખા માટે સંબંધિત સંસ્થાની સત્તાવાર વેબસાઇટનો સંદર્ભ લો.",
     },
     headlines: {
       adjust: "ચાલો વિગતો થોડી ગોઠવીએ.",
@@ -1156,9 +1154,9 @@ const I18N = {
       profileMain: "Main",
       profileAdvanced: "Advanced",
       disclaimerHtml:
-        "OPEN (CRL) ಸೀಟುಗಳಿಗಾಗಿ JoSAA 2025 ರೌಂಡ್-6 ಕಟ್‌ಆಫ್ ಆಧಾರಿತ. ಕಟ್‌ಆಫ್ ಪ್ರತಿ ವರ್ಷ ಬದಲಾಗುತ್ತದೆ — " +
-        "ಇದನ್ನು ಮಾರ್ಗದರ್ಶಿ ಎಂದು ತಿಳಿಯಿರಿ, ಅಂತಿಮ ಒಪ್ಪಂದವಲ್ಲ. ಸೀಟು ಲಾಕ್ ಮಾಡುವ ಮುನ್ನ <strong>josaa.nic.in</strong> ನಲ್ಲಿ ಪರಿಶೀಲಿಸಿ. " +
-        "ಟಿಪ್ಪಣಿ: ಅಧಿಕೃತ JEE ಕಟ್‌ಆಫ್ ಡೇಟಾದ ಆಧಾರದ ಮೇಲೆ ನಿಖರವಾದ ಪ್ರವೇಶ ವಿವರ ನೀಡುವುದು ನಮ್ಮ ಉದ್ದೇಶವಾಗಿದೆ, ಆದ್ದರಿಂದ ಇಲ್ಲಿ ಶುಲ್ಕದ ವಿವರ ಇರುವುದಿಲ್ಲ. ಶುಲ್ಕದ ವಿವರಗಳಿಗಾಗಿ ಆಯಾ ಕಾಲೇಜಿನ ಅಧಿಕೃತ ವೆಬ್‌ಸೈಟ್ ನೋಡಿ.",
+        "ಎಲ್ಲಾ ಮೀಸಲಾತಿ ವರ್ಗಗಳಿಗೆ ಸಂಬಂಧಿಸಿದ ನೈಜ JoSAA 2025 ರೌಂಡ್-ವೈಸ್ ಕಟ್‌ಆಫ್ ಡೇಟಾ (R1 ರಿಂದ R6) ಆಧಾರಿತವಾಗಿದೆ. " +
+        "ಈ ಶಿಫಾರಸುಗಳು ಕೇವಲ ಮಾರ್ಗದರ್ಶನಕ್ಕಾಗಿ ಮಾತ್ರ ಮತ್ತು ಆಯ್ಕೆಗಳನ್ನು ಅಂತಿಮಗೊಳಿಸುವ ಮೊದಲು <strong>josaa.nic.in</strong> ನಲ್ಲಿ ಅಧಿಕೃತ JoSAA ಕೌನ್ಸೆಲಿಂಗ್ ಡೇಟಾದೊಂದಿಗೆ ಪರಿಶೀಲಿಸಬೇಕು. " +
+        "ಶುಲ್ಕದ ವಿವರಗಳನ್ನು ಒಳಗೊಂಡಿಲ್ಲ; ಇತ್ತೀಚಿನ ಶುಲ್ಕದ ವಿವರಗಳಿಗಾಗಿ ಆಯಾ ಕಾಲೇಜಿನ ಅಧಿಕೃತ ವೆಬ್‌ಸೈಟ್ ನೋಡಿ.",
     },
     headlines: {
       adjust: "ವಿವರಗಳನ್ನು ಸ್ವಲ್ಪ ಸರಿಪಡಿಸೋಣ.",
