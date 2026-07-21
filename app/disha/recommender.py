@@ -27,8 +27,8 @@ from .schemas import (
 UPPER_MARGIN = 0.25
 # How far below the opening rank before we consider the student "overqualified"
 # (we prune options where candidate's rank is less than this fraction of opening rank).
-LOWER_MARGIN = 0.30
-SAFE_FRACTION = 0.10
+LOWER_MARGIN = 0.35
+SAFE_FRACTION = 0.15
 
 
 # ---------------------------------------------------------------------------
@@ -655,10 +655,10 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
     hs_index = home_state_advantage_index(effective_mode)
     female_index = female_seat_advantage_index(effective_mode)
 
-    category = req.seat_category
+    req_category = req.seat_category
     is_pwd = req.is_pwd
-    if category.endswith(" (PwD)"):
-        category = category[:-6]
+    if req_category.endswith(" (PwD)"):
+        req_category = req_category[:-6]
         is_pwd = True
 
     results: List[Recommendation] = []
@@ -667,15 +667,15 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         if rank is None:
             continue
         # Filter by seat_type
-        if category and category != "ALL":
+        if req_category and req_category != "ALL":
             if is_pwd:
                 # PwD candidates match their category PwD seats and OPEN PwD seats
-                allowed_seats = {f"{category} (PwD)", "OPEN (PwD)"}
+                allowed_seats = {f"{req_category} (PwD)", "OPEN (PwD)"}
                 if prog.seat_type not in allowed_seats:
                     continue
             else:
                 # Regular candidates match their category seats and OPEN seats
-                allowed_seats = {category, "OPEN"}
+                allowed_seats = {req_category, "OPEN"}
                 if prog.seat_type not in allowed_seats:
                     continue
         if not _passes_gender(prog, req.gender):
@@ -684,8 +684,8 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
             continue
         if wanted_tags and prog.tags.isdisjoint(wanted_tags):
             continue
-        category = _categorize(rank, prog.opening_rank, prog.closing_rank)
-        if category is None:
+        bucket = _categorize(rank, prog.opening_rank, prog.closing_rank)
+        if bucket is None:
             continue
         score, matched = _interest_score(prog, req.goal, req.brand_branch_ratio)
 
@@ -703,7 +703,7 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         confidence = prog.volatility_tag
         reason = _build_reason(
             prog,
-            category,
+            bucket,
             matched,
             confidence,
             home_state_advantage,
@@ -733,8 +733,8 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
                 gender_pool=prog.gender_pool,
                 opening_rank=prog.opening_rank,
                 closing_rank=prog.closing_rank,
-                category=category,
-                fit_label=FIT_LABELS.get(lang, FIT_LABELS["en"])[category],
+                category=bucket,
+                fit_label=FIT_LABELS.get(lang, FIT_LABELS["en"])[bucket],
                 interest_score=round(score, 2),
                 matched_interest=matched,
                 home_state_advantage=home_state_advantage,
