@@ -74,11 +74,30 @@ class RecommendRequest(BaseModel):
             "are ignored. See /api/meta for the available options."
         ),
     )
-    max_results: int = Field(
-        default=60,
+    bucket: Optional[str] = Field(
+        default="all",
+        description="Bucket filter: safe, target, dream (or reach), or all.",
+    )
+    college_type: Optional[str] = Field(
+        default="all",
+        description="College type filter: IIT, NIT, IIIT, GFTI, or all.",
+    )
+    page: int = Field(
+        default=1,
         ge=1,
-        le=300,
-        description="Maximum number of recommendations to return.",
+        description="Page number for pagination (1-indexed).",
+    )
+    page_size: int = Field(
+        default=50,
+        ge=1,
+        le=500,
+        description="Page size for pagination.",
+    )
+    max_results: int = Field(
+        default=5000,
+        ge=1,
+        le=10000,
+        description="Maximum number of recommendations to return (legacy/fallback).",
     )
     lang: Literal["en", "hi", "gu", "kn"] = Field(
         default="en",
@@ -167,6 +186,11 @@ class RecommendResponse(BaseModel):
     notes: List[str]
     category_guidance: List[CategoryGuidance]
     recommendations: List[Recommendation]
+    page: int = 1
+    page_size: int = 50
+    total_count: int = 0
+    total_pages: int = 0
+    total_by_type: dict = Field(default_factory=dict)
 
 
 class MetaResponse(BaseModel):

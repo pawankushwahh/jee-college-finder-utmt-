@@ -26,8 +26,10 @@ from .schemas import (
 # How far past the closing rank we still treat an option as a (Reach) possibility.
 UPPER_MARGIN = 0.25
 # How far below the opening rank before we consider the student "overqualified"
-# (i.e. they should be aiming materially higher) and drop the option.
-LOWER_MARGIN = 0.50
+# (we prune options where candidate's rank is less than this fraction of opening rank).
+LOWER_MARGIN = 0.30
+SAFE_FRACTION = 0.10
+
 
 # ---------------------------------------------------------------------------
 # Confidence band thresholds, derived from this dataset's rank-spread
@@ -159,11 +161,11 @@ def _categorize(rank: int, opening: int, closing: int) -> Optional[str]:
     """Return Safe/Target/Reach, or None if the option should be dropped."""
     if rank > closing * (1 + UPPER_MARGIN):
         return None  # no realistic chance
-    if rank < opening * (1 - LOWER_MARGIN):
-        return "Safe"  # heavily overqualified, but still a Safe option
+    if rank < opening * LOWER_MARGIN:
+        return None  # prune overqualified option
     
-    # Safe: rank is in the top 25% of the opening-closing gap
-    safe_threshold = opening + 0.25 * (closing - opening)
+    # Safe: rank is in the top SAFE_FRACTION of the opening-closing gap
+    safe_threshold = opening + SAFE_FRACTION * (closing - opening)
     if rank <= safe_threshold:
         return "Safe"
     if rank <= closing:
@@ -755,7 +757,8 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
             )
         )
 
-    results.sort(
+    all_matches = results
+    all_matches.sort(
         key=lambda r: (
             CATEGORY_ORDER[r.category],
             -r.interest_score,
@@ -765,7 +768,24 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         )
     )
 
-    total_found = len(results)
+    total_unfiltered = len(all_matches)
+
+    # Compute full breakdown of counts by college type per bucket across ALL matches
+    total_by_type = {
+        "safe": {"IIT": 0, "NIT": 0, "IIIT": 0, "GFTI": 0, "total": 0},
+        "target": {"IIT": 0, "NIT": 0, "IIIT": 0, "GFTI": 0, "total": 0},
+        "dream": {"IIT": 0, "NIT": 0, "IIIT": 0, "GFTI": 0, "total": 0},
+        "all": {"IIT": 0, "NIT": 0, "IIIT": 0, "GFTI": 0, "total": 0},
+    }
+    for r in all_matches:
+        b_key = "safe" if r.category == "Safe" else ("target" if r.category == "Target" else "dream")
+        itype = r.institute_type
+        if itype in total_by_type[b_key]:
+            total_by_type[b_key][itype] += 1
+            total_by_type[b_key]["total"] += 1
+        if itype in total_by_type["all"]:
+            total_by_type["all"][itype] += 1
+            total_by_type["all"]["total"] += 1
 
     # Tell the student a branch filter is shaping these results.
     if wanted_tags:
@@ -774,44 +794,42 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         ]
         pref_labels = _BRANCH_PREF_LABELS.get(lang, _BRANCH_PREF_LABELS["en"])
         branch_names = ", ".join(pref_labels.get(p, p) for p in valid_prefs)
-        note_key = "branch_filter" if total_found else "branch_filter_empty"
+        note_key = "branch_filter" if total_unfiltered else "branch_filter_empty"
         notes.append(notes_text[note_key].format(branches=branch_names))
 
-    # Ensure fair distribution among categories so Reach and Safe aren't starved out
-    targets = [r for r in results if r.category == "Target"]
-    reaches = [r for r in results if r.category == "Reach"]
-    safes = [r for r in results if r.category == "Safe"]
+    # Apply server-side bucket and college_type filtering
+    filtered_matches = all_matches
+    b_param = (req.bucket or "all").strip().lower()
+    if b_param == "safe":
+        filtered_matches = [r for r in filtered_matches if r.category == "Safe"]
+    elif b_param == "target":
+        filtered_matches = [r for r in filtered_matches if r.category == "Target"]
+    elif b_param in ("dream", "reach"):
+        filtered_matches = [r for r in filtered_matches if r.category == "Reach"]
 
-    reach_quota = req.max_results // 4
-    safe_quota = req.max_results // 4
-    
-    reach_keep = reaches[:reach_quota]
-    safe_keep = safes[:safe_quota]
-    target_quota = req.max_results - len(reach_keep) - len(safe_keep)
-    target_keep = targets[:target_quota]
-    
-    # If we didn't fill the max_results (e.g. fewer targets than expected), 
-    # we could try giving extra quota back, but for simplicity we'll just combine what we kept.
-    # Note: we re-sort to maintain the CATEGORY_ORDER -> interest_score -> etc order.
-    results = target_keep + reach_keep + safe_keep
-    results.sort(
-        key=lambda r: (
-            CATEGORY_ORDER[r.category],
-            -r.interest_score,
-            r.closing_rank,
-            r.institute,
-            r.branch,
-        )
-    )
+    c_param = (req.college_type or "all").strip().upper()
+    if c_param != "ALL":
+        filtered_matches = [r for r in filtered_matches if r.institute_type == c_param]
+
+    total_count = len(filtered_matches)
+    page = max(1, req.page)
+    page_size = max(1, req.page_size)
+    total_pages = math.ceil(total_count / page_size) if total_count > 0 else 0
+
+    start = (page - 1) * page_size
+    end = start + page_size
+    paginated_results = filtered_matches[start:end]
 
     counts = {
-        "total": total_found,
-        "shown": len(results),
-        "by_category": {c: sum(1 for r in results if r.category == c) for c in CATEGORY_ORDER},
-        "by_type": {
-            t: sum(1 for r in results if r.institute_type == t)
-            for t in ("IIT", "NIT", "IIIT", "GFTI")
+        "total": total_count,
+        "total_unfiltered": total_unfiltered,
+        "shown": len(paginated_results),
+        "by_category": {
+            "Safe": total_by_type["safe"]["total"],
+            "Target": total_by_type["target"]["total"],
+            "Reach": total_by_type["dream"]["total"],
         },
+        "by_type": total_by_type["all"],
     }
 
     blurbs = CATEGORY_BLURBS.get(lang, CATEGORY_BLURBS["en"])
@@ -826,10 +844,10 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
     ]
 
     guidance_text = _GUIDANCE.get(lang, _GUIDANCE["en"])
-    if total_found == 0:
+    if total_unfiltered == 0:
         overall = guidance_text["empty"]
     else:
-        overall = guidance_text["found"].format(total=total_found, shown=len(results))
+        overall = guidance_text["found"].format(total=total_unfiltered, shown=len(paginated_results))
 
     interest_guidance = states.GOAL_GUIDANCE.get(lang, states.GOAL_GUIDANCE["en"]).get(
         req.goal, ""
@@ -841,5 +859,10 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         counts=counts,
         notes=notes,
         category_guidance=category_guidance,
-        recommendations=results,
+        recommendations=paginated_results,
+        page=page,
+        page_size=page_size,
+        total_count=total_count,
+        total_pages=total_pages,
+        total_by_type=total_by_type,
     )

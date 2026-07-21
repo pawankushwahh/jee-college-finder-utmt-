@@ -65,9 +65,44 @@ def meta() -> MetaResponse:
     )
 
 
-@router.post("/api/recommend", response_model=RecommendResponse, tags=["recommend"])
-def recommend_endpoint(req: RecommendRequest) -> RecommendResponse:
+from typing import Optional
+from fastapi import Query
+
+
+@router.api_route("/api/recommend", methods=["GET", "POST"], response_model=RecommendResponse, tags=["recommend"])
+def recommend_endpoint(
+    req: Optional[RecommendRequest] = None,
+    adv_rank: Optional[int] = Query(default=None),
+    mains_rank: Optional[int] = Query(default=None),
+    gender: Optional[str] = Query(default="male"),
+    home_state: Optional[str] = Query(default="Delhi"),
+    goal: Optional[str] = Query(default="coding"),
+    seat_category: Optional[str] = Query(default="OPEN"),
+    is_pwd: Optional[bool] = Query(default=False),
+    bucket: Optional[str] = Query(default=None),
+    college_type: Optional[str] = Query(default=None),
+    page: Optional[int] = Query(default=None, ge=1),
+    page_size: Optional[int] = Query(default=None, ge=1, le=500),
+) -> RecommendResponse:
     """Return filtered, categorized and interest-ranked recommendations."""
+    if req is None:
+        req = RecommendRequest(
+            adv_rank=adv_rank,
+            mains_rank=mains_rank,
+            gender=gender if gender in ("male", "female") else "male",
+            home_state=home_state or "Delhi",
+            goal=goal if goal in ("coding", "research", "mba", "core", "undecided", "pure_science") else "coding",
+            seat_category=seat_category or "OPEN",
+            is_pwd=bool(is_pwd),
+        )
+    if bucket is not None:
+        req.bucket = bucket
+    if college_type is not None:
+        req.college_type = college_type
+    if page is not None:
+        req.page = page
+    if page_size is not None:
+        req.page_size = page_size
     return recommend(req)
 
 
