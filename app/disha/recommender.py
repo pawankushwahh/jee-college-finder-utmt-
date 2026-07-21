@@ -865,4 +865,9 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         total_count=total_count,
         total_pages=total_pages,
         total_by_type=total_by_type,
+        thresholds={
+            "lower_margin": LOWER_MARGIN,
+            "safe_fraction": SAFE_FRACTION,
+            "upper_margin": UPPER_MARGIN,
+        },
     )

@@ -209,7 +209,7 @@ const I18N = {
     results: {
       controlsToggle: "Search & Sort",
       standingTitle: "Your standing",
-      standingNote: "<strong>Safe:</strong> In top 25% of last year's class. &nbsp; <strong>Target:</strong> Inside last year's cutoff. &nbsp; <strong>Dream:</strong> Outside last year's cutoff, but possible.",
+      standingNote: "<strong>Safe:</strong> Top {safePct}% of last year's cutoff range (or <= opening rank). &nbsp; <strong>Target:</strong> Inside last year's cutoff range. &nbsp; <strong>Dream:</strong> Within {dreamPct}% past last year's cutoff.",
       byBranch: "By branch",
       byCollege: "By college",
       priorityBranchFull: "Favour Branch",
@@ -515,7 +515,7 @@ const I18N = {
     results: {
       controlsToggle: "खोजें और सॉर्ट करें",
       standingTitle: "आपकी स्थिति",
-      standingNote: "<strong>Safe:</strong> पिछले साल की क्लास के टॉप 25% में। &nbsp; <strong>Target:</strong> पिछले साल के कटऑफ के अंदर। &nbsp; <strong>Dream:</strong> पिछले साल के कटऑफ के बाहर, लेकिन संभव।",
+      standingNote: "<strong>Safe:</strong> पिछले साल के कटऑफ रेंज के टॉप {safePct}% में (या ओपनिंग रैंक से बेहतर)। &nbsp; <strong>Target:</strong> पिछले साल के कटऑफ रेंज के अंदर। &nbsp; <strong>Dream:</strong> पिछले साल के कटऑफ से {dreamPct}% तक बाहर, लेकिन संभव।",
       byBranch: "ब्रांच के अनुसार",
       byCollege: "कॉलेज के अनुसार",
       priorityBranchFull: "ब्रांच को प्राथमिकता",
@@ -818,7 +818,7 @@ const I18N = {
     results: {
       controlsToggle: "શોધો અને ક્રમબદ્ધ કરો",
       standingTitle: "તમારું સ્થાન",
-      standingNote: "<strong>Safe:</strong> ગયા વર્ષના ક્લાસના ટોપ 25% માં. &nbsp; <strong>Target:</strong> ગયા વર્ષના કટઓફની અંદર. &nbsp; <strong>Dream:</strong> ગયા વર્ષના કટઓફની બહાર, પરંતુ શક્ય.",
+      standingNote: "<strong>Safe:</strong> ગયા વર્ષના કટઓફ રેન્જના ટોપ {safePct}% માં (અથવા ઓપનિંગ રેન્કથી સારું). &nbsp; <strong>Target:</strong> ગયા વર્ષના કટઓફ રેન્જની અંદર. &nbsp; <strong>Dream:</strong> કટઓફથી {dreamPct}% સુધી બહાર, પરંતુ શક્ય.",
       byBranch: "બ્રાન્ચ મુજબ",
       byCollege: "કૉલેજ મુજબ",
       priorityBranchFull: "બ્રાન્ચને પ્રાધાન્ય",
@@ -1120,7 +1120,7 @@ const I18N = {
     results: {
       controlsToggle: "ಹುಡುಕಿ ಮತ್ತು ವಿಂಗಡಿಸಿ",
       standingTitle: "ನಿಮ್ಮ ಸ್ಥಾನಮಾನ",
-      standingNote: "<strong>Safe:</strong> ಕಳೆದ ವರ್ಷದ ಕ್ಲಾಸ್‌ನ ಟಾಪ್ 25% ರಲ್ಲಿದೆ. &nbsp; <strong>Target:</strong> ಕಳೆದ ವರ್ಷದ ಕಟ್-ಆಫ್‌ನೊಳಗೆ. &nbsp; <strong>Dream:</strong> ಕಳೆದ ವರ್ಷದ ಕಟ್-ಆಫ್‌ನಿಂದ ಹೊರಗಿದೆ, ಆದರೆ ಸಾಧ್ಯತೆ ಇದೆ.",
+      standingNote: "<strong>Safe:</strong> ಕಳೆದ ವರ್ಷದ ಕಟ್-ಆಫ್ ಶ್ರೇಣಿಯ ಟಾಪ್ {safePct}% ರಲ್ಲಿದೆ (ಅಥವಾ ಓಪನಿಂಗ್ ರ್ಯಾಂಕ್‌ಗಿಂತ ಉತ್ತಮ). &nbsp; <strong>Target:</strong> ಕಳೆದ ವರ್ಷದ ಕಟ್-ಆಫ್ ಶ್ರೇಣಿಯೊಳಗೆ. &nbsp; <strong>Dream:</strong> ಕಟ್-ಆಫ್‌ನಿಂದ {dreamPct}% ವರೆಗೆ ಹೊರಗಿದೆ, ಆದರೆ ಸಾಧ್ಯತೆ ಇದೆ.",
       byBranch: "ಬ್ರಾಂಚ್ ಪ್ರಕಾರ",
       byCollege: "ಕಾಲೇಜು ಪ್ರಕಾರ",
       priorityBranchFull: "ಬ್ರಾಂಚ್ ಆದ್ಯತೆ",

@@ -191,6 +191,7 @@ class RecommendResponse(BaseModel):
     total_count: int = 0
     total_pages: int = 0
     total_by_type: dict = Field(default_factory=dict)
+    thresholds: Optional[dict] = Field(default_factory=dict)
 
 
 class MetaResponse(BaseModel):

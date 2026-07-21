@@ -811,6 +811,8 @@ function updatePriorityStateUI() {
     const isGoalUndecided = (state.goal === "undecided" || !state.goal);
     tooltip.hidden = !(isFavourBranchActive && isGoalUndecided);
   }
+
+  updateStandingNoteUI();
 }
 
 function syncPanelFromState() {
@@ -899,6 +901,18 @@ function noteHeadline(byCat, total) {
   return t("headlines.stretch");
 }
 
+function updateStandingNoteUI() {
+  const noteEl = document.querySelector(".spectrum-note");
+  if (!noteEl) return;
+  const thresholds = state.lastData?.thresholds || { safe_fraction: 0.15, upper_margin: 0.25 };
+  const safePct = Math.round((thresholds.safe_fraction ?? 0.15) * 100);
+  const dreamPct = Math.round((thresholds.upper_margin ?? 0.25) * 100);
+
+  let template = t("results.standingNote");
+  template = template.replace("{safePct}", safePct).replace("{dreamPct}", dreamPct);
+  noteEl.innerHTML = template;
+}
+
 function renderNote(data) {
   const byCat = data.counts?.by_category || {};
   const total = data.counts?.total ?? 0;
@@ -925,6 +939,8 @@ function renderNote(data) {
     notesBox.hidden = true;
     notesBox.innerHTML = "";
   }
+
+  updateStandingNoteUI();
 }
 
 function userRankFor(rec) {
