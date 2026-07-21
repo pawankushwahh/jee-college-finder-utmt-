@@ -662,99 +662,13 @@ function getCollegeTypeParam() {
   return "all";
 }
 
-async function fetchAllBuckets(basePayload, { keepFilters = false } = {}) {
-  const collegeType = getCollegeTypeParam();
-  const buckets = ["target", "reach", "safe"];
-
-  const promises = buckets.map((b) =>
-    fetchRecommendations({
-      ...basePayload,
-      bucket: b,
-      college_type: collegeType,
-      page: 1,
-      page_size: 50,
-    })
-  );
-
-  const [targetRes, reachRes, safeRes] = await Promise.all(promises);
-
-  state.bucketData = {
-    Target: {
-      results: targetRes.recommendations || [],
-      page: 1,
-      page_size: 50,
-      total_count: targetRes.total_count || 0,
-      total_pages: targetRes.total_pages || 0,
-      loading: false,
-    },
-    Reach: {
-      results: reachRes.recommendations || [],
-      page: 1,
-      page_size: 50,
-      total_count: reachRes.total_count || 0,
-      total_pages: reachRes.total_pages || 0,
-      loading: false,
-    },
-    Safe: {
-      results: safeRes.recommendations || [],
-      page: 1,
-      page_size: 50,
-      total_count: safeRes.total_count || 0,
-      total_pages: safeRes.total_pages || 0,
-      loading: false,
-    },
-  };
-
-  state.totalByType = targetRes.total_by_type || reachRes.total_by_type || safeRes.total_by_type || {};
-
-  state.lastData = {
-    ...targetRes,
-    recommendations: [
-      ...(targetRes.recommendations || []),
-      ...(reachRes.recommendations || []),
-      ...(safeRes.recommendations || []),
-    ],
-  };
-
-  renderResults(state.lastData, { keepFilters });
+async function executeRecommendationRequest(basePayload, { keepFilters = false } = {}) {
+  const data = await fetchRecommendations(basePayload);
+  state.totalByType = data.total_by_type || {};
+  state.lastData = data;
+  renderResults(data, { keepFilters });
+  return data;
 }
-
-window.loadMoreBucket = async function (catName) {
-  const bData = state.bucketData[catName];
-  if (!bData || bData.loading || bData.page >= bData.total_pages) return;
-
-  bData.loading = true;
-  renderSections();
-
-  const bKey = catName.toLowerCase() === "reach" ? "dream" : catName.toLowerCase();
-  const collegeType = getCollegeTypeParam();
-  const nextPage = bData.page + 1;
-
-  try {
-    const res = await fetchRecommendations({
-      ...state.lastPayload,
-      bucket: bKey,
-      college_type: collegeType,
-      page: nextPage,
-      page_size: 50,
-    });
-
-    bData.page = nextPage;
-    bData.total_count = res.total_count || bData.total_count;
-    bData.total_pages = res.total_pages || bData.total_pages;
-    const newRecs = res.recommendations || [];
-    bData.results.push(...newRecs);
-
-    if (state.lastData && state.lastData.recommendations) {
-      state.lastData.recommendations.push(...newRecs);
-    }
-  } catch (err) {
-    console.error("Load More failed:", err);
-  } finally {
-    bData.loading = false;
-    renderSections();
-  }
-};
 
 // Like runRequest, but never leaves the results view: we refresh the cards in
 // place and show a subtle "Updating…" cue in the panel instead.
@@ -762,7 +676,7 @@ async function runLiveRequest(payload) {
   const seq = ++requestSeq;
   showPanelUpdating(true);
   try {
-    await fetchAllBuckets(payload, { keepFilters: true });
+    await executeRecommendationRequest(payload, { keepFilters: true });
   } catch (err) {
     if (seq !== requestSeq) return;
     // Soft-fail: keep the last good results rather than wiping the dashboard.
@@ -847,7 +761,7 @@ async function runRequest(payload, { keepFilters = false } = {}) {
   const minDelay = new Promise((r) => setTimeout(r, prefersReducedMotion ? 0 : 1100));
 
   try {
-    await Promise.all([fetchAllBuckets(payload, { keepFilters }), minDelay]);
+    await Promise.all([executeRecommendationRequest(payload, { keepFilters }), minDelay]);
     if (seq !== requestSeq) return;
     stopLoadingLines();
     syncPanelFromState();
@@ -2122,16 +2036,8 @@ function renderSections() {
   let anyShown = false;
 
   for (const catName of SECTION_ORDER) {
-    const bData = state.bucketData?.[catName] || {
-      results: [],
-      page: 1,
-      page_size: 50,
-      total_count: 0,
-      total_pages: 0,
-      loading: false,
-    };
-    const all = bData.results;
-    if (all.length === 0 && bData.total_count === 0) continue;
+    const all = (data?.recommendations || []).filter((r) => r.category === catName);
+    if (all.length === 0) continue;
     const visible = all.filter(recPassesFilters);
 
     anyShown = true;
@@ -2222,20 +2128,7 @@ function renderSections() {
     if (typeCounts.IIIT) typeParts.push(`${typeCounts.IIIT} IIIT`);
     if (typeCounts.GFTI) typeParts.push(`${typeCounts.GFTI} GFTI`);
     const breakdownStr = typeParts.length ? `${typeParts.join(", ")} available` : "";
-    const totalAvail = bData.total_count || visible.length;
-
-    // Load More button HTML
-    const canLoadMore = bData.page < bData.total_pages;
-    const remaining = totalAvail - visible.length;
-    const loadMoreHtml = canLoadMore
-      ? `<div class="rsection__load-more" style="margin-top: 24px; text-align: center;">
-           <button type="button" class="btn btn--ghost btn--sm load-more-btn" 
-                   style="border: 1px solid var(--line); border-radius: 8px; padding: 10px 24px; font-weight: 600;"
-                   onclick="loadMoreBucket('${catName}')" ${bData.loading ? "disabled" : ""}>
-             ${bData.loading ? "Loading..." : `Load More (${remaining} remaining)`}
-           </button>
-         </div>`
-      : "";
+    const totalAvail = all.length;
 
     const isSectionCollapsed = !!state.collapsedSections[catName];
     section.innerHTML = `
@@ -2258,7 +2151,6 @@ function renderSections() {
         <div class="rsection__collapse-inner">
           ${blurbs[catName] ? `<p class="rsection__blurb">${escapeHtml(blurbs[catName])}</p>` : ""}
           ${contentHtml}
-          ${loadMoreHtml}
         </div>
       </div>`;
     container.appendChild(section);
@@ -2266,9 +2158,8 @@ function renderSections() {
 
   updateExpandAllButtonUI();
 
-  const totalAllCount = (state.bucketData.Target.total_count + state.bucketData.Reach.total_count + state.bucketData.Safe.total_count);
-  const totalAllLoaded = (state.bucketData.Target.results.length + state.bucketData.Reach.results.length + state.bucketData.Safe.results.length);
-  const hasResults = totalAllCount > 0 || totalAllLoaded > 0;
+  const totalAllCount = (data?.recommendations || []).length;
+  const hasResults = totalAllCount > 0;
   $("empty-results").hidden = hasResults;
   $("empty-filtered").hidden = !hasResults || anyShown;
   $("toolbar").style.display = hasResults ? "" : "none";
@@ -2972,13 +2863,7 @@ function bindEvents() {
         c.classList.toggle("is-active", state.filterTypes.includes(c.dataset.type));
       }
     });
-    if (state.lastPayload) {
-      showPanelUpdating(true);
-      await fetchAllBuckets(state.lastPayload, { keepFilters: true });
-      showPanelUpdating(false);
-    } else {
-      renderSections();
-    }
+    renderSections();
     saveStateToURL();
   });
 
@@ -2993,13 +2878,7 @@ function bindEvents() {
     document.querySelectorAll("#type-chips .chip").forEach((c) =>
       c.classList.toggle("is-active", c.dataset.type === "")
     );
-    if (state.lastPayload) {
-      showPanelUpdating(true);
-      await fetchAllBuckets(state.lastPayload, { keepFilters: true });
-      showPanelUpdating(false);
-    } else {
-      renderSections();
-    }
+    renderSections();
     saveStateToURL();
   });
 

@@ -186,10 +186,10 @@ class RecommendResponse(BaseModel):
     notes: List[str]
     category_guidance: List[CategoryGuidance]
     recommendations: List[Recommendation]
-    page: int = 1
-    page_size: int = 50
+    page: Optional[int] = None
+    page_size: Optional[int] = None
     total_count: int = 0
-    total_pages: int = 0
+    total_pages: Optional[int] = None
     total_by_type: dict = Field(default_factory=dict)
     thresholds: Optional[dict] = Field(default_factory=dict)
 

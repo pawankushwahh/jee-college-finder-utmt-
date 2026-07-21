@@ -797,33 +797,12 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         note_key = "branch_filter" if total_unfiltered else "branch_filter_empty"
         notes.append(notes_text[note_key].format(branches=branch_names))
 
-    # Apply server-side bucket and college_type filtering
-    filtered_matches = all_matches
-    b_param = (req.bucket or "all").strip().lower()
-    if b_param == "safe":
-        filtered_matches = [r for r in filtered_matches if r.category == "Safe"]
-    elif b_param == "target":
-        filtered_matches = [r for r in filtered_matches if r.category == "Target"]
-    elif b_param in ("dream", "reach"):
-        filtered_matches = [r for r in filtered_matches if r.category == "Reach"]
-
-    c_param = (req.college_type or "all").strip().upper()
-    if c_param != "ALL":
-        filtered_matches = [r for r in filtered_matches if r.institute_type == c_param]
-
-    total_count = len(filtered_matches)
-    page = max(1, req.page)
-    page_size = max(1, req.page_size)
-    total_pages = math.ceil(total_count / page_size) if total_count > 0 else 0
-
-    start = (page - 1) * page_size
-    end = start + page_size
-    paginated_results = filtered_matches[start:end]
+    total_count = len(all_matches)
 
     counts = {
         "total": total_count,
         "total_unfiltered": total_unfiltered,
-        "shown": len(paginated_results),
+        "shown": total_count,
         "by_category": {
             "Safe": total_by_type["safe"]["total"],
             "Target": total_by_type["target"]["total"],
@@ -847,7 +826,7 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
     if total_unfiltered == 0:
         overall = guidance_text["empty"]
     else:
-        overall = guidance_text["found"].format(total=total_unfiltered, shown=len(paginated_results))
+        overall = guidance_text["found"].format(total=total_unfiltered, shown=total_count)
 
     interest_guidance = states.GOAL_GUIDANCE.get(lang, states.GOAL_GUIDANCE["en"]).get(
         req.goal, ""
@@ -859,11 +838,8 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         counts=counts,
         notes=notes,
         category_guidance=category_guidance,
-        recommendations=paginated_results,
-        page=page,
-        page_size=page_size,
+        recommendations=all_matches,
         total_count=total_count,
-        total_pages=total_pages,
         total_by_type=total_by_type,
         thresholds={
             "lower_margin": LOWER_MARGIN,
