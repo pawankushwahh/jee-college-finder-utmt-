@@ -207,7 +207,7 @@ const I18N = {
       done: "Done",
     },
     results: {
-      controlsToggle: "Search & Sort",
+      controlsToggle: "Sort & Preferences",
       standingTitle: "Your standing",
       standingNote: "<strong>Safe:</strong> Top {safePct}% of last year's cutoff range (or <= opening rank). &nbsp; <strong>Target:</strong> Inside last year's cutoff range. &nbsp; <strong>Dream:</strong> Within {dreamPct}% past last year's cutoff.",
       byBranch: "By branch",

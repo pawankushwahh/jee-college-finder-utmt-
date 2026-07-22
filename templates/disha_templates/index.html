@@ -428,12 +428,27 @@
 
           <!-- Filter toolbar -->
           <div class="toolbar" id="toolbar">
+            <div class="toolbar-section toolbar-section--primary" style="padding-top: 0; padding-bottom: 12px; border-bottom: none;">
+              <div class="toolbar-row">
+                <div class="searchbox">
+                  <svg width="14" height="14" viewBox="0 0 20 20" aria-hidden="true">
+                    <path
+                      d="M9 3.5a5.5 5.5 0 1 0 3.4 9.8l3.2 3.2a.9.9 0 0 0 1.3-1.3l-3.2-3.2A5.5 5.5 0 0 0 9 3.5zm-3.7 5.5a3.7 3.7 0 1 1 7.4 0 3.7 3.7 0 0 1-7.4 0z"
+                      fill="currentColor" />
+                  </svg>
+                  <input type="search" id="filter-search" data-i18n-ph="results.searchPlaceholder"
+                    placeholder="Search institute or branch…" data-i18n-aria="results.searchAria"
+                    aria-label="Search results" />
+                </div>
+              </div>
+            </div>
+
             <button type="button" class="toolbar-toggle" id="toolbar-toggle" aria-expanded="true">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M4 6h16M7 12h10M10 18h4" />
               </svg>
-              <span data-i18n="results.controlsToggle">Search & Sort</span>
+              <span data-i18n="results.controlsToggle">Sort & Preferences</span>
               <svg class="toolbar-toggle__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
                 aria-hidden="true">
@@ -445,16 +460,6 @@
               <!-- Section 1: Primary Filters -->
               <div class="toolbar-section toolbar-section--primary">
                 <div class="toolbar-row">
-                  <div class="searchbox">
-                    <svg width="14" height="14" viewBox="0 0 20 20" aria-hidden="true">
-                      <path
-                        d="M9 3.5a5.5 5.5 0 1 0 3.4 9.8l3.2 3.2a.9.9 0 0 0 1.3-1.3l-3.2-3.2A5.5 5.5 0 0 0 9 3.5zm-3.7 5.5a3.7 3.7 0 1 1 7.4 0 3.7 3.7 0 0 1-7.4 0z"
-                        fill="currentColor" />
-                    </svg>
-                    <input type="search" id="filter-search" data-i18n-ph="results.searchPlaceholder"
-                      placeholder="Search institute or branch…" data-i18n-aria="results.searchAria"
-                      aria-label="Search results" />
-                  </div>
                   <div class="type-chips" id="type-chips" role="group" aria-label="Filter by institute type">
                     <button type="button" class="chip is-active" data-type="" data-i18n="results.typeAll">All</button>
                     <button type="button" class="chip" data-type="IIT">IIT All</button>
@@ -528,11 +533,16 @@
                     <option value="west" data-i18n="region.west">West India</option>
                     <option value="northeast" data-i18n="region.northeast">Northeast / Hills</option>
                   </select>
-                  <button type="button" class="btn--link" id="expand-collapse-all-btn"></button>
+                  <button type="button" class="btn--link expand-collapse-all-btn desktop-only-btn"></button>
                 </div>
               </div>
             </div>
 
+          </div>
+
+          <!-- Mobile Expand/Collapse All -->
+          <div class="mobile-expand-row mobile-only-btn" style="display: flex; justify-content: flex-end; padding: 12px 16px 0;">
+             <button type="button" class="btn--link expand-collapse-all-btn"></button>
           </div>
 
           <!-- Result sections (populated by JS) -->

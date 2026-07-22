@@ -3801,3 +3801,16 @@ select.input--sm {
   user-select: none;
   line-height: 1.35;
 }
+/* Mobile and Desktop specific button visibility for Expand All */
+.mobile-only-btn {
+  display: none !important;
+}
+
+@media (max-width: 768px) {
+  .desktop-only-btn {
+    display: none !important;
+  }
+  .mobile-only-btn {
+    display: flex !important;
+  }
+}

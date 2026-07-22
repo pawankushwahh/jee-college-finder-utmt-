@@ -1311,7 +1311,16 @@ function bindRulerTooltip() {
       `<span>${escapeHtml(dot.dataset.branch)}</span>` +
       `<em>${escapeHtml(t("ruler.closes"))} ${fmt(Number(dot.dataset.rank))}</em>`;
     tip.dataset.cat = dot.dataset.cat;
-    tip.style.left = `${dr.left - cr.left + dr.width / 2}px`;
+    
+    let leftPos = dr.left - cr.left + dr.width / 2;
+    const tipWidth = tip.offsetWidth || 250;
+    const minLeft = (tipWidth / 2) + 10;
+    const maxLeft = cr.width - (tipWidth / 2) - 10;
+    
+    if (leftPos < minLeft) leftPos = minLeft;
+    if (leftPos > maxLeft) leftPos = maxLeft;
+
+    tip.style.left = `${leftPos}px`;
     tip.style.top = `${dr.top - cr.top}px`;
     tip.classList.add("is-on");
   };
@@ -2190,8 +2199,8 @@ window.toggleSection = function (catName) {
 };
 
 window.updateExpandAllButtonUI = function () {
-  const btn = $("expand-collapse-all-btn");
-  if (!btn) return;
+  const btns = document.querySelectorAll(".expand-collapse-all-btn");
+  if (btns.length === 0) return;
 
   const data = state.lastData;
   const recs = data?.recommendations || [];
@@ -2209,8 +2218,10 @@ window.updateExpandAllButtonUI = function () {
     }
   }
 
-  btn.textContent = hasAnyExpanded ? t("results.collapseAll") : t("results.expandAll");
-  btn.dataset.action = hasAnyExpanded ? "collapse" : "expand";
+  btns.forEach(btn => {
+    btn.textContent = hasAnyExpanded ? t("results.collapseAll") : t("results.expandAll");
+    btn.dataset.action = hasAnyExpanded ? "collapse" : "expand";
+  });
 };
 
 function buildSortOptions() {
@@ -2882,10 +2893,10 @@ function bindEvents() {
     saveStateToURL();
   });
 
-  const expColAllBtn = $("expand-collapse-all-btn");
-  if (expColAllBtn) {
-    expColAllBtn.addEventListener("click", () => {
-      const action = expColAllBtn.dataset.action || "collapse";
+  const expColAllBtns = document.querySelectorAll(".expand-collapse-all-btn");
+  expColAllBtns.forEach(btnEl => {
+    btnEl.addEventListener("click", () => {
+      const action = btnEl.dataset.action || "collapse";
       const shouldCollapse = action === "collapse";
 
       for (const catName of SECTION_ORDER) {
@@ -2909,7 +2920,7 @@ function bindEvents() {
 
       updateExpandAllButtonUI();
     });
-  }
+  });
 
   $("home-state").addEventListener("change", () => {
     saveStateToURL();
