@@ -778,8 +778,28 @@ def _apply_top_rank_fallback(
     if rank is None:
         return
 
+    # Check if the candidate's rank qualifies as a top-rank fallback case.
+    # We only apply the fallback logic if they have an exceptional category rank.
+    is_top = False
+    cat_upper = req_category.upper() if req_category else "OPEN"
+    if is_pwd:
+        is_top = rank <= 15
+    elif "OBC" in cat_upper:
+        is_top = rank <= 150
+    elif "SC" in cat_upper:
+        is_top = rank <= 100
+    elif "ST" in cat_upper:
+        is_top = rank <= 50
+    elif "EWS" in cat_upper:
+        is_top = rank <= 100
+    else:
+        is_top = rank <= 500
+
+    if not is_top:
+        return
+
     exam_results = [r for r in results if r.exam == exam_type]
-    if len(exam_results) > 0 and (len(exam_results) >= 10 or rank > 500):
+    if len(exam_results) >= 10:
         return
 
     existing_keys = {(r.institute, r.branch_full, r.quota) for r in exam_results}
