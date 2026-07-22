@@ -757,6 +757,273 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
             )
         )
 
+def _apply_top_rank_fallback(
+    exam_type: str,
+    rank: Optional[int],
+    results: List[Recommendation],
+    programs: List[Program],
+    req: RecommendRequest,
+    req_category: str,
+    is_pwd: bool,
+    wanted_tags: Set[str],
+    hs_index: dict,
+    female_index: dict,
+    lang: str,
+    effective_mode: str,
+) -> None:
+    """If student provided a rank for exam_type and normal overqualification filtering
+    returned 0 options (or fewer than 10 options for top rankers <= 500), include the top
+    options sorted by opening_rank as 'Safe' picks.
+    """
+    if rank is None:
+        return
+
+    exam_results = [r for r in results if r.exam == exam_type]
+    if len(exam_results) > 0 and (len(exam_results) >= 10 or rank > 500):
+        return
+
+    existing_keys = {(r.institute, r.branch_full, r.quota) for r in exam_results}
+    eligible = []
+    for prog in programs:
+        if prog.exam != exam_type:
+            continue
+        if req_category and req_category != "ALL":
+            if is_pwd:
+                allowed_seats = {f"{req_category} (PwD)", "OPEN (PwD)"}
+                if prog.seat_type not in allowed_seats:
+                    continue
+            else:
+                allowed_seats = {req_category, "OPEN"}
+                if prog.seat_type not in allowed_seats:
+                    continue
+        if not _passes_gender(prog, req.gender):
+            continue
+        if not _passes_quota(prog, req.home_state):
+            continue
+        if wanted_tags and prog.tags.isdisjoint(wanted_tags):
+            continue
+        if (prog.institute, prog.branch_full, prog.quota) in existing_keys:
+            continue
+        if prog.opening_rank > 10000:
+            continue
+        eligible.append(prog)
+
+    eligible.sort(key=lambda p: p.opening_rank)
+    needed = 10 - len(exam_results)
+    top_picks = eligible[:needed]
+
+    for prog in top_picks:
+        bucket = "Safe"
+        score, matched = _interest_score(prog, req.goal, req.brand_branch_ratio)
+        home_state_advantage = None
+        if prog.quota == "HS":
+            home_state_advantage = hs_index.get(
+                (prog.institute, prog.branch_full, prog.exam, prog.gender_pool)
+            )
+        female_seat_advantage = None
+        if req.gender == "female" and prog.gender_pool == "female":
+            female_seat_advantage = female_index.get(
+                (prog.institute, prog.branch_full, prog.exam, prog.quota)
+            )
+
+        confidence = prog.volatility_tag
+        reason = _build_reason(
+            prog,
+            bucket,
+            matched,
+            confidence,
+            home_state_advantage,
+            female_seat_advantage,
+            lang,
+        )
+        region = _get_region(prog.institute_state)
+        is_metro = _is_metro(prog.institute, prog.institute_state)
+        history = get_program_history(prog, effective_mode)
+        prob = 99.5  # High probability for top rankers
+
+        results.append(
+            Recommendation(
+                institute=prog.institute,
+                institute_type=prog.institute_type,
+                institute_state=prog.institute_state,
+                exam=prog.exam,
+                branch=prog.branch,
+                branch_full=prog.branch_full,
+                degree=prog.degree,
+                quota=prog.quota,
+                gender_pool=prog.gender_pool,
+                opening_rank=prog.opening_rank,
+                closing_rank=prog.closing_rank,
+                category=bucket,
+                fit_label=FIT_LABELS.get(lang, FIT_LABELS["en"])[bucket],
+                interest_score=round(score, 2),
+                matched_interest=matched,
+                home_state_advantage=home_state_advantage,
+                female_seat_advantage=female_seat_advantage,
+                confidence=confidence,
+                flag_round=prog.flag_round,
+                reason=reason,
+                region=region,
+                is_metro=is_metro,
+                is_top_iit=getattr(prog, "is_top_iit", False),
+                history=history,
+                admission_probability=prob,
+                is_preparatory=prog.is_preparatory,
+                has_preparatory_rounds=prog.has_preparatory_rounds,
+            )
+        )
+
+
+def recommend(req: RecommendRequest) -> RecommendResponse:
+    # Extended mode has been removed — always use basic (2025) dataset.
+    # TODO (reworkable): remove effective_mode variable entirely and replace all
+    # usages with the literal string "basic" once callers stop sending data_mode.
+    effective_mode = "basic"
+
+    programs = load_programs(effective_mode)
+    lang = req.lang if req.lang in ("en", "hi", "gu", "kn") else "en"
+    notes_text = _NOTES.get(lang, _NOTES["en"])
+    notes: List[str] = []
+
+    if req.adv_rank is None:
+        notes.append(notes_text["no_adv"])
+    if req.mains_rank is None:
+        notes.append(notes_text["no_mains"])
+    if req.home_state not in states.INDIAN_STATES:
+        notes.append(notes_text["home_state"].format(state=req.home_state))
+
+    # Branch preferences -> the set of branch tags the student wants to see.
+    # An empty set means "no filter" (show every eligible branch).
+    wanted_tags = states.tags_for_branch_preferences(req.branch_preferences)
+
+    hs_index = home_state_advantage_index(effective_mode)
+    female_index = female_seat_advantage_index(effective_mode)
+
+    req_category = req.seat_category
+    is_pwd = req.is_pwd
+    if req_category.endswith(" (PwD)"):
+        req_category = req_category[:-6]
+        is_pwd = True
+
+    results: List[Recommendation] = []
+    for prog in programs:
+        rank = _relevant_rank(prog, req)
+        if rank is None:
+            continue
+        # Filter by seat_type
+        if req_category and req_category != "ALL":
+            if is_pwd:
+                # PwD candidates match their category PwD seats and OPEN PwD seats
+                allowed_seats = {f"{req_category} (PwD)", "OPEN (PwD)"}
+                if prog.seat_type not in allowed_seats:
+                    continue
+            else:
+                # Regular candidates match their category seats and OPEN seats
+                allowed_seats = {req_category, "OPEN"}
+                if prog.seat_type not in allowed_seats:
+                    continue
+        if not _passes_gender(prog, req.gender):
+            continue
+        if not _passes_quota(prog, req.home_state):
+            continue
+        if wanted_tags and prog.tags.isdisjoint(wanted_tags):
+            continue
+        bucket = _categorize(rank, prog.opening_rank, prog.closing_rank)
+        if bucket is None:
+            continue
+        score, matched = _interest_score(prog, req.goal, req.brand_branch_ratio)
+
+        home_state_advantage = None
+        if prog.quota == "HS":
+            home_state_advantage = hs_index.get(
+                (prog.institute, prog.branch_full, prog.exam, prog.gender_pool)
+            )
+        female_seat_advantage = None
+        if req.gender == "female" and prog.gender_pool == "female":
+            female_seat_advantage = female_index.get(
+                (prog.institute, prog.branch_full, prog.exam, prog.quota)
+            )
+
+        confidence = prog.volatility_tag
+        reason = _build_reason(
+            prog,
+            bucket,
+            matched,
+            confidence,
+            home_state_advantage,
+            female_seat_advantage,
+            lang,
+        )
+
+        region = _get_region(prog.institute_state)
+        is_metro = _is_metro(prog.institute, prog.institute_state)
+
+        # Probability calculation (purely based on opening, closing, and student rank)
+        history = get_program_history(prog, effective_mode)
+        prob = _calculate_probability(rank, prog.opening_rank, prog.closing_rank, history)
+        
+        results.append(
+            Recommendation(
+                institute=prog.institute,
+                institute_type=prog.institute_type,
+                institute_state=prog.institute_state,
+                exam=prog.exam,
+                branch=prog.branch,
+                branch_full=prog.branch_full,
+                degree=prog.degree,
+                quota=prog.quota,
+                gender_pool=prog.gender_pool,
+                opening_rank=prog.opening_rank,
+                closing_rank=prog.closing_rank,
+                category=bucket,
+                fit_label=FIT_LABELS.get(lang, FIT_LABELS["en"])[bucket],
+                interest_score=round(score, 2),
+                matched_interest=matched,
+                home_state_advantage=home_state_advantage,
+                female_seat_advantage=female_seat_advantage,
+                confidence=confidence,
+                flag_round=prog.flag_round,
+                reason=reason,
+                region=region,
+                is_metro=is_metro,
+                is_top_iit=getattr(prog, "is_top_iit", False),
+                history=history,
+                admission_probability=prob,
+                is_preparatory=prog.is_preparatory,
+                has_preparatory_rounds=prog.has_preparatory_rounds,
+            )
+        )
+
+    # Apply top rank fallback for Mains and Advanced cleanly using helper
+    _apply_top_rank_fallback(
+        "mains",
+        req.mains_rank,
+        results,
+        programs,
+        req,
+        req_category,
+        is_pwd,
+        wanted_tags,
+        hs_index,
+        female_index,
+        lang,
+        effective_mode,
+    )
+    _apply_top_rank_fallback(
+        "advanced",
+        req.adv_rank,
+        results,
+        programs,
+        req,
+        req_category,
+        is_pwd,
+        wanted_tags,
+        hs_index,
+        female_index,
+        lang,
+        effective_mode,
+    )
+
     all_matches = results
     all_matches.sort(
         key=lambda r: (
@@ -801,7 +1068,6 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
 
     counts = {
         "total": total_count,
-        "total_unfiltered": total_unfiltered,
         "shown": total_count,
         "by_category": {
             "Safe": total_by_type["safe"]["total"],
