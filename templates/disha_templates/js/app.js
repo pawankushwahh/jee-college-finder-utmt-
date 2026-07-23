@@ -44,7 +44,8 @@ const $ = (id) => document.getElementById(id);
 function escapeHtml(str) {
   return String(str)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    .replace(/>/g, "&gt;").replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
 }
 
 const fmt = (n) => Number(n).toLocaleString("en-IN");
@@ -83,6 +84,7 @@ const state = {
   expandedColleges: {}, // in-memory accordion toggle state
   collapsedSections: { Safe: false, Target: false, Reach: false },
   sortBy: "rank",
+  showAllCards: {},
 };
 
 const TOTAL_STEPS = 5;
@@ -764,6 +766,7 @@ async function runRequest(payload, { keepFilters = false } = {}) {
     await Promise.all([executeRecommendationRequest(payload, { keepFilters }), minDelay]);
     if (seq !== requestSeq) return;
     stopLoadingLines();
+    sessionStorage.removeItem("disha_render_crash");
     syncPanelFromState();
     showView("results");
   } catch (err) {
@@ -971,7 +974,13 @@ function rulerGroupHtml(group, recs) {
   const youRank = state.lastPayload?.[group.rankKey];
   // sort by closing rank so adjacent (visually overlapping) dots land in
   // different jitter lanes, spreading dense clusters vertically
-  const sorted = items.slice().sort((a, b) => a.closing_rank - b.closing_rank);
+  const getRank = (r) => (r.closing_rank !== null && r.closing_rank !== undefined) ? r.closing_rank : Infinity;
+  const sorted = items.slice().sort((a, b) => {
+    const rankA = getRank(a);
+    const rankB = getRank(b);
+    if (rankA === rankB) return 0;
+    return rankA - rankB;
+  });
 
   // Compute autoscaled range
   const autoRange = computeAutoRange(items, youRank);
@@ -1071,10 +1080,19 @@ function rerenderRulerGroup(rulerId) {
   if (!newHtml) return;
   const temp = document.createElement("div");
   temp.innerHTML = newHtml;
-  const newGroup = temp.firstElementChild;
-  groupEl.replaceWith(newGroup);
-  // Re-wire zoom/pan on the fresh DOM nodes
-  bindRulerZoom();
+  
+  const newTrack = temp.querySelector('.ruler__track');
+  const newScale = temp.querySelector('.ruler__scale');
+  
+  const oldTrack = groupEl.querySelector('.ruler__track');
+  const oldScale = groupEl.querySelector('.ruler__scale');
+  
+  if (oldTrack && newTrack) {
+    oldTrack.innerHTML = newTrack.innerHTML;
+  }
+  if (oldScale && newScale) {
+    oldScale.innerHTML = newScale.innerHTML;
+  }
 }
 
 // ── Zoom / pan helpers ──────────────────────────────────────────────────
@@ -2067,6 +2085,7 @@ function renderSections() {
       sortedVisible.sort((a, b) => {
         const valA = a.closing_rank !== null && a.closing_rank !== undefined ? a.closing_rank : Infinity;
         const valB = b.closing_rank !== null && b.closing_rank !== undefined ? b.closing_rank : Infinity;
+        if (valA === valB) return 0;
         return valA - valB;
       });
     } else if (state.sortBy === "college") {
@@ -2099,6 +2118,7 @@ function renderSections() {
         grouped.sort((a, b) => {
           const minA = Math.min(...a.branches.map(r => r.closing_rank !== null && r.closing_rank !== undefined ? r.closing_rank : Infinity), Infinity);
           const minB = Math.min(...b.branches.map(r => r.closing_rank !== null && r.closing_rank !== undefined ? r.closing_rank : Infinity), Infinity);
+          if (minA === minB) return 0;
           return minA - minB;
         });
       } else if (state.sortBy === "college") {
@@ -2116,6 +2136,7 @@ function renderSections() {
           group.branches.sort((a, b) => {
             const valA = a.closing_rank !== null && a.closing_rank !== undefined ? a.closing_rank : Infinity;
             const valB = b.closing_rank !== null && b.closing_rank !== undefined ? b.closing_rank : Infinity;
+            if (valA === valB) return 0;
             return valA - valB;
           });
         } else if (state.sortBy === "college") {
@@ -2123,9 +2144,23 @@ function renderSections() {
         }
       });
 
-      contentHtml = `<div class="cards">${grouped.map((g, i) => collegeCardHtml(g, catName, i)).join("")}</div>`;
+      const CARD_LIMIT = 25;
+      const showAllC = !!state.showAllCards?.[catName];
+      const collegeSlice = showAllC ? grouped : grouped.slice(0, CARD_LIMIT);
+      contentHtml = `<div class="cards">${collegeSlice.map((g, i) => collegeCardHtml(g, catName, i)).join("")}</div>`;
+      if (!showAllC && grouped.length > CARD_LIMIT) {
+        const rem = grouped.length - CARD_LIMIT;
+        contentHtml += `<div style="text-align:center;margin:20px 0 8px"><button type="button" class="btn btn--ghost" onclick="showMoreCards('${catName}')" style="gap:6px;font-size:.92rem">Show ${rem} more colleges ▾</button></div>`;
+      }
     } else {
-      contentHtml = `<div class="cards">${sortedVisible.map((r, i) => cardHtml(r, i)).join("")}</div>`;
+      const CARD_LIMIT = 25;
+      const showAllB = !!state.showAllCards?.[catName];
+      const branchSlice = showAllB ? sortedVisible : sortedVisible.slice(0, CARD_LIMIT);
+      contentHtml = `<div class="cards">${branchSlice.map((r, i) => cardHtml(r, i)).join("")}</div>`;
+      if (!showAllB && sortedVisible.length > CARD_LIMIT) {
+        const rem = sortedVisible.length - CARD_LIMIT;
+        contentHtml += `<div style="text-align:center;margin:20px 0 8px"><button type="button" class="btn btn--ghost" onclick="showMoreCards('${catName}')" style="gap:6px;font-size:.92rem">Show ${rem} more options ▾</button></div>`;
+      }
     }
 
     // Compute type breakdown text for section title
@@ -2178,6 +2213,12 @@ function renderSections() {
     specHeader.style.display = hasResults ? "flex" : "none";
   }
 }
+
+window.showMoreCards = function (catName) {
+  if (!state.showAllCards) state.showAllCards = {};
+  state.showAllCards[catName] = true;
+  renderSections();
+};
 
 window.toggleSection = function (catName) {
   state.collapsedSections[catName] = !state.collapsedSections[catName];
@@ -2256,6 +2297,7 @@ function renderResults(data, { keepFilters = false } = {}) {
     state.filterState = "all";
     state.collapsedSections = { Safe: false, Target: false, Reach: false };
     state.expandedColleges = {};
+    state.showAllCards = {};
     $("filter-search").value = "";
     document.querySelectorAll("#type-chips .chip").forEach((c) =>
       c.classList.toggle("is-active", c.dataset.type === "")
@@ -2524,9 +2566,14 @@ function loadStateFromURL() {
   // Determine target view / step
   const stepParam = q.get("step");
   if (stepParam === "results" || (!stepParam && (hasMains || hasAdv))) {
+    // Crash-loop detection: increment attempt counter before heavy render
+    const _crashKey = "disha_render_crash";
+    const _prevCrashes = parseInt(sessionStorage.getItem(_crashKey) || "0", 10);
+    sessionStorage.setItem(_crashKey, String(_prevCrashes + 1));
     const payload = buildPayload();
     state.lastPayload = payload;
     runRequest(payload, { keepFilters: true }).then(() => {
+      sessionStorage.removeItem("disha_render_crash");
       restoreScrollPosition();
     });
   } else {
@@ -3038,7 +3085,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Determine initial view: show loading if URL has parameters, otherwise welcome
   const hasParams = [...new URLSearchParams(location.search).keys()].length > 0;
-  if (hasParams) {
+
+  // Crash-loop recovery: if previous loads crashed repeatedly on this URL,
+  // break the loop by falling back to the welcome screen.
+  const _crashCount = parseInt(sessionStorage.getItem("disha_render_crash") || "0", 10);
+  let skipUrlRestore = false;
+  if (hasParams && _crashCount >= 2) {
+    console.warn("Disha: detected crash loop — resetting to welcome view.");
+    sessionStorage.removeItem("disha_render_crash");
+    history.replaceState(null, "", location.pathname);
+    skipUrlRestore = true;
+  }
+
+  if (hasParams && !skipUrlRestore) {
     showView("loading");
   } else {
     showView("welcome");
@@ -3046,6 +3105,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Load form metadata, then load state from URL if present
   loadMeta().then(() => {
+    if (skipUrlRestore) {
+      showView("welcome");
+      return;
+    }
     const restored = loadStateFromURL();
     if (!restored) {
       showView("welcome");

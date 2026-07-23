@@ -99,10 +99,23 @@ def compute_dataset_stats() -> Dict[str, Any]:
 
     # Calculate clean closing ranks per round
     round_averages = {}
+    round_averages_main = {}
+    round_averages_adv = {}
+    
+    is_adv = df["Institute_Type"] == "IIT"
+    is_main = df["Institute_Type"] != "IIT"
+
     for col in closing_cols:
         clean_col = df[col].apply(_clean_rank_value)
+        
         mean_val = clean_col.mean()
         round_averages[col] = float(mean_val) if not pd.isna(mean_val) else None
+        
+        mean_main = clean_col[is_main].mean()
+        round_averages_main[col] = float(mean_main) if not pd.isna(mean_main) else None
+
+        mean_adv = clean_col[is_adv].mean()
+        round_averages_adv[col] = float(mean_adv) if not pd.isna(mean_adv) else None
 
     # Calculate overall opening and closing ranks for each row to compute min/max
     df_clean_open = pd.DataFrame({col: df[col].apply(_clean_rank_value) for col in opening_cols})
@@ -476,6 +489,8 @@ def compute_dataset_stats() -> Dict[str, Any]:
         "seat_type_counts": seat_type_counts,
         "gender_counts": gender_counts,
         "round_averages": round_averages,
+        "round_averages_main": round_averages_main,
+        "round_averages_adv": round_averages_adv,
         "highest_cutoffs": highest_cutoffs,
         "lowest_cutoffs": lowest_cutoffs,
         "inst_competitiveness": inst_competitiveness,

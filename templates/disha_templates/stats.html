@@ -1423,6 +1423,11 @@
             </h3>
           </div>
           <div class="card__body">
+            <div class="tabs-nav" id="round-exam-tabs" style="margin-bottom: 12px; border-bottom-color: var(--line-soft);">
+              <button class="tab-btn is-active" onclick="switchRoundExamTab('ALL')" data-round-exam-tab="ALL">All Programs</button>
+              <button class="tab-btn" onclick="switchRoundExamTab('MAIN')" data-round-exam-tab="MAIN">JEE Main (NITs, IIITs...)</button>
+              <button class="tab-btn" onclick="switchRoundExamTab('ADV')" data-round-exam-tab="ADV">JEE Advanced (IITs)</button>
+            </div>
             <div class="chart-container">
               <canvas id="chart-rounds"></canvas>
             </div>
@@ -1976,8 +1981,13 @@
         document.getElementById("val-seat-types").textContent = data.summary.unique_seat_types;
 
         // Draw Round-wise trend chart
+        window.roundsDataCache = {
+            ALL: Object.values(data.round_averages),
+            MAIN: Object.values(data.round_averages_main || {}),
+            ADV: Object.values(data.round_averages_adv || {})
+        };
         const roundsLabels = Object.keys(data.round_averages).map(k => `Round ${k.replace('Closing_R', '')}`);
-        const roundsValues = Object.values(data.round_averages);
+        const roundsValues = window.roundsDataCache.ALL;
 
         charts.rounds = new Chart(document.getElementById("chart-rounds"), {
           type: 'line',
@@ -3058,6 +3068,19 @@
       // Swap panel visibility with CSS transition
       document.getElementById('mobile-panel-lowest').classList.toggle('is-active', panel === 'lowest');
       document.getElementById('mobile-panel-highest').classList.toggle('is-active', panel === 'highest');
+    };
+
+    /**
+     * Switch dataset for Round-wise Cutoff Movement Trend
+     */
+    window.switchRoundExamTab = function(exam) {
+      document.querySelectorAll('#round-exam-tabs .tab-btn').forEach(btn => {
+        btn.classList.toggle('is-active', btn.dataset.roundExamTab === exam);
+      });
+      if (charts.rounds && window.roundsDataCache) {
+        charts.rounds.data.datasets[0].data = window.roundsDataCache[exam];
+        charts.rounds.update();
+      }
     };
   </script>
 </body>
