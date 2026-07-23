@@ -65,7 +65,10 @@ def compute_dataset_stats() -> Dict[str, Any]:
     # Also exclude School of Planning & Architecture institutes entirely
     df = df[~df["Institute"].str.lower().str.contains("planning", na=False)]
 
-    total_records = len(df)
+    from .data_loader import load_programs_basic
+    programs = load_programs_basic()
+    
+    total_records = len(programs)
     unique_institutes = int(df["Institute"].nunique())
     unique_programs = int(df["Academic Program Name"].nunique())
     unique_quotas = df["Quota"].unique().tolist()
