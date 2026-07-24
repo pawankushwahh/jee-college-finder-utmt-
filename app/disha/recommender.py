@@ -630,132 +630,7 @@ _GUIDANCE = {
 }
 
 
-def recommend(req: RecommendRequest) -> RecommendResponse:
-    # Extended mode has been removed — always use basic (2025) dataset.
-    # TODO (reworkable): remove effective_mode variable entirely and replace all
-    # usages with the literal string "basic" once callers stop sending data_mode.
-    effective_mode = "basic"
 
-    programs = load_programs(effective_mode)
-    lang = req.lang if req.lang in ("en", "hi", "gu", "kn") else "en"
-    notes_text = _NOTES.get(lang, _NOTES["en"])
-    notes: List[str] = []
-
-    if req.adv_rank is None:
-        notes.append(notes_text["no_adv"])
-    if req.mains_rank is None:
-        notes.append(notes_text["no_mains"])
-    if req.home_state not in states.INDIAN_STATES:
-        notes.append(notes_text["home_state"].format(state=req.home_state))
-
-    # Branch preferences -> the set of branch tags the student wants to see.
-    # An empty set means "no filter" (show every eligible branch).
-    wanted_tags = states.tags_for_branch_preferences(req.branch_preferences)
-
-    hs_index = home_state_advantage_index(effective_mode)
-    female_index = female_seat_advantage_index(effective_mode)
-
-    req_category = req.seat_category
-    is_pwd = req.is_pwd
-    if req_category.endswith(" (PwD)"):
-        req_category = req_category[:-6]
-        is_pwd = True
-
-    results: List[Recommendation] = []
-    for prog in programs:
-        rank = _relevant_rank(prog, req)
-        if rank is None:
-            continue
-        # Filter by seat_type
-        if req_category and req_category != "ALL":
-            if is_pwd:
-                # PwD candidates match their category PwD seats and OPEN PwD seats
-                allowed_seats = {f"{req_category} (PwD)", "OPEN (PwD)"}
-                if prog.seat_type not in allowed_seats:
-                    continue
-            else:
-                # Regular candidates match their category seats and OPEN seats
-                allowed_seats = {req_category, "OPEN"}
-                if prog.seat_type not in allowed_seats:
-                    continue
-        if not _passes_gender(prog, req.gender):
-            continue
-        if not _passes_quota(prog, req.home_state):
-            continue
-        if wanted_tags and prog.tags.isdisjoint(wanted_tags):
-            continue
-        bucket = _categorize(rank, prog.opening_rank, prog.closing_rank)
-        if bucket is None:
-            continue
-        score, matched = _interest_score(prog, req.goal, req.brand_branch_ratio)
-
-        home_state_advantage = None
-        if prog.quota == "HS":
-            home_state_advantage = hs_index.get(
-                (prog.institute, prog.branch_full, prog.exam, prog.gender_pool)
-            )
-        female_seat_advantage = None
-        if req.gender == "female" and prog.gender_pool == "female":
-            female_seat_advantage = female_index.get(
-                (prog.institute, prog.branch_full, prog.exam, prog.quota)
-            )
-
-        confidence = prog.volatility_tag
-        reason = _build_reason(
-            prog,
-            bucket,
-            matched,
-            confidence,
-            home_state_advantage,
-            female_seat_advantage,
-            lang,
-        )
-
-        # Fee calculation is removed to focus on admission probability insights.
-        # Future-proofing: If verified fees data becomes available, recalculate est_fees, waiver_applied, and fee_note here.
-        region = _get_region(prog.institute_state)
-        is_metro = _is_metro(prog.institute, prog.institute_state)
-
-        # Probability calculation (purely based on opening, closing, and student rank)
-        history = get_program_history(prog, effective_mode)
-        prob = _calculate_probability(rank, prog.opening_rank, prog.closing_rank, history)
-        
-        results.append(
-            Recommendation(
-                institute=prog.institute,
-                institute_type=prog.institute_type,
-                institute_state=prog.institute_state,
-                exam=prog.exam,
-                branch=prog.branch,
-                branch_full=prog.branch_full,
-                degree=prog.degree,
-                quota=prog.quota,
-                gender_pool=prog.gender_pool,
-                opening_rank=prog.opening_rank,
-                closing_rank=prog.closing_rank,
-                category=bucket,
-                fit_label=FIT_LABELS.get(lang, FIT_LABELS["en"])[bucket],
-                interest_score=round(score, 2),
-                matched_interest=matched,
-                home_state_advantage=home_state_advantage,
-                female_seat_advantage=female_seat_advantage,
-                confidence=confidence,
-                flag_round=prog.flag_round,
-                reason=reason,
-                # estimated_fees, fee_waiver_applied, fee_note are removed to focus on admission insights.
-                # Future-proofing: If verified fees data becomes available, pass these fields:
-                # estimated_fees=est_fees,
-                # fee_waiver_applied=waiver_applied,
-                # fee_note=fee_note,
-                region=region,
-                is_metro=is_metro,
-                is_top_iit=getattr(prog, 'is_top_iit', False),
-                history=history,
-                admission_probability=prob,
-                is_preparatory=prog.is_preparatory,
-                has_preparatory_rounds=prog.has_preparatory_rounds,
-            )
-        )
 
 def _apply_top_rank_fallback(
     exam_type: str,
@@ -782,7 +657,7 @@ def _apply_top_rank_fallback(
     # We only apply the fallback logic if they have an exceptional category rank.
     is_top = False
     cat_upper = req_category.upper() if req_category else "OPEN"
-    if is_pwd:
+    if is_pwd or "(PWD)" in cat_upper:
         is_top = rank <= 15
     elif "OBC" in cat_upper:
         is_top = rank <= 150
@@ -803,19 +678,16 @@ def _apply_top_rank_fallback(
         return
 
     existing_keys = {(r.institute, r.branch_full, r.quota) for r in exam_results}
+    target_category = req_category
+    if is_pwd and not target_category.endswith(" (PwD)"):
+        target_category = f"{target_category} (PwD)"
+
     eligible = []
     for prog in programs:
         if prog.exam != exam_type:
             continue
-        if req_category and req_category != "ALL":
-            if is_pwd:
-                allowed_seats = {f"{req_category} (PwD)", "OPEN (PwD)"}
-                if prog.seat_type not in allowed_seats:
-                    continue
-            else:
-                allowed_seats = {req_category, "OPEN"}
-                if prog.seat_type not in allowed_seats:
-                    continue
+        if prog.seat_type != target_category:
+            continue
         if not _passes_gender(prog, req.gender):
             continue
         if not _passes_quota(prog, req.home_state):
@@ -838,12 +710,12 @@ def _apply_top_rank_fallback(
         home_state_advantage = None
         if prog.quota == "HS":
             home_state_advantage = hs_index.get(
-                (prog.institute, prog.branch_full, prog.exam, prog.gender_pool)
+                (prog.institute, prog.branch_full, prog.exam, prog.gender_pool, prog.seat_type)
             )
         female_seat_advantage = None
         if req.gender == "female" and prog.gender_pool == "female":
             female_seat_advantage = female_index.get(
-                (prog.institute, prog.branch_full, prog.exam, prog.quota)
+                (prog.institute, prog.branch_full, prog.exam, prog.quota, prog.seat_type)
             )
 
         confidence = prog.volatility_tag
@@ -919,29 +791,18 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
     hs_index = home_state_advantage_index(effective_mode)
     female_index = female_seat_advantage_index(effective_mode)
 
-    req_category = req.seat_category
-    is_pwd = req.is_pwd
-    if req_category.endswith(" (PwD)"):
-        req_category = req_category[:-6]
-        is_pwd = True
+    target_category = req.seat_category
+    if req.is_pwd and not target_category.endswith(" (PwD)"):
+        target_category = f"{target_category} (PwD)"
 
     results: List[Recommendation] = []
     for prog in programs:
         rank = _relevant_rank(prog, req)
         if rank is None:
             continue
-        # Filter by seat_type
-        if req_category and req_category != "ALL":
-            if is_pwd:
-                # PwD candidates match their category PwD seats and OPEN PwD seats
-                allowed_seats = {f"{req_category} (PwD)", "OPEN (PwD)"}
-                if prog.seat_type not in allowed_seats:
-                    continue
-            else:
-                # Regular candidates match their category seats and OPEN seats
-                allowed_seats = {req_category, "OPEN"}
-                if prog.seat_type not in allowed_seats:
-                    continue
+        # Filter strictly by seat_type (1:1 canonical seat category match)
+        if prog.seat_type != target_category:
+            continue
         if not _passes_gender(prog, req.gender):
             continue
         if not _passes_quota(prog, req.home_state):
@@ -956,12 +817,12 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         home_state_advantage = None
         if prog.quota == "HS":
             home_state_advantage = hs_index.get(
-                (prog.institute, prog.branch_full, prog.exam, prog.gender_pool)
+                (prog.institute, prog.branch_full, prog.exam, prog.gender_pool, prog.seat_type)
             )
         female_seat_advantage = None
         if req.gender == "female" and prog.gender_pool == "female":
             female_seat_advantage = female_index.get(
-                (prog.institute, prog.branch_full, prog.exam, prog.quota)
+                (prog.institute, prog.branch_full, prog.exam, prog.quota, prog.seat_type)
             )
 
         confidence = prog.volatility_tag
@@ -1021,8 +882,8 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         results,
         programs,
         req,
-        req_category,
-        is_pwd,
+        target_category,
+        req.is_pwd,
         wanted_tags,
         hs_index,
         female_index,
@@ -1035,8 +896,8 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         results,
         programs,
         req,
-        req_category,
-        is_pwd,
+        target_category,
+        req.is_pwd,
         wanted_tags,
         hs_index,
         female_index,

@@ -52,12 +52,13 @@ class RecommendRequest(BaseModel):
     seat_category: str = Field(
         default="OPEN",
         description=(
-            "Reservation category for seat allocation: OPEN, OBC-NCL, SC, ST, or EWS."
+            "Canonical reservation seat category for allocation: OPEN, OBC-NCL, SC, ST, EWS, "
+            "OPEN (PwD), OBC-NCL (PwD), SC (PwD), ST (PwD), or EWS (PwD)."
         ),
     )
     is_pwd: bool = Field(
         default=False,
-        description="Whether the candidate belongs to Persons with Disabilities (PwD) subcategory.",
+        description="Deprecated: PwD state is encoded directly in canonical seat_category (e.g. 'OBC-NCL (PwD)'). Retained for API compatibility.",
     )
     # family_income is removed to focus exclusively on admission probability insights.
     brand_branch_ratio: float = Field(

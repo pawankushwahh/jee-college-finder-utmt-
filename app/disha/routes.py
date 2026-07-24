@@ -86,13 +86,16 @@ def recommend_endpoint(
 ) -> RecommendResponse:
     """Return filtered, categorized and interest-ranked recommendations."""
     if req is None:
+        cat = seat_category or "OPEN"
+        if is_pwd and not cat.endswith(" (PwD)"):
+            cat = f"{cat} (PwD)"
         req = RecommendRequest(
             adv_rank=adv_rank,
             mains_rank=mains_rank,
             gender=gender if gender in ("male", "female") else "male",
             home_state=home_state or "Delhi",
             goal=goal if goal in ("coding", "research", "mba", "core", "undecided", "pure_science") else "coding",
-            seat_category=seat_category or "OPEN",
+            seat_category=cat,
             is_pwd=bool(is_pwd),
         )
     if bucket is not None:

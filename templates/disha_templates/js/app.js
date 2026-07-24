@@ -531,7 +531,6 @@ function buildCategoryOptions(catSel) {
   if (catSel.id === "panel-seat-category") {
     // Selector B
     const cats = [
-      { value: "ALL", label: "All Categories" },
       { value: "OPEN", label: "General (OPEN)" },
       { value: "OBC-NCL", label: "OBC-NCL" },
       { value: "SC", label: "SC (Scheduled Caste)" },
@@ -570,7 +569,7 @@ function buildCategoryOptions(catSel) {
   }
   catSel.value = prev;
   if (!catSel.value) {
-    catSel.value = (catSel.id === "panel-seat-category") ? "ALL" : "OPEN";
+    catSel.value = "OPEN";
   }
   const note = $("category-note");
   if (note) note.textContent = t("category.note");
@@ -600,12 +599,17 @@ function stopLoadingLines() {
 function buildPayload() {
   const mains = parseRankInput($("mains-rank"));
   const adv = parseRankInput($("adv-rank"));
+  let cat = $("seat-category") ? $("seat-category").value : "OPEN";
+  const isPwd = $("seat-category-pwd") ? $("seat-category-pwd").checked : false;
+  if (isPwd && cat && !cat.endsWith(" (PwD)")) {
+    cat = `${cat} (PwD)`;
+  }
   const payload = {
     gender: state.gender === "female" ? "female" : "male",
     home_state: $("home-state").value,
     goal: state.goal,
-    seat_category: $("seat-category").value || "OPEN",
-    is_pwd: $("seat-category-pwd") ? $("seat-category-pwd").checked : false,
+    seat_category: cat,
+    is_pwd: isPwd,
     brand_branch_ratio: state.brandBranchRatio !== undefined ? state.brandBranchRatio : 0.5,
     max_results: 150,
     lang: getLang(),
@@ -738,9 +742,7 @@ function syncPanelFromState() {
   if ($("panel-seat-category")) {
     const primary = $("seat-category").value || "OPEN";
     const pwdCheckbox = $("seat-category-pwd");
-    if (primary === "ALL") {
-      $("panel-seat-category").value = "ALL";
-    } else if (pwdCheckbox && pwdCheckbox.checked) {
+    if (pwdCheckbox && pwdCheckbox.checked && !primary.endsWith(" (PwD)")) {
       $("panel-seat-category").value = `${primary} (PwD)`;
     } else {
       $("panel-seat-category").value = primary;
@@ -2744,10 +2746,7 @@ function bindPanelEvents() {
     panelCat.addEventListener("change", () => {
       const val = panelCat.value;
       const pwdCheckbox = $("seat-category-pwd");
-      if (val === "ALL") {
-        $("seat-category").value = "ALL";
-        if (pwdCheckbox) pwdCheckbox.checked = false;
-      } else if (val.endsWith(" (PwD)")) {
+      if (val.endsWith(" (PwD)")) {
         $("seat-category").value = val.replace(" (PwD)", "");
         if (pwdCheckbox) pwdCheckbox.checked = true;
       } else {
@@ -2979,9 +2978,7 @@ function bindEvents() {
     if (panelCat) {
       const primary = $("seat-category").value || "OPEN";
       const pwdCheckbox = $("seat-category-pwd");
-      if (primary === "ALL") {
-        panelCat.value = "ALL";
-      } else if (pwdCheckbox && pwdCheckbox.checked) {
+      if (pwdCheckbox && pwdCheckbox.checked && !primary.endsWith(" (PwD)")) {
         panelCat.value = `${primary} (PwD)`;
       } else {
         panelCat.value = primary;
@@ -2996,9 +2993,7 @@ function bindEvents() {
       const panelCat = $("panel-seat-category");
       if (panelCat) {
         const primary = $("seat-category").value || "OPEN";
-        if (primary !== "ALL") {
-          panelCat.value = seatCategoryPwd.checked ? `${primary} (PwD)` : primary;
-        }
+        panelCat.value = seatCategoryPwd.checked ? `${primary} (PwD)` : primary;
       }
     });
   }

@@ -455,19 +455,19 @@ ProgramKey = Tuple[str, str, str]  # (institute, branch_full, exam)
 
 
 @lru_cache(maxsize=2)
-def home_state_advantage_index(data_mode: str = "basic") -> Dict[Tuple[str, str, str, str], int]:
-    """Map an HS seat to the ranks it saves vs the equivalent open-pool seat.
+def home_state_advantage_index(data_mode: str = "basic") -> Dict[Tuple[str, str, str, str, str], int]:
+    """Map an HS seat to the ranks it saves vs the equivalent open-pool seat within the same category.
 
-    Key: (institute, branch_full, exam, gender_pool) -> ranks saved.
+    Key: (institute, branch_full, exam, gender_pool, seat_type) -> ranks saved.
     """
-    groups: Dict[Tuple[str, str, str, str], Dict[str, int]] = defaultdict(dict)
+    groups: Dict[Tuple[str, str, str, str, str], Dict[str, int]] = defaultdict(dict)
     for prog in load_programs(data_mode):
-        key = (prog.institute, prog.branch_full, prog.exam, prog.gender_pool)
+        key = (prog.institute, prog.branch_full, prog.exam, prog.gender_pool, prog.seat_type)
         prev = groups[key].get(prog.quota)
         if prev is None or prog.closing_rank > prev:
             groups[key][prog.quota] = prog.closing_rank
 
-    index: Dict[Tuple[str, str, str, str], int] = {}
+    index: Dict[Tuple[str, str, str, str, str], int] = {}
     for key, by_quota in groups.items():
         hs = by_quota.get("HS")
         if hs is None:
@@ -477,26 +477,26 @@ def home_state_advantage_index(data_mode: str = "basic") -> Dict[Tuple[str, str,
             other = by_quota.get("AI")
         if other is None:
             continue
-        advantage = other - hs
+        advantage = hs - other
         if advantage > 0:
             index[key] = advantage
     return index
 
 
 @lru_cache(maxsize=2)
-def female_seat_advantage_index(data_mode: str = "basic") -> Dict[Tuple[str, str, str, str], int]:
-    """Map a Female-only seat to how many ranks later it closes vs the neutral pool.
+def female_seat_advantage_index(data_mode: str = "basic") -> Dict[Tuple[str, str, str, str, str], int]:
+    """Map a Female-only seat to how many ranks later it closes vs the neutral pool within the same category.
 
-    Key: (institute, branch_full, exam, quota) -> ranks of extra cushion.
+    Key: (institute, branch_full, exam, quota, seat_type) -> ranks of extra cushion.
     """
-    groups: Dict[Tuple[str, str, str, str], Dict[str, int]] = defaultdict(dict)
+    groups: Dict[Tuple[str, str, str, str, str], Dict[str, int]] = defaultdict(dict)
     for prog in load_programs(data_mode):
-        key = (prog.institute, prog.branch_full, prog.exam, prog.quota)
+        key = (prog.institute, prog.branch_full, prog.exam, prog.quota, prog.seat_type)
         prev = groups[key].get(prog.gender_pool)
         if prev is None or prog.closing_rank > prev:
             groups[key][prog.gender_pool] = prog.closing_rank
 
-    index: Dict[Tuple[str, str, str, str], int] = {}
+    index: Dict[Tuple[str, str, str, str, str], int] = {}
     for key, by_pool in groups.items():
         female = by_pool.get("female")
         neutral = by_pool.get("neutral")
