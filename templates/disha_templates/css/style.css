@@ -3814,3 +3814,19 @@ select.input--sm {
     display: flex !important;
   }
 }
+
+/* Category Rank Alert warning callout */
+.category-rank-alert {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  padding: 10px 14px;
+  background-color: var(--target-bg);
+  border-left: 4px solid var(--target);
+  border-radius: var(--radius-sm);
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  line-height: 1.45;
+}
+.category-rank-alert strong {
+  color: var(--target);
+}
