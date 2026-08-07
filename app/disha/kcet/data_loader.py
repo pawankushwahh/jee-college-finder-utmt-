@@ -34,9 +34,22 @@ def load_kcet_programs() -> List[dict]:
             # Try to resolve keys case-insensitively or dynamically
             keys = {k.lower(): k for k in row.keys()}
             
-            inst_key = keys.get("institute", "Institute")
-            prog_key = keys.get("academic program name", keys.get("program", "Academic Program Name"))
-            quota_key = keys.get("quota", "Quota")
+            inst_key = (
+                keys.get("college_name") or 
+                keys.get("institute") or 
+                "Institute"
+            )
+            prog_key = (
+                keys.get("course_name") or 
+                keys.get("academic program name") or 
+                keys.get("program") or 
+                "Academic Program Name"
+            )
+            quota_key = (
+                keys.get("category") or 
+                keys.get("quota") or 
+                "Quota"
+            )
             
             institute = row.get(inst_key, "").strip()
             program = row.get(prog_key, "").strip()
@@ -47,7 +60,12 @@ def load_kcet_programs() -> List[dict]:
 
             # Determine the cutoff rank column
             cutoff_rank = None
-            cutoff_key = keys.get("cutoff_rank", keys.get("cutoff", keys.get("closing_rank", "Cutoff_Rank")))
+            cutoff_key = (
+                keys.get("closing_rank") or 
+                keys.get("cutoff_rank") or 
+                keys.get("cutoff") or 
+                "Cutoff_Rank"
+            )
             if cutoff_key in row:
                 cutoff_rank = _safe_float(row[cutoff_key])
             
