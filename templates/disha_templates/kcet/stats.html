@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>KCET 2025: Statistical Insights — Disha</title>
+  <meta name="description"
+    content="Dynamic statistics, trends, and analytical insights computed directly from the KCET 2025 cutoff dataset.">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      /* Surfaces & Theme matching Disha design system */
+      --paper: #faf6ee;
+      --paper-deep: #f2ecdd;
+      --card: #fffdf8;
+      --line: #e8dfcb;
+      --line-soft: #efe8d8;
+      --ink: #241e12;
+      --ink-soft: #5f5747;
+      --ink-faint: #93897a;
+      --pine: #175c4c;
+      --pine-deep: #0e4237;
+      --pine-tint: #e3ede7;
+      --safe: #2e7d5b;
+      --safe-bg: #e8f1e9;
+      --target: #a87714;
+      --target-bg: #f7eed7;
+      --reach: #bf5b3c;
+      --reach-bg: #f9e9e1;
+      --radius: 14px;
+      --radius-sm: 9px;
+      --shadow-sm: 0 1px 2px rgba(60, 48, 22, 0.06), 0 2px 8px rgba(60, 48, 22, 0.05);
+      --shadow-md: 0 2px 6px rgba(60, 48, 22, 0.07), 0 12px 32px rgba(60, 48, 22, 0.09);
+      --serif: "Fraunces", "Georgia", serif;
+      --sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--ink);
+      background:
+        radial-gradient(1100px 500px at 85% -8%, rgba(23, 92, 76, 0.06), transparent 60%),
+        radial-gradient(900px 480px at -10% 100%, rgba(191, 91, 60, 0.04), transparent 55%),
+        var(--paper);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header & Navigation */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      padding: 0 24px;
+      background: rgba(250, 246, 238, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .wordmark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ink);
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 19px;
+    }
+
+    .wordmark__mark { color: var(--pine); }
+    .wordmark__devanagari { font-size: 14px; opacity: 0.55; font-family: var(--sans); font-weight: 400; }
+
+    .btn {
+      font-family: var(--sans); font-weight: 600; font-size: 14px;
+      padding: 8px 16px; border-radius: var(--radius-sm);
+      border: 1px solid transparent; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: background-color 0.15s, color 0.15s, border-color 0.15s;
+      text-decoration: none;
+    }
+    .btn--ghost { border-color: var(--line); color: var(--ink-soft); background: transparent; }
+    .btn--ghost:hover { border-color: var(--ink-soft); color: var(--ink); background: rgba(0,0,0,0.02); }
+    .btn--primary { background: var(--pine); color: #ffffff; }
+    .btn--primary:hover { background: var(--pine-deep); }
+    .btn--sm { font-size: 13px; padding: 6px 12px; border-radius: 6px; }
+
+    /* Page Layout */
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+      width: 100%;
+      flex-grow: 1;
+    }
+
+    .hero {
+      margin-bottom: 40px;
+    }
+    .hero__eyebrow {
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--pine);
+      margin-bottom: 8px;
+    }
+    .hero__title {
+      font-family: var(--serif);
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: var(--ink);
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+    .hero__desc {
+      font-size: 1.05rem;
+      color: var(--ink-soft);
+      max-width: 640px;
+    }
+
+    /* Metric Highlights Grid */
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 800px) {
+      .metric-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 480px) {
+      .metric-grid { grid-template-columns: 1fr; }
+    }
+
+    .mcard {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+    .mcard__label {
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+      margin-bottom: 8px;
+    }
+    .mcard__value {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--ink);
+      font-family: var(--serif);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+    .mcard__desc {
+      font-size: 0.8rem;
+      color: var(--ink-soft);
+    }
+
+    /* Section Layout */
+    .section-title {
+      font-family: var(--serif);
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Visualisations Grid */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 900px) {
+      .charts-row { grid-template-columns: 1fr; }
+    }
+
+    .chart-box {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+    .chart-box__title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+    .chart-box__desc {
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      margin-bottom: 20px;
+    }
+    .chart-canvas-wrap {
+      position: relative;
+      flex-grow: 1;
+      min-height: 300px;
+    }
+
+    /* Tabs Panel for Data Tables */
+    .tabs-panel {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .tabs-nav {
+      display: flex;
+      border-bottom: 1px solid var(--line-soft);
+      background: rgba(250, 246, 238, 0.4);
+      padding: 0 16px;
+    }
+    .tab-btn {
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 16px 20px;
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 0.88rem;
+      color: var(--ink-soft);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .tab-btn:hover { color: var(--ink); }
+    .tab-btn.is-active {
+      color: var(--pine);
+      border-bottom-color: var(--pine);
+    }
+
+    .tab-pane { display: none; padding: 24px; }
+    .tab-pane.is-active { display: block; animation: fadeIn 0.2s var(--ease-out); }
+
+    /* Custom Tables */
+    .dtable-wrap { overflow-x: auto; }
+    .dtable {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+    }
+    .dtable th {
+      padding: 12px 16px;
+      font-weight: 600;
+      color: var(--ink-faint);
+      border-bottom: 1px solid var(--line-soft);
+      text-transform: uppercase;
+      font-size: 0.72rem;
+      letter-spacing: 0.04em;
+    }
+    .dtable td {
+      padding: 14px 16px;
+      color: var(--ink);
+      border-bottom: 1px solid var(--line-soft);
+      vertical-align: middle;
+    }
+    .dtable tr:last-child td { border-bottom: none; }
+    .dtable tr:hover td { background: rgba(23, 92, 76, 0.01); }
+
+    /* Ranks & badges styling */
+    .rank-badge {
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      background: var(--paper-deep);
+      color: var(--ink);
+      padding: 4px 8px;
+      border-radius: 6px;
+      font-size: 0.82rem;
+      display: inline-block;
+    }
+    .rank-badge--high { background: var(--pine-tint); color: var(--pine-deep); }
+    .rank-badge--low { background: var(--reach-bg); color: var(--reach); }
+
+    .tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      padding: 3px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      text-transform: uppercase;
+    }
+    .tag--kcet { background: var(--pine-tint); color: var(--pine-deep); }
+
+    /* External tooltip layout */
+    .chart-ext-tooltip {
+      position: absolute;
+      background: rgba(36, 30, 18, 0.95);
+      backdrop-filter: blur(4px);
+      color: #ffffff;
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-family: var(--sans);
+      font-size: 12px;
+      pointer-events: none;
+      box-shadow: var(--shadow-md);
+      z-index: 1000;
+      border: 1px solid rgba(255,255,255,0.1);
+      max-width: 320px;
+    }
+    .tooltip-title { font-weight: 700; margin-bottom: 4px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 4px; }
+    .tooltip-body { line-height: 1.4; color: rgba(255,255,255,0.8); }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Footer styling */
+    .footer {
+      border-top: 1px solid var(--line);
+      background: var(--paper-deep);
+      padding: 24px;
+      text-align: center;
+      font-size: 0.82rem;
+      color: var(--ink-soft);
+      margin-top: auto;
+    }
+    .footer__sep { margin: 0 8px; color: var(--line); }
+  </style>
+</head>
+
+<body>
+  <!-- Header Bar -->
+  <header class="topbar">
+    <a class="wordmark" href="/" aria-label="Disha home">
+      <svg class="wordmark__mark" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6" />
+        <path d="M15.5 8.5l-2.2 5.1-5.1 2.2 2.2-5.1 5.1-2.2z" fill="currentColor" />
+      </svg>
+      <span class="wordmark__text">Disha <span class="wordmark__devanagari">दिशा</span></span>
+    </a>
+    <a href="/exam/kcet" class="btn btn--ghost btn--sm">Back to Predictor</a>
+  </header>
+
+  <!-- Content Wrap -->
+  <main class="container">
+    <div class="hero">
+      <p class="hero__eyebrow">Data Analytics</p>
+      <h1 class="hero__title">KCET 2025 cutoff insights</h1>
+      <p class="hero__desc">Computed directly from the official KEA 2025 cutoff datasets. Learn the competitive landscape of engineering seats in Karnataka.</p>
+    </div>
+
+    <!-- Highlight Cards -->
+    <div class="metric-grid">
+      <div class="mcard">
+        <span class="mcard__label">Total Programs</span>
+        <span class="mcard__value" id="val-total-programs">—</span>
+        <span class="mcard__desc">Unique college-branch courses</span>
+      </div>
+      <div class="mcard">
+        <span class="mcard__label">Colleges</span>
+        <span class="mcard__value" id="val-institutes">—</span>
+        <span class="mcard__desc">Participating institutes</span>
+      </div>
+      <div class="mcard">
+        <span class="mcard__label">Unique Branches</span>
+        <span class="mcard__value" id="val-branches">—</span>
+        <span class="mcard__desc">Specializations offered</span>
+      </div>
+      <div class="mcard">
+        <span class="mcard__label">Categories/Quotas</span>
+        <span class="mcard__value" id="val-quotas">—</span>
+        <span class="mcard__desc">Allocation categories</span>
+      </div>
+    </div>
+
+    <!-- Charts Section -->
+    <h2 class="section-title">Cutoff Visualisations</h2>
+    <div class="charts-row">
+      <!-- Chart 1: Quota Distributions -->
+      <div class="chart-box">
+        <h3 class="chart-box__title">Seat Categories</h3>
+        <p class="chart-box__desc">Proportion of cutoffs records mapped by seat allocation categories.</p>
+        <div class="chart-canvas-wrap">
+          <canvas id="chart-quotas"></canvas>
+        </div>
+      </div>
+      <!-- Chart 2: Top Competitive Institutes -->
+      <div class="chart-box">
+        <h3 class="chart-box__title">Top 15 Competitive Colleges</h3>
+        <p class="chart-box__desc">Based on the average closing rank of all branches under the GM quota (lower = harder to get in).</p>
+        <div class="chart-canvas-wrap" style="height: 380px;">
+          <canvas id="chart-competitive-insts"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tables Section -->
+    <h2 class="section-title">Detailed Analysis</h2>
+    <div class="tabs-panel">
+      <!-- Tabs Nav -->
+      <div class="tabs-nav" id="metrics-tabs-nav" role="tablist">
+        <button class="tab-btn is-active" role="tab" aria-selected="true" onclick="switchTab('tab-popular')">Popular Branches</button>
+        <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('tab-cutoffs-high')">Most Competitive Programs</button>
+        <button class="tab-btn" role="tab" aria-selected="false" onclick="switchTab('tab-cutoffs-low')">Least Competitive Programs</button>
+      </div>
+
+      <!-- Tab 1: Popular Branches -->
+      <div class="tab-pane is-active" id="tab-popular" role="tabpanel">
+        <div class="dtable-wrap">
+          <table class="dtable" id="table-popular">
+            <thead>
+              <tr>
+                <th>Branch / Program Name</th>
+                <th>Avg Closing Rank (GM)</th>
+                <th>Colleges Offering</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="3" style="text-align: center; color: var(--ink-faint);">Loading branch data...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 2: High Cutoffs -->
+      <div class="tab-pane" id="tab-cutoffs-high" role="tabpanel">
+        <div class="dtable-wrap">
+          <table class="dtable" id="table-cutoffs-high">
+            <thead>
+              <tr>
+                <th>College / Institute</th>
+                <th>Branch</th>
+                <th>Category</th>
+                <th>Cutoff Rank (GM)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="4" style="text-align: center; color: var(--ink-faint);">Loading cutoff data...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Tab 3: Low Cutoffs -->
+      <div class="tab-pane" id="tab-cutoffs-low" role="tabpanel">
+        <div class="dtable-wrap">
+          <table class="dtable" id="table-cutoffs-low">
+            <thead>
+              <tr>
+                <th>College / Institute</th>
+                <th>Branch</th>
+                <th>Category</th>
+                <th>Cutoff Rank (GM)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td colspan="4" style="text-align: center; color: var(--ink-faint);">Loading cutoff data...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Page Footer -->
+  <footer class="footer">
+    <div>
+      <span>Disha KCET — a <a href="https://www.utmt.org" target="_blank" rel="noopener">UTMT</a> initiative</span>
+      <span class="footer__sep">·</span>
+      <span>KEA 2025 official cutoff data</span>
+      <span class="footer__sep">·</span>
+      <span>No login</span>
+    </div>
+  </footer>
+
+  <!-- Charting & Data Rendering Script -->
+  <script>
+    let activeTabId = 'tab-popular';
+    let charts = {};
+
+    function switchTab(tabId) {
+      document.querySelectorAll('#metrics-tabs-nav .tab-btn').forEach(btn => {
+        btn.classList.remove('is-active');
+      });
+      document.querySelectorAll('.tab-pane').forEach(pane => {
+        pane.classList.remove('is-active');
+      });
+      const targetBtn = Array.from(document.querySelectorAll('#metrics-tabs-nav .tab-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
+      if (targetBtn) targetBtn.classList.add('is-active');
+      const pane = document.getElementById(tabId);
+      if (pane) pane.classList.add('is-active');
+      activeTabId = tabId;
+    }
+
+    function badgeClass(type) {
+      return 'tag tag--kcet';
+    }
+
+    /* External tooltip handler */
+    function createTooltipEl() {
+      if (!document.getElementById('chart-tooltip')) {
+        const el = document.createElement('div');
+        el.id = 'chart-tooltip';
+        el.className = 'chart-ext-tooltip';
+        el.style.opacity = '0';
+        document.body.appendChild(el);
+      }
+    }
+
+    function externalTooltipHandler(context) {
+      const tooltip = context.tooltip;
+      const el = document.getElementById('chart-tooltip');
+      if (!el) return;
+      if (tooltip.opacity === 0) { el.style.opacity = '0'; el.style.display = 'none'; return; }
+      let html = '';
+      if (tooltip.title && tooltip.title.length) html += '<div class="tooltip-title">' + tooltip.title.join('<br>') + '</div>';
+      if (tooltip.body && tooltip.body.length) {
+        const bodyLines = tooltip.body.map(b => b.lines);
+        html += '<div class="tooltip-body">';
+        bodyLines.forEach(lines => { html += lines.join('<br>'); });
+        html += '</div>';
+      }
+      el.innerHTML = html;
+      el.style.display = 'block';
+      const canvasRect = context.chart.canvas.getBoundingClientRect();
+      const elW = el.offsetWidth || 300;
+      const elH = el.offsetHeight || 60;
+      let left = canvasRect.left + tooltip.caretX - (elW / 2);
+      let top = canvasRect.top + tooltip.caretY - elH - 12;
+      if (left + elW > window.innerWidth - 10) left = window.innerWidth - elW - 10;
+      if (left < 10) left = 10;
+      if (top < 10) top = canvasRect.top + tooltip.caretY + 12;
+      el.style.opacity = '1';
+      el.style.left = left + 'px';
+      el.style.top = top + 'px';
+    }
+
+    function shortenInstituteName(name, maxLen) {
+      if (maxLen === undefined) maxLen = window.innerWidth <= 768 ? 20 : 30;
+      if (name.length <= maxLen) return name;
+      const parts = name.split('-');
+      if (parts.length > 1) {
+        let short = parts[0].trim();
+        if (short.length <= maxLen) return short;
+      }
+      let cut = name.lastIndexOf(' ', maxLen - 3);
+      if (cut < maxLen * 0.4) cut = maxLen - 3;
+      return name.substring(0, cut).trim() + '...';
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      createTooltipEl();
+      try {
+        const response = await fetch('/api/kcet/stats');
+        if (!response.ok) throw new Error("API returned " + response.status);
+        const data = await response.json();
+
+        // ── Metric Cards ──
+        const summary = data.summary || data;
+        document.getElementById("val-total-programs").textContent = (summary.total_records || 0).toLocaleString();
+        document.getElementById("val-institutes").textContent = summary.unique_institutes || 0;
+        document.getElementById("val-branches").textContent = summary.unique_programs || 0;
+        document.getElementById("val-quotas").textContent = summary.unique_quotas || 0;
+
+        // ═══ Chart 1: Quota Distribution (Doughnut) ═══
+        const quotaCounts = data.quota_counts || {};
+        // Top 5 quotas by count to avoid overcrowding the legend
+        const sortedQuotas = Object.entries(quotaCounts).sort((a,b) => b[1] - a[1]);
+        const topQuotas = sortedQuotas.slice(0, 5);
+        const otherCount = sortedQuotas.slice(5).reduce((acc, curr) => acc + curr[1], 0);
+        
+        const quotaLabels = topQuotas.map(q => q[0]);
+        const quotaValues = topQuotas.map(q => q[1]);
+        if (otherCount > 0) {
+          quotaLabels.push("Others");
+          quotaValues.push(otherCount);
+        }
+
+        charts.quotas = new Chart(document.getElementById("chart-quotas"), {
+          type: 'doughnut',
+          data: {
+            labels: quotaLabels,
+            datasets: [{
+              data: quotaValues,
+              backgroundColor: ['#175c4c', '#a87714', '#bf5b3c', '#2e7d5b', '#93897a', '#c2b29a'],
+              borderWidth: 2,
+              borderColor: '#fffdf8'
+            }]
+          },
+          options: {
+            responsive: true, maintainAspectRatio: true,
+            plugins: {
+              legend: { position: 'bottom', labels: { font: { family: 'Inter', size: 11 }, color: '#241e12', padding: 8 } }
+            },
+            cutout: '65%'
+          }
+        });
+
+        // ═══ Chart 2: Top Competitive Institutes (Horizontal Bar) ═══
+        const compInsts = (data.inst_competitiveness?.KCET || []).slice(0, 15);
+        if (compInsts.length) {
+          const instLabels = compInsts.map(d => shortenInstituteName(d.institute));
+          const instValues = compInsts.map(d => Math.round(d.avg_closing_rank));
+          const fullNames = compInsts.map(d => d.institute);
+
+          charts.compInsts = new Chart(document.getElementById("chart-competitive-insts"), {
+            type: 'bar',
+            data: {
+              labels: instLabels,
+              datasets: [{
+                label: 'Avg Closing Rank (GM)',
+                data: instValues,
+                backgroundColor: instValues.map(v => v < 10000 ? 'rgba(23, 92, 76, 0.85)' : v < 30000 ? 'rgba(46, 125, 91, 0.85)' : 'rgba(168, 119, 20, 0.85)'),
+                borderRadius: 6,
+                barThickness: 20
+              }]
+            },
+            options: {
+              indexAxis: 'y',
+              responsive: true, maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  enabled: false,
+                  external: externalTooltipHandler,
+                  callbacks: {
+                    title: (items) => fullNames[items[0].dataIndex],
+                    label: (item) => `Average GM closing rank: ${item.formattedValue}`
+                  }
+                }
+              },
+              scales: {
+                x: {
+                  grid: { color: '#efe8d8' },
+                  ticks: { font: { family: 'Inter', size: 11 }, color: '#5f5747' },
+                  title: { display: true, text: 'Ranks (lower = more competitive)', font: { family: 'Inter', weight: '600' } }
+                },
+                y: {
+                  grid: { display: false },
+                  ticks: { font: { family: 'Inter', size: 11 }, color: '#241e12' }
+                }
+              }
+            }
+          });
+        }
+
+        // ═══ Table 1: Popular Branches ═══
+        const popularList = data.branch_popularity || [];
+        const tablePop = document.querySelector("#table-popular tbody");
+        if (popularList.length && tablePop) {
+          tablePop.innerHTML = popularList.map(b => `
+            <tr>
+              <td><strong>${b.branch}</strong></td>
+              <td><span class="rank-badge rank-badge--high">${Math.round(b.avg_closing_rank).toLocaleString("en-IN")}</span></td>
+              <td>${b.total_programs} colleges</td>
+            </tr>
+          `).join("");
+        } else if (tablePop) {
+          tablePop.innerHTML = `<tr><td colspan="3" style="text-align: center; color: var(--ink-faint);">No popular branch data found.</td></tr>`;
+        }
+
+        // ═══ Table 2: High Cutoffs ═══
+        const highList = data.highest_cutoffs || [];
+        const tableHigh = document.querySelector("#table-cutoffs-high tbody");
+        if (highList.length && tableHigh) {
+          tableHigh.innerHTML = highList.map(d => `
+            <tr>
+              <td>${d.institute}</td>
+              <td><strong>${d.program}</strong></td>
+              <td><span class="tag tag--kcet">${d.quota}</span></td>
+              <td><span class="rank-badge rank-badge--high">${d.closing_rank.toLocaleString("en-IN")}</span></td>
+            </tr>
+          `).join("");
+        } else if (tableHigh) {
+          tableHigh.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--ink-faint);">No competitive cutoff data found.</td></tr>`;
+        }
+
+        // ═══ Table 3: Low Cutoffs ═══
+        const lowList = data.lowest_cutoffs || [];
+        const tableLow = document.querySelector("#table-cutoffs-low tbody");
+        if (lowList.length && tableLow) {
+          tableLow.innerHTML = lowList.map(d => `
+            <tr>
+              <td>${d.institute}</td>
+              <td><strong>${d.program}</strong></td>
+              <td><span class="tag tag--kcet">${d.quota}</span></td>
+              <td><span class="rank-badge rank-badge--low">${d.closing_rank.toLocaleString("en-IN")}</span></td>
+            </tr>
+          `).join("");
+        } else if (tableLow) {
+          tableLow.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--ink-faint);">No cutoff data found.</td></tr>`;
+        }
+
+      } catch (err) {
+        console.error("Failed to render stats:", err);
+      }
+    });
+  </script>
+</body>
+</html>

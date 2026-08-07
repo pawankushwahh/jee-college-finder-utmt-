@@ -54,7 +54,19 @@ def exam_jee_page() -> FileResponse:
 
 @router.get("/exam/kcet", include_in_schema=False)
 def exam_kcet_page() -> FileResponse:
-    return FileResponse(str(_TEMPLATES_DIR / "kcet.html"))
+    return FileResponse(str(_TEMPLATES_DIR / "kcet" / "index.html"))
+
+
+@router.get("/exam/kcet/stats", include_in_schema=False)
+def exam_kcet_stats_page() -> FileResponse:
+    return FileResponse(
+        str(_TEMPLATES_DIR / "kcet" / "stats.html"),
+        headers={
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0",
+        },
+    )
 
 
 @router.get("/exam/comedk", include_in_schema=False)
