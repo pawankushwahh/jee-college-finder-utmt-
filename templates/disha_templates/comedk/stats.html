@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>COMEDK 2025: Statistical Insights — Disha</title>
+  <meta name="description"
+    content="Dynamic statistics, trends, and analytical insights computed directly from the COMEDK 2025 cutoff dataset.">
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <style>
+    :root {
+      /* Surfaces & Theme matching Disha design system */
+      --paper: #faf6ee;
+      --paper-deep: #f2ecdd;
+      --card: #fffdf8;
+      --line: #e8dfcb;
+      --line-soft: #efe8d8;
+      --ink: #241e12;
+      --ink-soft: #5f5747;
+      --ink-faint: #93897a;
+      --pine: #175c4c;
+      --pine-deep: #0e4237;
+      --pine-tint: #e3ede7;
+      --safe: #2e7d5b;
+      --safe-bg: #e8f1e9;
+      --target: #a87714;
+      --target-bg: #f7eed7;
+      --reach: #bf5b3c;
+      --reach-bg: #f9e9e1;
+      --radius: 14px;
+      --radius-sm: 9px;
+      --shadow-sm: 0 1px 2px rgba(60, 48, 22, 0.06), 0 2px 8px rgba(60, 48, 22, 0.05);
+      --shadow-md: 0 2px 6px rgba(60, 48, 22, 0.07), 0 12px 32px rgba(60, 48, 22, 0.09);
+      --serif: "Fraunces", "Georgia", serif;
+      --sans: "Inter", -apple-system, "Segoe UI", sans-serif;
+      --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--ink);
+      background:
+        radial-gradient(1100px 500px at 85% -8%, rgba(23, 92, 76, 0.06), transparent 60%),
+        radial-gradient(900px 480px at -10% 100%, rgba(191, 91, 60, 0.04), transparent 55%),
+        var(--paper);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header & Navigation */
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      padding: 0 24px;
+      background: rgba(250, 246, 238, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .wordmark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      color: var(--ink);
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 19px;
+    }
+
+    .wordmark__mark { color: var(--pine); }
+    .wordmark__devanagari { font-size: 14px; opacity: 0.55; font-family: var(--sans); font-weight: 400; }
+
+    .btn {
+      font-family: var(--sans); font-weight: 600; font-size: 14px;
+      padding: 8px 16px; border-radius: var(--radius-sm);
+      border: 1px solid transparent; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.2s var(--ease-out); text-decoration: none;
+    }
+    .btn--ghost { background: transparent; border-color: var(--line); color: var(--ink-soft); }
+    .btn--ghost:hover { background: var(--paper-deep); border-color: var(--ink-faint); }
+
+    /* Container & Layout */
+    .container { max-width: 1200px; margin: 0 auto; padding: 40px 24px; width: 100%; flex-grow: 1; }
+    .hero { margin-bottom: 40px; text-align: center; }
+    .hero__title { font-family: var(--serif); font-size: 38px; font-weight: 500; color: var(--pine-deep); margin-bottom: 12px; letter-spacing: -0.02em; }
+    .hero__lede { font-size: 16px; color: var(--ink-soft); max-width: 680px; margin: 0 auto; }
+
+    /* Loading state */
+    .loading-overlay { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 100px 0; gap: 20px; }
+    .spinner { width: 48px; height: 48px; border: 4px solid var(--line); border-top-color: var(--pine); border-radius: 50%; animation: spin 1s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Metrics Summary Cards */
+    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-bottom: 40px; }
+    .metric-card { background: var(--card); border: 1px solid var(--line-soft); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow-sm); transition: transform 0.2s var(--ease-out), box-shadow 0.2s var(--ease-out); display: flex; flex-direction: column; }
+    .metric-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); border-color: var(--line); }
+    .metric-card__label { font-size: 13px; color: var(--ink-soft); font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+    .metric-card__value { font-family: var(--serif); font-size: 32px; font-weight: 600; color: var(--pine); }
+
+    /* Main Grid for charts & tables */
+    .dashboard-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; margin-bottom: 40px; }
+    .card { background: var(--card); border: 1px solid var(--line-soft); border-radius: var(--radius); box-shadow: var(--shadow-sm); overflow: hidden; display: flex; flex-direction: column; }
+    .card--col-12 { grid-column: span 12; }
+    .card--col-8 { grid-column: span 8; }
+    .card--col-6 { grid-column: span 6; }
+    .card--col-4 { grid-column: span 4; }
+    @media (max-width: 900px) { .card--col-8, .card--col-6, .card--col-4 { grid-column: span 12; } }
+    .card__header { padding: 20px 24px; border-bottom: 1px solid var(--line-soft); display: flex; align-items: center; justify-content: space-between; }
+    .card__title { font-size: 16px; font-weight: 600; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+    .card--detail .card__header { padding: 24px 28px; background: linear-gradient(135deg, var(--pine-tint) 0%, rgba(255, 253, 248, 0.6) 100%); border-bottom: 2px solid var(--pine); border-left: 5px solid var(--pine); }
+    .card--detail .card__title { font-family: var(--serif); font-size: 22px; font-weight: 600; color: var(--pine-deep); letter-spacing: -0.01em; }
+    .card--detail .card__title svg { color: var(--pine); width: 22px; height: 22px; }
+    .card__body { padding: 24px; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; }
+    .chart-container { position: relative; height: 270px; width: 100%; }
+
+    /* External HTML tooltip */
+    .chart-ext-tooltip { position: fixed; pointer-events: none; background: rgba(30, 26, 20, 0.92); color: #fff; border-radius: 6px; padding: 8px 12px; font-family: 'Inter', sans-serif; font-size: 12px; line-height: 1.5; max-width: 360px; word-wrap: break-word; white-space: normal; z-index: 9999; box-shadow: 0 4px 12px rgba(0,0,0,0.25); transition: opacity 0.15s ease; }
+    .chart-ext-tooltip .tooltip-title { font-weight: 600; margin-bottom: 4px; }
+    .chart-ext-tooltip .tooltip-body { font-weight: 400; opacity: 0.9; }
+
+    /* Tile grid */
+    .tile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+    .tile { background: var(--card); border: 1px solid var(--line-soft); border-radius: var(--radius); padding: 18px 16px 16px; display: flex; flex-direction: column; gap: 10px; transition: transform 0.18s var(--ease-out), box-shadow 0.18s var(--ease-out), border-color 0.18s; position: relative; overflow: hidden; }
+    .tile::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--line); transition: background 0.2s; }
+    .tile:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--line); }
+    .tile:hover::before { background: var(--pine); }
+    .tile__label { font-size: 13px; font-weight: 600; color: var(--ink); line-height: 1.3; min-height: 34px; }
+    .tile__value { font-family: var(--serif); font-weight: 700; font-size: 26px; line-height: 1; color: var(--pine-deep); }
+    .tile__sub { font-size: 11.5px; font-weight: 500; color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.04em; }
+
+    /* Color variants */
+    .tile--hot::before { background: var(--reach); }
+    .tile--warm::before { background: var(--target); }
+    .tile--cool::before { background: var(--safe); }
+    .tile--hot .tile__value { color: var(--reach); }
+    .tile--warm .tile__value { color: var(--target); }
+    .tile--cool .tile__value { color: var(--safe); }
+    .tile--hot:hover::before { background: var(--reach); }
+    .tile--warm:hover::before { background: var(--target); }
+    .tile--cool:hover::before { background: var(--safe); }
+
+    /* Cutoff tile */
+    .tile-grid--cutoffs { grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+    .tile--cutoff { gap: 8px; }
+    .tile--cutoff .tile__value { text-align: center; }
+    .tile--cutoff .tile__label { min-height: 51px; }
+    .tile--cutoff .tile__institute { font-size: 12px; color: var(--ink-soft); line-height: 1.3; min-height: 32px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .tile--cutoff .tile__meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 2px; }
+
+    /* Tabs */
+    .tabs-nav { display: flex; gap: 6px; padding: 6px; background: var(--paper-deep); border-radius: 12px; margin-bottom: 24px; border: 1px solid var(--line); flex-wrap: wrap; }
+    .tab-btn { background: transparent; border: none; padding: 10px 20px; font-family: var(--sans); font-size: 14px; font-weight: 600; color: var(--ink-soft); cursor: pointer; border-radius: 8px; transition: all 0.25s var(--ease-out); position: relative; }
+    .tab-btn:hover { color: var(--pine-deep); background: rgba(23, 92, 76, 0.08); }
+    .tab-btn.is-active { color: #ffffff; background: linear-gradient(135deg, #1a6b58 0%, var(--pine-deep) 100%); box-shadow: 0 2px 8px rgba(14, 66, 55, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15); }
+    .tab-pane { display: none; animation: tab-fade-in 0.3s var(--ease-out); }
+    .tab-pane.is-active { display: block; }
+    @keyframes tab-fade-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+    /* Section Headers */
+    .tab-section-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 2px solid; }
+    .tab-section-head__icon { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .tab-section-head__icon--reach { background: var(--reach-bg); color: var(--reach); }
+    .tab-section-head__icon--safe { background: var(--safe-bg); color: var(--safe); }
+    .tab-section-head__text { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+    .tab-section-head--reach { border-bottom-color: var(--reach); }
+    .tab-section-head--reach .tab-section-head__text { color: var(--reach); }
+    .tab-section-head--safe { border-bottom-color: var(--safe); }
+    .tab-section-head--safe .tab-section-head__text { color: var(--safe); }
+
+    /* Tags */
+    .tag { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }
+    .tag--comedk { background: var(--pine-tint); color: var(--pine); }
+
+    /* Mobile cutoff toggle */
+    .cutoff-toggle-row { display: none; }
+    @media (max-width: 767px) {
+      .cutoff-toggle-row { display: flex; gap: 0; border-radius: 10px; overflow: hidden; border: 1.5px solid var(--pine); margin-bottom: 16px; }
+      .cutoff-toggle-btn { flex: 1; padding: 9px 6px; font-family: var(--sans); font-size: 13px; font-weight: 600; border: none; background: transparent; color: var(--pine); cursor: pointer; transition: background 0.2s, color 0.2s; letter-spacing: 0.01em; }
+      .cutoff-toggle-btn.is-active { background: var(--pine); color: #fff; }
+      .cutoff-toggle-btn:not(.is-active):hover { background: var(--pine-tint); }
+      .cutoff-desktop-grid { display: none !important; }
+      .cutoff-mobile-panel { display: block; opacity: 0; transform: translateY(6px); transition: opacity 0.25s ease, transform 0.25s ease; pointer-events: none; position: absolute; width: 100%; }
+      .cutoff-mobile-panel.is-active { opacity: 1; transform: translateY(0); pointer-events: auto; position: relative; }
+      .cutoff-mobile-panels { position: relative; min-height: 120px; }
+    }
+    @media (min-width: 768px) { .cutoff-mobile-panels { display: none; } .cutoff-toggle-row { display: none; } }
+
+    /* Footer */
+    .footer { background: var(--paper-deep); padding: 30px 24px; text-align: center; font-size: 13px; color: var(--ink-soft); border-top: 1px solid var(--line); margin-top: auto; display: flex; flex-direction: column; gap: 6px; }
+    .footer a { color: var(--pine); text-decoration: none; font-weight: 500; }
+    .footer a:hover { text-decoration: underline; }
+    .footer__sep { display: inline-block; margin: 0 8px; opacity: 0.35; }
+
+    /* Mobile responsive */
+    @media (max-width: 600px) {
+      .container { padding: 20px 12px; }
+      .hero { margin-bottom: 24px; }
+      .hero__title { font-size: 26px; }
+      .hero__lede { font-size: 14px; }
+      .topbar { padding: 0 12px; height: 54px; }
+      .wordmark { font-size: 16px; gap: 7px; }
+      .btn--ghost span { display: none; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 24px; }
+      .metric-card { padding: 14px 12px; }
+      .metric-card__label { font-size: 11px; margin-bottom: 4px; }
+      .metric-card__value { font-size: 24px; }
+      .dashboard-grid { gap: 16px; margin-bottom: 24px; }
+      .card__header { padding: 14px 14px; }
+      .card__title { font-size: 14px; gap: 6px; line-height: 1.35; }
+      .card__body { padding: 14px; }
+      .card--detail .card__header { padding: 16px 14px; border-left-width: 3px; }
+      .card--detail .card__title { font-size: 17px; }
+      .tabs-nav { gap: 4px; padding: 4px; margin-bottom: 16px; border-radius: 10px; }
+      .tab-btn { padding: 8px 12px; font-size: 12px; border-radius: 7px; }
+      .chart-container { height: 250px; }
+      #chart-inst-container { min-height: 320px !important; }
+      .tile-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+      .tile-grid--cutoffs { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
+      .tile { padding: 14px 12px 12px; gap: 8px; }
+      .tile__label { font-size: 12px; min-height: 28px; }
+      .tile__value { font-size: 20px; }
+      .tile__sub { font-size: 10.5px; }
+      .footer { padding: 20px 12px; font-size: 12px; }
+      .footer__sep { margin: 0 4px; }
+    }
+
+    @media (max-width: 768px) {
+      .tile-grid { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+      .tile__value { font-size: 22px; }
+      .tab-pane>div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Header -->
+  <header class="topbar">
+    <a class="wordmark" href="/exam/comedk">
+      <svg class="wordmark__mark" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6" />
+        <path d="M15.5 8.5l-2.2 5.1-5.1 2.2 2.2-5.1 5.1-2.2z" fill="currentColor" />
+      </svg>
+      <span class="wordmark__text">Disha <span class="wordmark__devanagari">दिशा</span></span>
+    </a>
+    <a href="/exam/comedk" class="btn btn--ghost">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+        <path d="M19 12H5M12 19l-7-7 7-7" />
+      </svg>
+      <span>Back to Predictor</span>
+    </a>
+  </header>
+
+  <!-- Content Container -->
+  <main class="container">
+    <section class="hero">
+      <h1 class="hero__title">COMEDK 2025: Statistical Insights</h1>
+      <p class="hero__lede">Explore dynamic charts, cutoff trends, and structural statistics generated directly from the
+        active COMEDK 2025 counselling dataset.</p>
+    </section>
+
+    <!-- Loading State -->
+    <div id="loading" class="loading-overlay">
+      <div class="spinner"></div>
+      <p>Computing statistical trends from the dataset...</p>
+    </div>
+
+    <!-- Dashboard Content (hidden until loaded) -->
+    <div id="dashboard" style="display: none;">
+
+      <!-- Metrics Cards -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span class="metric-card__label">Total Programs</span>
+          <span class="metric-card__value" id="val-total-programs">-</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-card__label">Colleges</span>
+          <span class="metric-card__value" id="val-institutes">-</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-card__label">Unique Branches</span>
+          <span class="metric-card__value" id="val-branches">-</span>
+        </div>
+        <div class="metric-card">
+          <span class="metric-card__label">Quotas</span>
+          <span class="metric-card__value" id="val-quotas">-</span>
+        </div>
+      </div>
+
+      <!-- Main Visualizations Grid -->
+      <div class="dashboard-grid">
+
+        <!-- Chart 1: Quota Distribution (Doughnut) — mirrors Institute Type pie in JEE -->
+        <div class="card card--col-4">
+          <div class="card__header">
+            <h3 class="card__title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21.21 15.89A10 10 0 1 1 8 2.83M22 12A10 10 0 0 0 12 2v10z" />
+              </svg>
+              Quota Distribution
+            </h3>
+          </div>
+          <div class="card__body">
+            <div class="chart-container" style="display: flex; justify-content: center; align-items: center;">
+              <canvas id="chart-quotas"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart 2: Top Competitive Institutes (Horizontal Bar) — mirrors JEE -->
+        <div class="card card--col-8">
+          <div class="card__header">
+            <h3 class="card__title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+              </svg>
+              Top 15 Most Competitive Institutes
+            </h3>
+          </div>
+          <div class="card__body">
+            <div class="chart-container" id="chart-inst-container" style="height:380px;">
+              <canvas id="chart-competitive-insts"></canvas>
+            </div>
+            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
+              Ranked by average closing rank of GM (General Merit) programs (lower is more competitive).
+            </p>
+          </div>
+        </div>
+
+        <!-- Chart 3: Branch Popularity (Vertical Bar) — mirrors JEE's popular branches -->
+        <div class="card card--col-12">
+          <div class="card__header">
+            <h3 class="card__title">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><line x1="3" y1="9" x2="21" y2="9" /><line x1="9" y1="21" x2="9" y2="9" />
+              </svg>
+              Branch Popularity — Average Closing Rank (GM)
+            </h3>
+          </div>
+          <div class="card__body">
+            <div class="chart-container" style="height: 350px;">
+              <canvas id="chart-branches"></canvas>
+            </div>
+            <p style="font-size: 12px; color: var(--ink-soft); margin-top: 12px; text-align: center;">
+              Lower average closing rank = more competitive. Only branches offered by ≥ 3 colleges shown.
+            </p>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Detailed statistics — exact same structure as JEE's card--detail -->
+      <div class="card card--col-12 card--detail" style="margin-bottom: 40px;">
+        <div class="card__header">
+          <h3 class="card__title">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8" />
+            </svg>
+            Detailed Dataset Metrics
+          </h3>
+        </div>
+
+        <div class="card__body" style="padding-top: 12px;">
+          <div class="tabs-nav" id="metrics-tabs-nav">
+            <button class="tab-btn is-active" onclick="switchTab('tab-popular')">Popular Branches</button>
+            <button class="tab-btn" onclick="switchTab('tab-quotas')">Quota Breakdown</button>
+            <button class="tab-btn" onclick="switchTab('tab-extremes')">Highest & Lowest Cutoffs</button>
+          </div>
+
+          <!-- Tab: Popular Branches -->
+          <div class="tab-pane is-active" id="tab-popular">
+            <div class="tile-grid" id="grid-branches">
+              <!-- Populated dynamically -->
+            </div>
+          </div>
+
+          <!-- Tab: Quotas -->
+          <div class="tab-pane" id="tab-quotas">
+            <div>
+              <div class="tab-section-head tab-section-head--safe" style="border-bottom-color: var(--pine);">
+                <div class="tab-section-head__icon" style="background: var(--pine-tint); color: var(--pine);">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  </svg>
+                </div>
+                <span class="tab-section-head__text" style="color: var(--pine-deep);">Quota Distribution</span>
+              </div>
+              <p style="font-size:12px;color:var(--pine-deep);margin:8px 0 12px;background:var(--pine-tint);border-left:3px solid var(--pine);border-radius:6px;padding:7px 11px;display:flex;align-items:center;gap:7px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;">
+                  <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
+                </svg>
+                No. of seat entries under each admission quota (GM = General Merit, KKR = Karnataka Kalyana Karnataka Region)
+              </p>
+              <div class="tile-grid" id="grid-quotas" style="grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));">
+                <!-- Populated dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab: Highest and Lowest cutoffs -->
+          <div class="tab-pane" id="tab-extremes">
+
+            <!-- Mobile toggle -->
+            <div class="cutoff-toggle-row" id="cutoff-toggle-row">
+              <button class="cutoff-toggle-btn is-active" id="btn-lowest" onclick="switchCutoffPanel('lowest')">
+                ⬇ Lowest Cutoffs
+              </button>
+              <button class="cutoff-toggle-btn" id="btn-highest" onclick="switchCutoffPanel('highest')">
+                ⬆ Highest Cutoffs
+              </button>
+            </div>
+
+            <!-- Mobile panels -->
+            <div class="cutoff-mobile-panels">
+              <div class="cutoff-mobile-panel is-active" id="mobile-panel-lowest">
+                <div class="tab-section-head tab-section-head--reach">
+                  <div class="tab-section-head__icon tab-section-head__icon--reach">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>
+                  </div>
+                  <span class="tab-section-head__text">Most Competitive (Lowest Ranks)</span>
+                </div>
+                <div class="tile-grid tile-grid--cutoffs" id="mobile-grid-highest"></div>
+              </div>
+              <div class="cutoff-mobile-panel" id="mobile-panel-highest">
+                <div class="tab-section-head tab-section-head--safe">
+                  <div class="tab-section-head__icon tab-section-head__icon--safe">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+                  </div>
+                  <span class="tab-section-head__text">Least Competitive (Highest Ranks)</span>
+                </div>
+                <div class="tile-grid tile-grid--cutoffs" id="mobile-grid-lowest"></div>
+              </div>
+            </div>
+
+            <!-- Desktop 2-column grid -->
+            <div class="cutoff-desktop-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 28px;">
+              <div>
+                <div class="tab-section-head tab-section-head--reach">
+                  <div class="tab-section-head__icon tab-section-head__icon--reach">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>
+                  </div>
+                  <span class="tab-section-head__text">Most Competitive (Lowest Ranks)</span>
+                </div>
+                <div class="tile-grid tile-grid--cutoffs" id="grid-highest"></div>
+              </div>
+              <div>
+                <div class="tab-section-head tab-section-head--safe">
+                  <div class="tab-section-head__icon tab-section-head__icon--safe">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg>
+                  </div>
+                  <span class="tab-section-head__text">Least Competitive (Highest Ranks)</span>
+                </div>
+                <div class="tile-grid tile-grid--cutoffs" id="grid-lowest"></div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <span>Disha — a <a href="https://www.utmt.org" target="_blank" rel="noopener">UTMT</a> initiative, built with care
+      for COMEDK aspirants</span>
+    <div>
+      <span>Open source</span>
+      <span class="footer__sep">·</span>
+      <span>Free</span>
+      <span class="footer__sep">·</span>
+      <span>No login</span>
+    </div>
+  </footer>
+
+  <!-- Charting & Data Rendering Script -->
+  <script>
+    let activeTabId = 'tab-popular';
+    let charts = {};
+
+    function switchTab(tabId) {
+      document.querySelectorAll('#metrics-tabs-nav .tab-btn').forEach(btn => {
+        btn.classList.remove('is-active');
+      });
+      document.querySelectorAll('.tab-pane').forEach(pane => {
+        pane.classList.remove('is-active');
+      });
+      const targetBtn = Array.from(document.querySelectorAll('#metrics-tabs-nav .tab-btn')).find(btn => btn.getAttribute('onclick').includes(tabId));
+      if (targetBtn) targetBtn.classList.add('is-active');
+      const pane = document.getElementById(tabId);
+      if (pane) pane.classList.add('is-active');
+      activeTabId = tabId;
+    }
+
+    function badgeClass(type) {
+      return 'tag tag--comedk';
+    }
+
+    /* External tooltip handler (same as JEE) */
+    function createTooltipEl() {
+      if (!document.getElementById('chart-tooltip')) {
+        const el = document.createElement('div');
+        el.id = 'chart-tooltip';
+        el.className = 'chart-ext-tooltip';
+        el.style.opacity = '0';
+        document.body.appendChild(el);
+      }
+    }
+
+    function externalTooltipHandler(context) {
+      const tooltip = context.tooltip;
+      const el = document.getElementById('chart-tooltip');
+      if (!el) return;
+      if (tooltip.opacity === 0) { el.style.opacity = '0'; el.style.display = 'none'; return; }
+      let html = '';
+      if (tooltip.title && tooltip.title.length) html += '<div class="tooltip-title">' + tooltip.title.join('<br>') + '</div>';
+      if (tooltip.body && tooltip.body.length) {
+        const bodyLines = tooltip.body.map(b => b.lines);
+        html += '<div class="tooltip-body">';
+        bodyLines.forEach(lines => { html += lines.join('<br>'); });
+        html += '</div>';
+      }
+      el.innerHTML = html;
+      el.style.display = 'block';
+      const canvasRect = context.chart.canvas.getBoundingClientRect();
+      const elW = el.offsetWidth || 300;
+      const elH = el.offsetHeight || 60;
+      let left = canvasRect.left + tooltip.caretX - (elW / 2);
+      let top = canvasRect.top + tooltip.caretY - elH - 12;
+      if (left + elW > window.innerWidth - 10) left = window.innerWidth - elW - 10;
+      if (left < 10) left = 10;
+      if (top < 10) top = canvasRect.top + tooltip.caretY + 12;
+      el.style.opacity = '1';
+      el.style.left = left + 'px';
+      el.style.top = top + 'px';
+    }
+
+    function shortenInstituteName(name, maxLen) {
+      if (maxLen === undefined) maxLen = window.innerWidth <= 768 ? 20 : 30;
+      if (name.length <= maxLen) return name;
+      // Try to abbreviate at hyphen
+      const parts = name.split('-');
+      if (parts.length > 1) {
+        let short = parts[0].trim();
+        if (short.length <= maxLen) return short;
+      }
+      let cut = name.lastIndexOf(' ', maxLen - 3);
+      if (cut < maxLen * 0.4) cut = maxLen - 3;
+      return name.substring(0, cut).trim() + '...';
+    }
+
+    function shortenBranchName(name) {
+      return name
+        .replace(/\(4 Years.*?\)/gi, '')
+        .replace(/\(Bachelor of Technology\)/gi, '')
+        .replace(/B\.?\s*Tech\s*in\s*/gi, '')
+        .trim()
+        .replace(/\s{2,}/g, ' ');
+    }
+
+    document.addEventListener("DOMContentLoaded", async () => {
+      createTooltipEl();
+      try {
+        const response = await fetch('/api/comedk/stats');
+        if (!response.ok) throw new Error("API returned " + response.status);
+        const data = await response.json();
+
+        // ── Metric Cards ──
+        const summary = data.summary || data;
+        document.getElementById("val-total-programs").textContent = (summary.total_records || 0).toLocaleString();
+        document.getElementById("val-institutes").textContent = summary.unique_institutes || 0;
+        document.getElementById("val-branches").textContent = summary.unique_programs || 0;
+        document.getElementById("val-quotas").textContent = summary.unique_quotas || 0;
+
+        // ═══ Chart 1: Quota Distribution (Doughnut) ═══
+        const quotaCounts = data.quota_counts || {};
+        const quotaLabels = Object.keys(quotaCounts);
+        const quotaValues = Object.values(quotaCounts);
+
+        charts.quotas = new Chart(document.getElementById("chart-quotas"), {
+          type: 'doughnut',
+          data: {
+            labels: quotaLabels,
+            datasets: [{
+              data: quotaValues,
+              backgroundColor: ['#175c4c', '#a87714', '#bf5b3c', '#2e7d5b', '#93897a'],
+              borderWidth: 2,
+              borderColor: '#fffdf8'
+            }]
+          },
+          options: {
+            responsive: true, maintainAspectRatio: true,
+            plugins: {
+              legend: { position: 'bottom', labels: { font: { family: 'Inter', size: 11 }, color: '#241e12', padding: 8 } }
+            },
+            cutout: '65%'
+          }
+        });
+
+        // ═══ Chart 2: Top Competitive Institutes (Horizontal Bar) ═══
+        const compInsts = (data.inst_competitiveness?.COMEDK || []).slice(0, 15);
+        if (compInsts.length) {
+          const instLabels = compInsts.map(d => shortenInstituteName(d.institute));
+          const instValues = compInsts.map(d => Math.round(d.avg_closing_rank));
+          const fullNames = compInsts.map(d => d.institute);
+
+          charts.compInsts = new Chart(document.getElementById("chart-competitive-insts"), {
+            type: 'bar',
+            data: {
+              labels: instLabels,
+              datasets: [{
+                label: 'Avg Closing Rank (GM)',
+                data: instValues,
+                backgroundColor: instValues.map(v => v < 10000 ? 'rgba(23, 92, 76, 0.85)' : v < 30000 ? 'rgba(46, 125, 91, 0.85)' : 'rgba(168, 119, 20, 0.85)'),
+                borderRadius: 6,
+                barThickness: 20
+              }]
+            },
+            options: {
+              indexAxis: 'y',
+              responsive: true, maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  enabled: false,
+                  external: externalTooltipHandler,
+                  callbacks: {
+                    title: (items) => fullNames[items[0].dataIndex],
+                    label: (item) => `Avg Closing Rank: ${item.raw.toLocaleString()} · ${compInsts[item.dataIndex].total_programs} programs`
+                  }
+                }
+              },
+              scales: {
+                x: { grid: { color: '#efe8d8' }, ticks: { font: { family: 'Inter' }, color: '#5f5747', callback: v => v >= 1000 ? (v/1000)+'k' : v },
+                  title: { display: true, text: 'Average Closing Rank (GM)', font: { family: 'Inter', size: 11 }, color: '#93897a' } },
+                y: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 11 }, color: '#5f5747' } }
+              }
+            }
+          });
+        }
+
+        // ═══ Chart 3: Branch Popularity (Vertical Bar) ═══
+        const EXCLUDED = new Set(["b.tech", "b. tech", "btech"]);
+        const branches = (data.branch_popularity || []).filter(b => !EXCLUDED.has(b.branch.trim().toLowerCase()));
+        if (branches.length) {
+          const brLabels = branches.map(b => shortenBranchName(b.branch));
+          const brValues = branches.map(b => Math.round(b.avg_closing_rank));
+          const brFull = branches.map(b => b.branch);
+
+          charts.branches = new Chart(document.getElementById("chart-branches"), {
+            type: 'bar',
+            data: {
+              labels: brLabels,
+              datasets: [{
+                label: 'Avg Closing Rank',
+                data: brValues,
+                backgroundColor: brValues.map(v => v < 30000 ? 'rgba(23, 92, 76, 0.85)' : v < 60000 ? 'rgba(168, 119, 20, 0.85)' : 'rgba(191, 91, 60, 0.85)'),
+                borderRadius: 6
+              }]
+            },
+            options: {
+              responsive: true, maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  enabled: false,
+                  external: externalTooltipHandler,
+                  callbacks: {
+                    title: (items) => brFull[items[0].dataIndex],
+                    label: (item) => `Avg Closing Rank: ${item.raw.toLocaleString()} · ${branches[item.dataIndex].total_programs} colleges`
+                  }
+                }
+              },
+              scales: {
+                x: { grid: { display: false }, ticks: { font: { family: 'Inter', size: 10 }, color: '#5f5747', maxRotation: 45 } },
+                y: { grid: { color: '#efe8d8' }, ticks: { font: { family: 'Inter' }, color: '#5f5747', callback: v => v >= 1000 ? (v/1000)+'k' : v },
+                  title: { display: true, text: 'Average Closing Rank', font: { family: 'Inter', size: 11 }, color: '#93897a' } }
+              }
+            }
+          });
+        }
+
+        // ═══ Populate: Popular Branches (tile grid) ═══
+        const gridBranches = document.getElementById("grid-branches");
+        gridBranches.innerHTML = "";
+        branches.forEach(b => {
+          const rank = Math.round(b.avg_closing_rank);
+          const mod = rank < 30000 ? 'hot' : rank < 60000 ? 'warm' : 'cool';
+          const tile = document.createElement("div");
+          tile.className = `tile tile--${mod}`;
+          tile.innerHTML = `
+            <div class="tile__label">${b.branch}</div>
+            <div class="tile__value">${rank.toLocaleString()}</div>
+            <div class="tile__sub">${b.total_programs} programs · Closing Rank</div>
+          `;
+          gridBranches.appendChild(tile);
+        });
+
+        // ═══ Populate: Quota Breakdown ═══
+        const gridQuotas = document.getElementById("grid-quotas");
+        gridQuotas.innerHTML = "";
+        Object.entries(quotaCounts).sort((a, b) => b[1] - a[1]).forEach(([quota, count]) => {
+          const tile = document.createElement("div");
+          tile.className = "tile";
+          tile.innerHTML = `
+            <div class="tile__label">${quota}</div>
+            <div class="tile__value">${count.toLocaleString()}</div>
+            <div class="tile__sub">programs</div>
+          `;
+          gridQuotas.appendChild(tile);
+        });
+
+        // ═══ Populate: Highest & Lowest Cutoffs ═══
+        function buildCutoffTile(item, mod) {
+          const tile = document.createElement("div");
+          tile.className = `tile tile--cutoff tile--${mod}`;
+          tile.innerHTML = `
+            <div class="tile__label">${item.program}</div>
+            <div class="tile--cutoff tile__institute">${item.institute}</div>
+            <div class="tile__value">${item.closing_rank.toLocaleString()}</div>
+            <div class="tile__sub" style="text-align:center;font-size:11px;color:var(--ink-faint);margin-bottom:4px;">Closing Rank</div>
+            <div class="tile--cutoff tile__meta">
+              <span class="${badgeClass(item.inst_type)}">${item.inst_type}</span>
+              <span class="tile__sub">${item.quota}</span>
+            </div>
+          `;
+          return tile;
+        }
+
+        const gridHighest = document.getElementById("grid-highest");
+        const mobileGridHighest = document.getElementById("mobile-grid-highest");
+        gridHighest.innerHTML = "";
+        mobileGridHighest.innerHTML = "";
+        (data.highest_cutoffs || []).forEach(item => {
+          gridHighest.appendChild(buildCutoffTile(item, 'hot'));
+          mobileGridHighest.appendChild(buildCutoffTile(item, 'hot'));
+        });
+
+        const gridLowest = document.getElementById("grid-lowest");
+        const mobileGridLowest = document.getElementById("mobile-grid-lowest");
+        gridLowest.innerHTML = "";
+        mobileGridLowest.innerHTML = "";
+        (data.lowest_cutoffs || []).forEach(item => {
+          gridLowest.appendChild(buildCutoffTile(item, 'cool'));
+          mobileGridLowest.appendChild(buildCutoffTile(item, 'cool'));
+        });
+
+        // Show dashboard, hide loading
+        document.getElementById("loading").style.display = "none";
+        document.getElementById("dashboard").style.display = "block";
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById("loading").innerHTML = `
+          <div style="color: var(--reach); font-weight: 600; font-size: 16px;">Failed to load statistics</div>
+          <p style="color: var(--ink-soft); margin-top: 8px;">Make sure the backend server is running and try again.</p>
+          <pre style="color:red; text-align:left; max-width:600px; margin:20px auto; overflow:auto; padding:10px; background:#fff; border:1px solid #ccc; font-size:12px;">${err.stack || err.message || err}</pre>
+          <button class="btn btn--ghost" style="margin-top: 16px;" onclick="window.location.reload()">Retry Page</button>
+        `;
+      }
+    });
+
+    /**
+     * Mobile-only: switch between "Lowest Cutoffs" and "Highest Cutoffs" panels.
+     */
+    window.switchCutoffPanel = function (panel) {
+      document.getElementById('btn-lowest').classList.toggle('is-active', panel === 'lowest');
+      document.getElementById('btn-highest').classList.toggle('is-active', panel === 'highest');
+      document.getElementById('mobile-panel-lowest').classList.toggle('is-active', panel === 'lowest');
+      document.getElementById('mobile-panel-highest').classList.toggle('is-active', panel === 'highest');
+    };
+  </script>
+</body>
+</html>

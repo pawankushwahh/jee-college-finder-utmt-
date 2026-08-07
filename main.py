@@ -88,12 +88,6 @@ app.include_router(disha_router)
 # Static file serving  (must come AFTER API routes)
 # ---------------------------------------------------------------------------
 
-@app.get("/stats", include_in_schema=False)
-def stats_page() -> FileResponse:
-    """Serve the static Statistical Insights page."""
-    return _static_file_response(_TEMPLATES_DIR / "stats.html")
-
-
 @app.get("/", include_in_schema=False)
 def portal_root() -> FileResponse:
     return _static_file_response(_TEMPLATES_DIR / "index.html")
@@ -101,10 +95,23 @@ def portal_root() -> FileResponse:
 
 @app.get("/{full_path:path}", include_in_schema=False)
 def spa_fallback(full_path: str) -> FileResponse:
-    """Serve static assets or index.html for unmatched paths."""
+    """Serve static assets from the templates directory.
+
+    For paths that look like files (have an extension), serve the file or 404.
+    For navigation-like paths (no extension), fall back to index.html.
+    """
+    from fastapi.responses import JSONResponse
+
     target = _TEMPLATES_DIR / full_path
     if target.is_file():
         return _static_file_response(target)
+
+    # Only fall back to index.html for navigation-like paths (no file extension).
+    # Asset requests (e.g. /exam/sw.js) should 404 properly.
+    if '.' in full_path.split('/')[-1]:
+        from fastapi.responses import PlainTextResponse
+        return PlainTextResponse("Not Found", status_code=404)
+
     return _static_file_response(_TEMPLATES_DIR / "index.html")
 
 

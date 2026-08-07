@@ -27,6 +27,7 @@ from .config import settings
 DATA_PATH                = settings.resolved_data_path        # legacy Excel (kept for reference)
 BASIC_MERGED_DATA_PATH   = settings.resolved_basic_merged_data_path
 
+
 # Premier / older institutes get a small brand bonus (matters for the "mba" and
 # "undecided" goals and as a tie-breaker everywhere).
 _OLD_IITS = {
@@ -357,6 +358,8 @@ def _load_basic_dataframe() -> pd.DataFrame:
     return compute_best_ranks(df)
 
 
+
+
 # Program name keywords that identify non-engineering programs to exclude.
 _EXCLUDED_PROGRAM_KEYWORDS = ("planning", "architecture")
 
@@ -406,6 +409,8 @@ def load_programs_basic() -> List[Program]:
             )
         )
     return programs
+
+
 
 
 # ---------------------------------------------------------------------------

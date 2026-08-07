@@ -14,7 +14,7 @@
    Bump CACHE when shipping changes so old caches are purged on activate.
    ════════════════════════════════════════════════════════════════════════ */
 
-const CACHE = "disha-shell-v4";
+const CACHE = "disha-shell-v9";
 
 // Resolve paths relative to the service worker's actual location
 // so it works both at root (/) and in sub-apps (/learning_games/)
@@ -23,8 +23,13 @@ const basePath = self.location.pathname.replace(/\/sw\.js$/, '') || '';
 const APP_SHELL = [
   `${basePath}/`,
   `${basePath}/index.html`,
+  `${basePath}/jee.html`,
+  `${basePath}/kcet.html`,
+  `${basePath}/comedk/index.html`,
+  `${basePath}/comedk/js/app.js`,
   `${basePath}/stats`,
   `${basePath}/css/style.css`,
+  `${basePath}/js/landing.js`,
   `${basePath}/js/config.js`,
   `${basePath}/js/i18n.js`,
   `${basePath}/js/api.js`,
@@ -82,6 +87,9 @@ function isAppShellAsset(url) {
   const p = url.pathname;
   return (
     p === `${basePath}/index.html` ||
+    p === `${basePath}/jee.html` ||
+    p === `${basePath}/kcet.html` ||
+    p === `${basePath}/comedk/index.html` ||
     p === `${basePath}/stats` ||
     p.endsWith(".js") ||
     p.endsWith(".css") ||
@@ -105,6 +113,12 @@ self.addEventListener("fetch", (event) => {
   if (req.mode === "navigate") {
     if (url.pathname === `${basePath}/stats` || url.pathname.endsWith("/stats")) {
       event.respondWith(networkFirst(new Request(`${basePath}/stats`, { cache: "no-store" })));
+    } else if (url.pathname.includes("/exam/jee")) {
+      event.respondWith(networkFirst(new Request(`${basePath}/jee.html`, { cache: "no-store" })));
+    } else if (url.pathname.includes("/exam/kcet")) {
+      event.respondWith(networkFirst(new Request(`${basePath}/kcet.html`, { cache: "no-store" })));
+    } else if (url.pathname.includes("/exam/comedk")) {
+      event.respondWith(networkFirst(new Request(`${basePath}/comedk/index.html`, { cache: "no-store" })));
     } else {
       event.respondWith(networkFirst(new Request(`${basePath}/index.html`, { cache: "no-store" })));
     }

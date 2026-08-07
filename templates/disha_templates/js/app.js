@@ -2659,8 +2659,10 @@ function registerServiceWorker() {
   if (!("serviceWorker" in navigator)) return;
   if (location.protocol === "file:") return;
   window.addEventListener("load", () => {
+    // If running on an /exam/ route, sw.js is one level up
+    const swPath = window.location.pathname.includes('/exam/') ? '../sw.js' : 'sw.js';
     navigator.serviceWorker
-      .register("sw.js")
+      .register(swPath)
       .then((reg) => {
         reg.addEventListener("updatefound", () => {
           const worker = reg.installing;

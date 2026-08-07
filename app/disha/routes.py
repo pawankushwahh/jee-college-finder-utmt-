@@ -24,12 +24,16 @@ from app.disha.data_loader import load_programs, load_programs_basic
 from app.disha.stats_loader import compute_dataset_stats
 from app.disha.recommender import recommend
 from app.disha.schemas import MetaResponse, RecommendRequest, RecommendResponse
+from app.disha.comedk.routes import router as comedk_router
+from app.disha.kcet.routes import router as kcet_router
 
 logger = logging.getLogger(__name__)
 
 _TEMPLATES_DIR = Path(__file__).resolve().parent.parent.parent / "templates" / "disha_templates"
 
 router = APIRouter()
+router.include_router(comedk_router)
+router.include_router(kcet_router)
 
 
 # ── Page routes (extension-less clean URLs) ──────────────────────────────
@@ -41,6 +45,32 @@ router = APIRouter()
 def stats_page() -> FileResponse:
     """Serve the Statistical Insights page at the clean URL /stats."""
     return FileResponse(str(_TEMPLATES_DIR / "stats.html"))
+
+
+@router.get("/exam/jee", include_in_schema=False)
+def exam_jee_page() -> FileResponse:
+    return FileResponse(str(_TEMPLATES_DIR / "jee.html"))
+
+
+@router.get("/exam/kcet", include_in_schema=False)
+def exam_kcet_page() -> FileResponse:
+    return FileResponse(str(_TEMPLATES_DIR / "kcet.html"))
+
+
+@router.get("/exam/comedk", include_in_schema=False)
+def exam_comedk_page() -> FileResponse:
+    return FileResponse(str(_TEMPLATES_DIR / "comedk" / "index.html"))
+
+@router.get("/exam/comedk/stats", include_in_schema=False)
+def exam_comedk_stats_page() -> FileResponse:
+    return FileResponse(
+        str(_TEMPLATES_DIR / "comedk" / "stats.html"),
+        headers={
+            "Cache-Control": "no-cache, no-store, must-revalidate",
+            "Pragma": "no-cache",
+            "Expires": "0",
+        },
+    )
 
 
 @router.get("/api/health", tags=["meta"])

@@ -24,6 +24,7 @@ class Settings:
     # computed at runtime as MIN/MAX across rounds.
     basic_merged_data_path: str = "app/disha/data/josaa_merged_2025.csv"
 
+
     # Active data mode: always "basic" (2025 round-wise merged CSV).
     # Extended mode has been removed — this setting is kept for API compatibility.
     data_mode: str = "basic"
@@ -42,6 +43,7 @@ class Settings:
     def resolved_basic_merged_data_path(self) -> Path:
         p = Path(self.basic_merged_data_path)
         return p if p.is_absolute() else _PROJECT_ROOT / p
+
 
     @property
     def resolved_extended_data_path(self) -> Path:
