@@ -12,9 +12,9 @@ class KcetRecommendRequest(BaseModel):
         default="GM",
         description="Quota/Category (e.g. GM, 1G, 2AG, etc.).",
     )
-    goal: Literal["coding", "research", "mba", "core", "undecided", "pure_science"] = Field(
-        default="coding",
-        description="Career interest, used to re-rank branches and produce guidance.",
+    branches: List[str] = Field(
+        default_factory=list,
+        description="List of selected branch families.",
     )
     bucket: Optional[str] = Field(
         default="all",

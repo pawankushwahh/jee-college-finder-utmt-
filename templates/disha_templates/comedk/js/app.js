@@ -11,25 +11,27 @@
          POST /api/comedk/recommend
    ═══════════════════════════════════════════════════════════════ */
 
-// ── GOALS ─────────────────────────────────────────────────────
-
-const GOALS = [
-  { id: "coding",       name: "CS / Software / AI",         desc: "Computer Science, IT, AI, Data Science" },
-  { id: "core",         name: "Core Engineering",            desc: "Mechanical, Civil, Electrical, Chemical" },
-  { id: "research",     name: "Research / Biotech",          desc: "Biotechnology, Aerospace, Sciences" },
-  { id: "pure_science", name: "Physics / Chemistry / Maths", desc: "Pure science foundations" },
-  { id: "mba",          name: "Management / MBA later",      desc: "Any branch — brand & placement focus" },
-  { id: "undecided",    name: "Not sure yet",                desc: "Show me all good options" },
+// ── BRANCHES (loaded from /meta, fallback hardcoded) ──────────
+let BRANCHES = [
+  { value: "cse",        label: "Computer Science & Engineering" },
+  { value: "ai_ds",      label: "AI / Data Science / ML" },
+  { value: "cyber",      label: "Cyber Security / Blockchain / IoT" },
+  { value: "it",         label: "Information Science / IT" },
+  { value: "ece",        label: "Electronics & Communication" },
+  { value: "vlsi",       label: "VLSI" },
+  { value: "eee",        label: "Electrical & Electronics" },
+  { value: "robotics",   label: "Robotics & Automation" },
+  { value: "mechanical", label: "Mechanical Engineering" },
+  { value: "automobile", label: "Automobile Engineering" },
+  { value: "civil",      label: "Civil Engineering" },
+  { value: "chemical",   label: "Chemical Engineering" },
+  { value: "aerospace",  label: "Aerospace / Aeronautical" },
+  { value: "biotech",    label: "Biotechnology" },
+  { value: "biomedical", label: "Bio-Medical Engineering" },
+  { value: "industrial", label: "Industrial Engineering" },
+  { value: "design",     label: "Design" },
+  { value: "agriculture",label: "Agricultural Engineering" },
 ];
-
-const GOAL_ICONS = {
-  coding:      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
-  core:        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>',
-  research:    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>',
-  pure_science:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v8L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45L14 10V2z"/><path d="M8.5 2h7"/><path d="M7 16h10"/></svg>',
-  mba:         '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>',
-  undecided:   '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
-};
 
 // ── ALL VIEW IDs ───────────────────────────────────────────────
 const ALL_VIEWS = [
@@ -39,11 +41,11 @@ const ALL_VIEWS = [
 
 // ── STATE ─────────────────────────────────────────────────────
 const state = {
-  rank:     null,
-  quota:    "GM",
-  goal:     "undecided",
-  lastData: null,
-  filterText: "",
+  rank:             null,
+  quota:            "GM",
+  selectedBranches: [],   // list of branch family values, e.g. ["cse", "ai_ds"]
+  lastData:         null,
+  filterText:       "",
 };
 
 // ── DOM helpers ───────────────────────────────────────────────
@@ -107,52 +109,98 @@ function bindQuotaRow(rowId, onChange) {
   });
 }
 
-// ── GOAL GRID ─────────────────────────────────────────────────
-function buildGoalGrid() {
-  const grid = $("goal-grid");
+// ── BRANCH GRID (multi-select chips) ──────────────────────────
+function buildBranchGrid() {
+  const grid = $("branch-grid");
   if (!grid) return;
   grid.innerHTML = "";
-  for (const g of GOALS) {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "goal-card" + (state.goal === g.id ? " is-selected" : "");
-    btn.dataset.goal = g.id;
-    btn.setAttribute("role", "radio");
-    btn.setAttribute("aria-checked", state.goal === g.id ? "true" : "false");
-    btn.innerHTML = `
-      <span class="goal-card__icon" aria-hidden="true">${GOAL_ICONS[g.id] || ""}</span>
-      <span>
-        <span class="goal-card__name">${esc(g.name)}</span>
-        <span class="goal-card__desc">${esc(g.desc)}</span>
-      </span>`;
-    btn.addEventListener("click", () => {
-      state.goal = g.id;
-      grid.querySelectorAll(".goal-card").forEach(c => {
-        const on = c === btn;
-        c.classList.toggle("is-selected", on);
-        c.setAttribute("aria-checked", on ? "true" : "false");
-      });
-      syncPanelGoal();
-      // Auto-advance after 260 ms so selection is visually confirmed
-      setTimeout(() => goToStep(3), 260);
+  for (const b of BRANCHES) {
+    const chip = document.createElement("button");
+    chip.type = "button";
+    chip.className = "branch-chip" + (state.selectedBranches.includes(b.value) ? " is-selected" : "");
+    chip.dataset.branch = b.value;
+    chip.setAttribute("role", "checkbox");
+    chip.setAttribute("aria-checked", state.selectedBranches.includes(b.value) ? "true" : "false");
+    chip.innerHTML = `
+      <svg class="branch-chip__check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+      <span>${esc(b.label)}</span>`;
+    chip.addEventListener("click", () => {
+      const idx = state.selectedBranches.indexOf(b.value);
+      if (idx >= 0) {
+        state.selectedBranches.splice(idx, 1);
+      } else {
+        state.selectedBranches.push(b.value);
+      }
+      const on = state.selectedBranches.includes(b.value);
+      chip.classList.toggle("is-selected", on);
+      chip.setAttribute("aria-checked", on ? "true" : "false");
+      syncPanelBranches();
     });
-    grid.appendChild(btn);
+    grid.appendChild(chip);
   }
 }
 
-function syncPanelGoal() {
-  const sel = $("panel-goal");
-  if (sel) sel.value = state.goal;
+// ── PANEL BRANCH CHIPS (sidebar) ──────────────────────────────
+function buildPanelBranchChips() {
+  const container = $("panel-branch-chips");
+  if (!container) return;
+  container.innerHTML = "";
+  for (const b of BRANCHES) {
+    const chip = document.createElement("button");
+    chip.type = "button";
+    chip.className = "panel-branch-chip" + (state.selectedBranches.includes(b.value) ? " is-selected" : "");
+    chip.dataset.branch = b.value;
+    chip.textContent = b.label;
+    chip.addEventListener("click", () => {
+      const idx = state.selectedBranches.indexOf(b.value);
+      if (idx >= 0) {
+        state.selectedBranches.splice(idx, 1);
+      } else {
+        state.selectedBranches.push(b.value);
+      }
+      syncPanelBranches();
+      syncBranchGrid();
+      schedulePanelUpdate();
+    });
+    container.appendChild(chip);
+  }
+}
+
+function syncPanelBranches() {
+  const container = $("panel-branch-chips");
+  if (!container) return;
+  container.querySelectorAll(".panel-branch-chip").forEach(chip => {
+    const on = state.selectedBranches.includes(chip.dataset.branch);
+    chip.classList.toggle("is-selected", on);
+  });
+}
+
+function syncBranchGrid() {
+  const grid = $("branch-grid");
+  if (!grid) return;
+  grid.querySelectorAll(".branch-chip").forEach(chip => {
+    const on = state.selectedBranches.includes(chip.dataset.branch);
+    chip.classList.toggle("is-selected", on);
+    chip.setAttribute("aria-checked", on ? "true" : "false");
+  });
+}
+
+// ── Helper: get display text for selected branches ────────────
+function selectedBranchesText() {
+  if (state.selectedBranches.length === 0) return "All branches";
+  return state.selectedBranches
+    .map(v => BRANCHES.find(b => b.value === v)?.label || v)
+    .join(", ");
 }
 
 // ── REVIEW (STEP 3) ───────────────────────────────────────────
 function populateReview() {
   const rv = $("rv-rank-val");
   const qv = $("rv-quota-val");
-  const gv = $("rv-goal-val");
+  const bv = $("rv-branch-val");
   if (rv) rv.textContent = state.rank ? fmt(state.rank) : "—";
   if (qv) qv.textContent = state.quota === "GM" ? "GM — General Merit" : "KKR — Kalyana Karnataka";
-  if (gv) gv.textContent = GOALS.find(g => g.id === state.goal)?.name || state.goal;
+  if (bv) bv.textContent = selectedBranchesText();
 }
 
 // ── NAVIGATION ────────────────────────────────────────────────
@@ -198,12 +246,12 @@ async function submitProfile() {
     const data = await apiRequest("/api/comedk/recommend", {
       method: "POST",
       body: JSON.stringify({
-        rank:      state.rank,
-        quota:     state.quota,
-        goal:      state.goal,
-        bucket:    "all",
-        page:      1,
-        page_size: 150,
+        rank:            state.rank,
+        quota:           state.quota,
+        branch_families: state.selectedBranches,
+        bucket:          "all",
+        page:            1,
+        page_size:       150,
       }),
     });
     stopLoading();
@@ -237,14 +285,17 @@ function schedulePanelUpdate() {
 async function runPanelUpdate() {
   const r = parseRank($("panel-rank"));
   if (!r) { setPanelUpdating(false); return; }
-  state.rank  = r;
-  state.goal  = $("panel-goal")?.value || state.goal;
+  state.rank = r;
   try {
     const data = await apiRequest("/api/comedk/recommend", {
       method: "POST",
       body: JSON.stringify({
-        rank: state.rank, quota: state.quota, goal: state.goal,
-        bucket: "all", page: 1, page_size: 150,
+        rank:            state.rank,
+        quota:           state.quota,
+        branch_families: state.selectedBranches,
+        bucket:          "all",
+        page:            1,
+        page_size:       150,
       }),
     });
     state.lastData = data;
@@ -260,7 +311,7 @@ function syncPanel() {
   const pr = $("panel-rank");
   if (pr) pr.value = fmt(state.rank);
   syncQuota();
-  syncPanelGoal();
+  syncPanelBranches();
 }
 
 // ── RESULTS ───────────────────────────────────────────────────
@@ -274,10 +325,13 @@ function renderResults(data, { keepFilter = false } = {}) {
   // Profile chips
   const chips = $("profile-chips");
   if (chips) {
+    const branchText = state.selectedBranches.length > 0
+      ? state.selectedBranches.length + " branch" + (state.selectedBranches.length > 1 ? "es" : "")
+      : "All branches";
     chips.innerHTML = [
       `Rank <strong>${fmt(state.rank)}</strong>`,
       esc(state.quota),
-      esc(GOALS.find(g => g.id === state.goal)?.name || state.goal),
+      esc(branchText),
     ].map(c => `<span class="pchip">${c}</span>`).join("");
   }
 
@@ -306,17 +360,19 @@ function renderResults(data, { keepFilter = false } = {}) {
     }
   }
 
-  // Rich guidance paragraph matching JEE format
+  // Rich guidance paragraph
   if (gd) {
-    const goalName = GOALS.find(g => g.id === state.goal)?.name || "all branches";
     if (total > 0) {
-      gd.textContent = `Found ${fmt(total)} eligible college–program options for your profile (showing ${fmt(total)}). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.`;
+      const branchNote = state.selectedBranches.length > 0
+        ? `Filtered to ${state.selectedBranches.length} preferred branch${state.selectedBranches.length > 1 ? "es" : ""}.`
+        : "Showing all branches.";
+      gd.textContent = `Found ${fmt(total)} eligible college–program options for your profile (showing ${fmt(total)}). They are grouped into Target, Dream and Safe. ${branchNote}`;
     } else {
-      gd.textContent = "Try adjusting your rank or quota to find matching programs.";
+      gd.textContent = "Try adjusting your rank, quota, or branch preferences to find matching programs.";
     }
   }
 
-  // Tips list (matches JEE's bullet points)
+  // Tips list
   if (tips) {
     const tipsList = [];
     if (total > 0) {
@@ -329,22 +385,27 @@ function renderResults(data, { keepFilter = false } = {}) {
 
   // Show spectrum header
   const specHeader = $("spectrum-header");
-  if (specHeader && total > 0) specHeader.style.display = "";
+  if (specHeader) {
+    specHeader.style.display = total > 0 ? "" : "none";
+  }
 
   // Spectrum
   const spec = $("spectrum");
-  if (spec && total > 0) {
-    const countUp = (el, val) => {
-      if (!el) return;
-      if (el.textContent === String(val)) return;
-      el.textContent = fmt(val);
-      el.classList.add("pop");
-      setTimeout(() => el.classList.remove("pop"), 300);
-    };
-    
-    countUp($("zone-count-safe"), ts);
-    countUp($("zone-count-target"), tt);
-    countUp($("zone-count-reach"), tr);
+  if (spec) {
+    spec.style.display = total > 0 ? "" : "none";
+    if (total > 0) {
+      const countUp = (el, val) => {
+        if (!el) return;
+        if (el.textContent === String(val)) return;
+        el.textContent = fmt(val);
+        el.classList.add("pop");
+        setTimeout(() => el.classList.remove("pop"), 300);
+      };
+      
+      countUp($("zone-count-safe"), ts);
+      countUp($("zone-count-target"), tt);
+      countUp($("zone-count-reach"), tr);
+    }
   }
 
   // Cards
@@ -424,7 +485,6 @@ function makeCard(rec, idx) {
   const cut   = Math.round(rec.cutoff_rank);
 
   // ── Rank bar: single cutoff model (no fabricated opening rank) ──
-  // Position the cutoff and your rank on a linear track
   const lo  = Math.min(rank, cut) * 0.75;
   const hi  = Math.max(rank, cut) * 1.25 || 1;
   const pos = (v) => {
@@ -435,11 +495,10 @@ function makeCard(rec, idx) {
   const cutPos = pos(cut);
   const youPos = pos(rank);
 
-  // Window spans from whichever is lower to whichever is higher
   const winLeft  = Math.min(cutPos, youPos);
   const winRight = Math.max(cutPos, youPos);
 
-  // ── Verdict sentence (matches JEE tone) ──
+  // ── Verdict sentence ──
   let verdict;
   if (rec.category === "Safe") {
     verdict = `Your rank (${fmt(rank)}) is better than the cutoff by ${fmt(cut - rank)} — very likely admission.`;
@@ -453,12 +512,6 @@ function makeCard(rec, idx) {
     const gap = Math.abs(rank - cut);
     verdict = `Cutoff (${fmt(cut)}) is ${fmt(gap)} ranks from your rank — ambitious.`;
   }
-
-  const star = (rec.category === "Target" || rec.category === "Safe")
-    ? `<span class="ccard__star" title="Fits your stated goal">
-         <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2z"/></svg>
-         fits your goal</span>`
-    : "";
 
   const isBookmarked = false;
   const bookmarkHtml = `
@@ -476,7 +529,6 @@ function makeCard(rec, idx) {
         <span class="tag tag--private">PRIVATE</span>
         <span class="tag">KARNATAKA</span>
         <span class="tag">${esc(rec.quota)}</span>
-        ${star}
       </div>
       <h3 class="ccard__institute">${esc(rec.institute)}</h3>
       <p class="ccard__branch">${esc(rec.program)}</p>
@@ -505,17 +557,17 @@ async function loadMeta() {
     const meta = await apiRequest("/api/comedk/meta");
     const note = $("data-note");
     if (note) note.textContent = `COMEDK 2025 · ${fmt(meta.total_programs)} programs`;
-    buildGoalGrid();
-    // Build panel goal select
-    const sel = $("panel-goal");
-    if (sel) {
-      sel.innerHTML = GOALS.map(g => `<option value="${g.id}">${esc(g.name)}</option>`).join("");
-      sel.value = state.goal;
+    // Update BRANCHES from server if available
+    if (meta.branch_families && meta.branch_families.length > 0) {
+      BRANCHES = meta.branch_families;
     }
+    buildBranchGrid();
+    buildPanelBranchChips();
   } catch (e) {
     console.error("Meta load failed:", e?.message);
-    // Still build goal grid with static data
-    buildGoalGrid();
+    // Still build branch grid with static data
+    buildBranchGrid();
+    buildPanelBranchChips();
   }
 }
 
@@ -526,8 +578,10 @@ function bindEvents() {
 
   // Restart
   $("restart-btn")?.addEventListener("click", () => {
-    state.rank = null; state.quota = "GM"; state.goal = "undecided";
+    state.rank = null; state.quota = "GM"; state.selectedBranches = [];
     syncQuota();
+    syncBranchGrid();
+    syncPanelBranches();
     showView("welcome");
   });
 
@@ -544,7 +598,8 @@ function bindEvents() {
   $("next-1")?.addEventListener("click", () => goToStep(2));
   $("back-1")?.addEventListener("click", () => goToStep(0));
 
-  // Step 2: goal (auto-advances on selection, see buildGoalGrid)
+  // Step 2: branch preference (Continue button advances to step 3)
+  $("next-2")?.addEventListener("click", () => goToStep(3));
   $("back-2")?.addEventListener("click", () => goToStep(1));
 
   // Step 3: review / confirm
@@ -552,12 +607,12 @@ function bindEvents() {
   $("see-colleges-btn")?.addEventListener("click", submitProfile);
 
   // Review rows → jump back to specific step
-  $("rv-rank") ?.addEventListener("click",  () => goToStep(0));
-  $("rv-quota")?.addEventListener("click",  () => goToStep(1));
-  $("rv-goal") ?.addEventListener("click",  () => goToStep(2));
-  $("rv-rank") ?.addEventListener("keydown", e => { if (e.key === "Enter") goToStep(0); });
-  $("rv-quota")?.addEventListener("keydown", e => { if (e.key === "Enter") goToStep(1); });
-  $("rv-goal") ?.addEventListener("keydown", e => { if (e.key === "Enter") goToStep(2); });
+  $("rv-rank")  ?.addEventListener("click",  () => goToStep(0));
+  $("rv-quota") ?.addEventListener("click",  () => goToStep(1));
+  $("rv-branch")?.addEventListener("click",  () => goToStep(2));
+  $("rv-rank")  ?.addEventListener("keydown", e => { if (e.key === "Enter") goToStep(0); });
+  $("rv-quota") ?.addEventListener("keydown", e => { if (e.key === "Enter") goToStep(1); });
+  $("rv-branch")?.addEventListener("keydown", e => { if (e.key === "Enter") goToStep(2); });
 
   // Error page
   $("retry-btn")    ?.addEventListener("click", submitProfile);
@@ -567,10 +622,6 @@ function bindEvents() {
   fmtRankInput($("panel-rank"));
   $("panel-rank")?.addEventListener("input", schedulePanelUpdate);
   bindQuotaRow("panel-quota-row", schedulePanelUpdate);
-  $("panel-goal")?.addEventListener("change", () => {
-    state.goal = $("panel-goal").value;
-    schedulePanelUpdate();
-  });
 
   // Panel toggle (mobile)
   const pt = $("panel-toggle");
@@ -596,7 +647,6 @@ function bindEvents() {
 
   // Share
   $("share-btn")?.addEventListener("click", () => {
-    const goalName = GOALS.find(g => g.id === state.goal)?.name || state.goal;
     const msg = `My COMEDK rank ${fmt(state.rank)} (${state.quota}). Check out Disha for free college predictions → ${location.href}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
   });
@@ -661,8 +711,9 @@ function validateAndNext0() {
 
 // ── INIT ──────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
-  buildGoalGrid();
+  buildBranchGrid();
+  buildPanelBranchChips();
   bindEvents();
-  loadMeta();       // async — also rebuilds goal grid with live data
+  loadMeta();       // async — also rebuilds branch grid with live data
   showView("welcome");
 });

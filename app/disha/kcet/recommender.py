@@ -12,6 +12,26 @@ _TARGET_HI = 1.15   # cutoff <= rank * 1.15 -> Target
 _SAFE_HI   = 1.50   # cutoff <= rank * 1.50 -> Safe (else excluded — too easy)
 
 
+def _safe_cap(rank: int) -> int:
+    """Return the maximum number of Safe options to show for this rank.
+
+        Rank 1-10    → 10
+        Rank 11-100  → 15
+        Rank 101-1k  → 20
+        Rank 1k-10k  → 25
+        Rank >10k    → 30
+    """
+    if rank <= 10:
+        return 10
+    if rank <= 100:
+        return 15
+    if rank <= 1000:
+        return 20
+    if rank <= 10000:
+        return 25
+    return 30
+
+
 def _categorize(rank: int, cutoff: float) -> Optional[str]:
     """Return Safe/Target/Reach or None (exclude).
     
@@ -20,7 +40,7 @@ def _categorize(rank: int, cutoff: float) -> Optional[str]:
     If cutoff < rank: student cannot get in unless cutoffs shift.
     """
     lo = rank * _REACH_LO
-    hi = max(rank * _SAFE_HI, rank + 15000)
+    hi = max(rank * _SAFE_HI, rank + max(2000, int(rank * 0.5)))
 
     # Exclude colleges that are too far in either direction
     if cutoff < lo or cutoff > hi:
@@ -94,6 +114,10 @@ def recommend(req: KcetRecommendRequest) -> KcetRecommendResponse:
     total_safe   = len(safe)
     total_target = len(target)
     total_reach  = len(reach)
+
+    # Cap safe list by rank tier
+    cap = _safe_cap(req.rank)
+    safe = safe[:cap]
 
     # Bucket filtering
     if req.bucket == "safe":

@@ -51,6 +51,76 @@
 
     /* Live-update overlay */
     .results-main.is-refreshing { opacity: 0.55; pointer-events: none; transition: opacity 0.2s; }
+
+    /* ── Branch grid (multi-select chips) ─────────────────────────── */
+    .branch-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .branch-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border: 1.5px solid var(--border, #d9d2c6);
+      border-radius: 10px;
+      background: var(--card-bg, #fff);
+      color: var(--ink, #2c2416);
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      user-select: none;
+    }
+    .branch-chip:hover {
+      border-color: var(--pine, #2d6a4f);
+      background: rgba(45, 106, 79, 0.04);
+    }
+    .branch-chip.is-selected {
+      border-color: var(--pine, #2d6a4f);
+      background: var(--pine, #2d6a4f);
+      color: #fff;
+    }
+    .branch-chip__check {
+      width: 16px;
+      height: 16px;
+      display: none;
+    }
+    .branch-chip.is-selected .branch-chip__check {
+      display: inline-block;
+    }
+
+    /* ── Panel branch chips (sidebar) ────────────────────────────── */
+    .panel-branch-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 6px;
+    }
+    .panel-branch-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 5px 10px;
+      border: 1px solid var(--border, #d9d2c6);
+      border-radius: 6px;
+      background: var(--card-bg, #fff);
+      color: var(--ink, #2c2416);
+      font-size: 0.78rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .panel-branch-chip:hover {
+      border-color: var(--pine, #2d6a4f);
+    }
+    .panel-branch-chip.is-selected {
+      border-color: var(--pine, #2d6a4f);
+      background: var(--pine, #2d6a4f);
+      color: #fff;
+    }
   </style>
 </head>
 
@@ -163,8 +233,8 @@
       </div>
     </section>
 
-    <!-- ════ STEP 2 — INTEREST ════ -->
-    <section class="view view--flow" id="view-step-2" aria-label="Select interest">
+    <!-- ════ STEP 2 — BRANCH PREFERENCE ════ -->
+    <section class="view view--flow" id="view-step-2" aria-label="Select preferred branches">
       <div class="flow">
         <div class="flow__head">
           <button type="button" class="flow__back" id="back-2" aria-label="Back">
@@ -176,12 +246,16 @@
           <span class="flow__count">3 / 4</span>
         </div>
 
-        <p class="eyebrow">Your interest</p>
-        <h2 class="step__title">What do you want to study?</h2>
-        <p class="step__hint">We use this to filter and highlight programs that match your direction.</p>
+        <p class="eyebrow">Your preference</p>
+        <h2 class="step__title">Which branches interest you?</h2>
+        <p class="step__hint">Select one or more branches to filter results. Leave blank to see all branches.</p>
 
-        <div class="goal-grid" id="goal-grid" role="radiogroup" aria-label="Interest area"></div>
-        <p class="field__error" id="error-goal" role="alert" hidden></p>
+        <div class="branch-grid" id="branch-grid" role="group" aria-label="Branch preferences"></div>
+        <p class="field__error" id="error-branch" role="alert" hidden></p>
+
+        <div class="flow__foot">
+          <button type="button" class="btn btn--primary btn--lg" id="next-2">Continue</button>
+        </div>
       </div>
     </section>
 
@@ -216,9 +290,9 @@
             </button>
           </li>
           <li>
-            <button type="button" class="review__row" id="rv-goal">
-              <span class="review__key">Interest</span>
-              <span class="review__val"><span id="rv-goal-val">—</span><span style="color: var(--pine); margin-left: 8px; font-weight: 500;">›</span></span>
+            <button type="button" class="review__row" id="rv-branch">
+              <span class="review__key">Branches</span>
+              <span class="review__val"><span id="rv-branch-val">—</span><span style="color: var(--pine); margin-left: 8px; font-weight: 500;">›</span></span>
             </button>
           </li>
         </ul>
@@ -285,8 +359,8 @@
               </div>
             </div>
             <div class="panel-field">
-              <label class="panel-field__label" for="panel-goal">Interest</label>
-              <select class="input input--sm" id="panel-goal"></select>
+              <span class="panel-field__label" id="pbl">Branches</span>
+              <div class="panel-branch-chips" id="panel-branch-chips" role="group" aria-labelledby="pbl"></div>
             </div>
             <p class="panel__updating" id="panel-updating" hidden>Updating…</p>
           </div>

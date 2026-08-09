@@ -161,7 +161,10 @@ def _categorize(rank: int, opening: int, closing: int) -> Optional[str]:
     """Return Safe/Target/Reach, or None if the option should be dropped."""
     if rank > closing * (1 + UPPER_MARGIN):
         return None  # no realistic chance
-    if rank < opening * LOWER_MARGIN:
+    # We prune options where the candidate's rank is much better than the opening rank
+    # (i.e. they are overqualified). However, to prevent pruning the best colleges 
+    # for students with top ranks (e.g., rank 1), we enforce a fixed buffer around the rank.
+    if rank < opening * LOWER_MARGIN and opening > rank + 10000:
         return None  # prune overqualified option
     
     # Safe: rank is in the top SAFE_FRACTION of the opening-closing gap
