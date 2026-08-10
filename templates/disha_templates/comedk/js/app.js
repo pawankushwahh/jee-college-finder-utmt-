@@ -1,215 +1,306 @@
 "use strict";
 
-/* ═══════════════════════════════════════════════════════════════
-   Disha — COMEDK  (standalone SPA, NO shared JEE code)
+/* ════════════════════════════════════════════════════════════════════════
+   Disha — COMEDK app logic
+   Ported from JEE app.js — structurally identical, domain-adapted.
 
-   View IDs (each step is its own <section>):
-     view-welcome  view-step-0  view-step-1  view-step-2  view-step-3
-     view-loading  view-results  view-error
+   Views: welcome → guided 4-step flow → loading → results (or error).
+   Talks to the COMEDK backend via apiRequest() defined in api.js.
+   ════════════════════════════════════════════════════════════════════════ */
 
-   API:  GET  /api/comedk/meta
-         POST /api/comedk/recommend
-   ═══════════════════════════════════════════════════════════════ */
+// ── DOM helpers ─────────────────────────────────────────────────────────
 
-// ── BRANCHES (loaded from /meta, fallback hardcoded) ──────────
-let BRANCHES = [
-  { value: "cse",        label: "Computer Science & Engineering" },
-  { value: "ai_ds",      label: "AI / Data Science / ML" },
-  { value: "cyber",      label: "Cyber Security / Blockchain / IoT" },
-  { value: "it",         label: "Information Science / IT" },
-  { value: "ece",        label: "Electronics & Communication" },
-  { value: "vlsi",       label: "VLSI" },
-  { value: "eee",        label: "Electrical & Electronics" },
-  { value: "robotics",   label: "Robotics & Automation" },
-  { value: "mechanical", label: "Mechanical Engineering" },
-  { value: "automobile", label: "Automobile Engineering" },
-  { value: "civil",      label: "Civil Engineering" },
-  { value: "chemical",   label: "Chemical Engineering" },
-  { value: "aerospace",  label: "Aerospace / Aeronautical" },
-  { value: "biotech",    label: "Biotechnology" },
-  { value: "biomedical", label: "Bio-Medical Engineering" },
-  { value: "industrial", label: "Industrial Engineering" },
-  { value: "design",     label: "Design" },
-  { value: "agriculture",label: "Agricultural Engineering" },
-];
+const $ = (id) => document.getElementById(id);
 
-// ── ALL VIEW IDs ───────────────────────────────────────────────
-const ALL_VIEWS = [
-  "welcome", "step-0", "step-1", "step-2", "step-3",
-  "loading", "results", "error",
-];
-
-// ── STATE ─────────────────────────────────────────────────────
-const state = {
-  rank:             null,
-  quota:            "GM",
-  selectedBranches: [],   // list of branch family values, e.g. ["cse", "ai_ds"]
-  lastData:         null,
-  filterText:       "",
-};
-
-// ── DOM helpers ───────────────────────────────────────────────
-const $ = id => document.getElementById(id);
-
-function esc(s) {
-  return String(s || "")
+function escapeHtml(str) {
+  return String(str)
     .replace(/&/g, "&amp;").replace(/</g, "&lt;")
     .replace(/>/g, "&gt;").replace(/"/g, "&quot;")
     .replace(/'/g, "&#39;");
 }
 
-const fmt = n => Number(n).toLocaleString("en-IN");
+const fmt = (n) => Number(n).toLocaleString("en-IN");
 
-function parseRank(el) {
-  if (!el) return null;
-  const n = parseInt(el.value.replace(/[^\d]/g, ""), 10);
-  return n > 0 ? n : null;
-}
+const prefersReducedMotion =
+  window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-function fmtRankInput(el) {
-  el.addEventListener("input", () => {
-    const n = parseRank(el);
-    el.value = n === null ? "" : fmt(n);
-  });
-}
+let initialStateLoaded = false;
 
-// ── VIEW SWITCHING ────────────────────────────────────────────
+// ── App state ───────────────────────────────────────────────────────────
+
+const state = {
+  meta: null,
+  step: 0,
+  quota: "GM",
+  branchPrefs: [],          // selected branch-preference values; [] means "Any"
+  lastPayload: null,
+  lastData: null,
+  totalByType: {},
+  filterText: "",
+  filterTypes: [],
+  choices: JSON.parse(localStorage.getItem("disha_comedk_choices") || "[]"),
+  view: localStorage.getItem("disha_comedk_view") || "branch",
+  expandedColleges: {},
+  collapsedSections: { Safe: false, Target: false, Reach: false },
+  sortBy: "rank",
+  showAllCards: {},
+};
+
+const TOTAL_STEPS = 4;
+
+const branchOptions = () => state.meta?.branch_families || [];
+const branchLabel = (value) => {
+  const b = branchOptions().find((o) => o.value === value);
+  return b ? b.label : value;
+};
+
+// ── Section ordering (same as JEE) ──────────────────────────────────────
+
+const SECTION_ORDER = ["Target", "Reach", "Safe"];
+const sectionMeta = (cat) => ({
+  Target: { title: "Target", sub: "your best-fit zone" },
+  Reach:  { title: "Dream", sub: "ambitious choices" },
+  Safe:   { title: "Safe", sub: "strong backups" },
+}[cat]);
+
+// ── View switching ──────────────────────────────────────────────────────
+
+const VIEWS = ["welcome", "flow", "loading", "results", "error"];
+
 function showView(name) {
-  for (const v of ALL_VIEWS) {
+  for (const v of VIEWS) {
     const el = $(`view-${v}`);
     if (el) el.classList.toggle("is-active", v === name);
   }
   const rb = $("restart-btn");
-  if (rb) rb.hidden = (name === "welcome");
+  if (rb) rb.hidden = name === "welcome";
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+
+  if (name === "results") {
+    const tb = $("toolbar");
+    const tbToggle = $("toolbar-toggle");
+    if (window.innerWidth <= 900 && tb && tbToggle) {
+      tb.classList.add("is-open");
+      tbToggle.setAttribute("aria-expanded", "true");
+      tb.dataset.autoOpened = "true";
+    }
+  }
+
+  saveStateToURL();
 }
 
-// ── QUOTA ─────────────────────────────────────────────────────
-function syncQuota() {
-  ["quota-row", "panel-quota-row"].forEach(rowId => {
-    const row = $(rowId);
-    if (!row) return;
-    row.querySelectorAll(".choice").forEach(btn => {
-      const on = btn.dataset.value === state.quota;
-      btn.classList.toggle("is-selected", on);
-      btn.setAttribute("aria-checked", on ? "true" : "false");
-    });
+// ── Rank inputs (live Indian-grouping format) ───────────────────────────
+
+function parseRankInput(el) {
+  if (!el) return null;
+  const digits = el.value.replace(/[^\d]/g, "");
+  if (!digits) return null;
+  const n = parseInt(digits, 10);
+  return n > 0 ? n : null;
+}
+
+function attachRankFormatting(el) {
+  if (!el) return;
+  el.addEventListener("input", () => {
+    const n = parseRankInput(el);
+    el.value = n === null ? "" : fmt(n);
+    saveStateToURL();
   });
+}
+
+// ── Guided flow ─────────────────────────────────────────────────────────
+
+const stepButtonLabel = (index) =>
+  index === TOTAL_STEPS - 1 ? "See colleges →" : "Continue";
+
+function goToStep(index, { backwards = false } = {}) {
+  state.step = index;
+  document.querySelectorAll(".step").forEach((s) => {
+    const active = Number(s.dataset.step) === index;
+    s.hidden = !active;
+    if (active) {
+      s.classList.toggle("is-back", backwards);
+      s.style.animation = "none";
+      void s.offsetWidth;
+      s.style.animation = "";
+    }
+  });
+
+  $("flow-progress-fill").style.width = `${((index + 1) / TOTAL_STEPS) * 100}%`;
+  $("flow-progressbar").setAttribute("aria-valuenow", String(index + 1));
+  $("flow-count").textContent = `${index + 1} / ${TOTAL_STEPS}`;
+  $("flow-back").disabled = index === 0;
+  $("flow-next").textContent = stepButtonLabel(index);
+
+  if (index === TOTAL_STEPS - 1) renderReview();
+
+  const firstInput = document.querySelector(
+    `.step[data-step="${index}"] input, .step[data-step="${index}"] select`
+  );
+  if (firstInput && window.matchMedia("(min-width: 720px)").matches) firstInput.focus();
+  saveStateToURL();
+}
+
+function validateStep(index) {
+  if (index === 0) {
+    const rank = parseRankInput($("comedk-rank"));
+    const err = $("error-ranks");
+    if (rank === null) {
+      if (err) { err.textContent = "Please enter a valid COMEDK rank."; err.hidden = false; }
+      return false;
+    }
+    if (err) err.hidden = true;
+    return true;
+  }
+  return true;
+}
+
+function advanceStep() {
+  if (!validateStep(state.step)) return;
+  if (state.step < TOTAL_STEPS - 1) {
+    goToStep(state.step + 1);
+  } else {
+    submitProfile();
+  }
+}
+
+// ── Quota pills ─────────────────────────────────────────────────────────
+
+function setQuota(value) {
+  state.quota = value;
+  syncQuotaRows();
+  saveStateToURL();
+}
+
+function syncQuotaRows() {
+  document
+    .querySelectorAll("#quota-row .choice, #panel-quota-row .choice")
+    .forEach((c) => {
+      const on = c.dataset.value === state.quota;
+      c.classList.toggle("is-selected", on);
+      c.setAttribute("aria-checked", on ? "true" : "false");
+    });
 }
 
 function bindQuotaRow(rowId, onChange) {
   const row = $(rowId);
   if (!row) return;
-  row.addEventListener("click", e => {
+  row.addEventListener("click", (e) => {
     const btn = e.target.closest(".choice");
     if (!btn) return;
-    state.quota = btn.dataset.value;
-    syncQuota();
+    setQuota(btn.dataset.value);
     if (onChange) onChange();
   });
 }
 
-// ── BRANCH GRID (multi-select chips) ──────────────────────────
-function buildBranchGrid() {
-  const grid = $("branch-grid");
+// ── Branch-preference chips ─────────────────────────────────────────────
+
+const BRANCH_CHECK_SVG =
+  '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+
+function makeBranchChip(value, label, active) {
+  const btn = document.createElement("button");
+  btn.type = "button";
+  btn.className =
+    "branch-chip" +
+    (active ? " is-selected" : "") +
+    (value === "" ? " branch-chip--any" : "");
+  btn.setAttribute("role", "checkbox");
+  btn.setAttribute("aria-checked", active ? "true" : "false");
+  btn.dataset.branch = value;
+  btn.innerHTML =
+    `<span class="branch-chip__check" aria-hidden="true">${BRANCH_CHECK_SVG}</span>` +
+    `<span class="branch-chip__label">${escapeHtml(label)}</span>`;
+  btn.addEventListener("click", () => toggleBranchPref(value));
+  return btn;
+}
+
+function buildBranchGrid(grid) {
   if (!grid) return;
   grid.innerHTML = "";
-  for (const b of BRANCHES) {
-    const chip = document.createElement("button");
-    chip.type = "button";
-    chip.className = "branch-chip" + (state.selectedBranches.includes(b.value) ? " is-selected" : "");
-    chip.dataset.branch = b.value;
-    chip.setAttribute("role", "checkbox");
-    chip.setAttribute("aria-checked", state.selectedBranches.includes(b.value) ? "true" : "false");
-    chip.innerHTML = `
-      <svg class="branch-chip__check" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
-      <span>${esc(b.label)}</span>`;
-    chip.addEventListener("click", () => {
-      const idx = state.selectedBranches.indexOf(b.value);
-      if (idx >= 0) {
-        state.selectedBranches.splice(idx, 1);
-      } else {
-        state.selectedBranches.push(b.value);
-      }
-      const on = state.selectedBranches.includes(b.value);
-      chip.classList.toggle("is-selected", on);
-      chip.setAttribute("aria-checked", on ? "true" : "false");
-      syncPanelBranches();
-    });
-    grid.appendChild(chip);
+  const anyActive = state.branchPrefs.length === 0;
+  grid.appendChild(makeBranchChip("", "Any branch", anyActive));
+  for (const b of branchOptions()) {
+    grid.appendChild(
+      makeBranchChip(b.value, b.label, state.branchPrefs.includes(b.value))
+    );
   }
 }
 
-// ── PANEL BRANCH CHIPS (sidebar) ──────────────────────────────
-function buildPanelBranchChips() {
-  const container = $("panel-branch-chips");
-  if (!container) return;
-  container.innerHTML = "";
-  for (const b of BRANCHES) {
-    const chip = document.createElement("button");
-    chip.type = "button";
-    chip.className = "panel-branch-chip" + (state.selectedBranches.includes(b.value) ? " is-selected" : "");
-    chip.dataset.branch = b.value;
-    chip.textContent = b.label;
-    chip.addEventListener("click", () => {
-      const idx = state.selectedBranches.indexOf(b.value);
-      if (idx >= 0) {
-        state.selectedBranches.splice(idx, 1);
-      } else {
-        state.selectedBranches.push(b.value);
-      }
-      syncPanelBranches();
-      syncBranchGrid();
-      schedulePanelUpdate();
-    });
-    container.appendChild(chip);
+function renderBranchGrids() {
+  buildBranchGrid($("branch-grid"));
+  buildBranchGrid($("panel-branch-grid"));
+}
+
+function toggleBranchPref(value) {
+  if (value === "") {
+    state.branchPrefs = [];
+  } else {
+    const i = state.branchPrefs.indexOf(value);
+    if (i >= 0) state.branchPrefs.splice(i, 1);
+    else state.branchPrefs.push(value);
+  }
+  renderBranchGrids();
+  if ($("view-results").classList.contains("is-active")) schedulePanelUpdate();
+  saveStateToURL();
+}
+
+// ── Review ──────────────────────────────────────────────────────────────
+
+function branchReviewValue() {
+  if (!state.branchPrefs.length) return "Any branch";
+  return state.branchPrefs.map(branchLabel).join(", ");
+}
+
+function renderReview() {
+  const rank = parseRankInput($("comedk-rank"));
+  const quotaText = state.quota === "GM" ? "GM — General Merit" : "KKR — Kalyana Karnataka";
+
+  const rows = [
+    { key: "COMEDK Rank", val: rank ? fmt(rank) : '<small>not given</small>', step: 0 },
+    { key: "Quota", val: escapeHtml(quotaText), step: 1 },
+    { key: "Branch preference", val: escapeHtml(branchReviewValue()), step: 2 },
+  ];
+
+  const list = $("review-list");
+  list.innerHTML = "";
+  for (const row of rows) {
+    const li = document.createElement("li");
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "review__row";
+    btn.innerHTML = `<span class="review__key">${escapeHtml(row.key)}</span><span class="review__val">${row.val}</span>`;
+    btn.addEventListener("click", () => goToStep(row.step, { backwards: true }));
+    li.appendChild(btn);
+    list.appendChild(li);
   }
 }
 
-function syncPanelBranches() {
-  const container = $("panel-branch-chips");
-  if (!container) return;
-  container.querySelectorAll(".panel-branch-chip").forEach(chip => {
-    const on = state.selectedBranches.includes(chip.dataset.branch);
-    chip.classList.toggle("is-selected", on);
-  });
+// ── Meta loading ────────────────────────────────────────────────────────
+
+async function loadMeta() {
+  const offlineEl = $("meta-offline");
+  if (offlineEl) offlineEl.hidden = true;
+  const beginBtn = $("begin-btn");
+  if (beginBtn) beginBtn.disabled = true;
+  try {
+    const meta = await apiRequest("/api/comedk/meta");
+    state.meta = meta;
+
+    if (meta.total_programs) $("program-count").textContent = fmt(meta.total_programs);
+
+    renderBranchGrids();
+    if (beginBtn) beginBtn.disabled = false;
+  } catch {
+    if (offlineEl) offlineEl.hidden = false;
+  }
 }
 
-function syncBranchGrid() {
-  const grid = $("branch-grid");
-  if (!grid) return;
-  grid.querySelectorAll(".branch-chip").forEach(chip => {
-    const on = state.selectedBranches.includes(chip.dataset.branch);
-    chip.classList.toggle("is-selected", on);
-    chip.setAttribute("aria-checked", on ? "true" : "false");
-  });
-}
+// ── Submission ──────────────────────────────────────────────────────────
 
-// ── Helper: get display text for selected branches ────────────
-function selectedBranchesText() {
-  if (state.selectedBranches.length === 0) return "All branches";
-  return state.selectedBranches
-    .map(v => BRANCHES.find(b => b.value === v)?.label || v)
-    .join(", ");
-}
+let loadingTimer = null;
+let requestSeq = 0;
 
-// ── REVIEW (STEP 3) ───────────────────────────────────────────
-function populateReview() {
-  const rv = $("rv-rank-val");
-  const qv = $("rv-quota-val");
-  const bv = $("rv-branch-val");
-  if (rv) rv.textContent = state.rank ? fmt(state.rank) : "—";
-  if (qv) qv.textContent = state.quota === "GM" ? "GM — General Merit" : "KKR — Kalyana Karnataka";
-  if (bv) bv.textContent = selectedBranchesText();
-}
-
-// ── NAVIGATION ────────────────────────────────────────────────
-function goToStep(n) {
-  if (n === 3) populateReview();
-  showView(`step-${n}`);
-}
-
-// ── LOADING ANIMATION ─────────────────────────────────────────
 const LOADING_LINES = [
   "Reading COMEDK 2025 cutoffs…",
   "Matching your rank to colleges…",
@@ -217,291 +308,544 @@ const LOADING_LINES = [
   "Almost there…",
 ];
 
-let _loadTimer = null;
-
-function startLoading() {
+function startLoadingLines() {
   let i = 0;
-  const el = $("loading-text");
-  if (el) el.textContent = LOADING_LINES[0];
-  _loadTimer = setInterval(() => {
+  $("loading-text").textContent = LOADING_LINES[0];
+  loadingTimer = setInterval(() => {
     i = (i + 1) % LOADING_LINES.length;
-    if (el) el.textContent = LOADING_LINES[i];
+    $("loading-text").textContent = LOADING_LINES[i];
   }, 1100);
 }
 
-function stopLoading() {
-  clearInterval(_loadTimer);
-  _loadTimer = null;
+function stopLoadingLines() {
+  clearInterval(loadingTimer);
+  loadingTimer = null;
 }
 
-// ── SUBMIT ────────────────────────────────────────────────────
+function buildPayload() {
+  const rank = parseRankInput($("comedk-rank"));
+  const payload = {
+    rank: rank || 1,
+    quota: state.quota,
+    branch_families: state.branchPrefs.slice(),
+    bucket: "all",
+    page: 1,
+    page_size: 150,
+    lang: "en",
+  };
+  return payload;
+}
+
 async function submitProfile() {
-  if (!state.rank) {
-    showView("step-0");
+  state.lastPayload = buildPayload();
+  await runRequest(state.lastPayload);
+}
+
+// ── Live panel updates ────────────────────────────────────────────────────
+
+let panelDebounce = null;
+
+function showPanelUpdating(on) {
+  const el = $("panel-updating");
+  if (el) el.hidden = !on;
+  const main = document.querySelector(".results-main");
+  if (main) main.classList.toggle("is-refreshing", on);
+}
+
+function schedulePanelUpdate() {
+  showPanelUpdating(true);
+  clearTimeout(panelDebounce);
+  panelDebounce = setTimeout(runPanelUpdate, 420);
+}
+
+function runPanelUpdate() {
+  const rank = parseRankInput($("panel-rank"));
+  if (rank === null) {
+    showPanelUpdating(false);
     return;
   }
-  showView("loading");
-  startLoading();
+  // Mirror panel rank back to flow rank input
+  if ($("comedk-rank")) $("comedk-rank").value = $("panel-rank").value;
+  state.lastPayload = buildPayload();
+  runLiveRequest(state.lastPayload);
+}
+
+async function executeRecommendationRequest(basePayload, { keepFilters = false } = {}) {
+  const data = await apiRequest("/api/comedk/recommend", {
+    method: "POST",
+    body: JSON.stringify(basePayload),
+  });
+  state.totalByType = data.total_by_type || {};
+  state.lastData = data;
+  renderResults(data, { keepFilters });
+  return data;
+}
+
+async function runLiveRequest(payload) {
+  const seq = ++requestSeq;
+  showPanelUpdating(true);
   try {
-    const data = await apiRequest("/api/comedk/recommend", {
-      method: "POST",
-      body: JSON.stringify({
-        rank:            state.rank,
-        quota:           state.quota,
-        branch_families: state.selectedBranches,
-        bucket:          "all",
-        page:            1,
-        page_size:       150,
-      }),
-    });
-    stopLoading();
-    state.lastData = data;
-    syncPanel();
-    renderResults(data);
+    await executeRecommendationRequest(payload, { keepFilters: true });
+  } catch (err) {
+    if (seq !== requestSeq) return;
+    console.warn("Live update failed:", err && err.message);
+  } finally {
+    if (seq === requestSeq) showPanelUpdating(false);
+  }
+}
+
+function syncPanelFromState() {
+  if ($("panel-rank") && $("comedk-rank")) $("panel-rank").value = $("comedk-rank").value;
+  syncQuotaRows();
+  renderBranchGrids();
+}
+
+async function runRequest(payload, { keepFilters = false } = {}) {
+  const seq = ++requestSeq;
+  showView("loading");
+  startLoadingLines();
+  const minDelay = new Promise((r) => setTimeout(r, prefersReducedMotion ? 0 : 1100));
+
+  try {
+    await Promise.all([executeRecommendationRequest(payload, { keepFilters }), minDelay]);
+    if (seq !== requestSeq) return;
+    stopLoadingLines();
+    sessionStorage.removeItem("disha_comedk_render_crash");
+    syncPanelFromState();
     showView("results");
   } catch (err) {
-    stopLoading();
-    const el = $("error-message");
-    if (el) el.textContent = err.message || "Something went wrong. Please try again.";
+    if (seq !== requestSeq) return;
+    stopLoadingLines();
+    $("error-message").textContent = err.message || "Something went wrong. Please try again.";
     showView("error");
   }
 }
 
-// ── LIVE PANEL ────────────────────────────────────────────────
-let _panelTimer = null;
+// ── Results rendering ───────────────────────────────────────────────────
 
-function setPanelUpdating(on) {
-  const el = $("panel-updating");
-  if (el) el.hidden = !on;
-  document.querySelector(".results-main")?.classList.toggle("is-refreshing", on);
-}
-
-function schedulePanelUpdate() {
-  setPanelUpdating(true);
-  clearTimeout(_panelTimer);
-  _panelTimer = setTimeout(runPanelUpdate, 450);
-}
-
-async function runPanelUpdate() {
-  const r = parseRank($("panel-rank"));
-  if (!r) { setPanelUpdating(false); return; }
-  state.rank = r;
-  try {
-    const data = await apiRequest("/api/comedk/recommend", {
-      method: "POST",
-      body: JSON.stringify({
-        rank:            state.rank,
-        quota:           state.quota,
-        branch_families: state.selectedBranches,
-        bucket:          "all",
-        page:            1,
-        page_size:       150,
-      }),
-    });
-    state.lastData = data;
-    renderResults(data, { keepFilter: true });
-  } catch (e) {
-    console.warn("Panel update failed:", e?.message);
-  } finally {
-    setPanelUpdating(false);
+function countUp(el, target) {
+  if (!el) return;
+  if (prefersReducedMotion || target === 0) {
+    el.textContent = String(target);
+    return;
   }
-}
-
-function syncPanel() {
-  const pr = $("panel-rank");
-  if (pr) pr.value = fmt(state.rank);
-  syncQuota();
-  syncPanelBranches();
-}
-
-// ── RESULTS ───────────────────────────────────────────────────
-const SEC_ORDER   = ["Target", "Reach", "Safe"];
-const SEC_DISPLAY = { Safe: "Safe", Target: "Target", Reach: "Dream" };
-const SEC_TONE    = { Safe: "safe", Target: "target", Reach: "reach" };
-
-function renderResults(data, { keepFilter = false } = {}) {
-  if (!keepFilter) state.filterText = "";
-
-  // Profile chips
-  const chips = $("profile-chips");
-  if (chips) {
-    const branchText = state.selectedBranches.length > 0
-      ? state.selectedBranches.length + " branch" + (state.selectedBranches.length > 1 ? "es" : "")
-      : "All branches";
-    chips.innerHTML = [
-      `Rank <strong>${fmt(state.rank)}</strong>`,
-      esc(state.quota),
-      esc(branchText),
-    ].map(c => `<span class="pchip">${c}</span>`).join("");
-  }
-
-  // Headline
-  const ts = data.total_safe   || 0;
-  const tt = data.total_target || 0;
-  const tr = data.total_reach  || 0;
-  const total = ts + tt + tr;
-
-  const hl = $("note-headline");
-  const gd = $("note-guidance");
-  const tips = $("note-tips");
-
-  // Dynamic headline matching JEE tone
-  if (hl) {
-    if (total === 0) {
-      hl.textContent = "No programs match this rank and quota.";
-    } else if (tt > 0 && ts > 0) {
-      hl.textContent = "You're standing in a good spot.";
-    } else if (ts > 0) {
-      hl.textContent = "You have strong backup options.";
-    } else if (tt > 0) {
-      hl.textContent = `${fmt(total)} realistic options found.`;
-    } else {
-      hl.textContent = "These are ambitious picks — worth trying.";
-    }
-  }
-
-  // Rich guidance paragraph
-  if (gd) {
-    if (total > 0) {
-      const branchNote = state.selectedBranches.length > 0
-        ? `Filtered to ${state.selectedBranches.length} preferred branch${state.selectedBranches.length > 1 ? "es" : ""}.`
-        : "Showing all branches.";
-      gd.textContent = `Found ${fmt(total)} eligible college–program options for your profile (showing ${fmt(total)}). They are grouped into Target, Dream and Safe. ${branchNote}`;
-    } else {
-      gd.textContent = "Try adjusting your rank, quota, or branch preferences to find matching programs.";
-    }
-  }
-
-  // Tips list
-  if (tips) {
-    const tipsList = [];
-    if (total > 0) {
-      tipsList.push("COMEDK colleges offer lateral entry and branch changes after first year based on performance.");
-      tipsList.push("Broad branches (CS, ECE, Mechanical, Civil) keep many doors open for future specialisation.");
-      tipsList.push("Talk to current students and check NIRF rankings before finalising your choice.");
-    }
-    tips.innerHTML = tipsList.map(t => `<li>${t}</li>`).join("");
-  }
-
-  // Show spectrum header
-  const specHeader = $("spectrum-header");
-  if (specHeader) {
-    specHeader.style.display = total > 0 ? "" : "none";
-  }
-
-  // Spectrum
-  const spec = $("spectrum");
-  if (spec) {
-    spec.style.display = total > 0 ? "" : "none";
-    if (total > 0) {
-      const countUp = (el, val) => {
-        if (!el) return;
-        if (el.textContent === String(val)) return;
-        el.textContent = fmt(val);
-        el.classList.add("pop");
-        setTimeout(() => el.classList.remove("pop"), 300);
-      };
-      
-      countUp($("zone-count-safe"), ts);
-      countUp($("zone-count-target"), tt);
-      countUp($("zone-count-reach"), tr);
-    }
-  }
-
-  // Cards
-  const grouped = {
-    Safe:   (data.safe   || []).map(r => ({ ...r, category: "Safe"   })),
-    Target: (data.target || []).map(r => ({ ...r, category: "Target" })),
-    Reach:  (data.reach  || []).map(r => ({ ...r, category: "Reach"  })),
+  const duration = 800;
+  const start = performance.now();
+  const tick = (now) => {
+    const t = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - t, 3);
+    el.textContent = String(Math.round(eased * target));
+    if (t < 1) requestAnimationFrame(tick);
   };
+  requestAnimationFrame(tick);
+}
 
-  const q = state.filterText.toLowerCase();
-  if (q) {
-    for (const cat of SEC_ORDER) {
-      grouped[cat] = grouped[cat].filter(r =>
-        r.institute.toLowerCase().includes(q) || r.program.toLowerCase().includes(q)
-      );
-    }
+function renderProfileChips() {
+  const p = state.lastPayload;
+  const chips = [];
+  chips.push(`COMEDK Rank <strong>${fmt(p.rank)}</strong>`);
+  chips.push(escapeHtml(p.quota));
+  for (const b of state.branchPrefs) chips.push(escapeHtml(branchLabel(b)));
+  if (!state.branchPrefs.length) chips.push("All branches");
+
+  $("profile-chips").innerHTML =
+    chips.map((c) => `<span class="pchip">${c}</span>`).join("");
+}
+
+function noteHeadline(byCat, total) {
+  if (total === 0) return "Try adjusting your rank, quota, or branch preferences.";
+  if ((byCat.Target || 0) > 0 && (byCat.Safe || 0) > 0) return "You're standing in a good spot.";
+  if ((byCat.Target || 0) > 0) return `${fmt(total)} realistic options found.`;
+  if ((byCat.Safe || 0) > 0) return "You have strong backup options.";
+  return "These are ambitious picks — worth trying.";
+}
+
+function updateStandingNoteUI() {
+  const noteEl = $("spectrum-note");
+  if (!noteEl) return;
+  const thresholds = state.lastData?.thresholds || {};
+  const safePct = Math.round((thresholds.safe_margin ?? 0.15) * 100);
+  const dreamPct = Math.round((thresholds.upper_margin ?? 0.25) * 100);
+
+  noteEl.innerHTML = `<strong>Safe:</strong> Your rank is well within the cutoff window (${safePct}% margin). &nbsp;
+    <strong>Target:</strong> Your rank is close to the cutoff. &nbsp;
+    <strong>Dream:</strong> Within ${dreamPct}% past the cutoff — ambitious but possible.`;
+}
+
+function renderNote(data) {
+  const byCat = data.counts?.by_category || {};
+  const total = data.counts?.total ?? 0;
+
+  $("note-headline").textContent = noteHeadline(byCat, total);
+
+  const pieces = [];
+  if (data.guidance) pieces.push(data.guidance);
+  $("note-guidance").textContent = pieces.join(" ");
+
+  const tips = [];
+  if (total > 0) {
+    tips.push("COMEDK colleges offer lateral entry and branch changes after first year based on performance.");
+    tips.push("Broad branches (CS, ECE, Mechanical, Civil) keep many doors open for future specialisation.");
+    tips.push("Talk to current students and check NIRF rankings before finalising your choice.");
+  }
+  $("note-tips").innerHTML = tips
+    .map((tip) => `<li>${escapeHtml(tip)}</li>`)
+    .join("");
+
+  const notesBox = $("api-notes");
+  if (data.notes?.length) {
+    notesBox.innerHTML = data.notes
+      .map((n) => `<p class="api-note">${escapeHtml(n)}</p>`)
+      .join("");
+    notesBox.hidden = false;
+  } else {
+    notesBox.hidden = true;
+    notesBox.innerHTML = "";
   }
 
-  const totals = { Safe: ts, Target: tt, Reach: tr };
-  const body = $("results-body");
-  if (!body) return;
+  updateStandingNoteUI();
+}
 
-  body.innerHTML = SEC_ORDER.map(cat => {
-    const items  = grouped[cat];
-    const count  = totals[cat];
-    const tone   = SEC_TONE[cat];
-    const label  = SEC_DISPLAY[cat];
+// ── Rank ruler ──────────────────────────────────────────────────────────
 
-    const content = items.length === 0
-      ? `<p class="rsection__empty">${
-          count === 0 ? "No programs in this category for your rank."
-          : q ? "No results match your search here."
-          : "Results loading…"
-        }</p>`
-      : items.map((r, i) => makeCard(r, i)).join("");
+const RANK_AXIS_MAX = 200000;
+const LOG_AXIS_MAX = Math.log10(RANK_AXIS_MAX);
 
-    return `
-      <section class="rsection" id="section-${cat.toLowerCase()}">
-        <div class="rsection__head">
-          <span class="rsection__tag tone-${tone}">${label}</span>
-          <span class="rsection__count">${fmt(count)} program${count !== 1 ? "s" : ""}</span>
-          <button class="btn btn--ghost btn--sm rsection__toggle-btn"
-                  aria-expanded="true"
-                  onclick="collapseSection('${cat}', this)">
-            <span class="rsection__toggle-text">Collapse</span>
-            <svg class="chevron" width="10" height="10" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="6 9 12 15 18 9"/>
-            </svg>
-          </button>
-        </div>
-        <div class="rsection__collapse" id="collapse-${cat.toLowerCase()}">
-          <div class="rsection__collapse-inner">
-            ${content}
-          </div>
-        </div>
-      </section>`;
+function rankPos(rank) {
+  const r = Math.min(Math.max(Number(rank) || 1, 1), RANK_AXIS_MAX);
+  return Math.min(Math.max((Math.log10(r) / LOG_AXIS_MAX) * 100, 0.5), 99.5);
+}
+
+function rankPosScoped(rank, logMin, logMax) {
+  const r = Math.min(Math.max(Number(rank) || 1, 1), RANK_AXIS_MAX);
+  const logR = Math.log10(r);
+  const span = logMax - logMin;
+  if (span <= 0) return 50;
+  return Math.min(Math.max(((logR - logMin) / span) * 100, 0.5), 99.5);
+}
+
+const ALL_TICKS = [
+  { rank: 1, label: "1" },
+  { rank: 5, label: "5" },
+  { rank: 10, label: "10" },
+  { rank: 50, label: "50" },
+  { rank: 100, label: "100" },
+  { rank: 500, label: "500" },
+  { rank: 1000, label: "1K" },
+  { rank: 2000, label: "2K" },
+  { rank: 5000, label: "5K" },
+  { rank: 10000, label: "10K" },
+  { rank: 20000, label: "20K" },
+  { rank: 50000, label: "50K" },
+  { rank: 100000, label: "1L" },
+  { rank: 200000, label: "2L" },
+];
+
+function ticksForRange(logMin, logMax) {
+  const visible = ALL_TICKS.filter(t => {
+    const logR = Math.log10(t.rank || 1);
+    return logR >= logMin - 0.05 && logR <= logMax + 0.05;
+  });
+  if (visible.length > 8) return visible.filter((_, i) => i % 2 === 0);
+  return visible;
+}
+
+const rulerZoomState = {};
+const MIN_LOG_SPAN = 0.4;
+
+function computeAutoRange(items, youRank) {
+  const ranks = items.map(r => r.cutoff_rank);
+  if (youRank) ranks.push(youRank);
+  if (!ranks.length) return { logMin: 1, logMax: LOG_AXIS_MAX };
+  const minR = Math.max(1, Math.min(...ranks));
+  const maxR = Math.min(RANK_AXIS_MAX, Math.max(...ranks));
+  const logMin = Math.log10(minR);
+  const logMax = Math.log10(maxR);
+  const padding = Math.max((logMax - logMin) * 0.15, 0.3);
+  return {
+    logMin: Math.max(0, logMin - padding),
+    logMax: Math.min(LOG_AXIS_MAX, logMax + padding),
+  };
+}
+
+function rulerGroupHtml(recs) {
+  if (!recs.length) return "";
+  const youRank = state.lastPayload?.rank;
+  const getRank = (r) => r.cutoff_rank ?? Infinity;
+  const sorted = recs.slice().sort((a, b) => getRank(a) - getRank(b));
+
+  const gid = "comedk";
+  const autoRange = computeAutoRange(recs, youRank);
+  if (!rulerZoomState[gid]) {
+    rulerZoomState[gid] = {
+      logMin: autoRange.logMin, logMax: autoRange.logMax,
+      defaultLogMin: autoRange.logMin, defaultLogMax: autoRange.logMax,
+    };
+  } else {
+    rulerZoomState[gid].defaultLogMin = autoRange.logMin;
+    rulerZoomState[gid].defaultLogMax = autoRange.logMax;
+  }
+  rulerZoomState[gid].dotLogs = sorted.map(r => Math.log10(r.cutoff_rank));
+  const { logMin, logMax } = rulerZoomState[gid];
+
+  const numLanes = 8;
+  const lanes = [];
+  for (let l = 0; l < numLanes; l++) lanes[l] = -100;
+
+  const dots = sorted.map((r) => {
+    const cat = r.category.toLowerCase();
+    const absPos = Math.log10(r.cutoff_rank);
+    let bestLane = 0;
+    let maxDist = -1;
+    for (let l = 0; l < numLanes; l++) {
+      const dist = absPos - lanes[l];
+      if (dist > maxDist) { maxDist = dist; bestLane = l; }
+    }
+    lanes[bestLane] = absPos;
+    const topPct = 10 + (bestLane / (numLanes - 1)) * 80;
+    const leftPct = rankPosScoped(r.cutoff_rank, logMin, logMax);
+    return `<span class="ruler__dot ruler__dot--${cat}" style="left:${leftPct.toFixed(2)}%; top:${topPct.toFixed(2)}%" data-inst="${escapeHtml(r.institute)}" data-branch="${escapeHtml(r.branch)}" data-rank="${r.cutoff_rank}" data-cat="${cat}"></span>`;
   }).join("");
+
+  const visibleTicks = ticksForRange(logMin, logMax);
+  const grid = visibleTicks.map(
+    (tk) => `<span class="ruler__grid" style="left:${rankPosScoped(tk.rank, logMin, logMax).toFixed(2)}%"></span>`
+  ).join("");
+  const scale = visibleTicks.map(
+    (tk) => `<span class="ruler__tick" style="left:${rankPosScoped(tk.rank, logMin, logMax).toFixed(2)}%">${tk.label}</span>`
+  ).join("");
+
+  const you = youRank
+    ? `<div class="ruler__you" style="left:${rankPosScoped(youRank, logMin, logMax).toFixed(2)}%" title="Your rank: ${fmt(youRank)}"><span class="ruler__you-flag">YOU</span></div>`
+    : "";
+
+  const headRight = youRank
+    ? `<span class="ruler__you-rank">YOU · ${fmt(youRank)}</span>`
+    : `<span class="ruler__count">${recs.length} options</span>`;
+
+  return `
+    <div class="ruler__group" role="img" aria-label="COMEDK rank ruler: ${recs.length} options" data-ruler-id="${gid}">
+      <div class="ruler__head">
+        <span class="ruler__title">COMEDK Colleges <span class="ruler__via">via COMEDK 2025</span></span>
+        ${headRight}
+      </div>
+      <div class="ruler__track-wrap">
+        <div class="ruler__track" data-ruler-id="${gid}" tabindex="0" aria-label="Interactive chart track. Use arrow keys to pan, plus/minus to zoom.">
+          ${grid}
+          ${dots}
+          ${you}
+        </div>
+        <div class="ruler__zoom-controls">
+          <button type="button" class="ruler__zoom-btn" data-action="in" data-ruler-id="${gid}" title="Zoom in">+</button>
+          <button type="button" class="ruler__zoom-btn" data-action="out" data-ruler-id="${gid}" title="Zoom out">−</button>
+          <button type="button" class="ruler__zoom-btn" data-action="reset" data-ruler-id="${gid}" title="Reset zoom">⟲</button>
+        </div>
+      </div>
+      <div class="ruler__scale">${scale}</div>
+    </div>`;
 }
 
-window.collapseSection = function(cat, btn) {
-  const col = $(`collapse-${cat.toLowerCase()}`);
-  if (!col) return;
-  const open = btn.getAttribute("aria-expanded") === "true";
-  btn.setAttribute("aria-expanded", open ? "false" : "true");
-  col.classList.toggle("is-collapsed", open);
-  const t = btn.querySelector(".rsection__toggle-text");
-  if (t) t.textContent = open ? "Expand" : "Collapse";
-};
+function rerenderRulerGroup(rulerId) {
+  const data = state.lastData;
+  if (!data) return;
+  const recs = data.recommendations || [];
+  const groupEl = document.querySelector(`.ruler__group[data-ruler-id="${rulerId}"]`);
+  if (!groupEl) return;
+  const newHtml = rulerGroupHtml(recs);
+  if (!newHtml) return;
+  const temp = document.createElement("div");
+  temp.innerHTML = newHtml;
+  const newTrack = temp.querySelector('.ruler__track');
+  const newScale = temp.querySelector('.ruler__scale');
+  const oldTrack = groupEl.querySelector('.ruler__track');
+  const oldScale = groupEl.querySelector('.ruler__scale');
+  if (oldTrack && newTrack) oldTrack.innerHTML = newTrack.innerHTML;
+  if (oldScale && newScale) oldScale.innerHTML = newScale.innerHTML;
+}
 
-// ── CARD ──────────────────────────────────────────────────────
-function makeCard(rec, idx) {
-  const catL  = rec.category === "Reach" ? "reach" : rec.category.toLowerCase();
-  const catDisplay = rec.category === "Reach" ? "DREAM" : rec.category.toUpperCase();
-  const delay = Math.min(idx * 40, 400);
-  const rank  = state.rank;
-  const cut   = Math.round(rec.cutoff_rank);
+function applyClampedRange(zs, newMin, newMax, action) {
+  const minAllowed = 0;
+  const maxAllowed = LOG_AXIS_MAX;
+  const maxSpan = (zs.defaultLogMax || LOG_AXIS_MAX) - (zs.defaultLogMin || 0);
+  let currentSpan = newMax - newMin;
+  if (currentSpan > maxSpan) { const c = (newMin + newMax) / 2; newMin = c - maxSpan / 2; newMax = c + maxSpan / 2; }
+  if (newMin < minAllowed) { newMax += (minAllowed - newMin); newMin = minAllowed; }
+  if (newMax > maxAllowed) { newMin -= (newMax - maxAllowed); newMax = maxAllowed; }
+  newMin = Math.max(minAllowed, newMin);
+  newMax = Math.min(maxAllowed, newMax);
+  if (newMax - newMin < 0.001) newMax = newMin + 0.001;
+  zs.logMin = newMin;
+  zs.logMax = newMax;
+}
 
-  // ── Rank bar: single cutoff model (no fabricated opening rank) ──
-  const lo  = Math.min(rank, cut) * 0.75;
-  const hi  = Math.max(rank, cut) * 1.25 || 1;
-  const pos = (v) => {
-    const range = hi - lo;
-    if (range <= 0) return 50;
-    return Math.min(Math.max(((v - lo) / range) * 100, 3), 97);
+function applyZoom(rulerId, action) {
+  const zs = rulerZoomState[rulerId];
+  if (!zs) return;
+  const span = zs.logMax - zs.logMin;
+  if (action === "in") {
+    const shrink = span * 0.15;
+    if (span - shrink * 2 < MIN_LOG_SPAN) return;
+    applyClampedRange(zs, zs.logMin + shrink, zs.logMax - shrink, "zoomIn");
+  } else if (action === "out") {
+    const grow = span * 0.2;
+    applyClampedRange(zs, zs.logMin - grow, zs.logMax + grow, "zoomOut");
+  } else if (action === "reset") {
+    zs.logMin = zs.defaultLogMin;
+    zs.logMax = zs.defaultLogMax;
+  }
+  rerenderRulerGroup(rulerId);
+}
+
+function applyPan(rulerId, deltaLog) {
+  const zs = rulerZoomState[rulerId];
+  if (!zs) return;
+  applyClampedRange(zs, zs.logMin + deltaLog, zs.logMax + deltaLog, "pan");
+  rerenderRulerGroup(rulerId);
+}
+
+function bindRulerZoom() {
+  document.querySelectorAll(".ruler__zoom-btn").forEach(btn => {
+    if (btn._zoomBound) return;
+    btn._zoomBound = true;
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      applyZoom(btn.dataset.rulerId, btn.dataset.action);
+    });
+  });
+  document.querySelectorAll(".ruler__track").forEach(track => {
+    if (track._wheelBound) return;
+    track._wheelBound = true;
+    track.addEventListener("wheel", (e) => {
+      e.preventDefault();
+      const rulerId = track.dataset.rulerId;
+      if (!rulerId) return;
+      applyZoom(rulerId, e.deltaY < 0 ? "in" : "out");
+    }, { passive: false });
+  });
+  document.querySelectorAll(".ruler__track").forEach(track => {
+    if (track._keyBound) return;
+    track._keyBound = true;
+    track.addEventListener("keydown", (e) => {
+      const rulerId = track.dataset.rulerId;
+      if (!rulerId) return;
+      const zs = rulerZoomState[rulerId];
+      if (!zs) return;
+      const span = zs.logMax - zs.logMin;
+      if (e.key === "ArrowLeft") { e.preventDefault(); applyPan(rulerId, -span * 0.1); }
+      if (e.key === "ArrowRight") { e.preventDefault(); applyPan(rulerId, span * 0.1); }
+      if (e.key === "+" || e.key === "=") { e.preventDefault(); applyZoom(rulerId, "in"); }
+      if (e.key === "-") { e.preventDefault(); applyZoom(rulerId, "out"); }
+      if (e.key === "0") { e.preventDefault(); applyZoom(rulerId, "reset"); }
+    });
+  });
+  document.querySelectorAll(".ruler__track").forEach(track => {
+    if (track._dragBound) return;
+    track._dragBound = true;
+    let dragging = false, startX = 0, startLogMin = 0, startLogMax = 0;
+    track.addEventListener("pointerdown", (e) => {
+      if (e.target.closest(".ruler__dot") || e.target.closest(".ruler__you")) return;
+      const rulerId = track.dataset.rulerId;
+      const zs = rulerZoomState[rulerId];
+      if (!zs) return;
+      dragging = true; startX = e.clientX; startLogMin = zs.logMin; startLogMax = zs.logMax;
+      track.setPointerCapture(e.pointerId);
+      track.style.cursor = "grabbing";
+    });
+    track.addEventListener("pointermove", (e) => {
+      if (!dragging) return;
+      const rulerId = track.dataset.rulerId;
+      const zs = rulerZoomState[rulerId];
+      if (!zs) return;
+      const dx = e.clientX - startX;
+      const trackWidth = track.offsetWidth || 1;
+      const span = startLogMax - startLogMin;
+      const deltaLog = -(dx / trackWidth) * span;
+      applyClampedRange(zs, startLogMin + deltaLog, startLogMax + deltaLog, "pan");
+      rerenderRulerGroup(rulerId);
+    });
+    const stopDrag = () => { dragging = false; track.style.cursor = ""; };
+    track.addEventListener("pointerup", stopDrag);
+    track.addEventListener("pointercancel", stopDrag);
+  });
+}
+
+function renderRuler(data, keepZoom = false) {
+  const el = $("ruler");
+  const recs = data?.recommendations || [];
+  if (!keepZoom) {
+    for (const key of Object.keys(rulerZoomState)) delete rulerZoomState[key];
+  }
+  const groups = rulerGroupHtml(recs);
+
+  if (!groups) {
+    el.hidden = true; el.innerHTML = "";
+    return;
+  }
+
+  el.innerHTML = `
+    <div class="ruler__intro">
+      <p class="eyebrow">Your rank on the map</p>
+      <p class="ruler__lede">Each dot is a program. Your rank is the black line — dots to its left closed at a better rank than yours.</p>
+    </div>
+    ${groups}
+    <div class="ruler__tip" id="ruler-tip" aria-hidden="true"></div>`;
+  el.hidden = false;
+  bindRulerZoom();
+}
+
+function bindRulerTooltip() {
+  const el = $("ruler");
+  const showTip = (dot) => {
+    const tip = $("ruler-tip");
+    if (!tip) return;
+    const cr = el.getBoundingClientRect();
+    const dr = dot.getBoundingClientRect();
+    tip.innerHTML =
+      `<strong>${escapeHtml(dot.dataset.inst)}</strong>` +
+      `<span>${escapeHtml(dot.dataset.branch)}</span>` +
+      `<em>Cutoff: ${fmt(Number(dot.dataset.rank))}</em>`;
+    tip.dataset.cat = dot.dataset.cat;
+    let leftPos = dr.left - cr.left + dr.width / 2;
+    const tipWidth = tip.offsetWidth || 250;
+    const minLeft = (tipWidth / 2) + 10;
+    const maxLeft = cr.width - (tipWidth / 2) - 10;
+    if (leftPos < minLeft) leftPos = minLeft;
+    if (leftPos > maxLeft) leftPos = maxLeft;
+    tip.style.left = `${leftPos}px`;
+    tip.style.top = `${dr.top - cr.top}px`;
+    tip.classList.add("is-on");
   };
-  const cutPos = pos(cut);
-  const youPos = pos(rank);
+  const hideTip = () => { const tip = $("ruler-tip"); if (tip) tip.classList.remove("is-on"); };
+  el.addEventListener("pointerover", (e) => { const dot = e.target.closest(".ruler__dot"); if (dot) showTip(dot); });
+  el.addEventListener("pointerout", (e) => { if (e.target.closest(".ruler__dot")) hideTip(); });
+  el.addEventListener("click", (e) => {
+    const dot = e.target.closest(".ruler__dot");
+    if (dot) showTip(dot);
+    else if (!e.target.closest(".ruler__zoom-btn")) hideTip();
+  });
+}
 
-  const winLeft  = Math.min(cutPos, youPos);
-  const winRight = Math.max(cutPos, youPos);
+// ── Rank bar (single-cutoff adaptation) ──────────────────────────────────
 
-  // ── Verdict sentence ──
+function rankBarHtml(rec) {
+  const cut = Math.round(rec.cutoff_rank);
+  const rank = state.lastPayload.rank;
+  // Create a synthetic window around the cutoff
+  const bandWidth = Math.max(Math.round(cut * 0.15), 500);
+  const syntheticOpen = Math.max(1, cut - bandWidth);
+  const syntheticClose = cut;
+  const span = Math.max(syntheticClose - syntheticOpen, 1);
+  const trackLo = syntheticOpen - span * 0.45;
+  const trackHi = syntheticClose + span * 0.45;
+  const pos = (v) => ((v - trackLo) / (trackHi - trackLo)) * 100;
+
+  const winLeft = pos(syntheticOpen);
+  const winRight = pos(syntheticClose);
+  const youPos = Math.min(Math.max(pos(rank), 3), 97);
+
   let verdict;
   if (rec.category === "Safe") {
-    verdict = `Your rank (${fmt(rank)}) is better than the cutoff by ${fmt(cut - rank)} — very likely admission.`;
+    verdict = `Your rank (${fmt(rank)}) is better than the cutoff by ${fmt(Math.abs(cut - rank))} — very likely admission.`;
   } else if (rec.category === "Target") {
     if (rank <= cut) {
       verdict = `Your rank (${fmt(rank)}) is within the cutoff (${fmt(cut)}) — realistic chance.`;
@@ -513,9 +857,62 @@ function makeCard(rec, idx) {
     verdict = `Cutoff (${fmt(cut)}) is ${fmt(gap)} ranks from your rank — ambitious.`;
   }
 
-  const isBookmarked = false;
+  return `
+    <div class="rankbar">
+      <div class="rankbar__track">
+        <div class="rankbar__window" style="left:${winLeft.toFixed(1)}%;right:${(100 - winRight).toFixed(1)}%"></div>
+        <div class="rankbar__you" style="left:${youPos.toFixed(1)}%" title="Your rank: ${fmt(rank)}"></div>
+      </div>
+      <div class="rankbar__labels">
+        <span>Cutoff <strong>${fmt(cut)}</strong></span>
+        <span>Your rank <strong>${fmt(rank)}</strong></span>
+      </div>
+      <p class="rankbar__verdict">${escapeHtml(verdict)}</p>
+    </div>`;
+}
+
+// ── Card components ─────────────────────────────────────────────────────
+
+function confidenceChipHtml(rec) {
+  const band = rec.confidence || "medium";
+  let styleClass = "medium";
+  let label = "Moderate";
+  if (band === "high" || band === "highly_stable") { styleClass = "high"; label = "Steady"; }
+  else if (band === "fragile" || band === "volatile_vacancy" || band === "volatile_erratic") { styleClass = "fragile"; label = "Variable"; }
+  else { styleClass = "medium"; label = "Moderate"; }
+  return `<span class="conf-chip conf-chip--${escapeHtml(styleClass)}" title="Cutoff confidence: ${escapeHtml(label)}">${escapeHtml(label)}</span>`;
+}
+
+function probabilityBadgeHtml(rec) {
+  if (rec.admission_probability === null || rec.admission_probability === undefined) return "";
+  const prob = rec.admission_probability;
+  let probClass = "low";
+  if (prob >= 75) probClass = "high";
+  else if (prob >= 35) probClass = "medium";
+  const text = `${Math.round(prob)}% chance`;
+  return `<span class="tag tag--prob tag--prob-${probClass}" title="Estimated admission probability: ${Math.round(prob)}%">${escapeHtml(text)}</span>`;
+}
+
+function cardHtml(rec, index) {
+  const cat = rec.category.toLowerCase();
+  const delay = prefersReducedMotion ? 0 : Math.min(index * 45, 420);
+
+  const foot = [
+    rec.quota + " seat",
+    "via COMEDK 2025",
+    rec.degree || "",
+  ].filter(Boolean);
+
+  const reason = rec.reason
+    ? `<p class="ccard__reason">${escapeHtml(rec.reason)}</p>`
+    : "";
+
+  const isBookmarked = state.choices && state.choices.some(c => c.institute === rec.institute && c.branch === rec.branch);
   const bookmarkHtml = `
     <button type="button" class="ccard__bookmark ${isBookmarked ? "is-selected" : ""}"
+            data-institute="${escapeHtml(rec.institute)}"
+            data-branch="${escapeHtml(rec.branch)}"
+            onclick="toggleBookmark(event, ${index}, '${escapeHtml(rec.institute).replace(/'/g, "\\'")}', '${escapeHtml(rec.branch).replace(/'/g, "\\'")}')"
             aria-label="Add to preference list">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bookmark-icon">
         <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
@@ -523,197 +920,865 @@ function makeCard(rec, idx) {
     </button>`;
 
   return `
-    <article class="ccard ccard--${catL}" style="animation-delay:${delay}ms">
+    <article class="ccard ccard--${cat}" style="animation-delay:${delay}ms">
       ${bookmarkHtml}
       <div class="ccard__meta">
         <span class="tag tag--private">PRIVATE</span>
         <span class="tag">KARNATAKA</span>
-        <span class="tag">${esc(rec.quota)}</span>
+        ${probabilityBadgeHtml(rec)}
+        ${confidenceChipHtml(rec)}
       </div>
-      <h3 class="ccard__institute">${esc(rec.institute)}</h3>
-      <p class="ccard__branch">${esc(rec.program)}</p>
-
-      <div class="rankbar">
-        <div class="rankbar__track">
-          <div class="rankbar__window" style="left:${winLeft.toFixed(1)}%;right:${(100 - winRight).toFixed(1)}%"></div>
-          <div class="rankbar__you" style="left:${youPos.toFixed(1)}%" title="Your rank: ${fmt(rank)}"></div>
-        </div>
-        <div class="rankbar__labels">
-          <span>Cutoff <strong>${fmt(cut)}</strong></span>
-          <span>Your rank <strong>${fmt(rank)}</strong></span>
-        </div>
-        <p class="rankbar__verdict">${verdict}</p>
-      </div>
-
-      <div class="ccard__foot">
-        <span>${esc(rec.quota)} seat</span><span>via COMEDK 2025</span><span>Official cutoff</span>
-      </div>
+      <h3 class="ccard__institute">${escapeHtml(rec.institute)}</h3>
+      <p class="ccard__branch">${escapeHtml(rec.branch || rec.program)}</p>
+      ${rankBarHtml(rec)}
+      ${reason}
+      <div class="ccard__foot">${foot.map((f) => `<span>${escapeHtml(f)}</span>`).join("")}</div>
     </article>`;
 }
 
-// ── META ──────────────────────────────────────────────────────
-async function loadMeta() {
-  try {
-    const meta = await apiRequest("/api/comedk/meta");
-    const note = $("data-note");
-    if (note) note.textContent = `COMEDK 2025 · ${fmt(meta.total_programs)} programs`;
-    // Update BRANCHES from server if available
-    if (meta.branch_families && meta.branch_families.length > 0) {
-      BRANCHES = meta.branch_families;
-    }
-    buildBranchGrid();
-    buildPanelBranchChips();
-  } catch (e) {
-    console.error("Meta load failed:", e?.message);
-    // Still build branch grid with static data
-    buildBranchGrid();
-    buildPanelBranchChips();
+// ── College-grouped card (by-college view) ──────────────────────────────
+
+function getCollegeLocation(rec) {
+  const parts = rec.institute.split(",");
+  if (parts.length > 1) return parts[parts.length - 1].trim();
+  return "Karnataka";
+}
+
+function getCollegeDomId(instName) {
+  return "college-" + instName.toLowerCase().replace(/[^a-z0-9]/g, "-");
+}
+
+window.toggleCollegeCard = function (event, instName) {
+  if (event) { event.preventDefault(); event.stopPropagation(); }
+  const isExpanded = !state.expandedColleges[instName];
+  state.expandedColleges[instName] = isExpanded;
+  const domId = getCollegeDomId(instName);
+  const collapseEl = document.getElementById(`collapse-${domId}`);
+  const headerEl = collapseEl ? collapseEl.previousElementSibling : null;
+  if (collapseEl && headerEl) {
+    collapseEl.hidden = !isExpanded;
+    headerEl.classList.toggle("is-expanded", isExpanded);
+  }
+};
+
+function branchRowCardHtml(r, index) {
+  const cat = r.category.toLowerCase();
+  const delay = prefersReducedMotion ? 0 : Math.min(index * 45, 420);
+  const foot = [r.quota + " seat", r.degree || ""].filter(Boolean);
+  const reason = r.reason ? `<p class="ccard__reason">${escapeHtml(r.reason)}</p>` : "";
+
+  const isBookmarked = state.choices && state.choices.some(c => c.institute === r.institute && c.branch === r.branch);
+  const bookmarkHtml = `
+    <button type="button" class="ccard__bookmark ${isBookmarked ? "is-selected" : ""}"
+            data-institute="${escapeHtml(r.institute)}"
+            data-branch="${escapeHtml(r.branch)}"
+            onclick="toggleBookmark(event, ${index}, '${escapeHtml(r.institute).replace(/'/g, "\\'")}', '${escapeHtml(r.branch).replace(/'/g, "\\'")}')"
+            aria-label="Add to preference list">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="bookmark-icon">
+        <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/>
+      </svg>
+    </button>`;
+
+  return `
+    <article class="ccard ccard--${cat} ccard--subbranch" style="animation-delay:${delay}ms; margin-top: 10px; box-shadow: none; border-color: var(--line);">
+      ${bookmarkHtml}
+      <div class="ccard__meta">
+        ${probabilityBadgeHtml(r)}
+        ${confidenceChipHtml(r)}
+      </div>
+      <p class="ccard__branch" style="font-size: 0.95rem; font-weight: 600; margin-top: 4px;">${escapeHtml(r.branch || r.program)}</p>
+      ${rankBarHtml(r)}
+      ${reason}
+      <div class="ccard__foot">${foot.map((f) => `<span>${escapeHtml(f)}</span>`).join("")}</div>
+    </article>`;
+}
+
+function collegeCardHtml(group, catName, index) {
+  const firstRec = group.branches[0];
+  const instName = group.institute;
+  const city = getCollegeLocation(firstRec);
+  const branchCount = group.branches.length;
+  const isExpanded = !!state.expandedColleges[instName];
+  const catClass = catName.toLowerCase();
+  const delay = prefersReducedMotion ? 0 : Math.min(index * 45, 420);
+  const domId = getCollegeDomId(instName);
+
+  const branchRowsHtml = group.branches.map((r, bIdx) => {
+    return branchRowCardHtml(r, index * 100 + bIdx);
+  }).join("");
+
+  return `
+    <article class="ccard ccard--${catClass} ccard--college" style="animation-delay:${delay}ms">
+      <div class="ccard__college-header ${isExpanded ? "is-expanded" : ""}" onclick="toggleCollegeCard(event, '${escapeHtml(instName).replace(/'/g, "\\'")}')"">
+        <div class="ccard__meta" style="width: 100%;">
+          <span class="tag tag--private">PRIVATE</span>
+          <span class="tag">KARNATAKA</span>
+          <span class="tag tag--count" style="margin-left: auto; background: var(--paper-deep); color: var(--ink-soft); font-weight: 600;">${branchCount} ${branchCount === 1 ? 'branch' : 'branches'}</span>
+        </div>
+        <div class="ccard__college-title-row" style="margin-top: 10px; display: flex; justify-content: space-between; align-items: flex-start; width: 100%; gap: 12px;">
+          <h3 class="ccard__institute" style="margin: 0; font-size: 1.12rem;">${escapeHtml(instName)} <small style="font-size: 0.82rem; font-weight: 500; color: var(--ink-soft); display: inline-block; margin-left: 6px;">(${escapeHtml(city)})</small></h3>
+          <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="transition: transform 0.2s; margin-top: 5px; flex-shrink: 0;"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+      <div class="ccard__branches-collapse" id="collapse-${domId}" ${isExpanded ? "" : "hidden"}>
+        <div class="ccard__branches-list" style="margin-top: 14px; border-top: 1px solid var(--line); padding-top: 6px;">
+          ${branchRowsHtml}
+        </div>
+      </div>
+    </article>
+  `;
+}
+
+// ── Choice List / Bookmarking ──────────────────────────────────────────
+
+window.toggleBookmark = function (event, index, institute, branch) {
+  if (event) { event.preventDefault(); event.stopPropagation(); }
+  const idx = state.choices.findIndex(c => c.institute === institute && c.branch === branch);
+  if (idx > -1) {
+    state.choices.splice(idx, 1);
+  } else {
+    const recommendations = state.lastData?.recommendations || [];
+    const rec = recommendations.find(r => r.institute === institute && r.branch === branch);
+    if (!rec) return;
+    state.choices.push({
+      institute: rec.institute, branch: rec.branch, degree: rec.degree,
+      quota: rec.quota, cutoff_rank: rec.cutoff_rank, category: rec.category,
+      fit_label: rec.fit_label, program: rec.program,
+    });
+  }
+  localStorage.setItem("disha_comedk_choices", JSON.stringify(state.choices));
+  updateChoiceUI();
+};
+
+window.moveChoice = function (index, direction) {
+  const targetIndex = index + direction;
+  if (targetIndex < 0 || targetIndex >= state.choices.length) return;
+  const temp = state.choices[index];
+  state.choices[index] = state.choices[targetIndex];
+  state.choices[targetIndex] = temp;
+  localStorage.setItem("disha_comedk_choices", JSON.stringify(state.choices));
+  updateChoiceUI();
+};
+
+function updateChoiceUI() {
+  const trigger = $("choice-list-trigger");
+  const count = $("choice-count");
+  const clearBtn = $("choice-clear-all");
+
+  if (count) count.textContent = state.choices.length;
+  if (clearBtn) clearBtn.style.display = state.choices.length > 0 ? "inline-block" : "none";
+
+  const inResultsView = $("view-results")?.classList.contains("is-active");
+  if (trigger) trigger.style.display = (inResultsView && state.choices.length > 0) ? "flex" : "none";
+
+  document.querySelectorAll(".ccard__bookmark").forEach(btn => {
+    const inst = btn.dataset.institute;
+    const br = btn.dataset.branch;
+    const bookmarked = state.choices.some(c => c.institute === inst && c.branch === br);
+    btn.classList.toggle("is-selected", bookmarked);
+  });
+  renderChoiceDrawerList();
+}
+
+let draggedIndex = null;
+
+function renderChoiceDrawerList() {
+  const list = $("choice-drawer-list");
+  if (!list) return;
+  list.innerHTML = "";
+  if (state.choices.length === 0) {
+    list.innerHTML = `<li class="choice-drawer__empty">No choices selected. Tap the bookmark icon on any recommendation card to build your preference list.</li>`;
+    return;
+  }
+  state.choices.forEach((c, idx) => {
+    const li = document.createElement("li");
+    li.className = "choice-drawer__item";
+    li.draggable = true;
+    li.dataset.index = idx;
+    li.innerHTML = `
+      <div class="choice-drawer__actions">
+        <button type="button" class="choice-drawer__action-btn choice-drawer__action-btn--up" onclick="moveChoice(${idx}, -1)" aria-label="Move Up" ${idx === 0 ? "disabled" : ""}>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+        </button>
+        <button type="button" class="choice-drawer__action-btn choice-drawer__action-btn--down" onclick="moveChoice(${idx}, 1)" aria-label="Move Down" ${idx === state.choices.length - 1 ? "disabled" : ""}>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+      </div>
+      <div class="choice-drawer__item-info">
+        <span class="choice-drawer__item-rank">#${idx + 1}</span>
+        <div>
+          <strong class="choice-drawer__item-inst">${escapeHtml(c.institute || "")}</strong>
+          <span class="choice-drawer__item-branch">${escapeHtml(c.branch || "")}</span>
+        </div>
+      </div>
+      <button type="button" class="choice-drawer__item-remove" onclick="toggleBookmark(event, null, '${escapeHtml(c.institute || "").replace(/'/g, "\\'")}', '${escapeHtml(c.branch || "").replace(/'/g, "\\'")}')">&times;</button>
+    `;
+    li.addEventListener("dragstart", (e) => { draggedIndex = idx; li.classList.add("is-dragging"); e.dataTransfer.effectAllowed = "move"; });
+    li.addEventListener("dragend", () => { li.classList.remove("is-dragging"); draggedIndex = null; });
+    li.addEventListener("dragover", (e) => { e.preventDefault(); li.classList.add("is-dragover"); });
+    li.addEventListener("dragleave", () => { li.classList.remove("is-dragover"); });
+    li.addEventListener("drop", (e) => {
+      e.preventDefault(); li.classList.remove("is-dragover");
+      if (draggedIndex === null || draggedIndex === idx) return;
+      const moved = state.choices.splice(draggedIndex, 1)[0];
+      state.choices.splice(idx, 0, moved);
+      localStorage.setItem("disha_comedk_choices", JSON.stringify(state.choices));
+      updateChoiceUI();
+    });
+    list.appendChild(li);
+  });
+}
+
+window.clearChoices = function () {
+  if (state.choices.length === 0) return;
+  if (confirm("Are you sure you want to clear your entire preference list?")) {
+    state.choices = [];
+    localStorage.setItem("disha_comedk_choices", JSON.stringify(state.choices));
+    updateChoiceUI();
+    $("choice-drawer").hidden = true;
+  }
+};
+
+function exportChoicesCSV() {
+  if (state.choices.length === 0) return;
+  let csv = "Preference Number,Institute,Branch,Degree,Category\n";
+  state.choices.forEach((c, idx) => {
+    csv += `${idx + 1},"${(c.institute || "").replace(/"/g, '""')}","${(c.branch || "").replace(/"/g, '""')}","${(c.degree || "").replace(/"/g, '""')}","${c.category || ""}"\n`;
+  });
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.setAttribute("href", url);
+  link.setAttribute("download", "my_disha_comedk_choices.csv");
+  link.style.visibility = "hidden";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+
+function printChoices() {
+  if (state.choices.length === 0) return;
+  const printWindow = window.open("", "_blank");
+  if (!printWindow) { alert("Please allow popups to print your preference list."); return; }
+  let rowsHtml = state.choices.map((c, idx) => `
+    <tr>
+      <td>${idx + 1}</td>
+      <td><strong>${escapeHtml(c.institute || "")}</strong></td>
+      <td>${escapeHtml(c.branch || "")}</td>
+      <td>${escapeHtml(c.degree || "")}</td>
+    </tr>
+  `).join("");
+  printWindow.document.write(`
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <title>My Disha COMEDK Preference List</title>
+      <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; color: #333; padding: 40px; }
+        h1 { margin-bottom: 8px; color: #111; }
+        p { color: #666; font-size: 14px; margin-bottom: 24px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #e0e0e0; padding: 12px 16px; text-align: left; }
+        th { background-color: #f7f7f7; font-weight: 600; }
+        tr:nth-child(even) { background-color: #fafafa; }
+        @media print { body { padding: 0; } button { display: none; } }
+      </style>
+    </head>
+    <body>
+      <h1>UTMT Disha - My COMEDK Preference List</h1>
+      <p>Customized COMEDK college choices generated on ${new Date().toLocaleDateString()}.</p>
+      <table>
+        <thead><tr><th style="width: 60px;">Pref #</th><th>Institute</th><th>Branch</th><th>Degree</th></tr></thead>
+        <tbody>${rowsHtml}</tbody>
+      </table>
+      <script>window.onload = function() { window.print(); setTimeout(function() { window.close(); }, 500); };<\/script>
+    </body>
+    </html>
+  `);
+  printWindow.document.close();
+}
+
+// ── Filtering ──────────────────────────────────────────────────────────
+
+function recPassesFilters(rec) {
+  if (!state.filterText) return true;
+  const q = state.filterText;
+  return (
+    rec.institute.toLowerCase().includes(q) ||
+    (rec.branch || "").toLowerCase().includes(q) ||
+    (rec.program || "").toLowerCase().includes(q)
+  );
+}
+
+// ── View toggle (by-branch / by-college) ────────────────────────────────
+
+function syncViewToggleUI() {
+  const btnBranch = $("view-by-branch");
+  const btnCollege = $("view-by-college");
+  if (btnBranch && btnCollege) {
+    btnBranch.classList.toggle("is-active", state.view === "branch");
+    btnCollege.classList.toggle("is-active", state.view === "college");
   }
 }
 
-// ── EVENTS ────────────────────────────────────────────────────
-function bindEvents() {
-  // Welcome → step 0
-  $("begin-btn")?.addEventListener("click", () => goToStep(0));
+// ── Section rendering ──────────────────────────────────────────────────
 
-  // Restart
-  $("restart-btn")?.addEventListener("click", () => {
-    state.rank = null; state.quota = "GM"; state.selectedBranches = [];
-    syncQuota();
-    syncBranchGrid();
-    syncPanelBranches();
+function renderSections() {
+  const data = state.lastData;
+  const container = $("result-sections");
+  container.innerHTML = "";
+
+  const blurbs = {};
+  for (const cg of data?.category_guidance || []) blurbs[cg.category] = cg.blurb;
+
+  let anyShown = false;
+
+  for (const catName of SECTION_ORDER) {
+    const all = (data?.recommendations || []).filter((r) => r.category === catName);
+    if (all.length === 0) continue;
+    const visible = all.filter(recPassesFilters);
+
+    anyShown = true;
+
+    const meta = sectionMeta(catName);
+    const section = document.createElement("section");
+    section.className = "rsection";
+    section.id = `section-${catName.toLowerCase()}`;
+
+    const sortedVisible = [...visible];
+    if (state.sortBy === "probability") {
+      sortedVisible.sort((a, b) => {
+        const valA = a.admission_probability ?? 0;
+        const valB = b.admission_probability ?? 0;
+        return valB - valA;
+      });
+    } else if (state.sortBy === "rank") {
+      sortedVisible.sort((a, b) => {
+        const valA = a.cutoff_rank ?? Infinity;
+        const valB = b.cutoff_rank ?? Infinity;
+        return valA - valB;
+      });
+    } else if (state.sortBy === "college") {
+      sortedVisible.sort((a, b) => (a.institute || "").localeCompare(b.institute || ""));
+    }
+
+    let contentHtml = "";
+    if (state.view === "college") {
+      const grouped = [];
+      visible.forEach((r) => {
+        let group = grouped.find((g) => g.institute === r.institute);
+        if (!group) { group = { institute: r.institute, branches: [] }; grouped.push(group); }
+        group.branches.push(r);
+      });
+
+      if (state.sortBy === "probability") {
+        grouped.sort((a, b) => {
+          const maxA = Math.max(...a.branches.map(r => r.admission_probability ?? 0), 0);
+          const maxB = Math.max(...b.branches.map(r => r.admission_probability ?? 0), 0);
+          return maxB - maxA;
+        });
+      } else if (state.sortBy === "rank") {
+        grouped.sort((a, b) => {
+          const minA = Math.min(...a.branches.map(r => r.cutoff_rank ?? Infinity), Infinity);
+          const minB = Math.min(...b.branches.map(r => r.cutoff_rank ?? Infinity), Infinity);
+          return minA - minB;
+        });
+      } else if (state.sortBy === "college") {
+        grouped.sort((a, b) => a.institute.localeCompare(b.institute));
+      }
+
+      grouped.forEach((group) => {
+        if (state.sortBy === "rank") group.branches.sort((a, b) => (a.cutoff_rank ?? Infinity) - (b.cutoff_rank ?? Infinity));
+        else if (state.sortBy === "probability") group.branches.sort((a, b) => (b.admission_probability ?? 0) - (a.admission_probability ?? 0));
+        else if (state.sortBy === "college") group.branches.sort((a, b) => (a.branch || "").localeCompare(b.branch || ""));
+      });
+
+      const CARD_LIMIT = 25;
+      const showAllC = !!state.showAllCards?.[catName];
+      const collegeSlice = showAllC ? grouped : grouped.slice(0, CARD_LIMIT);
+      contentHtml = `<div class="cards">${collegeSlice.map((g, i) => collegeCardHtml(g, catName, i)).join("")}</div>`;
+      if (!showAllC && grouped.length > CARD_LIMIT) {
+        const rem = grouped.length - CARD_LIMIT;
+        contentHtml += `<div style="text-align:center;margin:20px 0 8px"><button type="button" class="btn btn--ghost" onclick="showMoreCards('${catName}')" style="gap:6px;font-size:.92rem">Show ${rem} more colleges ▾</button></div>`;
+      }
+    } else {
+      const CARD_LIMIT = 25;
+      const showAllB = !!state.showAllCards?.[catName];
+      const branchSlice = showAllB ? sortedVisible : sortedVisible.slice(0, CARD_LIMIT);
+      contentHtml = `<div class="cards">${branchSlice.map((r, i) => cardHtml(r, i)).join("")}</div>`;
+      if (!showAllB && sortedVisible.length > CARD_LIMIT) {
+        const rem = sortedVisible.length - CARD_LIMIT;
+        contentHtml += `<div style="text-align:center;margin:20px 0 8px"><button type="button" class="btn btn--ghost" onclick="showMoreCards('${catName}')" style="gap:6px;font-size:.92rem">Show ${rem} more options ▾</button></div>`;
+      }
+    }
+
+    const totalAvail = all.length;
+    const isSectionCollapsed = !!state.collapsedSections[catName];
+    section.innerHTML = `
+      <div class="rsection__head">
+        <h2 class="rsection__title">
+          <span class="dot dot--${catName.toLowerCase()}" aria-hidden="true"></span>
+          ${meta.title} <span class="rsection__count">· ${meta.sub} · Showing ${visible.length} of ${totalAvail}</span>
+        </h2>
+        <button type="button" class="rsection__toggle-btn" 
+                aria-expanded="${!isSectionCollapsed}" 
+                aria-controls="cards-${catName.toLowerCase()}" 
+                onclick="toggleSection('${catName}')">
+          <span class="rsection__toggle-text">${isSectionCollapsed ? "Expand" : "Collapse"}</span>
+          <svg class="chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="6 9 12 15 18 9"/>
+          </svg>
+        </button>
+      </div>
+      <div class="rsection__collapse ${isSectionCollapsed ? "is-collapsed" : ""}" id="cards-${catName.toLowerCase()}">
+        <div class="rsection__collapse-inner">
+          ${blurbs[catName] ? `<p class="rsection__blurb">${escapeHtml(blurbs[catName])}</p>` : ""}
+          ${contentHtml}
+        </div>
+      </div>`;
+    container.appendChild(section);
+  }
+
+  updateExpandAllButtonUI();
+
+  const totalAllCount = (data?.recommendations || []).length;
+  const hasResults = totalAllCount > 0;
+  $("empty-results").hidden = hasResults;
+  $("empty-filtered").hidden = !hasResults || anyShown;
+  $("toolbar").style.display = hasResults ? "" : "none";
+  $("spectrum").style.display = hasResults ? "" : "none";
+  const specHeader = $("spectrum-header");
+  if (specHeader) specHeader.style.display = hasResults ? "flex" : "none";
+}
+
+window.showMoreCards = function (catName) {
+  if (!state.showAllCards) state.showAllCards = {};
+  state.showAllCards[catName] = true;
+  renderSections();
+};
+
+window.toggleSection = function (catName) {
+  state.collapsedSections[catName] = !state.collapsedSections[catName];
+  const sectionEl = $(`section-${catName.toLowerCase()}`);
+  if (sectionEl) {
+    const btn = sectionEl.querySelector(".rsection__toggle-btn");
+    const collapseEl = sectionEl.querySelector(".rsection__collapse");
+    if (btn && collapseEl) {
+      const isExpanded = !state.collapsedSections[catName];
+      btn.setAttribute("aria-expanded", String(isExpanded));
+      collapseEl.classList.toggle("is-collapsed", !isExpanded);
+      const textEl = btn.querySelector(".rsection__toggle-text");
+      if (textEl) textEl.textContent = isExpanded ? "Collapse" : "Expand";
+    }
+  }
+  updateExpandAllButtonUI();
+};
+
+window.updateExpandAllButtonUI = function () {
+  const btns = document.querySelectorAll(".expand-collapse-all-btn");
+  if (btns.length === 0) return;
+  const data = state.lastData;
+  const recs = data?.recommendations || [];
+  let hasAnyExpanded = false;
+  for (const catName of SECTION_ORDER) {
+    const all = recs.filter((r) => r.category === catName);
+    if (all.length === 0) continue;
+    const visible = all.filter(recPassesFilters);
+    if (visible.length === 0) continue;
+    if (!state.collapsedSections[catName]) { hasAnyExpanded = true; break; }
+  }
+  btns.forEach(btn => {
+    btn.textContent = hasAnyExpanded ? "Collapse all" : "Expand all";
+    btn.dataset.action = hasAnyExpanded ? "collapse" : "expand";
+  });
+};
+
+function buildSortOptions() {
+  const sortSel = $("results-sort");
+  if (!sortSel) return;
+  const prev = sortSel.value || state.sortBy || "rank";
+  sortSel.innerHTML = "";
+  const options = [
+    { value: "rank", label: "Sort by cutoff rank" },
+    { value: "probability", label: "Sort by probability" },
+    { value: "college", label: "Sort by college name" },
+  ];
+  options.forEach((opt) => {
+    const el = document.createElement("option");
+    el.value = opt.value;
+    el.textContent = opt.label;
+    sortSel.appendChild(el);
+  });
+  sortSel.value = prev;
+}
+
+function renderResults(data, { keepFilters = false } = {}) {
+  if (!keepFilters) {
+    state.filterText = "";
+    state.sortBy = "rank";
+    state.collapsedSections = { Safe: false, Target: false, Reach: false };
+    state.expandedColleges = {};
+    state.showAllCards = {};
+    $("filter-search").value = "";
+  }
+
+  buildSortOptions();
+  renderProfileChips();
+  renderNote(data);
+  renderRuler(data, keepFilters);
+
+  const byCat = data.counts?.by_category || {};
+  countUp($("zone-count-safe"), byCat.Safe || 0);
+  countUp($("zone-count-target"), byCat.Target || 0);
+  countUp($("zone-count-reach"), byCat.Reach || 0);
+  document.querySelectorAll(".zone").forEach((z) => {
+    z.classList.toggle("is-empty", !(byCat[z.dataset.zone] > 0));
+  });
+
+  syncViewToggleUI();
+  renderSections();
+  updateChoiceUI();
+}
+
+// ── Share / copy link / print ─────────────────────────────────────────────
+
+function buildShareUrl() {
+  const params = new URLSearchParams();
+
+  let currentStep = "welcome";
+  if ($("view-results")?.classList.contains("is-active")) {
+    currentStep = "results";
+  } else if ($("view-flow")?.classList.contains("is-active")) {
+    currentStep = String(state.step);
+  }
+  params.set("step", currentStep);
+
+  const rank = parseRankInput($("comedk-rank"));
+  if (rank !== null) params.set("r", String(rank));
+  params.set("q", state.quota);
+  if (state.branchPrefs && state.branchPrefs.length) {
+    params.set("b", state.branchPrefs.join(","));
+  }
+  if (state.filterText) params.set("search", state.filterText);
+
+  const base = `${location.origin}${location.pathname}`;
+  return `${base}?${params.toString()}`;
+}
+
+function saveStateToURL() {
+  if (!initialStateLoaded) return;
+  const newUrl = buildShareUrl();
+  history.replaceState(null, "", newUrl);
+}
+
+function loadStateFromURL() {
+  const q = new URLSearchParams(location.search);
+  const hasParams = [...q.keys()].length > 0;
+  if (!hasParams) { initialStateLoaded = true; return false; }
+
+  // Restore rank
+  const rank = parseInt(q.get("r") || "", 10);
+  const hasRank = Number.isFinite(rank) && rank > 0;
+  if (hasRank) $("comedk-rank").value = fmt(rank);
+
+  // Restore quota
+  const quota = q.get("q");
+  if (quota && ["GM", "KKR"].includes(quota)) {
+    state.quota = quota;
+    syncQuotaRows();
+  }
+
+  // Restore branch preferences
+  const valid = new Set(branchOptions().map((o) => o.value));
+  state.branchPrefs = (q.get("b") || "")
+    .split(",")
+    .map((v) => v.trim())
+    .filter((v) => valid.has(v));
+  renderBranchGrids();
+
+  // Restore filter text
+  const filterText = q.get("search") || "";
+  state.filterText = filterText.toLowerCase();
+  $("filter-search").value = filterText;
+
+  syncPanelFromState();
+
+  const stepParam = q.get("step");
+  if (stepParam === "results" || (!stepParam && hasRank)) {
+    const _crashKey = "disha_comedk_render_crash";
+    const _prevCrashes = parseInt(sessionStorage.getItem(_crashKey) || "0", 10);
+    sessionStorage.setItem(_crashKey, String(_prevCrashes + 1));
+    const payload = buildPayload();
+    state.lastPayload = payload;
+    runRequest(payload, { keepFilters: true }).then(() => {
+      sessionStorage.removeItem("disha_comedk_render_crash");
+    });
+  } else {
+    const stepNum = parseInt(stepParam, 10);
+    if (Number.isInteger(stepNum) && stepNum >= 0 && stepNum < TOTAL_STEPS) {
+      showView("flow");
+      goToStep(stepNum);
+    } else {
+      showView("welcome");
+    }
+  }
+  initialStateLoaded = true;
+  return true;
+}
+
+function shareToWhatsApp() {
+  const counts = state.lastData?.counts?.by_category || {};
+  const rank = state.lastPayload?.rank;
+  const text = `My COMEDK rank ${fmt(rank)} (${state.quota}). Found ${counts.Target || 0} Target, ${counts.Safe || 0} Safe and ${counts.Reach || 0} Dream options!\n\nCheck out Disha for free COMEDK college predictions:\n${buildShareUrl()}`;
+  window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank", "noopener");
+}
+
+async function copyShareLink() {
+  const url = buildShareUrl();
+  const label = $("copy-link-label");
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      await navigator.clipboard.writeText(url);
+    } else {
+      const ta = document.createElement("textarea");
+      ta.value = url; ta.setAttribute("readonly", "");
+      ta.style.position = "absolute"; ta.style.left = "-9999px";
+      document.body.appendChild(ta); ta.select();
+      document.execCommand("copy"); document.body.removeChild(ta);
+    }
+    label.textContent = "Copied!";
+    setTimeout(() => { label.textContent = "Copy link"; }, 1800);
+  } catch {
+    label.textContent = "Copy link";
+    alert("Failed to copy link. Please copy the URL manually.");
+  }
+}
+
+// ── Panel events ────────────────────────────────────────────────────────
+
+function bindPanelEvents() {
+  const toggle = $("panel-toggle");
+  if (toggle) {
+    toggle.addEventListener("click", () => {
+      const panel = $("results-panel");
+      const open = panel.classList.toggle("is-open");
+      toggle.setAttribute("aria-expanded", open ? "true" : "false");
+    });
+  }
+
+  const tbToggle = $("toolbar-toggle");
+  if (tbToggle) {
+    tbToggle.addEventListener("click", () => {
+      const tb = $("toolbar");
+      const open = tb.classList.toggle("is-open");
+      tbToggle.setAttribute("aria-expanded", open ? "true" : "false");
+      if (tb) delete tb.dataset.autoOpened;
+    });
+  }
+
+  window.addEventListener("scroll", () => {
+    if (window.innerWidth <= 900) {
+      const tb = $("toolbar");
+      const tbToggle = $("toolbar-toggle");
+      if (tb && tb.classList.contains("is-open")) {
+        if (window.scrollY > 150 && tb.dataset.autoOpened === "true") {
+          tb.classList.remove("is-open");
+          if (tbToggle) tbToggle.setAttribute("aria-expanded", "false");
+          delete tb.dataset.autoOpened;
+        }
+      }
+    }
+  });
+
+  const panelRank = $("panel-rank");
+  if (panelRank) {
+    attachRankFormatting(panelRank);
+    panelRank.addEventListener("input", () => {
+      const n = parseRankInput(panelRank);
+      if ($("comedk-rank")) $("comedk-rank").value = panelRank.value;
+      schedulePanelUpdate();
+    });
+  }
+
+  bindQuotaRow("panel-quota-row", schedulePanelUpdate);
+}
+
+// ── Events ──────────────────────────────────────────────────────────────
+
+function bindEvents() {
+  $("begin-btn").addEventListener("click", () => {
+    showView("flow");
+    goToStep(0);
+  });
+
+  $("retry-meta-btn")?.addEventListener("click", loadMeta);
+
+  $("flow-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    advanceStep();
+  });
+
+  $("flow-back").addEventListener("click", () => {
+    if (state.step > 0) goToStep(state.step - 1, { backwards: true });
+  });
+
+  $("restart-btn").addEventListener("click", () => {
+    state.expandedColleges = {};
+    showView("welcome");
+  });
+  $("wordmark")?.addEventListener("click", (e) => {
+    e.preventDefault();
+    state.expandedColleges = {};
     showView("welcome");
   });
 
-  // Step 0: rank input
-  fmtRankInput($("comedk-rank"));
-  $("comedk-rank")?.addEventListener("keydown", e => {
-    if (e.key === "Enter") { e.preventDefault(); validateAndNext0(); }
+  $("retry-btn").addEventListener("click", () => {
+    if (state.lastPayload) runRequest(state.lastPayload);
   });
-  $("next-0")?.addEventListener("click", validateAndNext0);
-  $("back-0")?.addEventListener("click", () => showView("welcome"));
 
-  // Step 1: quota
+  const backToReview = () => {
+    showView("flow");
+    goToStep(TOTAL_STEPS - 1, { backwards: true });
+  };
+  $("error-edit-btn").addEventListener("click", backToReview);
+  $("edit-profile-btn").addEventListener("click", backToReview);
+  $("empty-edit-btn")?.addEventListener("click", backToReview);
+
   bindQuotaRow("quota-row");
-  $("next-1")?.addEventListener("click", () => goToStep(2));
-  $("back-1")?.addEventListener("click", () => goToStep(0));
+  bindPanelEvents();
 
-  // Step 2: branch preference (Continue button advances to step 3)
-  $("next-2")?.addEventListener("click", () => goToStep(3));
-  $("back-2")?.addEventListener("click", () => goToStep(1));
+  // Choice drawer
+  $("choice-list-trigger")?.addEventListener("click", () => {
+    $("choice-drawer").hidden = false;
+    renderChoiceDrawerList();
+  });
+  $("choice-drawer-close")?.addEventListener("click", () => { $("choice-drawer").hidden = true; });
+  $("choice-drawer-overlay")?.addEventListener("click", () => { $("choice-drawer").hidden = true; });
+  $("choice-export-csv")?.addEventListener("click", exportChoicesCSV);
+  $("choice-export-pdf")?.addEventListener("click", printChoices);
+  $("choice-clear-all")?.addEventListener("click", clearChoices);
 
-  // Step 3: review / confirm
-  $("back-3")?.addEventListener("click", () => goToStep(2));
-  $("see-colleges-btn")?.addEventListener("click", submitProfile);
-
-  // Review rows → jump back to specific step
-  $("rv-rank")  ?.addEventListener("click",  () => goToStep(0));
-  $("rv-quota") ?.addEventListener("click",  () => goToStep(1));
-  $("rv-branch")?.addEventListener("click",  () => goToStep(2));
-  $("rv-rank")  ?.addEventListener("keydown", e => { if (e.key === "Enter") goToStep(0); });
-  $("rv-quota") ?.addEventListener("keydown", e => { if (e.key === "Enter") goToStep(1); });
-  $("rv-branch")?.addEventListener("keydown", e => { if (e.key === "Enter") goToStep(2); });
-
-  // Error page
-  $("retry-btn")    ?.addEventListener("click", submitProfile);
-  $("error-edit-btn")?.addEventListener("click", () => goToStep(0));
-
-  // Panel
-  fmtRankInput($("panel-rank"));
-  $("panel-rank")?.addEventListener("input", schedulePanelUpdate);
-  bindQuotaRow("panel-quota-row", schedulePanelUpdate);
-
-  // Panel toggle (mobile)
-  const pt = $("panel-toggle");
-  const pb = $("panel-body");
-  pt?.addEventListener("click", () => {
-    const open = pt.getAttribute("aria-expanded") === "true";
-    pt.setAttribute("aria-expanded", open ? "false" : "true");
-    pb?.classList.toggle("is-open", !open);
+  // Search
+  $("filter-search").addEventListener("input", (e) => {
+    state.filterText = e.target.value.trim().toLowerCase();
+    renderSections();
+    saveStateToURL();
   });
 
-  // Filter search
-  $("filter-search")?.addEventListener("input", e => {
-    state.filterText = e.target.value;
-    if (state.lastData) renderResults(state.lastData, { keepFilter: true });
+  $("clear-filters-btn")?.addEventListener("click", () => {
+    state.filterText = "";
+    $("filter-search").value = "";
+    renderSections();
+    saveStateToURL();
   });
 
-  // Spectrum → scroll to section
-  $("spectrum")?.addEventListener("click", e => {
+  // Expand/collapse all
+  const expColAllBtns = document.querySelectorAll(".expand-collapse-all-btn");
+  expColAllBtns.forEach(btnEl => {
+    btnEl.addEventListener("click", () => {
+      const action = btnEl.dataset.action || "collapse";
+      const shouldCollapse = action === "collapse";
+      for (const catName of SECTION_ORDER) {
+        state.collapsedSections[catName] = shouldCollapse;
+        const sectionEl = $(`section-${catName.toLowerCase()}`);
+        if (sectionEl) {
+          const btn = sectionEl.querySelector(".rsection__toggle-btn");
+          const collapseEl = sectionEl.querySelector(".rsection__collapse");
+          if (btn && collapseEl) {
+            btn.setAttribute("aria-expanded", String(!shouldCollapse));
+            collapseEl.classList.toggle("is-collapsed", shouldCollapse);
+            const textEl = btn.querySelector(".rsection__toggle-text");
+            if (textEl) textEl.textContent = shouldCollapse ? "Expand" : "Collapse";
+          }
+        }
+      }
+      updateExpandAllButtonUI();
+    });
+  });
+
+  // View toggle (by-branch / by-college)
+  const btnBranch = $("view-by-branch");
+  const btnCollege = $("view-by-college");
+  if (btnBranch && btnCollege) {
+    btnBranch.addEventListener("click", () => {
+      if (state.view !== "branch") {
+        state.view = "branch";
+        localStorage.setItem("disha_comedk_view", "branch");
+        syncViewToggleUI();
+        renderSections();
+      }
+    });
+    btnCollege.addEventListener("click", () => {
+      if (state.view !== "college") {
+        state.view = "college";
+        localStorage.setItem("disha_comedk_view", "college");
+        syncViewToggleUI();
+        renderSections();
+      }
+    });
+  }
+
+  // Sort
+  const sortSel = $("results-sort");
+  if (sortSel) {
+    sortSel.addEventListener("change", (e) => {
+      state.sortBy = e.target.value;
+      renderSections();
+    });
+  }
+
+  // Spectrum scroll-to-section
+  $("spectrum")?.addEventListener("click", (e) => {
     const zone = e.target.closest(".zone");
     if (!zone) return;
-    $(`section-${zone.dataset.zone}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+    const target = $(`section-${zone.dataset.zone.toLowerCase()}`);
+    if (target) target.scrollIntoView({ behavior: prefersReducedMotion ? "auto" : "smooth", block: "start" });
   });
 
-  // Share
-  $("share-btn")?.addEventListener("click", () => {
-    const msg = `My COMEDK rank ${fmt(state.rank)} (${state.quota}). Check out Disha for free college predictions → ${location.href}`;
-    window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
-  });
-
-  // Copy link
-  $("copy-link-btn")?.addEventListener("click", async () => {
-    try {
-      await navigator.clipboard.writeText(location.href);
-      const label = $("copy-link-label");
-      if (label) { label.textContent = "Copied!"; setTimeout(() => label.textContent = "Copy link", 2000); }
-    } catch { /* ignore */ }
-  });
-
-  // Print / Save PDF
-  $("print-btn")?.addEventListener("click", () => window.print());
-
-  // Collapse / Expand all
-  $("collapse-all-btn")?.addEventListener("click", (e) => {
-    const btn = e.target;
-    const isExpanded = btn.textContent === "Collapse all";
-    
-    document.querySelectorAll(".rsection__toggle-btn").forEach(toggleBtn => {
-      const match = toggleBtn.getAttribute("onclick")?.match(/'([^']+)'/);
-      if (!match) return;
-      const cat = match[1];
-      const col = $(`collapse-${cat.toLowerCase()}`);
-      if (!col) return;
-      
-      col.hidden = isExpanded;
-      toggleBtn.setAttribute("aria-expanded", !isExpanded);
-      const textNode = toggleBtn.querySelector(".rsection__toggle-text");
-      if (textNode) textNode.textContent = isExpanded ? "Expand" : "Collapse";
-    });
-    
-    btn.textContent = isExpanded ? "Expand all" : "Collapse all";
-  });
-
-  // Edit profile — scroll to panel
-  $("edit-profile-btn")?.addEventListener("click", () => {
-    const panel = $("panel-body");
-    const toggle = $("panel-toggle");
-    if (panel && toggle) {
-      toggle.setAttribute("aria-expanded", "true");
-      panel.classList.add("is-open");
-      $("panel-rank")?.focus();
+  // Share / Copy / Print
+  $("share-btn").addEventListener("click", shareToWhatsApp);
+  $("copy-link-btn").addEventListener("click", copyShareLink);
+  $("print-btn").addEventListener("click", () => {
+    if (state.filterText) {
+      state.filterText = "";
+      $("filter-search").value = "";
+      renderSections();
     }
+    window.print();
   });
 }
 
-function validateAndNext0() {
-  const rank = parseRank($("comedk-rank"));
-  const err  = $("error-rank");
-  if (!rank) {
-    if (err) { err.textContent = "Please enter a valid COMEDK rank."; err.hidden = false; }
-    $("comedk-rank")?.focus();
-    return;
-  }
-  if (err) err.hidden = true;
-  state.rank = rank;
-  goToStep(1);
-}
+// ── Init ────────────────────────────────────────────────────────────────
 
-// ── INIT ──────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
-  buildBranchGrid();
-  buildPanelBranchChips();
+  attachRankFormatting($("comedk-rank"));
   bindEvents();
-  loadMeta();       // async — also rebuilds branch grid with live data
-  showView("welcome");
+  bindRulerTooltip();
+
+  window.addEventListener("beforeunload", () => {
+    sessionStorage.setItem("disha_comedk_scroll_y", String(window.scrollY));
+  });
+
+  const hasParams = [...new URLSearchParams(location.search).keys()].length > 0;
+
+  const _crashCount = parseInt(sessionStorage.getItem("disha_comedk_render_crash") || "0", 10);
+  let skipUrlRestore = false;
+  if (hasParams && _crashCount >= 2) {
+    console.warn("Disha COMEDK: detected crash loop — resetting to welcome view.");
+    sessionStorage.removeItem("disha_comedk_render_crash");
+    history.replaceState(null, "", location.pathname);
+    skipUrlRestore = true;
+  }
+
+  if (hasParams && !skipUrlRestore) {
+    showView("loading");
+  } else {
+    showView("welcome");
+  }
+
+  loadMeta().then(() => {
+    if (skipUrlRestore) { showView("welcome"); return; }
+    const restored = loadStateFromURL();
+    if (!restored) showView("welcome");
+  });
 });
