@@ -4,7 +4,7 @@ categorized and interest-ranked list of institute + branch options.
 
 from __future__ import annotations
 
-from typing import List, Optional
+from typing import Dict, List, Optional, Set
 import math
 
 from . import states
@@ -45,6 +45,25 @@ HIGH_MIN_SPREAD = 6_000
 
 # Display order of the three buckets.
 CATEGORY_ORDER = {"Target": 0, "Reach": 1, "Safe": 2}
+
+# Bucket caps and institute-diversity allowance. See config.py for the measured
+# numbers that motivate each value.
+BUCKET_CAPS = {
+    "Target": settings.cap_target,
+    "Reach": settings.cap_reach,
+    "Safe": settings.cap_safe,
+}
+MAX_PER_INSTITUTE = settings.max_per_institute
+TOP_RANK_CAP = settings.top_rank_cap
+
+# Request ``bucket`` values that mean "return this one bucket, uncapped",
+# mapped to the internal category name. "dream" is the UI's name for "Reach".
+_SINGLE_BUCKETS = {
+    "safe": "Safe",
+    "target": "Target",
+    "reach": "Reach",
+    "dream": "Reach",
+}
 
 # ---------------------------------------------------------------------------
 # User-facing text, keyed by language ("en" / "hi"). Hindi is natural, simple
@@ -445,6 +464,16 @@ _NOTES = {
             "No options matched your branch preferences ({branches}). Try adding "
             "more branches or clearing the branch filter."
         ),
+        "curated": (
+            "Showing the {shown} strongest picks out of {total} eligible options, "
+            "with at most a couple of branches per institute. Open a single "
+            "section to see every option in it."
+        ),
+        "top_rank": (
+            "Your rank clears the cutoff for all {total} options you are eligible "
+            "for, so there is nothing to mark Target or Dream. Showing the "
+            "{shown} most competitive of them."
+        ),
     },
     "hi": {
         "no_adv": (
@@ -472,6 +501,16 @@ _NOTES = {
             "आपकी ब्रांच पसंद ({branches}) से कोई विकल्प मेल नहीं खाया। और ब्रांच जोड़ें "
             "या ब्रांच फ़िल्टर हटाकर देखें।"
         ),
+        "curated": (
+            "{total} योग्य विकल्पों में से सबसे मज़बूत {shown} दिखाए जा रहे हैं, और हर संस्थान "
+            "से ज़्यादा से ज़्यादा दो-तीन ब्रांच रखी गई हैं। किसी एक सेक्शन को खोलकर उसके "
+            "सभी विकल्प देखें।"
+        ),
+        "top_rank": (
+            "आपकी रैंक उन सभी {total} विकल्पों का कटऑफ़ पार कर लेती है जिनके आप योग्य हैं, "
+            "इसलिए Target या Dream में रखने लायक कुछ नहीं है। इनमें से सबसे प्रतिस्पर्धी "
+            "{shown} दिखाए जा रहे हैं।"
+        ),
     },
     "gu": {
         "no_adv": (
@@ -498,6 +537,15 @@ _NOTES = {
             "તમારી બ્રાન્ચ પસંદગીઓ ({branches}) સાથે કોઈ વિકલ્પ મેળ ખાતો નથી. "
             "વધુ બ્રાન્ચ ઉમેરવાનો અથવા ફિલ્ટર સાફ કરવાનો પ્રયાસ કરો."
         ),
+        "curated": (
+            "{total} પાત્ર વિકલ્પોમાંથી સૌથી મજબૂત {shown} બતાવી રહ્યા છીએ, અને દરેક સંસ્થા "
+            "દીઠ વધુમાં વધુ બે-ત્રણ બ્રાન્ચ રાખી છે. કોઈ એક વિભાગ ખોલીને તેના બધા વિકલ્પો જુઓ."
+        ),
+        "top_rank": (
+            "તમારો રેન્ક તમે જેના માટે પાત્ર છો તે બધા {total} વિકલ્પોનો કટઓફ પાર કરે છે, "
+            "તેથી Target કે Dream તરીકે ચિહ્નિત કરવા જેવું કંઈ નથી. તેમાંથી સૌથી સ્પર્ધાત્મક "
+            "{shown} બતાવી રહ્યા છીએ."
+        ),
     },
     "kn": {
         "no_adv": (
@@ -523,6 +571,16 @@ _NOTES = {
         "branch_filter_empty": (
             "ನಿಮ್ಮ ಬ್ರಾಂಚ್ ಆದ್ಯತೆಗಳಿಗೆ ({branches}) ಯಾವುದೇ ಆಯ್ಕೆಗಳು ಹೊಂದಿಕೆಯಾಗುತ್ತಿಲ್ಲ. "
             "ಹೆಚ್ಚಿನ ಬ್ರಾಂಚ್‌ಗಳನ್ನು ಸೇರಿಸಿ ಅಥವಾ ಫಿಲ್ಟರ್ ತೆರವುಗೊಳಿಸಿ."
+        ),
+        "curated": (
+            "{total} ಅರ್ಹ ಆಯ್ಕೆಗಳಲ್ಲಿ ಅತ್ಯಂತ ಪ್ರಬಲವಾದ {shown} ಅನ್ನು ತೋರಿಸಲಾಗುತ್ತಿದೆ, ಪ್ರತಿ "
+            "ಸಂಸ್ಥೆಗೆ ಗರಿಷ್ಠ ಎರಡು-ಮೂರು ಬ್ರಾಂಚ್‌ಗಳಂತೆ. ಒಂದು ವಿಭಾಗವನ್ನು ತೆರೆದು ಅದರ ಎಲ್ಲಾ "
+            "ಆಯ್ಕೆಗಳನ್ನು ನೋಡಿ."
+        ),
+        "top_rank": (
+            "ನೀವು ಅರ್ಹರಾಗಿರುವ ಎಲ್ಲಾ {total} ಆಯ್ಕೆಗಳ ಕಟ್‌ಆಫ್ ಅನ್ನು ನಿಮ್ಮ ರ‍್ಯಾಂಕ್ ದಾಟುತ್ತದೆ, "
+            "ಆದ್ದರಿಂದ Target ಅಥವಾ Dream ಎಂದು ಗುರುತಿಸಲು ಏನೂ ಇಲ್ಲ. ಅವುಗಳಲ್ಲಿ ಅತ್ಯಂತ "
+            "ಸ್ಪರ್ಧಾತ್ಮಕ {shown} ಅನ್ನು ತೋರಿಸಲಾಗುತ್ತಿದೆ."
         ),
     },
 }
@@ -595,6 +653,13 @@ _GUIDANCE = {
             "(showing {shown}). They are grouped into Target, Dream and Safe, and "
             "ordered to match your stated interest."
         ),
+        "beyond_data": (
+            "Your rank ({rank:,}) is past the last seat you are eligible for in "
+            "this dataset — the weakest cutoff open to your category, gender and "
+            "home state closed at {weakest:,}. Adding another rank will not "
+            "change this. Look at state counselling, private universities, or "
+            "the CSAB special rounds instead."
+        ),
     },
     "hi": {
         "empty": (
@@ -607,6 +672,12 @@ _GUIDANCE = {
             "({shown} दिखाए जा रहे हैं)। इन्हें Target, Dream और Safe में बाँटा गया है "
             "और आपकी बताई रुचि के अनुसार क्रम में लगाया गया है।"
         ),
+        "beyond_data": (
+            "आपकी रैंक ({rank:,}) इस डेटा में आपके लिए उपलब्ध आख़िरी सीट से भी आगे है — "
+            "आपकी श्रेणी, जेंडर और होम-स्टेट के लिए सबसे कमज़ोर कटऑफ़ {weakest:,} पर बंद "
+            "हुआ था। दूसरी रैंक डालने से यह नहीं बदलेगा। इसके बजाय राज्य काउंसलिंग, "
+            "प्राइवेट यूनिवर्सिटी, या CSAB स्पेशल राउंड देखें।"
+        ),
     },
     "gu": {
         "empty": (
@@ -617,6 +688,12 @@ _GUIDANCE = {
             "તમારી પ્રોફાઇલ માટે {total} પાત્ર સંસ્થા-બ્રાન્ચ વિકલ્પો મળ્યા "
             "({shown} બતાવી રહ્યા છીએ). તેઓ Target, Dream અને Safe માં વર્ગીકૃત થયેલ છે "
             "અને તમારી જણાવેલી રુચિ અનુસાર ગોઠવાયેલા છે."
+        ),
+        "beyond_data": (
+            "તમારો રેન્ક ({rank:,}) આ ડેટાસેટમાં તમે જેના માટે પાત્ર છો તે છેલ્લી સીટથી પણ "
+            "આગળ છે — તમારી કેટેગરી, જાતિ અને હોમ-સ્ટેટ માટેનો સૌથી નબળો કટઓફ {weakest:,} "
+            "પર બંધ થયો હતો. બીજો રેન્ક ઉમેરવાથી આ બદલાશે નહીં. તેના બદલે રાજ્ય કાઉન્સેલિંગ, "
+            "ખાનગી યુનિવર્સિટીઓ, અથવા CSAB સ્પેશિયલ રાઉન્ડ જુઓ."
         ),
     },
     "kn": {
@@ -629,144 +706,79 @@ _GUIDANCE = {
             "({shown} ತೋರಿಸಲಾಗುತ್ತಿದೆ). ಇವುಗಳನ್ನು Target, Dream ಮತ್ತು Safe ಎಂದು ವರ್ಗೀಕರಿಸಿ, "
             "ನಿಮ್ಮ ಆಸಕ್ತಿಗೆ ತಕ್ಕಂತೆ ಜೋಡಿಸಲಾಗಿದೆ."
         ),
+        "beyond_data": (
+            "ನಿಮ್ಮ ರ‍್ಯಾಂಕ್ ({rank:,}) ಈ ಡೇಟಾಸೆಟ್‌ನಲ್ಲಿ ನೀವು ಅರ್ಹರಾಗಿರುವ ಕೊನೆಯ ಸೀಟನ್ನೂ "
+            "ದಾಟಿದೆ — ನಿಮ್ಮ ವರ್ಗ, ಲಿಂಗ ಮತ್ತು ತವರು ರಾಜ್ಯಕ್ಕೆ ಲಭ್ಯವಿರುವ ಅತ್ಯಂತ ದುರ್ಬಲ ಕಟ್‌ಆಫ್ "
+            "{weakest:,} ರಲ್ಲಿ ಮುಚ್ಚಿದೆ. ಇನ್ನೊಂದು ರ‍್ಯಾಂಕ್ ಸೇರಿಸಿದರೂ ಇದು ಬದಲಾಗುವುದಿಲ್ಲ. "
+            "ಬದಲಿಗೆ ರಾಜ್ಯ ಕೌನ್ಸೆಲಿಂಗ್, ಖಾಸಗಿ ವಿಶ್ವವಿದ್ಯಾಲಯಗಳು ಅಥವಾ CSAB ವಿಶೇಷ ಸುತ್ತುಗಳನ್ನು ನೋಡಿ."
+        ),
     },
 }
 
 
 
 
-def _apply_top_rank_fallback(
-    exam_type: str,
-    rank: Optional[int],
-    results: List[Recommendation],
-    programs: List[Program],
-    req: RecommendRequest,
-    req_category: str,
-    is_pwd: bool,
-    wanted_tags: Set[str],
-    hs_index: dict,
-    female_index: dict,
-    lang: str,
-    effective_mode: str,
-) -> None:
-    """If student provided a rank for exam_type and normal overqualification filtering
-    returned 0 options (or fewer than 10 options for top rankers <= 500), include the top
-    options sorted by opening_rank as 'Safe' picks.
+def _order_bucket(rows: List[Recommendation], bucket: str) -> List[Recommendation]:
+    """Order one bucket best-first, so a cap keeps the strongest options.
+
+    Target and Safe lead with the most competitive programme the rank can
+    reach (lowest closing rank breaks an interest-score tie).  Reach inverts
+    that tiebreak: the *highest* closing rank inside the Dream band is the one
+    the student is closest to reaching, so sorting Dreams by ascending closing
+    rank — as the old flat sort did — put the least attainable Dream first.
     """
-    if rank is None:
-        return
-
-    # Check if the candidate's rank qualifies as a top-rank fallback case.
-    # We only apply the fallback logic if they have an exceptional category rank.
-    is_top = False
-    cat_upper = req_category.upper() if req_category else "OPEN"
-    if is_pwd or "(PWD)" in cat_upper:
-        is_top = rank <= 15
-    elif "OBC" in cat_upper:
-        is_top = rank <= 150
-    elif "SC" in cat_upper:
-        is_top = rank <= 100
-    elif "ST" in cat_upper:
-        is_top = rank <= 50
-    elif "EWS" in cat_upper:
-        is_top = rank <= 100
-    else:
-        is_top = rank <= 500
-
-    if not is_top:
-        return
-
-    exam_results = [r for r in results if r.exam == exam_type]
-    if len(exam_results) >= 10:
-        return
-
-    existing_keys = {(r.institute, r.branch_full, r.quota) for r in exam_results}
-    target_category = req_category
-    if is_pwd and not target_category.endswith(" (PwD)"):
-        target_category = f"{target_category} (PwD)"
-
-    eligible = []
-    for prog in programs:
-        if prog.exam != exam_type:
-            continue
-        if prog.seat_type != target_category:
-            continue
-        if not _passes_gender(prog, req.gender):
-            continue
-        if not _passes_quota(prog, req.home_state):
-            continue
-        if wanted_tags and prog.tags.isdisjoint(wanted_tags):
-            continue
-        if (prog.institute, prog.branch_full, prog.quota) in existing_keys:
-            continue
-        if prog.opening_rank > 10000:
-            continue
-        eligible.append(prog)
-
-    eligible.sort(key=lambda p: p.opening_rank)
-    needed = 10 - len(exam_results)
-    top_picks = eligible[:needed]
-
-    for prog in top_picks:
-        bucket = "Safe"
-        score, matched = _interest_score(prog, req.goal, req.brand_branch_ratio)
-        home_state_advantage = None
-        if prog.quota == "HS":
-            home_state_advantage = hs_index.get(
-                (prog.institute, prog.branch_full, prog.exam, prog.gender_pool, prog.seat_type)
-            )
-        female_seat_advantage = None
-        if req.gender == "female" and prog.gender_pool == "female":
-            female_seat_advantage = female_index.get(
-                (prog.institute, prog.branch_full, prog.exam, prog.quota, prog.seat_type)
-            )
-
-        confidence = prog.volatility_tag
-        reason = _build_reason(
-            prog,
-            bucket,
-            matched,
-            confidence,
-            home_state_advantage,
-            female_seat_advantage,
-            lang,
+    if bucket == "Reach":
+        return sorted(
+            rows,
+            key=lambda r: (-r.interest_score, -r.closing_rank, r.institute, r.branch),
         )
-        region = _get_region(prog.institute_state)
-        is_metro = _is_metro(prog.institute, prog.institute_state)
-        history = get_program_history(prog, effective_mode)
-        prob = 99.5  # High probability for top rankers
+    return sorted(
+        rows,
+        key=lambda r: (-r.interest_score, r.closing_rank, r.institute, r.branch),
+    )
 
-        results.append(
-            Recommendation(
-                institute=prog.institute,
-                institute_type=prog.institute_type,
-                institute_state=prog.institute_state,
-                exam=prog.exam,
-                branch=prog.branch,
-                branch_full=prog.branch_full,
-                degree=prog.degree,
-                quota=prog.quota,
-                gender_pool=prog.gender_pool,
-                opening_rank=prog.opening_rank,
-                closing_rank=prog.closing_rank,
-                category=bucket,
-                fit_label=FIT_LABELS.get(lang, FIT_LABELS["en"])[bucket],
-                interest_score=round(score, 2),
-                matched_interest=matched,
-                home_state_advantage=home_state_advantage,
-                female_seat_advantage=female_seat_advantage,
-                confidence=confidence,
-                flag_round=prog.flag_round,
-                reason=reason,
-                region=region,
-                is_metro=is_metro,
-                is_top_iit=getattr(prog, "is_top_iit", False),
-                history=history,
-                admission_probability=prob,
-                is_preparatory=prog.is_preparatory,
-                has_preparatory_rounds=prog.has_preparatory_rounds,
-            )
-        )
+
+def _curate_bucket(
+    rows: List[Recommendation], cap: int, max_per_institute: int
+) -> List[Recommendation]:
+    """Take the first ``cap`` options, allowing at most N per institute.
+
+    ``rows`` must already be ordered best-first.  Nothing is deleted from the
+    caller's data — this only chooses what the default response displays.
+
+    The per-institute allowance is raised one seat at a time rather than
+    abandoned, so a bucket that cannot fill under a strict limit still fills,
+    fairly: every college gets a third seat before any college gets a fourth.
+    Diversity therefore never costs the student options — if a bucket holds
+    three programmes and all three are from one institute, all three are still
+    shown.
+    """
+    if cap <= 0 or not rows:
+        return []
+
+    kept: List[Recommendation] = []
+    taken: Set[int] = set()
+    per_institute: Dict[str, int] = {}
+    allowance = max(1, max_per_institute)
+
+    while len(kept) < cap:
+        progressed = False
+        for idx, row in enumerate(rows):
+            if len(kept) >= cap:
+                break
+            if idx in taken:
+                continue
+            if per_institute.get(row.institute, 0) >= allowance:
+                continue
+            kept.append(row)
+            taken.add(idx)
+            per_institute[row.institute] = per_institute.get(row.institute, 0) + 1
+            progressed = True
+        if not progressed:
+            break
+        allowance += 1
+
+    return kept
 
 
 def recommend(req: RecommendRequest) -> RecommendResponse:
@@ -799,6 +811,11 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         target_category = f"{target_category} (PwD)"
 
     results: List[Recommendation] = []
+    # The weakest cutoff the student is actually allowed to compete for, after
+    # every eligibility filter but before categorisation. If their rank is past
+    # even this, no advice about ranks or filters will help — the dataset
+    # simply has no seat for them, and the note below must say so plainly.
+    weakest_reachable: Optional[int] = None
     for prog in programs:
         rank = _relevant_rank(prog, req)
         if rank is None:
@@ -812,6 +829,8 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
             continue
         if wanted_tags and prog.tags.isdisjoint(wanted_tags):
             continue
+        if weakest_reachable is None or prog.closing_rank > weakest_reachable:
+            weakest_reachable = prog.closing_rank
         bucket = _categorize(rank, prog.opening_rank, prog.closing_rank)
         if bucket is None:
             continue
@@ -878,65 +897,73 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
             )
         )
 
-    # Apply top rank fallback for Mains and Advanced cleanly using helper
-    _apply_top_rank_fallback(
-        "mains",
-        req.mains_rank,
-        results,
-        programs,
-        req,
-        target_category,
-        req.is_pwd,
-        wanted_tags,
-        hs_index,
-        female_index,
-        lang,
-        effective_mode,
-    )
-    _apply_top_rank_fallback(
-        "advanced",
-        req.adv_rank,
-        results,
-        programs,
-        req,
-        target_category,
-        req.is_pwd,
-        wanted_tags,
-        hs_index,
-        female_index,
-        lang,
-        effective_mode,
-    )
+    # ── Curate the default view ──────────────────────────────────────────
+    # Order each bucket best-first, then cap it. Every eligible option stays
+    # counted (``total_by_type`` below reports the full attainable numbers) and
+    # stays reachable by requesting a single bucket, which is returned uncapped.
+    eligible: Dict[str, List[Recommendation]] = {c: [] for c in CATEGORY_ORDER}
+    for r in results:
+        eligible[r.category].append(r)
+    for cat in eligible:
+        eligible[cat] = _order_bucket(eligible[cat], cat)
 
-    all_matches = results
-    all_matches.sort(
-        key=lambda r: (
-            CATEGORY_ORDER[r.category],
-            -r.interest_score,
-            r.closing_rank,
-            r.institute,
-            r.branch,
-        )
-    )
+    count_target = len(eligible["Target"])
+    count_reach = len(eligible["Reach"])
+    count_safe = len(eligible["Safe"])
+    total_unfiltered = count_target + count_reach + count_safe
 
-    total_unfiltered = len(all_matches)
+    # Top-rank mode: when nothing lands in Target or Dream, the student's rank
+    # clears every cutoff they are eligible for, so all three buckets collapse
+    # into one undifferentiated "Safe" wall (118 cards at Mains rank 1, all at
+    # 100 % probability). Show a short, institute-diverse list of the most
+    # competitive programmes instead. Triggered by the bucket counts rather
+    # than a rank threshold, so it adapts to each seat category's own scale.
+    is_top_rank = total_unfiltered > 0 and count_target == 0 and count_reach == 0
 
-    # Compute full breakdown of counts by college type per bucket across ALL matches
+    requested_bucket = _SINGLE_BUCKETS.get((req.bucket or "all").lower())
+    single_bucket = requested_bucket is not None
+    if single_bucket:
+        # A per-bucket request is the "show me everything in this section"
+        # view: that one bucket, uncapped, and nothing from the other two.
+        curated = {c: [] for c in CATEGORY_ORDER}
+        curated[requested_bucket] = eligible[requested_bucket]
+    elif is_top_rank:
+        curated = {
+            "Target": [],
+            "Reach": [],
+            "Safe": _curate_bucket(eligible["Safe"], TOP_RANK_CAP, MAX_PER_INSTITUTE),
+        }
+    else:
+        curated = {
+            cat: _curate_bucket(rows, BUCKET_CAPS[cat], MAX_PER_INSTITUTE)
+            for cat, rows in eligible.items()
+        }
+
+    all_matches: List[Recommendation] = []
+    for cat in sorted(CATEGORY_ORDER, key=lambda c: CATEGORY_ORDER[c]):
+        all_matches.extend(curated[cat])
+
+    # Full breakdown by college type per bucket, over every ELIGIBLE option —
+    # not just the shown ones. The UI renders these as "N NIT, M IIIT
+    # available", which must stay honest when the shown list is capped.
+    _BUCKET_KEY = {"Safe": "safe", "Target": "target", "Reach": "dream"}
     total_by_type = {
-        "safe": {"IIT": 0, "NIT": 0, "IIIT": 0, "GFTI": 0, "total": 0},
-        "target": {"IIT": 0, "NIT": 0, "IIIT": 0, "GFTI": 0, "total": 0},
-        "dream": {"IIT": 0, "NIT": 0, "IIIT": 0, "GFTI": 0, "total": 0},
-        "all": {"IIT": 0, "NIT": 0, "IIIT": 0, "GFTI": 0, "total": 0},
+        "safe": {"IIT": 0, "NIT": 0, "IIIT": 0, "GFTI": 0, "total": 0, "shown": 0},
+        "target": {"IIT": 0, "NIT": 0, "IIIT": 0, "GFTI": 0, "total": 0, "shown": 0},
+        "dream": {"IIT": 0, "NIT": 0, "IIIT": 0, "GFTI": 0, "total": 0, "shown": 0},
+        "all": {"IIT": 0, "NIT": 0, "IIIT": 0, "GFTI": 0, "total": 0, "shown": 0},
     }
-    for r in all_matches:
-        b_key = "safe" if r.category == "Safe" else ("target" if r.category == "Target" else "dream")
+    for r in results:
+        b_key = _BUCKET_KEY[r.category]
         itype = r.institute_type
         if itype in total_by_type[b_key]:
             total_by_type[b_key][itype] += 1
-            total_by_type[b_key]["total"] += 1
-        if itype in total_by_type["all"]:
             total_by_type["all"][itype] += 1
-            total_by_type["all"]["total"] += 1
+        total_by_type[b_key]["total"] += 1
+        total_by_type["all"]["total"] += 1
+    for cat, rows in curated.items():
+        total_by_type[_BUCKET_KEY[cat]]["shown"] = len(rows)
+    total_by_type["all"]["shown"] = len(all_matches)
 
     # Tell the student a branch filter is shaping these results.
     if wanted_tags:
@@ -948,17 +975,26 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         note_key = "branch_filter" if total_unfiltered else "branch_filter_empty"
         notes.append(notes_text[note_key].format(branches=branch_names))
 
-    total_count = len(all_matches)
+    shown_count = len(all_matches)
 
     counts = {
-        "total": total_count,
-        "shown": total_count,
+        # "total" is everything the student is eligible for; "shown" is the
+        # size of the curated list actually returned.
+        "total": total_unfiltered,
+        "shown": shown_count,
         "by_category": {
-            "Safe": total_by_type["safe"]["total"],
-            "Target": total_by_type["target"]["total"],
-            "Reach": total_by_type["dream"]["total"],
+            "Safe": count_safe,
+            "Target": count_target,
+            "Reach": count_reach,
+        },
+        "shown_by_category": {
+            "Safe": len(curated["Safe"]),
+            "Target": len(curated["Target"]),
+            "Reach": len(curated["Reach"]),
         },
         "by_type": total_by_type["all"],
+        "is_curated": shown_count < total_unfiltered,
+        "is_top_rank": is_top_rank,
     }
 
     blurbs = CATEGORY_BLURBS.get(lang, CATEGORY_BLURBS["en"])
@@ -974,9 +1010,28 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
 
     guidance_text = _GUIDANCE.get(lang, _GUIDANCE["en"])
     if total_unfiltered == 0:
-        overall = guidance_text["empty"]
+        # Distinguish "your rank is past every seat you could compete for" from
+        # "your filters were too narrow". The generic empty message advises
+        # supplying the other rank, which is actively wrong in the first case.
+        student_rank = req.mains_rank if req.mains_rank is not None else req.adv_rank
+        beyond_data = (
+            weakest_reachable is not None
+            and student_rank is not None
+            and student_rank > weakest_reachable * (1 + UPPER_MARGIN)
+        )
+        if beyond_data:
+            overall = guidance_text["beyond_data"].format(
+                rank=student_rank, weakest=weakest_reachable
+            )
+        else:
+            overall = guidance_text["empty"]
     else:
-        overall = guidance_text["found"].format(total=total_unfiltered, shown=total_count)
+        overall = guidance_text["found"].format(total=total_unfiltered, shown=shown_count)
+
+    if is_top_rank and not single_bucket:
+        notes.append(notes_text["top_rank"].format(shown=shown_count, total=total_unfiltered))
+    elif counts["is_curated"] and not single_bucket:
+        notes.append(notes_text["curated"].format(shown=shown_count, total=total_unfiltered))
 
     interest_guidance = states.GOAL_GUIDANCE.get(lang, states.GOAL_GUIDANCE["en"]).get(
         req.goal, ""
@@ -989,11 +1044,14 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
         notes=notes,
         category_guidance=category_guidance,
         recommendations=all_matches,
-        total_count=total_count,
+        total_count=total_unfiltered,
         total_by_type=total_by_type,
         thresholds={
             "lower_margin": LOWER_MARGIN,
             "safe_fraction": SAFE_FRACTION,
             "upper_margin": UPPER_MARGIN,
+            "caps": dict(BUCKET_CAPS),
+            "max_per_institute": MAX_PER_INSTITUTE,
+            "top_rank_cap": TOP_RANK_CAP,
         },
     )
