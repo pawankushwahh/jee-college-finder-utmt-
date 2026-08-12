@@ -1,34 +1,45 @@
 """KCET API routes."""
 
-from fastapi import APIRouter
-from typing import Optional
+from __future__ import annotations
 
-from app.disha.states import VALID_GOALS, GOAL_LABELS
-from .schemas import KcetRecommendRequest, KcetRecommendResponse, KcetMetaResponse
+from fastapi import APIRouter
+
+from . import states
+from .data_loader import get_institute_count, get_seat_categories, load_programs
 from .recommender import recommend
-from .data_loader import get_programs
+from .schemas import KcetMetaResponse, KcetRecommendRequest, KcetRecommendResponse
 
 router = APIRouter(prefix="/api/kcet", tags=["kcet"])
 
+
+@router.get("/health")
+def health() -> dict:
+    return {"status": "ok", "programs": len(load_programs())}
+
+
 @router.get("/meta", response_model=KcetMetaResponse)
 def meta() -> KcetMetaResponse:
-    # Extract unique quotas/categories from loaded programs
-    programs = get_programs()
-    quotas = sorted(list(set(p["quota"] for p in programs if p.get("quota"))))
-    if not quotas:
-        quotas = ["GM"]  # default fallback
-        
+    categories = get_seat_categories() or ["GM"]
     return KcetMetaResponse(
-        quotas=quotas,
-        goals=[{"value": g, "label": GOAL_LABELS[g]} for g in VALID_GOALS],
-        total_programs=len(programs)
+        seat_categories=[
+            {"value": c, "label": states.describe_category(c)} for c in categories
+        ],
+        goals=[{"value": g, "label": states.GOAL_LABELS[g]} for g in states.VALID_GOALS],
+        branch_preferences=[
+            {"value": b["value"], "label": b["label"]} for b in states.BRANCH_PREFERENCES
+        ],
+        total_programs=len(load_programs()),
+        total_institutes=get_institute_count(),
     )
 
+
 @router.post("/recommend", response_model=KcetRecommendResponse)
-def recommend_endpoint_post(req: KcetRecommendRequest) -> KcetRecommendResponse:
+def recommend_endpoint(req: KcetRecommendRequest) -> KcetRecommendResponse:
     return recommend(req)
 
-@router.get("/stats", tags=["kcet"])
+
+@router.get("/stats")
 def stats_endpoint() -> dict:
     from .stats_loader import compute_kcet_stats
+
     return compute_kcet_stats()
