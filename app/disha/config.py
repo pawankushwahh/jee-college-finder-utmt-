@@ -29,6 +29,37 @@ class Settings:
     # Extended mode has been removed — this setting is kept for API compatibility.
     data_mode: str = "basic"
 
+    # ── Curation: how many cards each bucket shows by default ─────────────
+    # Measured against the 2025 JoSAA set, the uncapped engine returned 118
+    # options at Mains rank 1, 489 at rank 20,000 and 307 at rank 50,000 — a
+    # data dump rather than a recommendation.  These caps bound the default
+    # "all" response only: every eligible programme is still counted in
+    # ``total_by_type[...]["total_attainable"]`` and still reachable by asking
+    # for a single bucket (``bucket=safe|target|dream``), which is returned
+    # uncapped.  Ordering plus a cap does the curation; nothing is deleted.
+    cap_target: int = 25
+    cap_reach: int = 15
+    cap_safe: int = 15
+
+    # Max programmes from a single institute inside one bucket's shown list.
+    # Ordering by interest score alone gave a Mains rank-1 student three cards
+    # from Surathkal and three from Warangal inside the first twenty; students
+    # want a shortlist of colleges, not one college's prospectus.  The
+    # allowance is relaxed one seat at a time when a bucket cannot otherwise
+    # fill, so diversity never costs the student options.
+    max_per_institute: int = 2
+
+    # ── Top-rank mode ─────────────────────────────────────────────────────
+    # For exceptional ranks every programme lands in Safe (at Mains rank 1:
+    # 118 Safe, 0 Target, 0 Dream, all at 100 % probability), so the
+    # three-bucket framing carries no signal at all.  Detected from the bucket
+    # counts rather than a hardcoded rank, because the rank scale differs
+    # wildly per seat category — an SC rank-500 student has 546 eligible
+    # options where an OPEN rank-500 student has 124, and ST is exhausted by
+    # rank 20,000 where OPEN peaks.  Any fixed rank threshold would be wrong
+    # for most categories.
+    top_rank_cap: int = 25
+
     @property
     def cors_origin_list(self) -> List[str]:
         origins = [o.strip() for o in self.cors_origins.split(",") if o.strip()]

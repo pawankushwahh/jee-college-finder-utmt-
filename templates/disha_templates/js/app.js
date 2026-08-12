@@ -2174,7 +2174,11 @@ function renderSections() {
     if (typeCounts.IIIT) typeParts.push(`${typeCounts.IIIT} IIIT`);
     if (typeCounts.GFTI) typeParts.push(`${typeCounts.GFTI} GFTI`);
     const breakdownStr = typeParts.length ? `${typeParts.join(", ")} available` : "";
-    const totalAvail = all.length;
+    // The backend curates: `all` holds the shortlist it chose to send, while
+    // typeCounts.total is every option the student is actually eligible for.
+    // Report the eligible total so "Showing 25 of 109" stays true — reading it
+    // off `all` would claim "25 of 25" and hide the other 84.
+    const totalAvail = Number.isFinite(typeCounts.total) ? typeCounts.total : all.length;
 
     const isSectionCollapsed = !!state.collapsedSections[catName];
     section.innerHTML = `
