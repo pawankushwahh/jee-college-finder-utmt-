@@ -1,373 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Disha — COMEDK 2025 College Predictor</title>
-  <meta name="description" content="Find your best college match for COMEDK 2025. Enter your rank and get Safe, Target and Dream recommendations from real cutoff data." />
+  <title>Disha — Find your direction after COMEDK</title>
+  <meta name="description"
+    content="Disha, a UTMT initiative — a calm, guided college counsellor for COMEDK aspirants. Enter your rank and goals, and see which Karnataka engineering colleges realistically fit — grouped into Safe, Target and Dream with personal guidance." />
   <meta name="theme-color" content="#faf6ee" />
-  <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
-  <link rel="apple-touch-icon" href="/assets/favicon.svg" />
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg" />
+  <link rel="apple-touch-icon" href="../assets/favicon.svg" />
+  <link rel="manifest" href="../manifest.json" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" media="print" onload="this.media='all'"
     href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" />
   <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" />
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" />
   </noscript>
-  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="../css/style.css" />
   <script>
-    // Nuke stale SW cache exactly once per browser session
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
       if (!sessionStorage.getItem('sw_cleared_v8')) {
         sessionStorage.setItem('sw_cleared_v8', '1');
-        caches.keys().then(ks => Promise.all(ks.map(k => caches.delete(k)))).then(() => location.reload());
+        caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k)))).then(() => location.reload());
       }
     }
   </script>
-  <style>
-    /* ── COMEDK scoped extras (do NOT override layout rules from style.css) ── */
-
-
-
-    /* ── Layout enforcement ────────────────────────────────────────── */
-    /* Ensure the flow container is perfectly centered horizontally and vertically */
-    .view--flow {
-      justify-content: center !important;
-    }
-    .flow {
-      margin: 0 auto !important;
-    }
-
-    /* Section empty state */
-    .rsection__empty {
-      padding: 32px 24px;
-      text-align: center;
-      color: var(--ink-soft, #8a7f6f);
-      font-size: 0.9rem;
-    }
-    .rsection + .rsection { margin-top: 28px; }
-
-    /* Live-update overlay */
-    .results-main.is-refreshing { opacity: 0.55; pointer-events: none; transition: opacity 0.2s; }
-
-    /* ── Branch grid (multi-select chips) ─────────────────────────── */
-    .branch-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 20px;
-    }
-    .branch-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 10px 16px;
-      border: 1.5px solid var(--border, #d9d2c6);
-      border-radius: 10px;
-      background: var(--card-bg, #fff);
-      color: var(--ink, #2c2416);
-      font-size: 0.88rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s ease;
-      user-select: none;
-    }
-    .branch-chip:hover {
-      border-color: var(--pine, #2d6a4f);
-      background: rgba(45, 106, 79, 0.04);
-    }
-    .branch-chip.is-selected {
-      border-color: var(--pine, #2d6a4f);
-      background: var(--pine, #2d6a4f);
-      color: #fff;
-    }
-    .branch-chip__check {
-      width: 16px;
-      height: 16px;
-      display: none;
-    }
-    .branch-chip.is-selected .branch-chip__check {
-      display: inline-block;
-    }
-
-    /* ── Panel branch chips (sidebar) ────────────────────────────── */
-    .panel-branch-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 6px;
-    }
-    .panel-branch-chip {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      padding: 5px 10px;
-      border: 1px solid var(--border, #d9d2c6);
-      border-radius: 6px;
-      background: var(--card-bg, #fff);
-      color: var(--ink, #2c2416);
-      font-size: 0.78rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.15s ease;
-    }
-    .panel-branch-chip:hover {
-      border-color: var(--pine, #2d6a4f);
-    }
-    .panel-branch-chip.is-selected {
-      border-color: var(--pine, #2d6a4f);
-      background: var(--pine, #2d6a4f);
-      color: #fff;
-    }
-  </style>
 </head>
 
 <body>
-  <!-- ── Header ── -->
+
+  <!-- ───────────────────────── Header ───────────────────────── -->
   <header class="topbar">
-    <a class="wordmark" href="/" id="wordmark" aria-label="Disha home">
+    <a class="wordmark" href="../" id="wordmark" aria-label="Disha — home">
       <svg class="wordmark__mark" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6"/>
-        <path d="M15.5 8.5l-2.2 5.1-5.1 2.2 2.2-5.1 5.1-2.2z" fill="currentColor"/>
+        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.6" />
+        <path d="M15.5 8.5l-2.2 5.1-5.1 2.2 2.2-5.1 5.1-2.2z" fill="currentColor" />
       </svg>
       <span class="wordmark__text">Disha <span class="wordmark__devanagari" aria-hidden="true">दिशा</span></span>
     </a>
+    <a class="utmt-badge" href="https://www.utmt.org" target="_blank" rel="noopener">a <strong>UTMT</strong>
+      initiative</a>
     <div class="topbar__right">
-      <span class="topbar__data-note" id="data-note">COMEDK 2025</span>
-      <a href="/exam/comedk/stats" class="btn btn--primary btn--sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 4px; height: 32px; padding: 0 12px; font-size: 13px;">
+      <span class="topbar__data-note"><span>COMEDK 2025 cutoffs · </span><span
+          id="program-count">637</span><span> programs</span></span>
+      <a href="../comedk/stats" class="btn btn--primary btn--sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 4px; height: 32px; padding: 0 12px; font-size: 13px;">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <path d="M18 20V10M12 20V4M6 20v-6"/>
         </svg>
         <span>Insights</span>
       </a>
-      <button type="button" class="btn btn--ghost btn--sm" id="restart-btn" hidden>Start over</button>
+      <button type="button" class="btn btn--ghost btn--sm" id="restart-btn" hidden>Start
+        over</button>
     </div>
   </header>
 
   <main id="main">
 
-    <!-- ════ WELCOME ════ -->
+    <!-- ───────────────────────── View: Welcome ───────────────────────── -->
     <section class="view view--welcome is-active" id="view-welcome" aria-label="Welcome">
       <div class="welcome">
         <p class="eyebrow welcome__eyebrow">For COMEDK 2025 aspirants</p>
-        <h1 class="welcome__title">Your rank is a starting&nbsp;point,<br><em>not a verdict.</em></h1>
+        <h1 class="welcome__title">Your rank is a starting&nbsp;point, <em>not a
+            verdict.</em></h1>
         <p class="welcome__lede">
-          Enter your COMEDK rank and we'll find the colleges where you genuinely stand a chance —
+          Enter your COMEDK rank and what you want from the next four years.
+          We'll show you the Karnataka engineering colleges where you genuinely stand a chance —
           sorted into <strong class="tone-safe">Safe</strong>, <strong class="tone-target">Target</strong>
-          and <strong class="tone-reach">Dream</strong> — using real 2025 cutoff data.
+          and <strong class="tone-reach">Dream</strong> — with honest guidance for your choices.
         </p>
         <button type="button" class="btn btn--primary btn--lg welcome__cta" id="begin-btn">
-          Find where I stand
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          <span>Find where I stand</span>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
         </button>
-        <p class="welcome__trust">Takes about a minute · Free · No login · Nothing stored</p>
+        <p class="welcome__trust">Takes about a minute · Free · Nothing is stored</p>
+        <p class="welcome__utmt">An open-source initiative by <a
+            href="https://www.utmt.org" target="_blank" rel="noopener">UTMT</a> — learn to build AI products</p>
+
         <div class="welcome__legend" aria-hidden="true">
-          <div class="legend-chip"><span class="dot dot--safe"></span> Safe <small>comfortably within cutoff</small></div>
-          <div class="legend-chip"><span class="dot dot--target"></span> Target <small>close to your rank</small></div>
-          <div class="legend-chip"><span class="dot dot--reach"></span> Dream <small>ambitious but possible</small></div>
+          <div class="legend-chip"><span class="dot dot--safe"></span><span>Safe</span>
+            <small>very likely</small></div>
+          <div class="legend-chip"><span class="dot dot--target"></span><span>Target</span> <small>realistic
+              fit</small></div>
+          <div class="legend-chip"><span class="dot dot--reach"></span><span>Dream</span> <small>Ambitious choices</small>
+          </div>
         </div>
+      </div>
+
+      <div class="offline-note" id="meta-offline" hidden>
+        <p>We couldn't reach the recommendation service. Make sure the backend is running,
+          then try again.</p>
+        <button type="button" class="btn btn--ghost btn--sm" id="retry-meta-btn">Retry</button>
       </div>
     </section>
 
-    <!-- ════ STEP 0 — RANK ════ -->
-    <section class="view view--flow" id="view-step-0" aria-label="Enter your rank">
+    <!-- ───────────────────────── View: Guided flow ───────────────────────── -->
+    <section class="view view--flow" id="view-flow" aria-label="Your details">
       <div class="flow">
         <div class="flow__head">
-          <button type="button" class="flow__back" id="back-0" aria-label="Back">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+          <button type="button" class="flow__back" id="flow-back"
+            aria-label="Previous question">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M19 12H5M11 18l-6-6 6-6" />
+            </svg>
           </button>
-          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" id="prog-0">
-            <div class="flow__progress-fill" style="width:25%"></div>
+          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1"
+            id="flow-progressbar">
+            <div class="flow__progress-fill" id="flow-progress-fill"></div>
           </div>
-          <span class="flow__count">1 / 4</span>
+          <span class="flow__count" id="flow-count">1 / 4</span>
         </div>
 
-        <p class="eyebrow">First things first</p>
-        <h2 class="step__title">What's your COMEDK rank?</h2>
-        <p class="step__hint">Enter your COMEDK UGET 2025 merit rank from the official result card.</p>
+        <form id="flow-form" novalidate>
 
-        <div class="field">
-          <label class="field__label" for="comedk-rank">COMEDK Rank</label>
-          <input class="input input--rank" id="comedk-rank" type="text" inputmode="numeric"
-                 autocomplete="off" placeholder="e.g. 5,000" />
-        </div>
-        <p class="field__error" id="error-rank" role="alert" hidden></p>
+          <!-- Step 1: Rank -->
+          <fieldset class="step" data-step="0">
+            <p class="eyebrow">First things first</p>
+            <h2 class="step__title">What's your COMEDK rank?</h2>
+            <p class="step__hint">Enter your COMEDK UGET 2025 merit rank from the official result card.</p>
 
-        <div class="flow__foot">
-          <button type="button" class="btn btn--primary btn--lg" id="next-0">Continue</button>
-          <p class="flow__kbd-hint">press <kbd>Enter</kbd> ↵</p>
-        </div>
+            <div class="field">
+              <label class="field__label" for="comedk-rank">COMEDK rank</label>
+              <input class="input input--rank" id="comedk-rank" type="text" inputmode="numeric" autocomplete="off"
+                placeholder="e.g. 5,000" />
+              <p class="field__note">Used for all COMEDK colleges in Karnataka.</p>
+            </div>
+
+            <p class="field__error" id="error-ranks" role="alert" hidden></p>
+          </fieldset>
+
+          <!-- Step 2: Quota -->
+          <fieldset class="step" data-step="1" hidden>
+            <p class="eyebrow">Your eligibility</p>
+            <h2 class="step__title">Which quota applies to you?</h2>
+            <p class="step__hint">KKR (Kalyana Karnataka Region) is reserved for students domiciled in the Hyderabad-Karnataka region. Most students will be under General Merit (GM).</p>
+
+            <div class="field">
+              <span class="field__label" id="quota-label">Quota</span>
+              <div class="choice-row" role="radiogroup" aria-labelledby="quota-label" id="quota-row">
+                <button type="button" class="choice is-selected" role="radio" aria-checked="true" data-value="GM">GM — General Merit</button>
+                <button type="button" class="choice" role="radio" aria-checked="false" data-value="KKR">KKR — Kalyana Karnataka</button>
+              </div>
+              <p class="field__note" id="quota-note">&nbsp;</p>
+            </div>
+          </fieldset>
+
+          <!-- Step 3: Branch preference -->
+          <fieldset class="step" data-step="2" hidden>
+            <p class="eyebrow">Branch focus</p>
+            <h2 class="step__title">Any branch in mind?</h2>
+            <p class="step__hint">Pick the branch families you'd consider. Leave it on "Any" to
+              keep every branch in your results.</p>
+
+            <div class="branch-grid" id="branch-grid" role="group" aria-label="Branch preference"></div>
+          </fieldset>
+
+          <!-- Step 4: Review -->
+          <fieldset class="step" data-step="3" hidden>
+            <p class="eyebrow">One last look</p>
+            <h2 class="step__title">Did we get this right?</h2>
+            <p class="step__hint">Tap any row to change it.</p>
+
+            <ul class="review" id="review-list"></ul>
+          </fieldset>
+
+          <div class="flow__foot">
+            <button type="submit" class="btn btn--primary btn--lg" id="flow-next">Continue</button>
+            <p class="flow__kbd-hint"><span>press</span> <kbd>Enter</kbd> ↵</p>
+          </div>
+        </form>
       </div>
     </section>
 
-    <!-- ════ STEP 1 — QUOTA ════ -->
-    <section class="view view--flow" id="view-step-1" aria-label="Select quota">
-      <div class="flow">
-        <div class="flow__head">
-          <button type="button" class="flow__back" id="back-1" aria-label="Back">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
-          </button>
-          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="2" id="prog-1">
-            <div class="flow__progress-fill" style="width:50%"></div>
-          </div>
-          <span class="flow__count">2 / 4</span>
-        </div>
-
-        <p class="eyebrow">Your eligibility</p>
-        <h2 class="step__title">Which quota applies to you?</h2>
-        <p class="step__hint">KKR (Kalyana Karnataka Region) is reserved for students domiciled in the Hyderabad-Karnataka region.</p>
-
-        <div class="field">
-          <span class="field__label" id="quota-label">Quota</span>
-          <div class="choice-row" role="radiogroup" aria-labelledby="quota-label" id="quota-row">
-            <button type="button" class="choice is-selected" role="radio" aria-checked="true"  data-value="GM" >GM — General Merit</button>
-            <button type="button" class="choice"             role="radio" aria-checked="false" data-value="KKR">KKR — Kalyana Karnataka</button>
-          </div>
-        </div>
-
-        <div class="flow__foot">
-          <button type="button" class="btn btn--primary btn--lg" id="next-1">Continue</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ STEP 2 — BRANCH PREFERENCE ════ -->
-    <section class="view view--flow" id="view-step-2" aria-label="Select preferred branches">
-      <div class="flow">
-        <div class="flow__head">
-          <button type="button" class="flow__back" id="back-2" aria-label="Back">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
-          </button>
-          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="3" id="prog-2">
-            <div class="flow__progress-fill" style="width:75%"></div>
-          </div>
-          <span class="flow__count">3 / 4</span>
-        </div>
-
-        <p class="eyebrow">Your preference</p>
-        <h2 class="step__title">Which branches interest you?</h2>
-        <p class="step__hint">Select one or more branches to filter results. Leave blank to see all branches.</p>
-
-        <div class="branch-grid" id="branch-grid" role="group" aria-label="Branch preferences"></div>
-        <p class="field__error" id="error-branch" role="alert" hidden></p>
-
-        <div class="flow__foot">
-          <button type="button" class="btn btn--primary btn--lg" id="next-2">Continue</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ STEP 3 — REVIEW / CONFIRM ════ -->
-    <section class="view view--flow" id="view-step-3" aria-label="Confirm details">
-      <div class="flow">
-        <div class="flow__head">
-          <button type="button" class="flow__back" id="back-3" aria-label="Back">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
-          </button>
-          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="4" id="prog-3">
-            <div class="flow__progress-fill" style="width:100%"></div>
-          </div>
-          <span class="flow__count">4 / 4</span>
-        </div>
-
-        <p class="eyebrow">One last look</p>
-        <h2 class="step__title">Did we get this right?</h2>
-        <p class="step__hint">Tap any row to change it.</p>
-
-        <ul class="review" id="review-list">
-          <li>
-            <button type="button" class="review__row" id="rv-rank">
-              <span class="review__key">Rank</span>
-              <span class="review__val"><span id="rv-rank-val">—</span><span style="color: var(--pine); margin-left: 8px; font-weight: 500;">›</span></span>
-            </button>
-          </li>
-          <li>
-            <button type="button" class="review__row" id="rv-quota">
-              <span class="review__key">Quota</span>
-              <span class="review__val"><span id="rv-quota-val">—</span><span style="color: var(--pine); margin-left: 8px; font-weight: 500;">›</span></span>
-            </button>
-          </li>
-          <li>
-            <button type="button" class="review__row" id="rv-branch">
-              <span class="review__key">Branches</span>
-              <span class="review__val"><span id="rv-branch-val">—</span><span style="color: var(--pine); margin-left: 8px; font-weight: 500;">›</span></span>
-            </button>
-          </li>
-        </ul>
-
-        <div class="flow__foot">
-          <button type="button" class="btn btn--primary btn--lg" id="see-colleges-btn">
-            See Colleges →
-          </button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ LOADING ════ -->
-    <section class="view view--loading" id="view-loading" aria-label="Loading" aria-live="polite">
+    <!-- ───────────────────────── View: Loading ───────────────────────── -->
+    <section class="view view--loading" id="view-loading" aria-label="Finding your colleges">
       <div class="loading">
         <svg class="loading__compass" width="56" height="56" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.4"/>
-          <path d="M15.5 8.5l-2.2 5.1-5.1 2.2 2.2-5.1 5.1-2.2z" fill="currentColor"/>
+          <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="1.4" />
+          <path d="M15.5 8.5l-2.2 5.1-5.1 2.2 2.2-5.1 5.1-2.2z" fill="currentColor" />
         </svg>
         <p class="loading__text" id="loading-text">Reading COMEDK 2025 cutoffs…</p>
       </div>
     </section>
 
-    <!-- ════ ERROR ════ -->
-    <section class="view view--error" id="view-error" aria-label="Error" role="alert">
+    <!-- ───────────────────────── View: Error ───────────────────────── -->
+    <section class="view view--error" id="view-error" aria-label="Something went wrong" role="alert">
       <div class="error-box">
         <h2 class="error-box__title">That didn't work</h2>
         <p id="error-message">Something went wrong. Please try again.</p>
         <div class="error-box__actions">
           <button type="button" class="btn btn--primary" id="retry-btn">Try again</button>
-          <button type="button" class="btn btn--ghost"   id="error-edit-btn">Edit my details</button>
+          <button type="button" class="btn btn--ghost" id="error-edit-btn">Edit my
+            details</button>
         </div>
       </div>
     </section>
 
-    <!-- ════ RESULTS ════ -->
+    <!-- ───────────────────────── View: Results ───────────────────────── -->
     <section class="view view--results" id="view-results" aria-label="Your results">
+
       <div class="results-layout">
 
-        <!-- Sidebar panel -->
-        <aside class="results-panel" id="results-panel" aria-label="Edit inputs">
-          <button type="button" class="panel-toggle" id="panel-toggle"
-                  aria-expanded="false" aria-controls="panel-body">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+        <!-- Live panel sidebar -->
+        <aside class="results-panel" id="results-panel" aria-label="Edit your inputs">
+          <button type="button" class="panel-toggle" id="panel-toggle" aria-expanded="false" aria-controls="panel-body">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M4 6h16M7 12h10M10 18h4" />
+            </svg>
             <span>Filter / Edit</span>
-            <svg class="panel-toggle__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            <svg class="panel-toggle__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+              aria-hidden="true">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
           </button>
 
-          <div class="panel-body" id="panel-body">
+          <form class="panel-body" id="panel-body" novalidate>
             <div class="panel-head">
               <p class="eyebrow">Your inputs</p>
               <p class="panel__subtitle">Change anything — results update live.</p>
             </div>
+
             <div class="panel-field">
-              <label class="panel-field__label" for="panel-rank">COMEDK Rank</label>
-              <input class="input input--sm" id="panel-rank" type="text" inputmode="numeric"
-                     autocomplete="off" placeholder="e.g. 5,000" />
+              <label class="panel-field__label" for="panel-rank">COMEDK rank</label>
+              <input class="input input--sm" id="panel-rank" type="text" inputmode="numeric" autocomplete="off"
+                placeholder="e.g. 5,000" />
             </div>
+
             <div class="panel-field">
-              <span class="panel-field__label" id="pql">Quota</span>
-              <div class="choice-row choice-row--sm" role="radiogroup" aria-labelledby="pql" id="panel-quota-row">
-                <button type="button" class="choice is-selected" role="radio" aria-checked="true"  data-value="GM" >GM</button>
-                <button type="button" class="choice"             role="radio" aria-checked="false" data-value="KKR">KKR</button>
+              <span class="panel-field__label" id="panel-quota-label">Quota</span>
+              <div class="choice-row choice-row--sm" role="radiogroup" aria-labelledby="panel-quota-label"
+                id="panel-quota-row">
+                <button type="button" class="choice is-selected" role="radio" aria-checked="true" data-value="GM">GM</button>
+                <button type="button" class="choice" role="radio" aria-checked="false" data-value="KKR">KKR</button>
               </div>
             </div>
+
             <div class="panel-field">
-              <span class="panel-field__label" id="pbl">Branches</span>
-              <div class="panel-branch-chips" id="panel-branch-chips" role="group" aria-labelledby="pbl"></div>
+              <span class="panel-field__label">Branch preference</span>
+              <div class="branch-grid branch-grid--compact" id="panel-branch-grid" role="group"
+                aria-label="Branch preference"></div>
             </div>
-            <p class="panel__updating" id="panel-updating" hidden>Updating…</p>
-          </div>
+
+            <p class="panel__updating" id="panel-updating" hidden aria-live="polite">
+              <span class="panel__spinner" aria-hidden="true"></span>
+              <span>Updating…</span>
+            </p>
+          </form>
         </aside>
 
-        <!-- Results main -->
         <div class="results-main">
+
           <div class="results-head">
             <div class="profile-chips" id="profile-chips"></div>
             <div class="results-actions">
@@ -413,11 +304,14 @@
             <div class="note__rule" aria-hidden="true"></div>
             <div class="note__body">
               <p class="eyebrow note__eyebrow">A note for you</p>
-              <h2 class="note__headline" id="note-headline"></h2>
+              <h2 class="note__headline" id="note-headline">Here's where you
+                stand.</h2>
               <p class="note__text" id="note-guidance"></p>
               <ul class="note__tips" id="note-tips"></ul>
             </div>
           </article>
+
+          <div class="api-notes" id="api-notes" hidden></div>
 
           <!-- Standing spectrum header -->
           <div class="spectrum-header" id="spectrum-header" style="display: none;">
@@ -426,27 +320,31 @@
 
           <!-- Standing spectrum -->
           <div class="spectrum" id="spectrum" role="group" aria-label="Your standing at a glance">
-            <button type="button" class="zone zone--safe" data-zone="safe">
+            <button type="button" class="zone zone--safe" data-zone="Safe">
               <span class="zone__count" id="zone-count-safe">0</span>
               <span class="zone__name">Safe</span>
               <span class="zone__sub">strong backups</span>
             </button>
-            <button type="button" class="zone zone--target is-hot" data-zone="target">
+            <button type="button" class="zone zone--target is-hot" data-zone="Target">
               <span class="zone__count" id="zone-count-target">0</span>
               <span class="zone__name">Target</span>
               <span class="zone__sub">your best-fit zone</span>
             </button>
-            <button type="button" class="zone zone--reach" data-zone="reach">
+            <button type="button" class="zone zone--reach" data-zone="Reach">
               <span class="zone__count" id="zone-count-reach">0</span>
               <span class="zone__name">Dream</span>
               <span class="zone__sub">Ambitious choices</span>
             </button>
           </div>
-          <p class="spectrum-note" style="font-size: 13px; color: var(--color-text-muted); margin-top: 12px; margin-bottom: 24px; text-align: center;">
-            <strong>Safe:</strong> Your rank is significantly better than the cutoff. &nbsp;
+          <p class="spectrum-note" id="spectrum-note" style="font-size: 13px; color: var(--color-text-muted); margin-top: 12px; margin-bottom: 24px; text-align: center;">
+            <strong>Safe:</strong> Your rank is well within the cutoff window. &nbsp;
             <strong>Target:</strong> Your rank is close to the cutoff. &nbsp;
-            <strong>Dream:</strong> Cutoff is above your rank — ambitious but possible.
+            <strong>Dream:</strong> Cutoff is past your rank — ambitious but possible.
           </p>
+
+          <!-- Rank ruler -->
+          <section class="ruler" id="ruler" role="group" aria-label="Rank ruler: where you stand against every match"
+            hidden></section>
 
           <!-- Filter toolbar -->
           <div class="toolbar" id="toolbar">
@@ -464,25 +362,123 @@
                 </div>
               </div>
             </div>
+
+            <button type="button" class="toolbar-toggle" id="toolbar-toggle" aria-expanded="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M4 6h16M7 12h10M10 18h4" />
+              </svg>
+              <span>Sort &amp; View</span>
+              <svg class="toolbar-toggle__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"
+                aria-hidden="true">
+                <path d="M6 9l6 6 6-6" />
+              </svg>
+            </button>
+            
+            <div class="toolbar-body" id="toolbar-body">
+              <!-- Section: Display Controls -->
+              <div class="toolbar-section toolbar-section--display">
+                <div class="toolbar-row">
+                  <div class="toolbar-controls-group">
+                    <div class="view-toggle" role="group" aria-label="View toggle">
+                      <button type="button" class="view-toggle-btn" id="view-by-branch">By branch</button>
+                      <button type="button" class="view-toggle-btn" id="view-by-college">By college</button>
+                    </div>
+                    <select class="sort-select" id="results-sort" aria-label="Sort options"></select>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Section: Actions -->
+              <div class="toolbar-section toolbar-section--actions">
+                <div class="toolbar-row" style="justify-content: flex-end;">
+                  <button type="button" class="btn--link expand-collapse-all-btn desktop-only-btn"></button>
+                </div>
+              </div>
+            </div>
+
           </div>
 
-          <div id="results-body"></div>
+          <!-- Mobile Expand/Collapse All -->
+          <div class="mobile-expand-row mobile-only-btn" style="display: flex; justify-content: flex-end; padding: 12px 16px 0;">
+             <button type="button" class="btn--link expand-collapse-all-btn"></button>
+          </div>
 
+          <!-- Result sections (populated by JS) -->
+          <div id="result-sections" aria-live="polite"></div>
+
+          <div class="empty-state" id="empty-filtered" hidden>
+            <p><strong>Nothing matches those filters.</strong></p>
+            <p>Try clearing the search or adjusting your preferences.</p>
+            <button type="button" class="btn btn--ghost btn--sm" id="clear-filters-btn">Clear filters</button>
+          </div>
+
+          <div class="empty-state" id="empty-results" hidden>
+            <p><strong>We couldn't find close matches.</strong></p>
+            <p>Your rank may sit far from this dataset's cutoff windows for the
+              quota chosen. Try changing your quota or branch preferences.</p>
+            <button type="button" class="btn btn--primary btn--sm" id="empty-edit-btn">Edit my details</button>
+          </div>
+
+          <p class="disclaimer">
+            Based on actual COMEDK 2025 cutoff data across General Merit and KKR quotas. 
+            These recommendations are for guidance purposes and should be verified with the official COMEDK counselling data on <strong>comedk.org</strong> before finalizing choices.
+          </p>
+
+        </div><!-- /.results-main -->
+      </div><!-- /.results-layout -->
+
+      <!-- Choice List floating button and drawer -->
+      <button type="button" class="btn btn--primary" id="choice-list-trigger"
+        style="position: fixed; bottom: 24px; right: 24px; z-index: 1000; box-shadow: 0 4px 20px rgba(0,0,0,0.2); display: none; align-items: center; gap: 8px; border-radius: 50px; padding: 12px 20px;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+        </svg>
+        <span>My Preference List</span> (<span id="choice-count">0</span>)
+      </button>
+
+      <div class="choice-drawer" id="choice-drawer" hidden>
+        <div class="choice-drawer__overlay" id="choice-drawer-overlay"></div>
+        <div class="choice-drawer__content">
+          <div class="choice-drawer__header">
+            <h3>My Preference List</h3>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <button type="button" class="btn btn--link btn--sm" id="choice-clear-all" style="color: #ef4444; padding: 0 4px; font-size: 13px; font-weight: 500; display: none; background: transparent; border: none; cursor: pointer;">Clear All</button>
+              <button type="button" class="choice-drawer__close" id="choice-drawer-close" style="margin-left: 4px;">&times;</button>
+            </div>
+          </div>
+          <div class="choice-drawer__body">
+            <p class="choice-drawer__hint">Drag and drop options to rearrange your custom preference list.</p>
+            <ul class="choice-drawer__list" id="choice-drawer-list"></ul>
+          </div>
+          <div class="choice-drawer__footer" style="display: flex; gap: 12px; margin-top: 16px;">
+            <button type="button" class="btn btn--ghost btn--sm" id="choice-export-csv" style="flex: 1;">Export
+              CSV</button>
+            <button type="button" class="btn btn--primary btn--sm" id="choice-export-pdf" style="flex: 1;">Print
+              List</button>
+          </div>
         </div>
       </div>
+
     </section>
 
   </main>
 
   <footer class="footer">
-    <span>Disha COMEDK — a <a href="https://www.utmt.org" target="_blank" rel="noopener">UTMT</a> initiative</span>
+    <span>Disha COMEDK — a <a href="https://www.utmt.org" target="_blank"
+        rel="noopener">UTMT</a> initiative, built with care for COMEDK aspirants</span>
     <span class="footer__sep" aria-hidden="true">·</span>
-    <span>COMEDK 2025 official cutoff data</span>
+    <span>Open source · Free · No login</span>
+    <span class="footer__sep" aria-hidden="true">·</span>
+    <span>Cutoff data: COMEDK 2025 official cutoffs</span>
   </footer>
 
-  <script src="/js/config.js"></script>
-  <script src="/js/api.js"></script>
-  <script src="/js/i18n.js"></script>
-  <script src="/comedk/js/app.js"></script>
+  <script src="../js/config.js"></script>
+  <script src="../js/api.js"></script>
+  <script src="../comedk/js/app.js" defer></script>
+
 </body>
+
 </html>
