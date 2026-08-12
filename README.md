@@ -1,498 +1,309 @@
-# Disha (दिशा) — JEE College Recommender & Analytics Portal
+<!--
+  Note for contributors AND for AI coding agents (Antigravity, Claude Code, etc.)
+  working on this repo:
 
-Disha is an open-source intelligent counselling pipeline and interactive portal designed to help JEE Main and Advanced aspirants navigate the complex JoSAA/CSAB seat allocation process. By inputting their ranks, gender, home state, and career aspirations, students receive a personalized, mathematically backed list of eligible college and branch options. Unlike static PDF cutoff tables, Disha groups recommendations into intuitive categories (Safe, Target, and Dream—referred to as Reach in backend models and API payloads), calculates the statistical probability of admission based on historical round-wise volatility, and aligns choices with the student's career interests.
+  This README, docs/API.md, CONTRIBUTING.md, and templates/disha_templates/README.md
+  are the ONLY source of truth for how this project works — they replace a set of
+  docs that had drifted badly out of date. Any task that touches a backend endpoint
+  or response field, adds/changes an exam, changes setup/run steps, or changes the
+  frontend file structure MUST update the relevant doc(s) in the SAME change, not as
+  a follow-up. See CONTRIBUTING.md for the full policy and a "docs checklist" of
+  trigger questions to run through before you consider a change finished.
+-->
 
-**Live Application**: [jee-college-finder-utmt-asov.onrender.com](https://jee-college-finder-utmt-asov.onrender.com/)
+# Disha (दिशा) — Multi-Exam College Recommender & Analytics Portal
 
-On the technical side, **Disha** is built as a unified **FastAPI** application in Python. The backend runs a full recommendation pipeline utilizing:
-*   **2025 Merged Dataset**: Loads **12,143 cutoff rows** (all reservation categories: OPEN, OBC-NCL, SC, ST, EWS, and PwD variants) at startup from `josaa_merged_2025.csv` — cached in memory for sub-millisecond responses.
-*   **Round-wise Cutoffs**: Extracts opening and closing ranks at runtime from rounds `Opening_R1…R6` / `Closing_R1…R6`.
-*   **Filters** by rank type, gender pool, home-state quota, seat category, and branch tags.
-*   **Scores** every option using a weighted tag-interest model per career goal.
-*   **Calculates admission probability** using a sigmoid function over last-year cutoffs, adjusted by a **Volatility Penalty** derived from round-to-round movement ratio.
-*   **Returns** categorised, ranked results through a clean REST API.
-*   **Dataset Analytics**: Precomputes and serves detailed statistics, quota breakdowns, gender cushion multipliers, CSE cutoff premiums, and category-wise student rank availability curves via a dedicated analytics endpoint.
+Disha helps engineering aspirants in India turn a rank into a shortlist of realistic colleges and branches. A student enters their rank (and, for JEE, gender/home-state/category/career-goal), and Disha returns institute+branch options grouped into **Safe / Target / Reach ("Dream")** buckets, each with an estimated admission probability and a plain-language reason, computed from official cutoff data.
 
-The frontend is pure **HTML, CSS, and vanilla JavaScript** — no frameworks — served from the same server as the API. The entire UI works in multiple languages (**English, Hindi, Gujarati, and Kannada**), switching with a single click. The API is fully documented with **Swagger UI**. The application also functions as an offline-capable **Progressive Web App (PWA)** that can be installed on mobile devices and desktops.
+**Live deployment:** [jee-college-finder-utmt-asov.onrender.com](https://jee-college-finder-utmt-asov.onrender.com/) (Render free tier — the instance sleeps when idle, so the first load after a while can take ~30s to wake up).
 
 ![Disha Portal — Desktop and Mobile View](./screenshots/hero.png)
 
----
+### Exams supported today
 
-## Quick Start
+| Exam | Status | Cutoff data | Notes |
+|---|---|---|---|
+| **JEE** (Main + Advanced, via JoSAA) | ✅ Original, most complete implementation | 2025, round-wise (`Opening_R1…R6`/`Closing_R1…R6`) | The reference implementation every other exam is patterned on. |
+| **COMEDK** | ✅ Complete, recently finished | 2025, single closing rank per programme/quota | Built by structurally porting JEE's frontend/backend patterns and adapting them to COMEDK's single-cutoff data — see [Architecture](#architecture-overview) below. |
+| **KCET** | ⚠️ Present in the code and linked from the landing page, but **`POST /api/kcet/recommend` currently returns HTTP 500 on every call** | 2025, round 1 only | A real, verified bug (missing `goal` field on the request schema — see [docs/API.md](docs/API.md#kcet-endpoints)), not a hypothetical one. Treat KCET as in-progress despite looking shipped in the UI. |
 
-1. **Set up a virtual environment and install dependencies**:
-   ```bash
-   # From the repository root
-   python -m venv venv
-   source venv/bin/activate   # On Windows: venv\Scripts\activate
-   pip install -r requirements.txt
-   ```
-
-2. **Run the FastAPI application**:
-   ```bash
-   uvicorn main:app --reload --port 8000
-   ```
-
-3. **Access the portal**:
-   - Main Recommender Portal: Open your browser and navigate to [http://127.0.0.1:8000](http://127.0.0.1:8000).
-   - Statistical Insights Dashboard: Navigate to [http://127.0.0.1:8000/stats](http://127.0.0.1:8000/stats).
-   - Interactive API Documentation: Available at [http://127.0.0.1:8000/api/docs](http://127.0.0.1:8000/api/docs).
-
-*Note: On Windows, you can also double-click the `run.bat` file in the root directory to automatically set up the virtual environment, install dependencies, and launch the server.*
+This table, and everything below it, was written by reading the current code — not by trusting the previous README, which had drifted (wrong HTTP methods, wrong margin constants, a `Data/` folder that no longer exists, and no mention of COMEDK or KCET at all). If you find something here that no longer matches the code, that's a docs bug — fix it in the same change that changed the behavior.
 
 ---
 
-## How It Works
+## Docs checklist
 
-### 1. The Student's Journey (An Intuitive Walkthrough)
+Before you consider any change to this repo finished, ask:
 
-To understand how Disha thinks, let’s follow **Ayush**, a student from **Madhya Pradesh** who scored a **JEE Main CRL rank of 6,500** and is passionate about a **"Coding & software"** career. When Ayush submits his profile, Disha processes his request through five distinct stages:
+- [ ] **Did I add/change an API endpoint or a response/request field?** → update [docs/API.md](docs/API.md) and, if it changes the high-level picture, the tables above.
+- [ ] **Did I add a new exam, or change how an existing exam's frontend/backend is structured?** → update [Architecture overview](#architecture-overview), [Directory layout](#directory-layout), and [Adding a new exam](#adding-a-new-exam) below.
+- [ ] **Did I change setup/install/run steps, dependencies, or env vars?** → update [Setup](#setup) below.
+- [ ] **Did I touch `templates/disha_templates/`?** → update [templates/disha_templates/README.md](templates/disha_templates/README.md) too; it's a separate file and does not auto-sync with this one.
 
-*   **Stage 1: Filtering Out the Impossible**
-    First, Disha looks at Ayush's exam type. Since he only entered a JEE Main rank, Disha immediately filters out all IITs (which require a JEE Advanced rank) and keeps NITs, IIITs, and GFTIs. Next, because Ayush is male, Disha filters out all female-only (supernumerary) seats. Finally, Disha checks the geographic quotas: since Ayush’s home state is Madhya Pradesh, he gets the **Home State (HS)** quota at MANIT Bhopal, but falls under the **Other State (OS)** quota for NITs in other states (like NIT Trichy or NIT Warangal).
-*   **Stage 2: Sorting into Buckets (Safe, Target, and Dream/Reach)**
-    Disha compares Ayush’s rank of 6,500 against last year's opening and closing ranks for every remaining branch:
-    *   **Dream (Ambitious)**: For *Computer Science at MANIT Bhopal*, last year's home-state cutoff window was 3,200 (Opening) to 5,800 (Closing). Ayush's rank of 6,500 is slightly past the closing rank, but since it is within a 25% margin, Disha places it in his **Dream** bucket (internally classified as **Reach**)—it's tough, but cutoffs fluctuate, so it is an ambitious choice.
-    *   **Target (Realistic)**: For *Computer Science at NIT Jalandhar*, the cutoff window was 6,200 to 9,500. Ayush's rank of 6,500 sits comfortably inside this range, making it a highly realistic **Target**.
-    *   **Safe (Backups)**: For *Civil Engineering at NIT Kurukshetra*, the cutoff window was 12,000 to 22,000. Ayush's rank of 6,500 easily beats the opening rank of 12,000. However, because Ayush is *too* overqualified (his rank is less than half of the opening rank), Disha automatically prunes this option. This keeps Ayush's list clean and prevents him from wasting choices on branches far below his potential.
-*   **Stage 3: Personalizing by Career Goal**
-    Ayush selected "Coding & software". Disha looks at its internal career-weight mapping: Computer Science (CSE) gets a maximum interest weight of 10, Mathematics & Computing gets 9, ECE gets 6, while Civil Engineering gets 0. 
-    Disha also calculates a brand score for each college (e.g., top-tier older NITs get a higher brand weight than newer ones). Since Ayush left the **Brand-vs-Branch Slider** at the default 50/50 setting, Disha blends the branch interest score and the college brand score to calculate a personalized **Interest Score** for every option.
-*   **Stage 4: Calculating Admission Probability**
-    Instead of just giving a binary "yes" or "no", Disha analyzes the historical volatility of cutoffs. If a branch's closing rank has fluctuated wildly over the last few rounds, Disha calculates a wider margin of error. Using this volatility, Disha estimates Ayush's actual chance of getting in: he has a **23.5% chance** for MANIT Bhopal CSE (Dream) and an **88.2% chance** for NIT Jalandhar CSE (Target).
-*   **Stage 5: Designing the Final List**
-    Finally, Disha sorts Ayush’s matches. It shows all his **Targets** first (sorted by his personalized interest score), followed by his **Dreams**, and then his **Safes**. For each card, it generates a natural explanation in his chosen language: 
-    > *"Target for you – strong fit for your goal (Computer Science and Engineering at NIT Jalandhar). Your home-state quota gives roughly a 1,200-rank cushion. Cutoff has been fairly steady. (88.2% chance)"*
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full policy this checklist is a summary of.
 
 ---
 
-### 2. Technical Detail & Core Logic
+## Setup
 
-This section outlines the exact mathematical formulas, thresholds, and variables implemented in the backend pipeline (`app/disha/recommender.py` and `app/disha/states.py`).
+### Prerequisites
 
-#### A. Rank Categorization Thresholds
-For a student rank $R$, opening rank $OR$, and closing rank $CR$, the category is determined by the following constants:
-*   `UPPER_MARGIN = 0.25` (Allows ranks up to 25% worse than last year's closing rank to be considered a **Reach** / **Dream** option).
-*   `LOWER_MARGIN = 0.50` (Prunes any option where the student's rank is more than 50% better than the opening rank to avoid overqualification).
+- **Python 3.9+** (the committed `venv/` in this checkout was built with 3.9; `run.bat`'s own error message asks for 3.12+ — either works against the pinned dependencies, but prefer 3.12+ for a fresh setup). No Node.js, no frontend build tool, no database — the frontend is static files served directly by FastAPI.
+- `pip` for installing Python dependencies.
 
-$$\text{Category} = \begin{cases} 
-\text{None (Pruned)} & \text{if } R < OR \times (1 - \text{LOWER MARGIN}) \\
-\text{Safe} & \text{if } R \le OR \\
-\text{Target} & \text{if } OR < R \le CR \\
-\text{Reach} & \text{if } CR < R \le CR \times (1 + \text{UPPER MARGIN}) \\
-\text{None (Dropped)} & \text{if } R > CR \times (1 + \text{UPPER MARGIN})
-\end{cases}$$
+### Install
 
-#### B. Personalized Scoring (Tag-Weight Model)
-Each academic program is mapped to a set of semantic tags (e.g., `cse`, `ece`, `math_computing`, `mechanical`) in `states.classify_branch()`. 
-
-When a student selects a career goal, the branch interest score ($S_{\text{branch}}$) is the maximum weight assigned to the program's tags under that goal in `states.GOAL_TAG_WEIGHTS`:
-
-```python
-# Weights from states.py
-GOAL_TAG_WEIGHTS = {
-    "coding":        {"cse": 10, "math_computing": 9, "ai_ds": 9, "it": 8, "ece": 6, "electrical": 4},
-    "research":      {"physics": 10, "bs_science": 9, "math_science": 9, "chemistry": 8, "math_computing": 7, "economics": 6, "cse": 5, "ece": 5, "materials": 5, "mechanical": 4, "chemical": 4},
-    "pure_science":  {"physics": 10, "chemistry": 10, "math_science": 10, "bs_science": 9, "biotech": 7, "materials": 4, "chemical": 3},
-    "mba":           {"economics": 8, "cse": 6, "math_computing": 6, "ece": 5, "mechanical": 5, "electrical": 5, "civil": 4, "chemical": 4},
-    "core":          {"mechanical": 10, "civil": 9, "electrical": 9, "chemical": 9, "aerospace": 9, "materials": 8, "energy": 8, "production": 8, "ece": 6, "cse": 3},
-    "undecided":     {"cse": 7, "ece": 7, "math_computing": 7, "ai_ds": 7, "electrical": 6, "mechanical": 6, "chemical": 5, "civil": 5, "it": 6, "economics": 5}
-}
+```bash
+# From the repository root
+python -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
+pip install -r requirements.txt
 ```
 
-The institute brand score ($S_{\text{brand}}$) is determined by the tier of the college in `data_loader._brand_score()`:
-*   **Old IITs** (`_OLD_IITS`): `1.0`
-*   **Newer IITs**: `0.88`
-*   **Top NITs** (`_TOP_NITS`): `0.78`
-*   **Other NITs**: `0.68`
-*   **IIITs**: `0.60`
-*   **GFTIs**: `0.50`
+`requirements.txt` pins: `fastapi`, `uvicorn[standard]`, `pandas`, `openpyxl`, `pydantic`, `aiofiles`, `pytest`, `httpx`. Note: `openpyxl` and `aiofiles` are currently **not imported anywhere in the app code** (verified by grep) — they're leftovers from an earlier Excel-based data pipeline and possible future use; installing them is harmless, just don't be surprised they're unused today.
 
-The final interest score ($S_{\text{interest}}$) blends these two components using the user's brand-vs-branch ratio slider $\alpha \in [0.0, 1.0]$:
+### Run the dev server
 
-$$S_{\text{interest}} = (1 - \alpha) \times S_{\text{branch}} + \alpha \times (S_{\text{brand}} \times 10)$$
+```bash
+uvicorn main:app --reload --port 8000
+# or: python main.py   (reads PORT / APP_DEBUG env vars, defaults to port 8000)
+```
 
-#### C. Admission Probability & Volatility
-The probability of admission $P$ is calculated using a logistic sigmoid function of the Z-score and adjusted by a Volatility Penalty:
+Open:
 
-$$P_{\text{base}} = \frac{1}{1 + e^{-1.7 \cdot z}} \times 100\%$$
+| URL | What |
+|---|---|
+| `http://127.0.0.1:8000/` | Landing page — pick an exam |
+| `http://127.0.0.1:8000/exam/jee` | JEE recommender |
+| `http://127.0.0.1:8000/exam/comedk` | COMEDK recommender |
+| `http://127.0.0.1:8000/exam/kcet` | KCET recommender (frontend loads; recommend calls currently 500 — see status table above) |
+| `http://127.0.0.1:8000/stats` | JEE insights dashboard |
+| `http://127.0.0.1:8000/exam/comedk/stats` | COMEDK insights dashboard |
+| `http://127.0.0.1:8000/exam/kcet/stats` | KCET insights dashboard |
+| `http://127.0.0.1:8000/api/docs` | Swagger UI (auto-generated, live) |
+| `http://127.0.0.1:8000/api/redoc` | ReDoc |
 
-Where the Z-score $z$ represents how many standard deviations the student's rank is from the closing rank:
+On Windows, double-clicking `run.bat` does the `pip install` + `python main.py` steps for you.
 
-$$z = \frac{CR - R}{\sigma}$$
+**No env vars or config files are required to run locally.** All configuration (CORS, data-file paths, tuning constants) lives in `app/disha/config.py` and `app/disha/comedk/config.py` as hard-coded class attributes, by design (see the docstring at the top of `app/disha/config.py`). One env var exception exists but is dev-only and optional: `PORT` and `APP_DEBUG`, read only inside `main.py`'s `if __name__ == "__main__":` block (i.e. only when you run `python main.py` directly, not `uvicorn main:app`).
 
-*   **Volatility ($\sigma$)**:
-    *   Since multi-year history has been removed, volatility defaults to a baseline of $8\%$ of the closing rank:
-        $$\sigma = 0.08 \times CR$$
-    *   To prevent zero or low spreads, a minimum floor is enforced:
-        $$\sigma_{\text{min}} = \max(10, 0.05 \times CR)$$
+> **Verified inconsistency:** `render.yaml` sets a `CORS_ORIGINS` env var for the deployed service, but `app/disha/config.py`'s `Settings.cors_origins` is a hard-coded `"*"` — nothing in the codebase reads `os.environ["CORS_ORIGINS"]`. That env var currently has no effect. If you wire it up, remove this note.
 
-*   **Volatility Penalty**:
-    A penalty is deducted from the base probability based on the program's round-to-round **movement ratio** to account for vacancy fluctuations:
-    $$\text{penalty} = \min(0.2, \text{movement\_ratio} \times 0.3)$$
-    $$P = \max(0.0, P_{\text{base}} - \text{penalty} \times 100)$$
+### Simulating the UTMT portal integration locally
 
-#### D. Cutoff Confidence & Volatility Tags
-Cutoffs are classified dynamically by analyzing the round-wise closing ranks (`Closing_R1...R6`) of 2025 using `compute_stable_and_volatility()`:
-*   **Stable Cutoff**: Computed as the median of the last 4 valid round closing ranks (if $\ge 4$ valid rounds exist), otherwise the median of all valid rounds.
-*   **Movement Ratio**: $\text{total\_movement} / \text{stable\_cutoff}$ (where total movement is the sum of consecutive round-to-round deltas).
-*   **Jump Concentration**: $\text{max\_single\_jump} / \text{total\_movement}$.
-*   **Classifications**:
-    *   **Highly Stable** (`highly_stable`): Movement ratio $< 0.05$ (highly stable across all rounds).
-    *   **Stable — Predictable Drift** (`stable_drift`): Movement ratio $< 0.20$ and jump concentration $< 0.5$.
-    *   **Volatile — Vacancy-Driven** (`volatile_vacancy`): Jump concentration $\ge 0.5$ and movement ratio $\ge 0.20$ (includes the round number of the largest jump).
-    *   **Volatile — Erratic** (`volatile_erratic`): Erratic fluctuations across rounds.
+Disha is designed to be plugged into a larger FastAPI portal (see [Architecture](#architecture-overview)). To test that integration path without the real portal:
 
-#### E. Sorting Hierarchy
-Recommended programs are sorted by a tuple containing five keys:
-1.  **Category Order**: `Target` (0) $\to$ `Reach` (1, displayed as `Dream` in UI) $\to$ `Safe` (2).
-2.  **Interest Score**: Descending (aligning with career goals and the brand/branch slider).
-3.  **Closing Rank**: Ascending (placing more competitive branches first).
-4.  **Institute Name**: Alphabetically (A-Z).
-5.  **Branch Name**: Alphabetically (A-Z).
+```bash
+uvicorn mock_portal:app --reload --port 8001
+```
 
-#### F. Preparatory Ranks (PwD candidates) Handling
-For candidates applying under PwD categories, JoSAA issues **Preparatory ranks** (suffixed with a trailing 'P', e.g. `151P`, `2P`) when candidates score below the standard cutoff but meet the bridge-course criteria. To prevent these distinct rank scales from corrupting standard statistics:
-*   **Detection & Separation**: `_split_col_by_suffix()` detects P-suffixed cells, strips the suffix, and stores them in separate `preparatory_opening_rank` and `preparatory_closing_rank` columns.
-*   **Pruning**: Pure preparatory rows (where all round entries are preparatory) are excluded from the main recommender pipeline to prevent mismatched rank recommendations.
+then visit `http://127.0.0.1:8001/learning_games/` — `mock_portal.py` mounts the exact same router+static-files pattern the real portal is expected to use, under a `/learning_games` prefix, so you can catch prefix-related bugs (relative asset paths, `config.js`'s prefix auto-detection) before handing the code off. `mock_portal.py` and this scenario are also documented in [DISHA_INTEGRATION_QA.md](DISHA_INTEGRATION_QA.md).
+
+### Tests
+
+```bash
+pytest tests/ -v
+```
+
+`tests/test_api.py` (HTTP-level, JEE only), `tests/test_recommender.py` and `tests/test_enhancements.py` (unit-level, JEE recommender internals). **There are currently no automated tests for COMEDK or KCET** — worth flagging if you're relying on test coverage as a safety net while changing either of those.
+
+### Build steps
+
+None. The frontend is hand-written HTML/CSS/vanilla JS served as-is; there is no bundler, no `npm install`, no compilation step for either backend or frontend.
 
 ---
 
-## API Reference
+## Architecture overview
 
-### GET `/api/health`
-Returns the status of the API and the number of loaded programs.
-
-**Response Body (`MetaResponse`)**:
-```json
-{
-  "status": "ok",
-  "programs": 12143
-}
 ```
+                         ┌─────────────────────────────────────────┐
+   Browser  ── HTTP ──▶  │  FastAPI app  (main.py, or a host        │
+                         │  portal's main.py in production)         │
+                         │                                           │
+                         │  1. disha_router  (app/disha/routes.py)  │
+                         │     ├─ JEE routes            (this file) │
+                         │     ├─ comedk_router  (app/disha/comedk) │
+                         │     └─ kcet_router    (app/disha/kcet)   │
+                         │                                           │
+                         │  2. StaticFiles / catch-all               │
+                         │     serves templates/disha_templates/**  │
+                         └─────────────────────────────────────────┘
+                                        │
+                                        ▼
+                     app/disha/data/*.csv,  comedk/data/*.csv,  kcet/data/*.csv
+                     (loaded into memory once, cached with lru_cache/module globals)
+```
+
+- **Backend framework:** FastAPI (Python), one process, no database. Each exam's data file is read into memory on first use and cached (`@lru_cache` in JEE's `data_loader.py`; a module-level `_cached_programs` global in COMEDK/KCET's). There is no ORM, no persistence layer, no background jobs — every request runs a synchronous, in-memory filter/sort pass over the cached list.
+- **One router, three exams bundled together:** `app/disha/routes.py` defines the JEE endpoints *and* imports+includes `comedk_router` and `kcet_router` into the same `APIRouter` instance (`router.include_router(comedk_router)` / `...(kcet_router)`). So `main.py` (or a host portal) only ever imports **one** router (`app.disha.routes.router`) to get all three exams' API surface at once — see [docs/API.md](docs/API.md) for the full endpoint list this produces.
+- **Frontend approach:** no framework, no build step. Each exam is a **separate, independently-maintained vanilla-JS single-page app** — a static HTML shell plus a per-exam `app.js` that manages its own view state and talks to its own backend endpoints via `fetch`. There is a shared HTML+JS **landing page** (`index.html` + `js/landing.js`) that is just a config-driven list of `<a href="exam/...">` cards — clicking one is a real page navigation, not a client-side route change.
+- **Wiring between frontend and backend:** the frontend never hardcodes a hostname. `js/config.js` inspects its own `<script src>` URL at load time to figure out what prefix it's mounted under (`""` at root, `"/learning_games"` inside a portal, etc.) and sets `window.APP_CONFIG.API_BASE_URL` accordingly — this is what lets the *same* static files work standalone and inside the UTMT portal without editing anything.
+
+### JEE and COMEDK are separate implementations, not a shared engine — by design, for now
+
+This is the most important architectural fact to internalize before touching either exam:
+
+- **Backend:** `app/disha/` (JEE) and `app/disha/comedk/` (COMEDK) each have their own `config.py`, `data_loader.py`, `recommender.py`, `schemas.py`, `states.py`, `stats_loader.py`, and `routes.py`. None of these modules import from the other exam's package. COMEDK's docstrings explicitly say things like *"Mirrors `app/disha/config.py` in structure"* and *"Mirrors `app/disha/schemas.py` in shape"* — it was built by reading JEE's modules and writing COMEDK-shaped equivalents, not by extracting a shared base class or config schema. Where COMEDK's domain genuinely differs (a single published cutoff instead of an opening/closing pair; no home-state axis because all colleges are in Karnataka), its constants and formulas were **re-derived from scratch** — see the long design-rationale comments in `app/disha/comedk/config.py` for why COMEDK's band math can't just reuse JEE's percentages unchanged.
+- **Frontend:** `templates/disha_templates/comedk/js/app.js` opens with the comment *"Ported from JEE app.js — structurally identical, domain-adapted."* It reuses the shared `js/config.js` and `js/api.js` (API-base-URL detection and the generic fetch wrapper), but **not** `js/i18n.js` — COMEDK's UI is English-only, with no equivalent i18n layer built. Its own `comedk/js/app.js` was written by copying JEE's `js/app.js` view-state/rendering structure and adapting each section (fewer guided-flow steps, a single-cutoff "rank bar" instead of JEE's opening/closing rank ruler, quota pills instead of a home-state dropdown) rather than sharing code with it.
+- **KCET follows the same pattern** but less thoroughly — see the status table at the top of this README and [docs/API.md](docs/API.md#kcet-endpoints) for specifics on where it's incomplete.
+
+**The honest cost this implies:** every bug fix, every UI tweak, every new career-goal weight discovered to be wrong has to be applied to each exam's copy separately — there is currently no single place to fix it once. A shared "exam engine" (common config schema, common recommender base, common frontend shell parameterized by exam) does not exist yet. If/when one gets built, this section and [Adding a new exam](#adding-a-new-exam) below should be rewritten, since the whole point of that section is describing the current copy-and-adapt cost honestly.
 
 ---
 
-### GET `/api/meta`
-Returns metadata required to populate the frontend form dropdowns and sliders.
-
-**Response Body (`MetaResponse`)**:
-```json
-{
-  "states": ["Andhra Pradesh", "Rajasthan", "..."],
-  "goals": [
-    { "value": "coding", "label": "Software / coding career" },
-    { "value": "pure_science", "label": "Pure Science (Physics, Chemistry, Maths)" },
-    { "value": "research", "label": "Research / higher studies" },
-    "..."
-  ],
-  "genders": ["male", "female"],
-  "categories": [
-    { "value": "OPEN", "label": "OPEN (General / CRL)", "available": true },
-    { "value": "OBC-NCL", "label": "OBC-NCL", "available": true },
-    "..."
-  ],
-  "branches": [
-    { "value": "cs_it", "label": "CS / IT" },
-    "..."
-  ],
-  "total_programs": 12143,
-  "data_mode": "basic",
-  "allow_toggle": false,
-  "extended_available": false
-}
-```
-
----
-
-### GET `/api/stats`
-Returns dynamically computed statistical insights and distributions on the active dataset.
-
-**Response Body**:
-```json
-{
-  "summary": {
-    "total_records": 12143,
-    "unique_institutes": 118,
-    "unique_programs": 150,
-    "unique_quotas": 6,
-    "unique_seat_types": 10,
-    "unique_genders": 2
-  },
-  "inst_type_counts": { "IIT": 3200, "NIT": 5000, "IIIT": 2500, "GFTI": 1443 },
-  "state_counts": { "Rajasthan": 1200, "Bihar": 800, "...": 0 },
-  "quota_counts": { "AI": 5000, "HS": 3500, "OS": 3500, "...": 143 },
-  "seat_type_counts": { "OPEN": 6000, "OBC-NCL": 3000, "...": 0 },
-  "gender_counts": { "Gender-Neutral": 9000, "Female-only": 3143 },
-  "round_averages": { "Closing_R1": 15200.5, "Closing_R6": 17800.2 },
-  "highest_cutoffs": [
-    {
-      "institute": "Indian Institute of Technology Bombay",
-      "program": "Computer Science and Engineering (4 Years, Bachelor of Technology)",
-      "quota": "AI",
-      "gender": "Gender-Neutral",
-      "opening_rank": 1,
-      "closing_rank": 68,
-      "inst_type": "IIT"
-    }
-  ],
-  "lowest_cutoffs": [ ... ],
-  "inst_competitiveness": {
-    "IIT": [
-      {
-        "institute": "Indian Institute of Technology Bombay",
-        "avg_closing_rank": 540.2,
-        "min_opening_rank": 1,
-        "total_programs": 15
-      }
-    ],
-    "...": []
-  },
-  "top_programs_by_type": { ... },
-  "popular_branches": [ ... ],
-  "volatility_counts": {
-    "highly_stable": 5420,
-    "stable_drift": 3200,
-    "volatile_vacancy": 1800,
-    "volatile_erratic": 1723
-  },
-  "gender_advantage": [
-    {
-      "inst_type": "IIT",
-      "avg_multiplier": 1.45,
-      "avg_rank_difference": 3200.5
-    }
-  ],
-  "cse_premium": [
-    {
-      "inst_type": "IIT",
-      "cse_avg": 2500.5,
-      "non_cse_avg": 7800.3,
-      "overall_avg": 6200.1,
-      "cse_programs": 23,
-      "non_cse_programs": 95
-    }
-  ],
-  "top_branches_by_type": { ... },
-  "duration_comparison": [ ... ],
-  "rank_availability": {
-    "advanced": [
-      { "rank": 500, "total_programs": 4, "total_institutes": 2 }
-    ],
-    "mains": [ ... ],
-    "advanced_by_category": { "OPEN": [ ... ], "OBC-NCL": [ ... ] },
-    "mains_by_category": { ... }
-  }
-}
-```
-
----
-
-### POST `/api/recommend`
-Submits a student profile and returns filtered, categorized, and sorted recommendations.
-
-**Request Body (`RecommendRequest`)**:
-```json
-{
-  "adv_rank": 1500,
-  "mains_rank": 6000,
-  "gender": "female",
-  "home_state": "Rajasthan",
-  "goal": "coding",
-  "data_mode": "basic",
-  "seat_category": "OPEN",
-  "brand_branch_ratio": 0.5,
-  "branch_preferences": ["cs_it", "ece"],
-  "max_results": 60,
-  "lang": "en"
-}
-```
-
-*   `adv_rank` (integer, optional): JEE Advanced CRL rank. Required to see IITs.
-*   `mains_rank` (integer, optional): JEE Mains CRL rank. Required to see NITs/IIITs/GFTIs.
-*   `gender` (string): `male` | `female`.
-*   `home_state` (string): Must match one of the canonical Indian states.
-*   `goal` (string): `coding` | `research` | `pure_science` | `mba` | `core` | `undecided`.
-*   `data_mode` (string, optional): Default `"basic"`. ("extended" is accepted for backwards compatibility).
-*   `seat_category` (string, optional): Must match a canonical JoSAA category (e.g. `OPEN`, `OBC-NCL`, `SC`, `ST`, `EWS`).
-*   `brand_branch_ratio` (float, optional): Priority slider value between `0.0` and `1.0`.
-*   `branch_preferences` (array of strings, optional): List of branch family codes to filter by.
-*   `max_results` (integer, optional): Maximum recommendations to return (default 60, max 300).
-*   `lang` (string, optional): `en` | `hi` | `gu` | `kn`.
-
-**Response Body (`RecommendResponse`)**:
-```json
-{
-  "guidance": "Found 45 eligible institute-branch options...",
-  "interest_guidance": "Since you are aiming for a software/coding career...",
-  "counts": {
-    "total": 45,
-    "shown": 45,
-    "by_category": { "Target": 20, "Reach": 10, "Safe": 15 },
-    "by_type": { "IIT": 10, "NIT": 20, "IIIT": 10, "GFTI": 5 }
-  },
-  "notes": [],
-  "category_guidance": [
-    { "category": "Target", "count": 20, "blurb": "These match your rank closely..." }
-  ],
-  "recommendations": [
-    {
-      "institute": "National Institute of Technology, Jalandhar",
-      "institute_type": "NIT",
-      "institute_state": "Punjab",
-      "exam": "mains",
-      "branch": "Computer Science and Engineering",
-      "branch_full": "Computer Science and Engineering (4 Years, Bachelor of Technology)",
-      "degree": "Bachelor of Technology",
-      "quota": "OS",
-      "gender_pool": "neutral",
-      "opening_rank": 6200,
-      "closing_rank": 9500,
-      "category": "Target",
-      "fit_label": "Achievable - your rank lies within last year's opening to closing range.",
-      "interest_score": 8.9,
-      "matched_interest": true,
-      "home_state_advantage": null,
-      "female_seat_advantage": null,
-      "confidence": "medium",
-      "reason": "Target for you – strong fit for your goal (Computer Science and Engineering at an NIT)...",
-      "region": "north",
-      "is_metro": false,
-      "history": { "2025": 9500 },
-      "admission_probability": 88.2
-    }
-  ]
-}
-```
-
----
-
-## Project Structure
+## Directory layout
 
 ```text
-jee-college-finder-utmt/
-├── main.py                       # FastAPI server & portal entry point
-├── requirements.txt              # Python package dependencies
-├── render.yaml                   # Render deployment configuration
-├── run.bat                       # Windows quick launch script
-├── conftest.py                   # Pytest configuration and fixtures
-├── .gitignore                    # Git ignore file
-├── LICENSE                       # Project license
-├── README.md                     # Project documentation (this file)
+.
+├── main.py                        # FastAPI app: mounts disha_router + serves templates/disha_templates/ as static files
+├── mock_portal.py                 # Simulates the UTMT host portal locally (test-only, see Setup)
+├── conftest.py                    # Makes `app...` importable from tests/
+├── requirements.txt
+├── render.yaml                    # Render.com deploy config (uvicorn main:app)
+├── run.bat                        # Windows: pip install + run
+├── docs/
+│   └── API.md                     # Full per-exam API contract (endpoints, request/response shapes, comparison table)
+├── CONTRIBUTING.md                # Docs-stay-in-sync policy + checklist
+├── DISHA_INTEGRATION_QA.md        # Q&A on plugging Disha into the UTMT host portal
+│
 ├── app/
+│   ├── __init__.py
 │   └── disha/
-│       ├── __init__.py
-│       ├── config.py             # Configuration for backend variables
-│       ├── data_loader.py        # Core data loading and processing logic
-│       ├── recommender.py        # Recommendation engine algorithm
-│       ├── routes.py             # APIRouter for sub-app integration
-│       ├── schemas.py            # Pydantic data models for validation
-│       ├── states.py             # State mappings and career weights
-│       ├── stats_loader.py       # Statistics generation and data analysis
-│       └── data/                 # Data storage for backend
-│           └── josaa_merged_2025.csv # Primary college dataset
-├── Data/                         # Scripts and notebooks for data preprocessing
-│   ├── analysis.ipynb            # Jupyter notebook for exploratory data analysis
-│   ├── analyze_criteria.py       # Script for specific criteria analysis
-│   ├── clean.py                  # Data cleaning and formatting script
-│   ├── jee_cutoff_last_round.csv # Raw JEE cutoff dataset
-│   └── josaa_merged_2025.csv     # Cleaned dataset (source for app data)
-├── templates/
-│   └── disha_templates/          # Web UI codebase
-│       ├── index.html            # Main recommender portal frontend
-│       ├── stats.html            # Statistics dashboard frontend
-│       ├── manifest.json         # PWA manifest file
-│       ├── sw.js                 # Service worker for offline capabilities
-│       ├── assets/               # Static assets and icons
-│       │   └── favicon.svg       # Website favicon
-│       ├── css/                  # Stylesheets
-│       │   └── style.css         # Core visual styling & responsive rules
-│       └── js/                   # Component modules
-│           ├── api.js            # API client for backend communication
-│           ├── app.js            # Main frontend application logic
-│           ├── config.js         # API URL resolver and configurations
-│           └── i18n.js           # Internationalization/localization setup
-└── tests/                        # Automated test suite
-    ├── test_api.py               # Tests for REST API endpoints
-    ├── test_enhancements.py      # Tests for specific enhanced features
-    └── test_recommender.py       # Tests for recommendation engine accuracy
+│       ├── routes.py               # JEE API + page routes; also includes comedk_router and kcet_router
+│       ├── config.py                # JEE settings (CORS, data paths, data_mode)
+│       ├── data_loader.py           # Reads josaa_merged_2025.csv, computes opening/closing ranks + volatility tags
+│       ├── recommender.py           # JEE recommendation pipeline (filter → bucket → score → probability → sort)
+│       ├── schemas.py               # JEE request/response Pydantic models
+│       ├── states.py                # Indian states, institute→state map, branch-tag classifier, career-goal weights
+│       ├── stats_loader.py          # Computes /api/stats from the JEE dataset
+│       ├── data/
+│       │   └── josaa_merged_2025.csv   # JEE 2025 cutoffs — all categories, all 6 JoSAA rounds
+│       │
+│       ├── comedk/                  # Independent COMEDK implementation (see Architecture)
+│       │   ├── routes.py, config.py, data_loader.py, recommender.py, schemas.py, states.py, stats_loader.py
+│       │   └── data/comedk_2025.csv    # COMEDK 2025 — single closing rank per programme/quota
+│       │
+│       └── kcet/                    # Independent KCET implementation (incomplete — see status table)
+│           ├── routes.py, schemas.py, data_loader.py, recommender.py, stats_loader.py   (no config.py)
+│           └── data/kcet_2025.csv      # KCET 2025 — round 1 only
+│
+├── templates/disha_templates/       # The entire frontend — see its own README.md for the full breakdown
+│   ├── index.html                     # Landing page — exam picker (config-driven cards)
+│   ├── jee.html                       # JEE SPA shell
+│   ├── stats.html                     # JEE insights dashboard
+│   ├── comedk/index.html, comedk/stats.html, comedk/js/app.js
+│   ├── kcet/index.html, kcet/stats.html, kcet/js/app.js
+│   ├── css/style.css                  # Shared design system used by every exam's HTML
+│   ├── js/
+│   │   ├── config.js                    # Shared: auto-detects API base URL / mount prefix
+│   │   ├── api.js                       # Shared: generic fetch wrapper + error normalization
+│   │   ├── i18n.js                      # JEE-only: en/hi/gu/kn string dictionary + t()
+│   │   ├── landing.js                   # Landing-page-only: renders the exam-picker cards
+│   │   └── app.js                       # JEE-only: JEE's own SPA logic (COMEDK/KCET each have their own app.js)
+│   ├── manifest.json                  # Shared PWA manifest (text is JEE-flavored/stale — see frontend README)
+│   └── sw.js                           # Shared service worker (app-shell cache; has a known-broken KCET path, see docs/API.md)
+│
+├── tests/                           # JEE-only test coverage (no COMEDK/KCET tests exist yet)
+│   ├── test_api.py, test_recommender.py, test_enhancements.py
+│
+└── screenshots/hero.png             # Used in this README
 ```
+
+**Why files live where they do:** everything under `app/disha/<exam>/` and `templates/disha_templates/<exam-or-root>` for a given exam is meant to be self-contained enough to copy wholesale into a new exam's folders (see [Adding a new exam](#adding-a-new-exam)). `js/config.js`, `js/api.js`, and `css/style.css` at the top level of `templates/disha_templates/js`/`css` are the only pieces every exam currently shares; everything else that looks shared (`js/i18n.js`) is in practice JEE-only because no other exam adopted it.
 
 ---
 
-## Portal Integration
+## Backend / API documentation
 
-To deploy **Disha** on the master UTMT portal, integrate it as a FastAPI sub-app matching the existing format:
+Full endpoint-by-endpoint, field-by-field documentation — including the exact differences between JEE's `opening_rank`/`closing_rank` pair, COMEDK's single `cutoff_rank` + `GM`/`KKR` quota, and KCET's single `cutoff_rank` + Karnataka category codes — lives in **[docs/API.md](docs/API.md)**. Read it before integrating against, or extending, any exam's API.
 
-### 1. Backend Integration (Router)
-Include the disha router from `app/disha/routes` using the desired URL prefix:
-```python
-from app.disha.routes import router as disha_router
+Quick orientation:
 
-# Include API routes & clean-URL page routes
-app.include_router(disha_router, prefix="/learning_games", tags=["learning_games"])
-```
+| | JEE | COMEDK | KCET |
+|---|---|---|---|
+| Prefix | *(none — mounted at root)* | `/api/comedk` | `/api/kcet` |
+| Meta | `GET /api/meta` | `GET /api/comedk/meta` | `GET /api/kcet/meta` |
+| Recommend | `GET`/`POST /api/recommend` | `POST /api/comedk/recommend` | `POST /api/kcet/recommend` ⚠️ 500s today |
+| Stats | `GET /api/stats` | `GET /api/comedk/stats` | `GET /api/kcet/stats` |
+| Health | `GET /api/health` *(global, no per-exam equivalent)* | — | — |
 
-### 2. Frontend Integration (Static Files Mount)
-Mount the static templates directory under the same URL prefix:
-```python
-from fastapi.staticfiles import StaticFiles
-from pathlib import Path
-
-DISHA_TEMPLATES_DIR = Path(__file__).resolve().parent / "templates" / "disha_templates"
-app.mount(
-    "/learning_games",
-    StaticFiles(directory=str(DISHA_TEMPLATES_DIR), html=True),
-    name="disha",
-)
-```
-
-### 3. Merging Dependencies
-Ensure the following packages are merged into the main portal's `requirements.txt`:
-```text
-pandas>=2.3.1
-openpyxl==3.1.5
-aiofiles==23.2.1
-pydantic==2.7.4
-```
+**Data sources:** JEE's cutoffs come from JoSAA 2025 round-wise data (all 6 rounds, all categories) published by UTMT, sourced originally from the [atmabodha/OpenNLP](https://github.com/atmabodha/OpenNLP) dataset. COMEDK's and KCET's CSVs (`app/disha/comedk/data/comedk_2025.csv`, `app/disha/kcet/data/kcet_2025.csv`) are committed directly into the repo; nothing in the code fetches or refreshes any of the three CSVs at runtime or on a schedule — updating a dataset means replacing the CSV file and, for JEE, rerunning through `data_loader.py`'s round-wise MIN/MAX logic (which happens automatically on next load, no separate build step). This tool is for guidance only and does not guarantee admission outcomes.
 
 ---
 
-## Configuration
+## Adding a new exam
 
-The application settings are statically configured inside `app/disha/config.py` using the `Settings` class:
+This section documents **how COMEDK was actually built**, because that's the only exam that's been added since JEE — not a hypothetical process. Read the [Architecture](#architecture-overview) section above first: this is a **copy-and-adapt process today, not a config-driven plugin system.** There is no shared base class, no shared Pydantic schema, no exam registry to update — you write a new set of files that structurally mirror an existing exam's, and adapt every domain-specific number and assumption by hand.
 
-| Setting | Type & Default | Description |
-|---------|----------------|-------------|
-| `cors_origins` | `str = "*"` | Comma-separated list of origins allowed to make API requests, or `*` for all. |
-| `data_path` | `str = "app/disha/data/JEE_2025_Cutoffs.xlsx"` | Path to the legacy Excel cutoff workbook (kept for reference). |
-| `basic_merged_data_path` | `str = "app/disha/data/josaa_merged_2025.csv"` | Path to the 2025 round-wise merged CSV containing all categories and rounds. |
-| `data_mode` | `str = "basic"` | Active data mode. Defaults to `"basic"`; extended mode has been fully removed. |
+**Hard constraint, followed by COMEDK and enforced by this doc: never modify an existing exam's files while adding a new one.** JEE's files were not touched to build COMEDK; COMEDK's files should not be touched to build a fourth exam. Every exam's directory is additive.
+
+### Backend — new files under `app/disha/<new_exam>/`
+
+Use COMEDK as the template to copy the *shape* of (not the literal file contents — COMEDK's numbers are COMEDK-specific), since it's the more complete second implementation:
+
+1. **`__init__.py`** — empty/placeholder, mirrors every other exam package.
+2. **`config.py`** — a `Settings` class with your data file path and every tuning constant your recommender needs (band widths, sigma, caps). Do **not** import or extend JEE's or COMEDK's `Settings` — each exam's config is deliberately standalone so tuning one can't silently move another (see the docstring at the top of `app/disha/comedk/config.py`). Think hard about whether your exam publishes an opening/closing rank pair (→ you can reuse JEE's fixed-margin approach) or a single cutoff (→ you'll need COMEDK's clamped-band approach, or something new — read the rationale comments in `comedk/config.py` before picking constants).
+3. **`states.py`** — your own branch-family classifier and, if relevant, career-goal weights and any geography/quota logic your exam needs (home-state quotas, regional reservation codes, etc.). Decide up front whether a programme maps to one branch family (COMEDK's approach — programme names are specific enough) or a *set* of tags (JEE's approach — needed because JEE's names are more generic). Don't assume KCET's `app/disha/states` import pattern is a model to copy — KCET reuses JEE's shared `app.disha.states` for goals/labels in one place while defining its own `classify_branch` locally, which is part of why it ended up inconsistent; pick one pattern deliberately instead of mixing them.
+4. **`data_loader.py`** — parse your CSV into a flat list of dicts or a small dataclass (COMEDK went with dicts; JEE uses a frozen `dataclass`). Cache the parsed result (`lru_cache` or a module-level global — both patterns exist in this repo) so you're not re-parsing the CSV on every request. Derive anything you can from the data itself rather than hard-coding it — COMEDK's quota list, institute brand tiers, and per-quota competitiveness percentiles are all computed from the CSV at load time, not hand-maintained lists.
+5. **`recommender.py`** — the actual filter → bucket (Safe/Target/Reach) → score → sort pipeline. This is where you'll spend the most time re-deriving constants, because JEE's `UPPER_MARGIN`/`LOWER_MARGIN`/`SAFE_FRACTION` are tuned against a real opening→closing *window*, and that window doesn't exist for a single-cutoff exam — copying JEE's numbers verbatim onto a single cutoff produces the exact bucket-explosion/no-backups failure modes documented in `comedk/config.py`'s docstring. Re-derive, don't copy.
+6. **`schemas.py`** — request/response Pydantic models. Decide explicitly whether to mirror an existing exam's response field names (COMEDK kept JEE's legacy field names like `safe`/`target`/`reach` for frontend compatibility, then added new JEE-parallel fields alongside them) or start clean. **Whatever fields your request model declares, make sure your recommender only reads fields that actually exist on it** — this is exactly the mistake that currently breaks KCET's `/recommend` (it reads `req.goal` on a schema with no `goal` field). Test the endpoint with `TestClient` before considering it done.
+7. **`stats_loader.py`** — a `compute_<exam>_stats()` function feeding the exam's `/stats` dashboard. Fine to leave placeholder/empty keys for anything you don't compute yet (both COMEDK and KCET do this), but say so in a comment rather than leaving it silently blank.
+8. **`routes.py`** — an `APIRouter(prefix="/api/<new_exam>")` with `meta`, `stats`, and `recommend` endpoints (page routes for the exam's HTML live in the *root* `app/disha/routes.py`, not here — see below).
+9. Wire it in: in **`app/disha/routes.py`** (the one shared file you're allowed to edit — it's the integration point, not an exam's own file), add `from app.disha.<new_exam>.routes import router as <new_exam>_router`, `router.include_router(<new_exam>_router)`, and the two page routes (`GET /exam/<new_exam>`, `GET /exam/<new_exam>/stats`) following the existing COMEDK/KCET examples immediately above them in that file.
+
+### Frontend — new files under `templates/disha_templates/<new_exam>/`
+
+1. **`<new_exam>/index.html`** — copy an existing exam's HTML shell (COMEDK's is the more complete second example) and adapt the form fields to your exam's inputs. Reuse `../css/style.css` (don't fork the stylesheet — every exam so far reuses it as-is) and load `../js/config.js` + `../js/api.js` (both are genuinely shared and require no changes). Skip `../js/i18n.js` unless you're prepared to build out translated strings for your exam too — COMEDK deliberately didn't, and is English-only as a result.
+2. **`<new_exam>/js/app.js`** — copy an existing exam's `app.js` as your starting structure (view-state machine, guided-flow steps, results rendering, share/print, Choice List/bookmarking) and adapt every domain-specific piece: what the guided-flow steps ask for, what payload shape `buildPayload()` sends to `POST /api/<new_exam>/recommend`, and how result cards render your exam's cutoff shape (a rank *bar* against a single cutoff, like COMEDK, vs. a rank *ruler* against an opening/closing window, like JEE). Leave a header comment stating what you ported from and what you adapted — every existing exam's `app.js` does this, and it's what let this doc reconstruct the porting history accurately.
+3. **`<new_exam>/stats.html`** — copy an existing stats dashboard and point its `fetch()` calls at `/api/<new_exam>/stats`.
+4. Register the new exam in **`templates/disha_templates/js/landing.js`**'s `EXAMS` array (the only shared frontend file you should need to touch) so it shows up as a card on the landing page.
+5. Add your new HTML/JS paths to **`templates/disha_templates/sw.js`**'s `APP_SHELL` precache list and its navigation-routing `if`/`else if` chain — and **double-check the path you add there is the file's real path** (e.g. `kcet/index.html`, not a flattened `kcet.html`); the existing KCET entry has exactly this mistake today (see [docs/API.md](docs/API.md#page-routes-html-not-json)) and it's an easy one to repeat.
+
+### The honest cost
+
+Building COMEDK this way — reading JEE's ~7 backend modules and ~3100-line `app.js`, and writing COMEDK-shaped equivalents of each — was a multi-file, multi-domain-decision port, not a config change. Expect the same order of effort for a fourth exam: a new `config.py` with re-derived constants, a new `recommender.py` with a deliberately-chosen bucketing model, a new multi-hundred-line `app.js`, and a new stats dashboard — plus the discipline to test the new `/recommend` endpoint end-to-end before calling it done (KCET didn't, and its recommend endpoint has been silently broken as a result). If you find yourself doing this a third time, that repetition is itself the signal that a shared engine is now worth building — see the closing note in [Architecture](#architecture-overview).
+
+---
+
+## Configuration reference
+
+All settings are hard-coded Python class attributes — there is deliberately no `.env` file for local dev.
+
+**JEE** — `app/disha/config.py::Settings`
+
+| Setting | Default | Notes |
+|---|---|---|
+| `cors_origins` | `"*"` | Comma-separated allow-list, or `*`. Not overridable via env var today (see caveat in Setup). |
+| `data_path` | `app/disha/data/JEE_2025_Cutoffs.xlsx` | **File does not exist in this repo** — a legacy Excel path kept only for reference; nothing reads it. |
+| `basic_merged_data_path` | `app/disha/data/josaa_merged_2025.csv` | The actual, only data source JEE loads. |
+| `data_mode` | `"basic"` | Permanently `"basic"` — an "extended" multi-year mode was fully removed; the setting survives for API compatibility. |
+
+**COMEDK** — `app/disha/comedk/config.py::Settings` — a much larger set of tuned constants (target/reach band floors/ceilings, sigma bounds, per-institute curation caps) with extensive rationale comments explaining *why* each clamp exists. Read the file directly rather than a table here — the comments are the documentation.
+
+**KCET** — no `config.py` exists; its tuning constants are inline in `app/disha/kcet/recommender.py`.
 
 ---
 
 ## Testing
 
-The test suite is located in the `tests/` directory and can be run using `pytest`.
-
-*   **`tests/test_api.py`**: Integration tests for the HTTP API layer. Verifies that the `/api/health` and `/api/meta` endpoints return correctly structured responses, that the `/api/recommend` endpoint filters and sorts results, and that invalid inputs or languages are rejected with the correct status codes (e.g., `422`).
-*   **`tests/test_recommender.py`**: Unit tests for the core recommendation pipeline. Verifies rank selection, gender-pool filtering, home-state and other-state quota matching, rank categorization boundary conditions, overqualification pruning, and language-specific text generation.
-*   **`tests/test_enhancements.py`**: Unit tests verifying geographic region classification, metro status, and the mathematical correctness of the ratio-blended interest scoring model.
-
-To run all tests, activate the virtual environment and execute:
 ```bash
 pytest tests/ -v
 ```
 
+- `tests/test_api.py` — HTTP-level tests against JEE's `/api/health`, `/api/meta`, `/api/recommend` (filters, language handling, validation errors).
+- `tests/test_recommender.py` — unit tests for JEE's bucketing, quota/gender filtering, and overqualification pruning.
+- `tests/test_enhancements.py` — unit tests for JEE's region/metro classification and interest-score blending.
+
+No test file exists for `app/disha/comedk/` or `app/disha/kcet/` — if you're changing either, you're currently relying on manual verification (e.g. `TestClient` in a scratch script, as used to verify the KCET bug documented above) rather than an existing suite catching regressions.
+
 ---
 
-## Data Sources
+## Portal integration
 
-Cutoffs are sourced from the [atmabodha/OpenNLP JEE dataset](https://github.com/atmabodha/OpenNLP) (JoSAA 2025, Round 6 closing ranks), published by UTMT. This tool is for guidance only and does not guarantee admission outcomes.
+See [DISHA_INTEGRATION_QA.md](DISHA_INTEGRATION_QA.md) for the full Q&A on plugging Disha (all three exams — one `include_router()` call brings all of them, per the Architecture section above) into a larger FastAPI portal.
 
 ---
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+MIT License — see [LICENSE](LICENSE).
