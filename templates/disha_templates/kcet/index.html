@@ -17,85 +17,46 @@
   </noscript>
   <link rel="stylesheet" href="/css/style.css" />
   <script>
-    // Nuke stale SW cache exactly once per browser session
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister()));
-      if (!sessionStorage.getItem('sw_cleared_v9')) {
-        sessionStorage.setItem('sw_cleared_v9', '1');
+      if (!sessionStorage.getItem('sw_cleared_v10')) {
+        sessionStorage.setItem('sw_cleared_v10', '1');
         caches.keys().then(ks => Promise.all(ks.map(k => caches.delete(k)))).then(() => location.reload());
       }
     }
   </script>
   <style>
-    /* Layout enforcement */
     .view--flow { justify-content: center !important; }
     .flow { margin: 0 auto !important; }
-
-    /* Section empty state */
-    .rsection__empty {
-      padding: 32px 24px;
-      text-align: center;
-      color: var(--ink-soft, #8a7f6f);
-      font-size: 0.9rem;
-    }
+    .rsection__empty { padding: 32px 24px; text-align: center; color: var(--ink-soft, #8a7f6f); font-size: 0.9rem; }
     .rsection + .rsection { margin-top: 28px; }
-
-    /* Live-update overlay */
     .results-main.is-refreshing { opacity: 0.55; pointer-events: none; transition: opacity 0.2s; }
 
-    /* Branch-preference chip grid (step 2) */
     .branch-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 10px;
-      margin: 8px 0 4px;
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 8px 0 4px;
     }
     @media (max-width: 520px) { .branch-grid { grid-template-columns: 1fr; } }
     .branch-chip {
-      display: flex; align-items: center; gap: 8px;
-      padding: 10px 14px;
-      border: 1px solid var(--line, #e4dcc9);
-      border-radius: 10px;
-      background: var(--card, #fff);
-      cursor: pointer;
-      font-size: 0.88rem;
-      text-align: left;
-      transition: border-color .15s, background .15s;
+      display: flex; align-items: center; gap: 8px; padding: 10px 14px;
+      border: 1px solid var(--line, #e4dcc9); border-radius: 10px; background: var(--card, #fff);
+      cursor: pointer; font-size: 0.88rem; text-align: left; transition: border-color .15s, background .15s;
     }
-    .branch-chip.is-selected {
-      border-color: var(--pine, #175c4c);
-      background: var(--pine-tint, #e9f2ee);
-      font-weight: 600;
-    }
+    .branch-chip.is-selected { border-color: var(--pine, #175c4c); background: var(--pine-tint, #e9f2ee); font-weight: 600; }
     .branch-chip input { accent-color: var(--pine, #175c4c); }
 
-    /* Notes / banners on the results page */
     .kcet-notes { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
     .kcet-note {
-      padding: 10px 14px;
-      border-radius: 10px;
-      font-size: 0.85rem;
-      background: var(--paper-deep, #f4efe2);
-      color: var(--ink-soft, #5f5747);
+      padding: 10px 14px; border-radius: 10px; font-size: 0.85rem;
+      background: var(--paper-deep, #f4efe2); color: var(--ink-soft, #5f5747);
       border-left: 3px solid var(--pine, #175c4c);
     }
 
-    /* Slider (brand vs branch) */
-    .ratio-field { margin-top: 18px; }
-    .ratio-field__labels { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--ink-soft); margin-bottom: 4px; }
-    .ratio-field input[type=range] { width: 100%; accent-color: var(--pine, #175c4c); }
-
-    /* Card meta additions */
     .ccard__quality { font-size: 0.72rem; color: var(--ink-soft); }
-    .ccard__prob {
-      font-weight: 700;
-      font-size: 0.82rem;
-    }
+    .ccard__prob { font-weight: 700; font-size: 0.82rem; }
   </style>
 </head>
 
 <body>
-  <!-- ── Header ── -->
   <header class="topbar">
     <a class="wordmark" href="/" id="wordmark" aria-label="Disha home">
       <svg class="wordmark__mark" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
@@ -148,10 +109,10 @@
           <button type="button" class="flow__back" id="back-0" aria-label="Back">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
           </button>
-          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="1" id="prog-0">
-            <div class="flow__progress-fill" style="width:20%"></div>
+          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="1" id="prog-0">
+            <div class="flow__progress-fill" style="width:25%"></div>
           </div>
-          <span class="flow__count">1 / 5</span>
+          <span class="flow__count">1 / 4</span>
         </div>
 
         <p class="eyebrow">First things first</p>
@@ -179,10 +140,10 @@
           <button type="button" class="flow__back" id="back-1" aria-label="Back">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
           </button>
-          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="2" id="prog-1">
-            <div class="flow__progress-fill" style="width:40%"></div>
+          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="2" id="prog-1">
+            <div class="flow__progress-fill" style="width:50%"></div>
           </div>
-          <span class="flow__count">2 / 5</span>
+          <span class="flow__count">2 / 4</span>
         </div>
 
         <p class="eyebrow">Your eligibility</p>
@@ -209,70 +170,36 @@
           <button type="button" class="flow__back" id="back-2" aria-label="Back">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
           </button>
-          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="3" id="prog-2">
-            <div class="flow__progress-fill" style="width:60%"></div>
+          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="3" id="prog-2">
+            <div class="flow__progress-fill" style="width:75%"></div>
           </div>
-          <span class="flow__count">3 / 5</span>
+          <span class="flow__count">3 / 4</span>
         </div>
 
         <p class="eyebrow">Optional</p>
         <h2 class="step__title">Any branches you'd rather focus on?</h2>
-        <p class="step__hint">Select one or more, or skip to see every eligible branch.</p>
+        <p class="step__hint">Select one or more, or skip to see every eligible branch. You can set a career-goal focus and branch/college priority later, once you see your results.</p>
 
         <div class="branch-grid" id="branch-grid" role="group" aria-label="Branch preferences"></div>
 
         <div class="flow__foot">
-          <button type="button" class="btn btn--primary btn--lg" id="next-2">Continue</button>
+          <button type="button" class="btn btn--primary btn--lg" id="next-2">See Colleges →</button>
           <button type="button" class="btn btn--ghost" id="skip-2" style="margin-top:8px;">Skip — show all branches</button>
         </div>
       </div>
     </section>
 
-    <!-- ════ STEP 3 — INTEREST ════ -->
-    <section class="view view--flow" id="view-step-3" aria-label="Select interest">
+    <!-- ════ STEP 3 — REVIEW / CONFIRM ════ -->
+    <section class="view view--flow" id="view-step-3" aria-label="Confirm details">
       <div class="flow">
         <div class="flow__head">
           <button type="button" class="flow__back" id="back-3" aria-label="Back">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
           </button>
-          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="4" id="prog-3">
-            <div class="flow__progress-fill" style="width:80%"></div>
-          </div>
-          <span class="flow__count">4 / 5</span>
-        </div>
-
-        <p class="eyebrow">Your interest</p>
-        <h2 class="step__title">What do you want to study?</h2>
-        <p class="step__hint">We use this to filter and highlight programs that match your direction.</p>
-
-        <div class="goal-grid" id="goal-grid" role="radiogroup" aria-label="Interest area"></div>
-        <p class="field__error" id="error-goal" role="alert" hidden></p>
-
-        <div class="ratio-field">
-          <div class="ratio-field__labels">
-            <span>Prefer the best-fit branch</span>
-            <span>Prefer the strongest college</span>
-          </div>
-          <input type="range" id="ratio-slider" min="0" max="1" step="0.1" value="0.5" />
-        </div>
-
-        <div class="flow__foot">
-          <button type="button" class="btn btn--primary btn--lg" id="next-3">Continue</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ════ STEP 4 — REVIEW / CONFIRM ════ -->
-    <section class="view view--flow" id="view-step-4" aria-label="Confirm details">
-      <div class="flow">
-        <div class="flow__head">
-          <button type="button" class="flow__back" id="back-4" aria-label="Back">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
-          </button>
-          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="5" aria-valuenow="5" id="prog-4">
+          <div class="flow__progress" role="progressbar" aria-valuemin="1" aria-valuemax="4" aria-valuenow="4" id="prog-3">
             <div class="flow__progress-fill" style="width:100%"></div>
           </div>
-          <span class="flow__count">5 / 5</span>
+          <span class="flow__count">4 / 4</span>
         </div>
 
         <p class="eyebrow">One last look</p>
@@ -296,12 +223,6 @@
             <button type="button" class="review__row" id="rv-branches">
               <span class="review__key">Branches</span>
               <span class="review__val"><span id="rv-branches-val">All</span><span style="color: var(--pine); margin-left: 8px; font-weight: 500;">›</span></span>
-            </button>
-          </li>
-          <li>
-            <button type="button" class="review__row" id="rv-goal">
-              <span class="review__key">Interest</span>
-              <span class="review__val"><span id="rv-goal-val">—</span><span style="color: var(--pine); margin-left: 8px; font-weight: 500;">›</span></span>
             </button>
           </li>
         </ul>
@@ -365,12 +286,8 @@
               <select class="input input--sm" id="panel-quota-select"></select>
             </div>
             <div class="panel-field">
-              <label class="panel-field__label" for="panel-goal">Interest</label>
-              <select class="input input--sm" id="panel-goal"></select>
-            </div>
-            <div class="panel-field">
-              <label class="panel-field__label" for="panel-ratio">Branch ↔ College</label>
-              <input type="range" id="panel-ratio" min="0" max="1" step="0.1" value="0.5" />
+              <p class="panel-field__label">Branches</p>
+              <div class="branch-grid" id="panel-branch-grid" style="grid-template-columns:1fr;"></div>
             </div>
             <p class="panel__updating" id="panel-updating" hidden>Updating…</p>
           </div>
@@ -390,10 +307,84 @@
 
           <div class="kcet-notes" id="kcet-notes"></div>
 
-          <!-- Main search & text filter in results view -->
-          <div class="results-search-wrap">
-            <svg class="results-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
-            <input type="search" class="input results-search" id="results-search-input" placeholder="Search by college name or branch..." aria-label="Search results" />
+          <!-- Standing spectrum header -->
+          <div class="spectrum-header" id="spectrum-header">
+            <h4 class="spectrum-title">Your standing</h4>
+          </div>
+
+          <!-- Standing spectrum -->
+          <div class="spectrum" id="spectrum" role="group" aria-label="Your standing at a glance">
+            <button type="button" class="zone zone--safe" data-zone="Safe">
+              <span class="zone__count" id="zone-count-safe">0</span>
+              <span class="zone__name">Safe</span>
+              <span class="zone__sub">strong backups</span>
+            </button>
+            <button type="button" class="zone zone--target is-hot" data-zone="Target">
+              <span class="zone__count" id="zone-count-target">0</span>
+              <span class="zone__name">Target</span>
+              <span class="zone__sub">your best-fit zone</span>
+            </button>
+            <button type="button" class="zone zone--reach" data-zone="Reach">
+              <span class="zone__count" id="zone-count-reach">0</span>
+              <span class="zone__name">Dream</span>
+              <span class="zone__sub">ambitious choices</span>
+            </button>
+          </div>
+          <p class="spectrum-note" id="spectrum-note" style="font-size: 13px; color: var(--color-text-muted); margin-top: 12px; margin-bottom: 24px; text-align: center;"></p>
+
+          <!-- Rank ruler — every eligible pick on one log rank axis -->
+          <section class="ruler" id="ruler" role="group" aria-label="Rank ruler: where you stand against every match"></section>
+
+          <!-- Filter toolbar -->
+          <div class="toolbar" id="toolbar">
+            <div class="toolbar-section toolbar-section--primary" style="padding-top: 0; padding-bottom: 12px; border-bottom: none;">
+              <div class="toolbar-row">
+                <div class="searchbox">
+                  <svg width="14" height="14" viewBox="0 0 20 20" aria-hidden="true">
+                    <path d="M9 3.5a5.5 5.5 0 1 0 3.4 9.8l3.2 3.2a.9.9 0 0 0 1.3-1.3l-3.2-3.2A5.5 5.5 0 0 0 9 3.5zm-3.7 5.5a3.7 3.7 0 1 1 7.4 0 3.7 3.7 0 0 1-7.4 0z" fill="currentColor" />
+                  </svg>
+                  <input type="search" id="results-search-input" placeholder="Search by college name or branch..." aria-label="Search results" />
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="toolbar-toggle" id="toolbar-toggle" aria-expanded="true">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+              <span>Sort &amp; Preferences</span>
+              <svg class="toolbar-toggle__chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+            </button>
+
+            <div class="toolbar-body" id="toolbar-body">
+              <div class="toolbar-section toolbar-section--preferences">
+                <div class="toolbar-row">
+                  <div class="toolbar-controls-group">
+                    <div class="priority-group" id="priority-group" style="display: inline-flex; align-items: center; gap: 8px;">
+                      <select class="sort-select" id="toolbar-goal" aria-label="Career goal"></select>
+                      <div style="position: relative; display: inline-flex;">
+                        <div class="view-toggle" id="priority-toggle" role="group" aria-label="College vs Branch Priority">
+                          <button type="button" class="view-toggle-btn" id="priority-branch" data-ratio="0.2">
+                            <span class="full-label">Favour Branch</span>
+                            <span class="short-label">Branch</span>
+                          </button>
+                          <button type="button" class="view-toggle-btn is-active" id="priority-balanced" data-ratio="0.5">
+                            <span class="full-label">Balanced</span>
+                            <span class="short-label">Balanced</span>
+                          </button>
+                          <button type="button" class="view-toggle-btn" id="priority-college" data-ratio="0.8">
+                            <span class="full-label">Favour College</span>
+                            <span class="short-label">College</span>
+                          </button>
+                        </div>
+                        <div class="priority-tooltip" id="priority-goal-tooltip" hidden>
+                          <span>Set your Career Goal to get branch-specific rankings.</span>
+                          <button type="button" class="btn btn--link btn--sm" id="priority-goal-focus" style="padding: 0; text-decoration: underline; color: #fff; font-weight: 600;">Set Goal</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div id="results-sections-container"></div>

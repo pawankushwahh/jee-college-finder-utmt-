@@ -5,36 +5,20 @@
 
    View IDs (each step is its own <section>):
      view-welcome  view-step-0  view-step-1  view-step-2  view-step-3
-     view-step-4   view-loading  view-results  view-error
+     view-loading  view-results  view-error
 
-   Flow: rank -> category -> branch preferences -> interest -> review
+   Flow: rank -> category -> branch preferences -> review
+   Career goal and the branch/college priority toggle are NOT part of the
+   guided flow — matching the real JEE page, which explicitly removed its
+   interest step from onboarding. Both live only in the results toolbar,
+   where changing them triggers a live re-fetch, same as editing the panel.
 
    API:  GET  /api/kcet/meta
          POST /api/kcet/recommend
    ═══════════════════════════════════════════════════════════════ */
 
-// ── GOALS (icons + copy; labels are overridden from /meta at load time) ──
-
-const GOALS = [
-  { id: "coding",       name: "CS / Software / AI",           desc: "Computer Science, IT, AI/Data Science" },
-  { id: "core",         name: "Core Engineering",              desc: "Mechanical, Civil, Electrical, Chemical" },
-  { id: "research",     name: "Research / Higher Studies",     desc: "AI/DS, Biotechnology" },
-  { id: "pure_science", name: "Science-adjacent",              desc: "Biotech, Materials, Chemical" },
-  { id: "mba",          name: "Management / MBA later",        desc: "Any branch — college strength focus" },
-  { id: "undecided",    name: "Not sure yet",                  desc: "Show me all good options" },
-];
-
-const GOAL_ICONS = {
-  coding:      '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>',
-  core:        '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 112.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 112.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>',
-  research:    '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/><path d="M11 8v6M8 11h6"/></svg>',
-  pure_science:'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v8L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45L14 10V2z"/><path d="M8.5 2h7"/><path d="M7 16h10"/></svg>',
-  mba:         '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/></svg>',
-  undecided:   '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
-};
-
 const ALL_VIEWS = [
-  "welcome", "step-0", "step-1", "step-2", "step-3", "step-4",
+  "welcome", "step-0", "step-1", "step-2", "step-3",
   "loading", "results", "error",
 ];
 
@@ -76,6 +60,11 @@ function fmtRankInput(el) {
   });
 }
 
+function goalName(id) {
+  const found = (state.meta?.goals || []).find(g => g.value === id);
+  return found ? found.label : id;
+}
+
 // ── VIEW SWITCHING ────────────────────────────────────────────
 function showView(name) {
   for (const v of ALL_VIEWS) {
@@ -100,17 +89,17 @@ function categoryLabel(value) {
   return found ? found.label : value;
 }
 
-// ── BRANCH PREFERENCE GRID (STEP 2) ──────────────────────────
-function buildBranchGrid() {
-  const grid = $("branch-grid");
-  if (!grid) return;
+// ── BRANCH PREFERENCE GRIDS (flow step 2 + results panel) ────
+function branchChipsHtml() {
   const options = state.meta?.branch_preferences || [];
-  grid.innerHTML = options.map(b => `
+  return options.map(b => `
     <label class="branch-chip${state.branchPrefs.includes(b.value) ? " is-selected" : ""}" data-value="${esc(b.value)}">
       <input type="checkbox" value="${esc(b.value)}" ${state.branchPrefs.includes(b.value) ? "checked" : ""} />
       <span>${esc(b.label)}</span>
     </label>`).join("");
+}
 
+function bindBranchChipClicks(grid, onToggle) {
   grid.querySelectorAll(".branch-chip").forEach(chip => {
     chip.addEventListener("click", (e) => {
       e.preventDefault();
@@ -118,9 +107,30 @@ function buildBranchGrid() {
       const idx = state.branchPrefs.indexOf(val);
       if (idx === -1) state.branchPrefs.push(val);
       else state.branchPrefs.splice(idx, 1);
-      chip.classList.toggle("is-selected", state.branchPrefs.includes(val));
-      chip.querySelector("input").checked = state.branchPrefs.includes(val);
+      document.querySelectorAll(`.branch-chip[data-value="${val}"]`).forEach(c => {
+        c.classList.toggle("is-selected", state.branchPrefs.includes(val));
+        const inp = c.querySelector("input");
+        if (inp) inp.checked = state.branchPrefs.includes(val);
+      });
+      onToggle?.();
     });
+  });
+}
+
+function buildBranchGrid() {
+  const grid = $("branch-grid");
+  if (!grid) return;
+  grid.innerHTML = branchChipsHtml();
+  bindBranchChipClicks(grid);
+}
+
+function buildPanelBranchGrid() {
+  const grid = $("panel-branch-grid");
+  if (!grid) return;
+  grid.innerHTML = branchChipsHtml();
+  bindBranchChipClicks(grid, () => {
+    buildBranchGrid();
+    schedulePanelUpdate();
   });
 }
 
@@ -132,57 +142,19 @@ function branchPrefsLabel() {
     .join(", ");
 }
 
-// ── GOAL GRID ─────────────────────────────────────────────────
-function buildGoalGrid() {
-  const grid = $("goal-grid");
-  if (!grid) return;
-  grid.innerHTML = "";
-  for (const g of GOALS) {
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "goal-card" + (state.goal === g.id ? " is-selected" : "");
-    btn.dataset.goal = g.id;
-    btn.setAttribute("role", "radio");
-    btn.setAttribute("aria-checked", state.goal === g.id ? "true" : "false");
-    btn.innerHTML = `
-      <span class="goal-card__icon" aria-hidden="true">${GOAL_ICONS[g.id] || ""}</span>
-      <span>
-        <span class="goal-card__name">${esc(g.name)}</span>
-        <span class="goal-card__desc">${esc(g.desc)}</span>
-      </span>`;
-    btn.addEventListener("click", () => {
-      state.goal = g.id;
-      grid.querySelectorAll(".goal-card").forEach(c => {
-        const on = c === btn;
-        c.classList.toggle("is-selected", on);
-        c.setAttribute("aria-checked", on ? "true" : "false");
-      });
-      syncPanelGoal();
-    });
-    grid.appendChild(btn);
-  }
-}
-
-function syncPanelGoal() {
-  const sel = $("panel-goal");
-  if (sel) sel.value = state.goal;
-}
-
-// ── REVIEW (STEP 4) ───────────────────────────────────────────
+// ── REVIEW (STEP 3) ───────────────────────────────────────────
 function populateReview() {
   const rv = $("rv-rank-val");
   const qv = $("rv-quota-val");
   const bv = $("rv-branches-val");
-  const gv = $("rv-goal-val");
   if (rv) rv.textContent = state.rank ? fmt(state.rank) : "—";
   if (qv) qv.textContent = categoryLabel(state.seatCategory);
   if (bv) bv.textContent = branchPrefsLabel();
-  if (gv) gv.textContent = GOALS.find(g => g.id === state.goal)?.name || state.goal;
 }
 
 // ── NAVIGATION ────────────────────────────────────────────────
 function goToStep(n) {
-  if (n === 4) populateReview();
+  if (n === 3) populateReview();
   showView(`step-${n}`);
 }
 
@@ -266,7 +238,7 @@ async function submitProfile() {
   }
 }
 
-// ── LIVE PANEL ────────────────────────────────────────────────
+// ── LIVE PANEL / TOOLBAR UPDATES ───────────────────────────────
 let _panelTimer = null;
 
 function setPanelUpdating(on) {
@@ -278,7 +250,7 @@ function setPanelUpdating(on) {
 function schedulePanelUpdate() {
   setPanelUpdating(true);
   clearTimeout(_panelTimer);
-  _panelTimer = setTimeout(runPanelUpdate, 450);
+  _panelTimer = setTimeout(runPanelUpdate, 420);
 }
 
 async function runPanelUpdate() {
@@ -286,8 +258,6 @@ async function runPanelUpdate() {
   if (!r) { setPanelUpdating(false); return; }
   state.rank         = r;
   state.seatCategory = $("panel-quota-select")?.value || state.seatCategory;
-  state.goal         = $("panel-goal")?.value || state.goal;
-  state.ratio         = parseFloat($("panel-ratio")?.value ?? state.ratio);
   try {
     const data = await apiRequest("/api/kcet/recommend", {
       method: "POST",
@@ -306,9 +276,58 @@ function syncPanel() {
   const pr = $("panel-rank");
   if (pr) pr.value = fmt(state.rank);
   syncCategory();
-  syncPanelGoal();
-  const pratio = $("panel-ratio");
-  if (pratio) pratio.value = state.ratio;
+  buildPanelBranchGrid();
+  updatePriorityUI();
+}
+
+// ── TOOLBAR: goal select + branch/college priority toggle ─────
+function buildToolbarGoalSelect() {
+  const sel = $("toolbar-goal");
+  if (!sel) return;
+  const opts = state.meta?.goals || [];
+  sel.innerHTML = opts.map(g => `<option value="${esc(g.value)}">${esc(g.label)}</option>`).join("");
+  sel.value = state.goal;
+}
+
+function updatePriorityUI() {
+  const buttons = { "0.2": $("priority-branch"), "0.5": $("priority-balanced"), "0.8": $("priority-college") };
+  Object.entries(buttons).forEach(([val, btn]) => {
+    if (btn) btn.classList.toggle("is-active", Math.abs(state.ratio - parseFloat(val)) < 0.15);
+  });
+
+  const branchFull = document.querySelector("#priority-branch .full-label");
+  const branchShort = document.querySelector("#priority-branch .short-label");
+  if (branchFull && branchShort) {
+    if (state.goal && state.goal !== "undecided") {
+      const name = goalName(state.goal);
+      branchFull.textContent = `Favour Branch (${name})`;
+      branchShort.textContent = `Branch (${name})`;
+    } else {
+      branchFull.textContent = "Favour Branch";
+      branchShort.textContent = "Branch";
+    }
+  }
+
+  const tooltip = $("priority-goal-tooltip");
+  if (tooltip) {
+    const favourBranchActive = Math.abs(state.ratio - 0.2) < 0.15;
+    const goalUndecided = !state.goal || state.goal === "undecided";
+    tooltip.hidden = !(favourBranchActive && goalUndecided);
+  }
+
+  updateSpectrumNote();
+}
+
+function updateSpectrumNote() {
+  const el = $("spectrum-note");
+  if (!el) return;
+  const th = state.lastData?.thresholds || {};
+  const safeMargin = th.safe_margin ?? 0.15;
+  const upperMargin = th.upper_margin ?? 0.25;
+  el.innerHTML =
+    `<strong>Safe:</strong> your rank clears last year's cutoff by more than ${Math.round(safeMargin * 100)}% of it (clamped to a sensible rank range). &nbsp;` +
+    `<strong>Target:</strong> your rank sits at or just above the cutoff. &nbsp;` +
+    `<strong>Dream:</strong> within ${Math.round(upperMargin * 100)}% past the cutoff — ambitious but possible.`;
 }
 
 // ── FETCH A SINGLE BUCKET UNCAPPED ("show all N") ────────────
@@ -324,12 +343,237 @@ async function fetchFullBucket(bucketKey) {
   return _bucketCache[bucketKey];
 }
 
+// ── RANK RULER — every eligible pick on one log rank axis ─────
+// KCET closing ranks run up to ~250,000 in the 2025 GM data (vs. COMEDK's
+// ~112,000 and JEE's per-exam ranges), so the axis and tick set are KCET's
+// own, not reused from either.
+const RANK_AXIS_MAX = 300000;
+const LOG_AXIS_MAX = Math.log10(RANK_AXIS_MAX);
+
+function rankPosScoped(rank, logMin, logMax) {
+  const r = Math.min(Math.max(Number(rank) || 1, 1), RANK_AXIS_MAX);
+  const logR = Math.log10(r);
+  const span = logMax - logMin;
+  if (span <= 0) return 50;
+  return Math.min(Math.max(((logR - logMin) / span) * 100, 0.5), 99.5);
+}
+
+const ALL_TICKS = [
+  { rank: 1, label: "1" }, { rank: 10, label: "10" }, { rank: 100, label: "100" },
+  { rank: 500, label: "500" }, { rank: 1000, label: "1K" }, { rank: 2000, label: "2K" },
+  { rank: 5000, label: "5K" }, { rank: 10000, label: "10K" }, { rank: 20000, label: "20K" },
+  { rank: 50000, label: "50K" }, { rank: 100000, label: "1L" }, { rank: 200000, label: "2L" },
+  { rank: 300000, label: "3L" },
+];
+
+function ticksForRange(logMin, logMax) {
+  const visible = ALL_TICKS.filter(t => {
+    const logR = Math.log10(t.rank || 1);
+    return logR >= logMin - 0.05 && logR <= logMax + 0.05;
+  });
+  return visible.length > 8 ? visible.filter((_, i) => i % 2 === 0) : visible;
+}
+
+const rulerZoomState = {};
+const MIN_LOG_SPAN = 0.4;
+const RULER_ID = "kcet";
+
+function computeAutoRange(items, youRank) {
+  const ranks = items.map(r => r.closing_rank);
+  if (youRank) ranks.push(youRank);
+  if (!ranks.length) return { logMin: 1, logMax: LOG_AXIS_MAX };
+  const minR = Math.max(1, Math.min(...ranks));
+  const maxR = Math.min(RANK_AXIS_MAX, Math.max(...ranks));
+  const logMin = Math.log10(minR);
+  const logMax = Math.log10(maxR);
+  const padding = Math.max((logMax - logMin) * 0.15, 0.3);
+  return { logMin: Math.max(0, logMin - padding), logMax: Math.min(LOG_AXIS_MAX, logMax + padding) };
+}
+
+function rulerGroupHtml(recs) {
+  if (!recs.length) return "";
+  const youRank = state.rank;
+  const sorted = recs.slice().sort((a, b) => a.closing_rank - b.closing_rank);
+
+  const autoRange = computeAutoRange(recs, youRank);
+  if (!rulerZoomState[RULER_ID]) {
+    rulerZoomState[RULER_ID] = {
+      logMin: autoRange.logMin, logMax: autoRange.logMax,
+      defaultLogMin: autoRange.logMin, defaultLogMax: autoRange.logMax,
+    };
+  } else {
+    rulerZoomState[RULER_ID].defaultLogMin = autoRange.logMin;
+    rulerZoomState[RULER_ID].defaultLogMax = autoRange.logMax;
+  }
+  rulerZoomState[RULER_ID].dotLogs = sorted.map(r => Math.log10(r.closing_rank));
+  const { logMin, logMax } = rulerZoomState[RULER_ID];
+
+  const numLanes = 8;
+  const lanes = new Array(numLanes).fill(-100);
+  const dots = sorted.map((r) => {
+    const cat = r.category === "Reach" ? "reach" : r.category.toLowerCase();
+    const absPos = Math.log10(r.closing_rank);
+    let bestLane = 0, maxDist = -1;
+    for (let l = 0; l < numLanes; l++) {
+      const dist = absPos - lanes[l];
+      if (dist > maxDist) { maxDist = dist; bestLane = l; }
+    }
+    lanes[bestLane] = absPos;
+    const topPct = 10 + (bestLane / (numLanes - 1)) * 80;
+    const leftPct = rankPosScoped(r.closing_rank, logMin, logMax);
+    return `<span class="ruler__dot ruler__dot--${cat}" style="left:${leftPct.toFixed(2)}%; top:${topPct.toFixed(2)}%" data-inst="${esc(r.institute)}" data-branch="${esc(r.program)}" data-rank="${r.closing_rank}" data-cat="${cat}" title="${esc(r.institute)} — ${esc(r.program)} (cutoff ${fmt(r.closing_rank)})"></span>`;
+  }).join("");
+
+  const visibleTicks = ticksForRange(logMin, logMax);
+  const grid = visibleTicks.map(tk => `<span class="ruler__grid" style="left:${rankPosScoped(tk.rank, logMin, logMax).toFixed(2)}%"></span>`).join("");
+  const scale = visibleTicks.map(tk => `<span class="ruler__tick" style="left:${rankPosScoped(tk.rank, logMin, logMax).toFixed(2)}%">${tk.label}</span>`).join("");
+
+  const you = youRank
+    ? `<div class="ruler__you" style="left:${rankPosScoped(youRank, logMin, logMax).toFixed(2)}%" title="Your rank: ${fmt(youRank)}"><span class="ruler__you-flag">YOU</span></div>`
+    : "";
+  const headRight = youRank
+    ? `<span class="ruler__you-rank">YOU · ${fmt(youRank)}</span>`
+    : `<span class="ruler__count">${recs.length} options</span>`;
+
+  return `
+    <div class="ruler__group" role="img" aria-label="KCET rank ruler: ${recs.length} options" data-ruler-id="${RULER_ID}">
+      <div class="ruler__head">
+        <span class="ruler__title">KCET Colleges <span class="ruler__via">via KCET 2025 R1</span></span>
+        ${headRight}
+      </div>
+      <div class="ruler__track-wrap">
+        <div class="ruler__track" data-ruler-id="${RULER_ID}" tabindex="0" aria-label="Interactive chart track. Use arrow keys to pan, plus/minus to zoom.">
+          ${grid}
+          ${dots}
+          ${you}
+        </div>
+        <div class="ruler__zoom-controls">
+          <button type="button" class="ruler__zoom-btn" data-action="in" data-ruler-id="${RULER_ID}" title="Zoom in">+</button>
+          <button type="button" class="ruler__zoom-btn" data-action="out" data-ruler-id="${RULER_ID}" title="Zoom out">−</button>
+          <button type="button" class="ruler__zoom-btn" data-action="reset" data-ruler-id="${RULER_ID}" title="Reset zoom">⟲</button>
+        </div>
+      </div>
+      <div class="ruler__scale">${scale}</div>
+    </div>`;
+}
+
+function renderRuler(data) {
+  const container = $("ruler");
+  if (!container) return;
+  const recs = data.recommendations || [];
+  container.innerHTML = rulerGroupHtml(recs);
+  bindRulerInteractions();
+}
+
+function rerenderRuler() {
+  const data = state.lastData;
+  if (!data) return;
+  const groupEl = document.querySelector(`.ruler__group[data-ruler-id="${RULER_ID}"]`);
+  if (!groupEl) return;
+  const html = rulerGroupHtml(data.recommendations || []);
+  if (!html) return;
+  const temp = document.createElement("div");
+  temp.innerHTML = html;
+  const newTrack = temp.querySelector(".ruler__track");
+  const newScale = temp.querySelector(".ruler__scale");
+  const oldTrack = groupEl.querySelector(".ruler__track");
+  const oldScale = groupEl.querySelector(".ruler__scale");
+  if (oldTrack && newTrack) oldTrack.innerHTML = newTrack.innerHTML;
+  if (oldScale && newScale) oldScale.innerHTML = newScale.innerHTML;
+}
+
+function applyClampedRange(zs, newMin, newMax) {
+  const maxSpan = (zs.defaultLogMax || LOG_AXIS_MAX) - (zs.defaultLogMin || 0);
+  let span = newMax - newMin;
+  if (span > maxSpan) { const c = (newMin + newMax) / 2; newMin = c - maxSpan / 2; newMax = c + maxSpan / 2; }
+  if (newMin < 0) { newMax += -newMin; newMin = 0; }
+  if (newMax > LOG_AXIS_MAX) { newMin -= (newMax - LOG_AXIS_MAX); newMax = LOG_AXIS_MAX; }
+  newMin = Math.max(0, newMin);
+  newMax = Math.min(LOG_AXIS_MAX, newMax);
+  if (newMax - newMin < 0.001) newMax = newMin + 0.001;
+  zs.logMin = newMin; zs.logMax = newMax;
+}
+
+function applyZoom(action) {
+  const zs = rulerZoomState[RULER_ID];
+  if (!zs) return;
+  const span = zs.logMax - zs.logMin;
+  if (action === "in") {
+    const shrink = span * 0.15;
+    if (span - shrink * 2 < MIN_LOG_SPAN) return;
+    applyClampedRange(zs, zs.logMin + shrink, zs.logMax - shrink);
+  } else if (action === "out") {
+    const grow = span * 0.2;
+    applyClampedRange(zs, zs.logMin - grow, zs.logMax + grow);
+  } else if (action === "reset") {
+    zs.logMin = zs.defaultLogMin; zs.logMax = zs.defaultLogMax;
+  }
+  rerenderRuler();
+}
+
+function applyPan(deltaLog) {
+  const zs = rulerZoomState[RULER_ID];
+  if (!zs) return;
+  applyClampedRange(zs, zs.logMin + deltaLog, zs.logMax + deltaLog);
+  rerenderRuler();
+}
+
+function bindRulerInteractions() {
+  document.querySelectorAll(".ruler__zoom-btn").forEach(btn => {
+    if (btn._bound) return;
+    btn._bound = true;
+    btn.addEventListener("click", (e) => { e.stopPropagation(); applyZoom(btn.dataset.action); });
+  });
+  document.querySelectorAll(".ruler__track").forEach(track => {
+    if (track._bound) return;
+    track._bound = true;
+    track.addEventListener("wheel", (e) => { e.preventDefault(); applyZoom(e.deltaY < 0 ? "in" : "out"); }, { passive: false });
+    track.addEventListener("keydown", (e) => {
+      const zs = rulerZoomState[RULER_ID];
+      if (!zs) return;
+      const span = zs.logMax - zs.logMin;
+      if (e.key === "ArrowLeft") { e.preventDefault(); applyPan(-span * 0.1); }
+      if (e.key === "ArrowRight") { e.preventDefault(); applyPan(span * 0.1); }
+      if (e.key === "+" || e.key === "=") { e.preventDefault(); applyZoom("in"); }
+      if (e.key === "-") { e.preventDefault(); applyZoom("out"); }
+      if (e.key === "0") { e.preventDefault(); applyZoom("reset"); }
+    });
+    let dragging = false, startX = 0, startMin = 0, startMax = 0;
+    track.addEventListener("pointerdown", (e) => {
+      if (e.target.closest(".ruler__dot") || e.target.closest(".ruler__you")) return;
+      const zs = rulerZoomState[RULER_ID];
+      if (!zs) return;
+      dragging = true; startX = e.clientX; startMin = zs.logMin; startMax = zs.logMax;
+      track.setPointerCapture(e.pointerId);
+      track.style.cursor = "grabbing";
+    });
+    track.addEventListener("pointermove", (e) => {
+      if (!dragging) return;
+      const zs = rulerZoomState[RULER_ID];
+      if (!zs) return;
+      const dx = e.clientX - startX;
+      const span = startMax - startMin;
+      const deltaLog = -(dx / (track.offsetWidth || 1)) * span;
+      applyClampedRange(zs, startMin + deltaLog, startMax + deltaLog);
+      rerenderRuler();
+    });
+    const stop = () => { dragging = false; track.style.cursor = ""; };
+    track.addEventListener("pointerup", stop);
+    track.addEventListener("pointercancel", stop);
+  });
+}
+
 // ── RESULTS ───────────────────────────────────────────────────
 const SEC_ORDER   = ["Target", "Reach", "Safe"];
 const SEC_DISPLAY = { Safe: "Safe", Target: "Target", Reach: "Dream" };
 const SEC_TONE    = { Safe: "safe", Target: "target", Reach: "reach" };
 const SEC_BUCKET_KEY = { Safe: "safe", Target: "target", Reach: "dream" };
 const CARD_LIMIT = 25;
+
+function countUp(el, target) {
+  if (!el) return;
+  el.textContent = fmt(target);
+}
 
 function renderResults(data, { keepFilter = false } = {}) {
   if (!keepFilter) { state.filterText = ""; Object.keys(_bucketCache).forEach(k => delete _bucketCache[k]); }
@@ -339,24 +583,33 @@ function renderResults(data, { keepFilter = false } = {}) {
     chips.innerHTML = [
       `Rank <strong>${fmt(state.rank)}</strong>`,
       esc(categoryLabel(state.seatCategory)),
-      esc(GOALS.find(g => g.id === state.goal)?.name || state.goal),
+      esc(goalName(state.goal)),
     ].map(c => `<span class="pchip">${c}</span>`).join("");
   }
 
-  // Notes / banners
   const notesEl = $("kcet-notes");
   if (notesEl) {
     const notes = data.notes || [];
     notesEl.innerHTML = notes.map(n => `<div class="kcet-note">${esc(n)}</div>`).join("");
   }
 
-  const recs = (data.recommendations || []).map(r => ({ ...r }));
-  const grouped = { Safe: [], Target: [], Reach: [] };
-  for (const r of recs) if (grouped[r.category]) grouped[r.category].push(r);
-
   const counts = data.counts || {};
   const byCat = counts.by_category || {};
   const total = counts.total || 0;
+
+  countUp($("zone-count-safe"), byCat.Safe || 0);
+  countUp($("zone-count-target"), byCat.Target || 0);
+  countUp($("zone-count-reach"), byCat.Reach || 0);
+  document.querySelectorAll(".zone").forEach(z => {
+    z.classList.toggle("is-empty", !(byCat[z.dataset.zone] > 0));
+  });
+  updateSpectrumNote();
+
+  renderRuler(data);
+
+  const recs = (data.recommendations || []).map(r => ({ ...r }));
+  const grouped = { Safe: [], Target: [], Reach: [] };
+  for (const r of recs) if (grouped[r.category]) grouped[r.category].push(r);
 
   const q = state.filterText.toLowerCase();
   const passesFilter = r => !q || r.institute.toLowerCase().includes(q) || r.program.toLowerCase().includes(q);
@@ -511,20 +764,9 @@ async function loadMeta() {
     }
 
     buildBranchGrid();
-
-    const gLabels = {};
-    for (const g of meta.goals || []) gLabels[g.value] = g.label;
-    for (const g of GOALS) if (gLabels[g.id]) g.name = gLabels[g.id];
-    buildGoalGrid();
-
-    const sel = $("panel-goal");
-    if (sel) {
-      sel.innerHTML = GOALS.map(g => `<option value="${g.id}">${esc(g.name)}</option>`).join("");
-      sel.value = state.goal;
-    }
+    buildToolbarGoalSelect();
   } catch (e) {
     console.error("Meta load failed:", e?.message);
-    buildGoalGrid();
   }
 }
 
@@ -560,37 +802,23 @@ function bindEvents() {
   $("skip-2")?.addEventListener("click", () => { state.branchPrefs = []; buildBranchGrid(); goToStep(3); });
   $("back-2")?.addEventListener("click", () => goToStep(1));
 
-  // Step 3: goal + ratio
+  // Step 3: review / confirm
   $("back-3")?.addEventListener("click", () => goToStep(2));
-  $("ratio-slider")?.addEventListener("input", e => { state.ratio = parseFloat(e.target.value); });
-  $("next-3")?.addEventListener("click", () => goToStep(4));
-
-  // Step 4: review / confirm
-  $("back-4")?.addEventListener("click", () => goToStep(3));
   $("see-colleges-btn")?.addEventListener("click", submitProfile);
 
   $("rv-rank")    ?.addEventListener("click", () => goToStep(0));
   $("rv-quota")   ?.addEventListener("click", () => goToStep(1));
   $("rv-branches")?.addEventListener("click", () => goToStep(2));
-  $("rv-goal")    ?.addEventListener("click", () => goToStep(3));
 
   // Error page
   $("retry-btn")     ?.addEventListener("click", submitProfile);
   $("error-edit-btn")?.addEventListener("click", () => goToStep(0));
 
-  // Panel
+  // Sidebar panel (rank + category + branches — core identity inputs)
   fmtRankInput($("panel-rank"));
   $("panel-rank")?.addEventListener("input", schedulePanelUpdate);
   $("panel-quota-select")?.addEventListener("change", e => {
     state.seatCategory = e.target.value;
-    schedulePanelUpdate();
-  });
-  $("panel-goal")?.addEventListener("change", () => {
-    state.goal = $("panel-goal").value;
-    schedulePanelUpdate();
-  });
-  $("panel-ratio")?.addEventListener("input", () => {
-    state.ratio = parseFloat($("panel-ratio").value);
     schedulePanelUpdate();
   });
 
@@ -600,6 +828,41 @@ function bindEvents() {
     const open = pt.getAttribute("aria-expanded") === "true";
     pt.setAttribute("aria-expanded", open ? "false" : "true");
     pb?.classList.toggle("is-open", !open);
+  });
+
+  // Toolbar: goal select + branch/college priority (secondary refinement,
+  // available only once results exist — same as real JEE).
+  $("toolbar-goal")?.addEventListener("change", () => {
+    state.goal = $("toolbar-goal").value;
+    updatePriorityUI();
+    schedulePanelUpdate();
+  });
+  $("priority-toggle")?.addEventListener("click", (e) => {
+    const btn = e.target.closest(".view-toggle-btn");
+    if (!btn) return;
+    state.ratio = parseFloat(btn.dataset.ratio);
+    updatePriorityUI();
+    schedulePanelUpdate();
+  });
+  $("priority-goal-focus")?.addEventListener("click", () => {
+    const sel = $("toolbar-goal");
+    if (sel) { sel.focus(); }
+  });
+
+  // Standing spectrum: click a zone to jump to that section
+  $("spectrum")?.addEventListener("click", (e) => {
+    const zone = e.target.closest(".zone");
+    if (!zone) return;
+    const target = $(`section-${zone.dataset.zone.toLowerCase()}`);
+    target?.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+
+  $("toolbar-toggle")?.addEventListener("click", () => {
+    const tb = $("toolbar-toggle");
+    const body = $("toolbar-body");
+    const open = tb.getAttribute("aria-expanded") === "true";
+    tb.setAttribute("aria-expanded", open ? "false" : "true");
+    body?.classList.toggle("is-open", !open);
   });
 
   $("results-search-input")?.addEventListener("input", e => {
@@ -628,7 +891,6 @@ function validateAndNext0() {
 
 // ── INIT ──────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
-  buildGoalGrid();
   bindEvents();
   loadMeta();
   showView("welcome");
