@@ -1,25 +1,27 @@
 "use strict";
 
 /* ═══════════════════════════════════════════════════════════════
-   Disha — KCET (standalone SPA, NO shared JEE code)
+   Disha — KCET (standalone SPA, NO shared JEE/COMEDK code)
 
    View IDs (each step is its own <section>):
      view-welcome  view-step-0  view-step-1  view-step-2  view-step-3
-     view-loading  view-results  view-error
+     view-step-4   view-loading  view-results  view-error
+
+   Flow: rank -> category -> branch preferences -> interest -> review
 
    API:  GET  /api/kcet/meta
          POST /api/kcet/recommend
    ═══════════════════════════════════════════════════════════════ */
 
-// ── GOALS ─────────────────────────────────────────────────────
+// ── GOALS (icons + copy; labels are overridden from /meta at load time) ──
 
 const GOALS = [
-  { id: "coding",       name: "CS / Software / AI",         desc: "Computer Science, IT, AI, Data Science" },
-  { id: "core",         name: "Core Engineering",            desc: "Mechanical, Civil, Electrical, Chemical" },
-  { id: "research",     name: "Research / Biotech",          desc: "Biotechnology, Aerospace, Sciences" },
-  { id: "pure_science", name: "Physics / Chemistry / Maths", desc: "Pure science foundations" },
-  { id: "mba",          name: "Management / MBA later",      desc: "Any branch — brand & placement focus" },
-  { id: "undecided",    name: "Not sure yet",                desc: "Show me all good options" },
+  { id: "coding",       name: "CS / Software / AI",           desc: "Computer Science, IT, AI/Data Science" },
+  { id: "core",         name: "Core Engineering",              desc: "Mechanical, Civil, Electrical, Chemical" },
+  { id: "research",     name: "Research / Higher Studies",     desc: "AI/DS, Biotechnology" },
+  { id: "pure_science", name: "Science-adjacent",              desc: "Biotech, Materials, Chemical" },
+  { id: "mba",          name: "Management / MBA later",        desc: "Any branch — college strength focus" },
+  { id: "undecided",    name: "Not sure yet",                  desc: "Show me all good options" },
 ];
 
 const GOAL_ICONS = {
@@ -31,19 +33,21 @@ const GOAL_ICONS = {
   undecided:   '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 015.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>',
 };
 
-// ── ALL VIEW IDs ───────────────────────────────────────────────
 const ALL_VIEWS = [
-  "welcome", "step-0", "step-1", "step-2", "step-3",
+  "welcome", "step-0", "step-1", "step-2", "step-3", "step-4",
   "loading", "results", "error",
 ];
 
 // ── STATE ─────────────────────────────────────────────────────
 const state = {
-  rank:     null,
-  quota:    "GM",
-  goal:     "undecided",
-  lastData: null,
-  filterText: "",
+  rank:         null,
+  seatCategory: "GM",
+  branchPrefs:  [],
+  goal:         "undecided",
+  ratio:        0.5,
+  lastData:     null,
+  filterText:   "",
+  meta:         null,
 };
 
 // ── DOM helpers ───────────────────────────────────────────────
@@ -83,12 +87,49 @@ function showView(name) {
   window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
 }
 
-// ── QUOTA ─────────────────────────────────────────────────────
-function syncQuota() {
+// ── CATEGORY (seat_category) ─────────────────────────────────
+function syncCategory() {
   const s1 = $("quota-select");
-  if (s1) s1.value = state.quota;
+  if (s1) s1.value = state.seatCategory;
   const s2 = $("panel-quota-select");
-  if (s2) s2.value = state.quota;
+  if (s2) s2.value = state.seatCategory;
+}
+
+function categoryLabel(value) {
+  const found = (state.meta?.seat_categories || []).find(c => c.value === value);
+  return found ? found.label : value;
+}
+
+// ── BRANCH PREFERENCE GRID (STEP 2) ──────────────────────────
+function buildBranchGrid() {
+  const grid = $("branch-grid");
+  if (!grid) return;
+  const options = state.meta?.branch_preferences || [];
+  grid.innerHTML = options.map(b => `
+    <label class="branch-chip${state.branchPrefs.includes(b.value) ? " is-selected" : ""}" data-value="${esc(b.value)}">
+      <input type="checkbox" value="${esc(b.value)}" ${state.branchPrefs.includes(b.value) ? "checked" : ""} />
+      <span>${esc(b.label)}</span>
+    </label>`).join("");
+
+  grid.querySelectorAll(".branch-chip").forEach(chip => {
+    chip.addEventListener("click", (e) => {
+      e.preventDefault();
+      const val = chip.dataset.value;
+      const idx = state.branchPrefs.indexOf(val);
+      if (idx === -1) state.branchPrefs.push(val);
+      else state.branchPrefs.splice(idx, 1);
+      chip.classList.toggle("is-selected", state.branchPrefs.includes(val));
+      chip.querySelector("input").checked = state.branchPrefs.includes(val);
+    });
+  });
+}
+
+function branchPrefsLabel() {
+  if (!state.branchPrefs.length) return "All";
+  const opts = state.meta?.branch_preferences || [];
+  return state.branchPrefs
+    .map(v => opts.find(o => o.value === v)?.label || v)
+    .join(", ");
 }
 
 // ── GOAL GRID ─────────────────────────────────────────────────
@@ -117,8 +158,6 @@ function buildGoalGrid() {
         c.setAttribute("aria-checked", on ? "true" : "false");
       });
       syncPanelGoal();
-      // Auto-advance after 260 ms so selection is visually confirmed
-      setTimeout(() => goToStep(3), 260);
     });
     grid.appendChild(btn);
   }
@@ -129,19 +168,21 @@ function syncPanelGoal() {
   if (sel) sel.value = state.goal;
 }
 
-// ── REVIEW (STEP 3) ───────────────────────────────────────────
+// ── REVIEW (STEP 4) ───────────────────────────────────────────
 function populateReview() {
   const rv = $("rv-rank-val");
   const qv = $("rv-quota-val");
+  const bv = $("rv-branches-val");
   const gv = $("rv-goal-val");
   if (rv) rv.textContent = state.rank ? fmt(state.rank) : "—";
-  if (qv) qv.textContent = state.quota;
+  if (qv) qv.textContent = categoryLabel(state.seatCategory);
+  if (bv) bv.textContent = branchPrefsLabel();
   if (gv) gv.textContent = GOALS.find(g => g.id === state.goal)?.name || state.goal;
 }
 
 // ── NAVIGATION ────────────────────────────────────────────────
 function goToStep(n) {
-  if (n === 3) populateReview();
+  if (n === 4) populateReview();
   showView(`step-${n}`);
 }
 
@@ -170,6 +211,35 @@ function stopLoading() {
   _loadTimer = null;
 }
 
+// ── API ───────────────────────────────────────────────────────
+async function apiRequest(path, opts = {}) {
+  const res = await fetch(path, {
+    headers: { "Content-Type": "application/json" },
+    ...opts,
+  });
+  if (!res.ok) {
+    let msg = `Request failed (${res.status})`;
+    try {
+      const body = await res.json();
+      msg = body.detail ? JSON.stringify(body.detail) : msg;
+    } catch { /* ignore */ }
+    throw new Error(msg);
+  }
+  return res.json();
+}
+
+function buildPayload(extra = {}) {
+  return {
+    rank: state.rank,
+    seat_category: state.seatCategory,
+    goal: state.goal,
+    branch_preferences: state.branchPrefs.slice(),
+    brand_branch_ratio: state.ratio,
+    bucket: "all",
+    ...extra,
+  };
+}
+
 // ── SUBMIT ────────────────────────────────────────────────────
 async function submitProfile() {
   if (!state.rank) {
@@ -181,14 +251,7 @@ async function submitProfile() {
   try {
     const data = await apiRequest("/api/kcet/recommend", {
       method: "POST",
-      body: JSON.stringify({
-        rank:      state.rank,
-        quota:     state.quota,
-        goal:      state.goal,
-        bucket:    "all",
-        page:      1,
-        page_size: 150,
-      }),
+      body: JSON.stringify(buildPayload()),
     });
     stopLoading();
     state.lastData = data;
@@ -221,16 +284,14 @@ function schedulePanelUpdate() {
 async function runPanelUpdate() {
   const r = parseRank($("panel-rank"));
   if (!r) { setPanelUpdating(false); return; }
-  state.rank  = r;
-  state.quota = $("panel-quota-select")?.value || state.quota;
-  state.goal  = $("panel-goal")?.value || state.goal;
+  state.rank         = r;
+  state.seatCategory = $("panel-quota-select")?.value || state.seatCategory;
+  state.goal         = $("panel-goal")?.value || state.goal;
+  state.ratio         = parseFloat($("panel-ratio")?.value ?? state.ratio);
   try {
     const data = await apiRequest("/api/kcet/recommend", {
       method: "POST",
-      body: JSON.stringify({
-        rank: state.rank, quota: state.quota, goal: state.goal,
-        bucket: "all", page: 1, page_size: 150,
-      }),
+      body: JSON.stringify(buildPayload()),
     });
     state.lastData = data;
     renderResults(data, { keepFilter: true });
@@ -244,63 +305,62 @@ async function runPanelUpdate() {
 function syncPanel() {
   const pr = $("panel-rank");
   if (pr) pr.value = fmt(state.rank);
-  syncQuota();
+  syncCategory();
   syncPanelGoal();
+  const pratio = $("panel-ratio");
+  if (pratio) pratio.value = state.ratio;
+}
+
+// ── FETCH A SINGLE BUCKET UNCAPPED ("show all N") ────────────
+const _bucketCache = {};
+
+async function fetchFullBucket(bucketKey) {
+  if (_bucketCache[bucketKey]) return _bucketCache[bucketKey];
+  const data = await apiRequest("/api/kcet/recommend", {
+    method: "POST",
+    body: JSON.stringify(buildPayload({ bucket: bucketKey })),
+  });
+  _bucketCache[bucketKey] = data.recommendations || [];
+  return _bucketCache[bucketKey];
 }
 
 // ── RESULTS ───────────────────────────────────────────────────
 const SEC_ORDER   = ["Target", "Reach", "Safe"];
 const SEC_DISPLAY = { Safe: "Safe", Target: "Target", Reach: "Dream" };
 const SEC_TONE    = { Safe: "safe", Target: "target", Reach: "reach" };
+const SEC_BUCKET_KEY = { Safe: "safe", Target: "target", Reach: "dream" };
+const CARD_LIMIT = 25;
 
 function renderResults(data, { keepFilter = false } = {}) {
-  if (!keepFilter) state.filterText = "";
+  if (!keepFilter) { state.filterText = ""; Object.keys(_bucketCache).forEach(k => delete _bucketCache[k]); }
 
-  // Profile chips
   const chips = $("profile-chips");
   if (chips) {
     chips.innerHTML = [
       `Rank <strong>${fmt(state.rank)}</strong>`,
-      esc(state.quota),
+      esc(categoryLabel(state.seatCategory)),
       esc(GOALS.find(g => g.id === state.goal)?.name || state.goal),
     ].map(c => `<span class="pchip">${c}</span>`).join("");
   }
 
-  // Headline
-  const ts = data.total_safe   || 0;
-  const tt = data.total_target || 0;
-  const tr = data.total_reach  || 0;
-  const total = ts + tt + tr;
-
-  // Active filter alert
-  const toast = $("filter-toast");
-  const toastGoal = $("toast-goal-name");
-  if (toast && toastGoal) {
-    if (state.goal !== "undecided" || state.filterText) {
-      toastGoal.textContent = GOALS.find(g => g.id === state.goal)?.name || state.goal;
-      toast.hidden = false;
-    } else {
-      toast.hidden = true;
-    }
+  // Notes / banners
+  const notesEl = $("kcet-notes");
+  if (notesEl) {
+    const notes = data.notes || [];
+    notesEl.innerHTML = notes.map(n => `<div class="kcet-note">${esc(n)}</div>`).join("");
   }
 
-  // Cards
-  const grouped = {
-    Safe:   (data.safe   || []).map(r => ({ ...r, category: "Safe"   })),
-    Target: (data.target || []).map(r => ({ ...r, category: "Target" })),
-    Reach:  (data.reach  || []).map(r => ({ ...r, category: "Reach"  })),
-  };
+  const recs = (data.recommendations || []).map(r => ({ ...r }));
+  const grouped = { Safe: [], Target: [], Reach: [] };
+  for (const r of recs) if (grouped[r.category]) grouped[r.category].push(r);
+
+  const counts = data.counts || {};
+  const byCat = counts.by_category || {};
+  const total = counts.total || 0;
 
   const q = state.filterText.toLowerCase();
-  if (q) {
-    for (const cat of SEC_ORDER) {
-      grouped[cat] = grouped[cat].filter(r =>
-        r.institute.toLowerCase().includes(q) || r.program.toLowerCase().includes(q)
-      );
-    }
-  }
+  const passesFilter = r => !q || r.institute.toLowerCase().includes(q) || r.program.toLowerCase().includes(q);
 
-  const totals = { Safe: ts, Target: tt, Reach: tr };
   const container = $("results-sections-container");
   if (!container) return;
 
@@ -310,32 +370,65 @@ function renderResults(data, { keepFilter = false } = {}) {
   }
 
   container.innerHTML = SEC_ORDER.map(cat => {
-    const items  = grouped[cat];
-    const count  = totals[cat];
-    const tone   = SEC_TONE[cat];
-    const label  = SEC_DISPLAY[cat];
+    const shown = grouped[cat].filter(passesFilter);
+    const eligibleCount = byCat[cat] || 0;
+    const tone  = SEC_TONE[cat];
+    const label = SEC_DISPLAY[cat];
+    const visible = shown.slice(0, CARD_LIMIT);
+    const remaining = eligibleCount - visible.length;
 
-    const content = items.length === 0
+    const content = shown.length === 0
       ? `<p class="rsection__empty">${
-          count === 0 ? "No programs in this category for your rank."
+          eligibleCount === 0 ? "No programmes in this category for your rank."
           : q ? "No results match your search here."
           : "Results loading…"
         }</p>`
-      : items.map((r, i) => makeCard(r, i)).join("");
+      : visible.map((r, i) => makeCard(r, i)).join("");
+
+    const moreBtn = (!q && remaining > 0)
+      ? `<div style="text-align:center;margin:20px 0 8px">
+           <button type="button" class="btn btn--ghost" data-more="${cat}" style="gap:6px;font-size:.92rem">Show ${fmt(remaining)} more ▾</button>
+         </div>`
+      : "";
 
     return `
       <section class="rsection" id="section-${cat.toLowerCase()}">
         <div class="rsection__head">
           <span class="rsection__tag tone-${tone}">${label}</span>
-          <span class="rsection__count">${fmt(count)} program${count !== 1 ? "s" : ""}</span>
+          <span class="rsection__count">Showing ${fmt(visible.length)} of ${fmt(eligibleCount)}</span>
         </div>
         <div class="rsection__collapse" id="collapse-${cat.toLowerCase()}">
-          <div class="rsection__collapse-inner">
+          <div class="rsection__collapse-inner" id="cards-${cat.toLowerCase()}">
             ${content}
           </div>
+          ${moreBtn}
         </div>
       </section>`;
   }).join("");
+
+  container.querySelectorAll("[data-more]").forEach(btn => {
+    btn.addEventListener("click", () => expandSection(btn.dataset.more));
+  });
+}
+
+async function expandSection(cat) {
+  const bucketKey = SEC_BUCKET_KEY[cat];
+  const btn = document.querySelector(`[data-more="${cat}"]`);
+  if (btn) btn.textContent = "Loading…";
+  try {
+    const full = await fetchFullBucket(bucketKey);
+    const cardsEl = $(`cards-${cat.toLowerCase()}`);
+    if (cardsEl) {
+      const q = state.filterText.toLowerCase();
+      const filtered = full.filter(r => !q || r.institute.toLowerCase().includes(q) || r.program.toLowerCase().includes(q));
+      cardsEl.innerHTML = filtered.map((r, i) => makeCard(r, i)).join("");
+    }
+    const countEl = document.querySelector(`#section-${cat.toLowerCase()} .rsection__count`);
+    if (countEl) countEl.textContent = `Showing ${fmt(full.length)} of ${fmt(full.length)}`;
+    btn?.parentElement?.remove();
+  } catch (e) {
+    if (btn) btn.textContent = "Failed to load — try again";
+  }
 }
 
 // ── CARD ──────────────────────────────────────────────────────
@@ -343,9 +436,8 @@ function makeCard(rec, idx) {
   const catL  = rec.category === "Reach" ? "reach" : rec.category.toLowerCase();
   const delay = Math.min(idx * 40, 400);
   const rank  = state.rank;
-  const cut   = Math.round(rec.cutoff_rank);
+  const cut   = Math.round(rec.closing_rank);
 
-  // Position the cutoff and your rank on a linear track
   const lo  = Math.min(rank, cut) * 0.75;
   const hi  = Math.max(rank, cut) * 1.25 || 1;
   const pos = (v) => {
@@ -355,38 +447,24 @@ function makeCard(rec, idx) {
   };
   const cutPos = pos(cut);
   const youPos = pos(rank);
-
-  // Window spans from whichever is lower to whichever is higher
   const winLeft  = Math.min(cutPos, youPos);
   const winRight = Math.max(cutPos, youPos);
 
-  // Verdict sentence
-  let verdict;
-  if (rec.category === "Safe") {
-    verdict = `Your rank (${fmt(rank)}) is better than the cutoff by ${fmt(cut - rank)} — very likely admission.`;
-  } else if (rec.category === "Target") {
-    if (rank <= cut) {
-      verdict = `Your rank (${fmt(rank)}) is within the cutoff (${fmt(cut)}) — realistic chance.`;
-    } else {
-      verdict = `Cutoff (${fmt(cut)}) is ${fmt(rank - cut)} ranks above your rank — borderline.`;
-    }
-  } else {
-    const gap = Math.abs(rank - cut);
-    verdict = `Cutoff (${fmt(cut)}) is ${fmt(gap)} ranks from your rank — ambitious.`;
-  }
-
-  const star = (rec.category === "Target" || rec.category === "Safe")
+  const star = rec.matched_interest
     ? `<span class="ccard__star" title="Fits your stated goal">
          <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.9 6.3 6.9.8-5.1 4.7 1.4 6.8L12 17.2 5.9 20.6l1.4-6.8L2.2 9.1l6.9-.8L12 2z"/></svg>
          fits your goal</span>`
     : "";
 
+  const prob = rec.admission_probability;
+  const probColor = prob >= 70 ? "var(--pine, #175c4c)" : prob >= 35 ? "#a87714" : "#bf5b3c";
+
   return `
     <article class="ccard ccard--${catL}" style="animation-delay:${delay}ms">
       <div class="ccard__meta">
         <span class="tag tag--govt">KEA</span>
-        <span class="tag">KARNATAKA</span>
-        <span class="tag">${esc(rec.quota)}</span>
+        <span class="tag">${esc(rec.seat_category)}</span>
+        <span class="ccard__quality">quality ${rec.quality_score?.toFixed(1) ?? "—"}/10</span>
         ${star}
       </div>
       <h3 class="ccard__institute">${esc(rec.institute)}</h3>
@@ -401,11 +479,13 @@ function makeCard(rec, idx) {
           <span>Cutoff <strong>${fmt(cut)}</strong></span>
           <span>Your rank <strong>${fmt(rank)}</strong></span>
         </div>
-        <p class="rankbar__verdict">${verdict}</p>
+        <p class="rankbar__verdict">${esc(rec.reason)}</p>
       </div>
 
       <div class="ccard__foot">
-        <span>${esc(rec.quota)} seat</span><span>via KCET 2025</span><span>Official cutoff</span>
+        ${prob !== null && prob !== undefined ? `<span class="ccard__prob" style="color:${probColor}">${prob}% chance</span>` : "<span></span>"}
+        <span>${esc(rec.seat_category_label)}</span>
+        <span>via KCET 2025 R1</span>
       </div>
     </article>`;
 }
@@ -414,25 +494,29 @@ function makeCard(rec, idx) {
 async function loadMeta() {
   try {
     const meta = await apiRequest("/api/kcet/meta");
+    state.meta = meta;
     const note = $("data-note");
-    if (note) note.textContent = `KCET 2025 · ${fmt(meta.total_programs)} programs`;
-    
-    // Populate quota select dropdowns
+    if (note) note.textContent = `KCET 2025 · ${fmt(meta.total_programs)} programmes · ${fmt(meta.total_institutes)} colleges`;
+
     const q1 = $("quota-select");
     const q2 = $("panel-quota-select");
-    if (meta.quotas && meta.quotas.length) {
-      const quotaOptions = meta.quotas.map(q => `<option value="${q}">${q}</option>`).join("");
-      if (q1) q1.innerHTML = quotaOptions;
-      if (q2) q2.innerHTML = quotaOptions;
-      
-      if (!meta.quotas.includes(state.quota)) {
-        state.quota = meta.quotas[0];
+    if (meta.seat_categories && meta.seat_categories.length) {
+      const opts = meta.seat_categories.map(c => `<option value="${esc(c.value)}">${esc(c.value)} — ${esc(c.label)}</option>`).join("");
+      if (q1) q1.innerHTML = opts;
+      if (q2) q2.innerHTML = opts;
+      if (!meta.seat_categories.some(c => c.value === state.seatCategory)) {
+        state.seatCategory = meta.seat_categories.find(c => c.value === "GM")?.value || meta.seat_categories[0].value;
       }
-      syncQuota();
+      syncCategory();
     }
 
+    buildBranchGrid();
+
+    const gLabels = {};
+    for (const g of meta.goals || []) gLabels[g.value] = g.label;
+    for (const g of GOALS) if (gLabels[g.id]) g.name = gLabels[g.id];
     buildGoalGrid();
-    // Build panel goal select
+
     const sel = $("panel-goal");
     if (sel) {
       sel.innerHTML = GOALS.map(g => `<option value="${g.id}">${esc(g.name)}</option>`).join("");
@@ -446,17 +530,16 @@ async function loadMeta() {
 
 // ── EVENTS ────────────────────────────────────────────────────
 function bindEvents() {
-  // Welcome → step 0
   $("begin-btn")?.addEventListener("click", () => goToStep(0));
 
-  // Restart
   $("restart-btn")?.addEventListener("click", () => {
-    state.rank = null; state.quota = "GM"; state.goal = "undecided";
-    syncQuota();
+    state.rank = null; state.seatCategory = "GM"; state.goal = "undecided";
+    state.branchPrefs = []; state.ratio = 0.5;
+    syncCategory();
     showView("welcome");
   });
 
-  // Step 0: rank input
+  // Step 0: rank
   fmtRankInput($("kcet-rank"));
   $("kcet-rank")?.addEventListener("keydown", e => {
     if (e.key === "Enter") { e.preventDefault(); validateAndNext0(); }
@@ -464,43 +547,53 @@ function bindEvents() {
   $("next-0")?.addEventListener("click", validateAndNext0);
   $("back-0")?.addEventListener("click", () => showView("welcome"));
 
-  // Step 1: quota select
+  // Step 1: category
   $("quota-select")?.addEventListener("change", e => {
-    state.quota = e.target.value;
-    syncQuota();
+    state.seatCategory = e.target.value;
+    syncCategory();
   });
   $("next-1")?.addEventListener("click", () => goToStep(2));
   $("back-1")?.addEventListener("click", () => goToStep(0));
 
-  // Step 2: goal (auto-advances on selection)
+  // Step 2: branch preferences
+  $("next-2")?.addEventListener("click", () => goToStep(3));
+  $("skip-2")?.addEventListener("click", () => { state.branchPrefs = []; buildBranchGrid(); goToStep(3); });
   $("back-2")?.addEventListener("click", () => goToStep(1));
 
-  // Step 3: review / confirm
+  // Step 3: goal + ratio
   $("back-3")?.addEventListener("click", () => goToStep(2));
+  $("ratio-slider")?.addEventListener("input", e => { state.ratio = parseFloat(e.target.value); });
+  $("next-3")?.addEventListener("click", () => goToStep(4));
+
+  // Step 4: review / confirm
+  $("back-4")?.addEventListener("click", () => goToStep(3));
   $("see-colleges-btn")?.addEventListener("click", submitProfile);
 
-  // Review rows → jump back to specific step
-  $("rv-rank") ?.addEventListener("click",  () => goToStep(0));
-  $("rv-quota")?.addEventListener("click",  () => goToStep(1));
-  $("rv-goal") ?.addEventListener("click",  () => goToStep(2));
+  $("rv-rank")    ?.addEventListener("click", () => goToStep(0));
+  $("rv-quota")   ?.addEventListener("click", () => goToStep(1));
+  $("rv-branches")?.addEventListener("click", () => goToStep(2));
+  $("rv-goal")    ?.addEventListener("click", () => goToStep(3));
 
   // Error page
-  $("retry-btn")    ?.addEventListener("click", submitProfile);
+  $("retry-btn")     ?.addEventListener("click", submitProfile);
   $("error-edit-btn")?.addEventListener("click", () => goToStep(0));
 
   // Panel
   fmtRankInput($("panel-rank"));
   $("panel-rank")?.addEventListener("input", schedulePanelUpdate);
   $("panel-quota-select")?.addEventListener("change", e => {
-    state.quota = e.target.value;
+    state.seatCategory = e.target.value;
     schedulePanelUpdate();
   });
   $("panel-goal")?.addEventListener("change", () => {
     state.goal = $("panel-goal").value;
     schedulePanelUpdate();
   });
+  $("panel-ratio")?.addEventListener("input", () => {
+    state.ratio = parseFloat($("panel-ratio").value);
+    schedulePanelUpdate();
+  });
 
-  // Panel toggle (mobile)
   const pt = $("panel-toggle");
   const pb = $("panel-body");
   pt?.addEventListener("click", () => {
@@ -509,25 +602,13 @@ function bindEvents() {
     pb?.classList.toggle("is-open", !open);
   });
 
-  // Filter search
   $("results-search-input")?.addEventListener("input", e => {
     state.filterText = e.target.value;
     if (state.lastData) renderResults(state.lastData, { keepFilter: true });
   });
 
-  // Clear toast btn
-  $("toast-clear-btn")?.addEventListener("click", () => {
-    state.goal = "undecided";
-    state.filterText = "";
-    const searchIn = $("results-search-input");
-    if (searchIn) searchIn.value = "";
-    syncPanel();
-    schedulePanelUpdate();
-  });
-
-  // Share
   $("share-btn")?.addEventListener("click", () => {
-    const msg = `My KCET rank ${fmt(state.rank)} (${state.quota}). Check out Disha for free college predictions → ${location.href}`;
+    const msg = `My KCET rank ${fmt(state.rank)} (${state.seatCategory}). Check out Disha for free college predictions → ${location.href}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`, "_blank", "noopener");
   });
 }

@@ -1,116 +1,121 @@
+"""Statistical insights for the KCET dataset, served at /api/kcet/stats.
+
+Output shape matches what templates/disha_templates/kcet/stats.html already
+expects (data.summary, data.quota_counts, data.inst_competitiveness.KCET,
+data.branch_popularity, data.highest_cutoffs, data.lowest_cutoffs) so the
+existing stats page keeps working unchanged — only the data source
+underneath moved from the old ad-hoc dict loader to data_loader.KcetProgram.
+"""
+
 from __future__ import annotations
 
+from typing import Any, Dict
+
 import pandas as pd
-from typing import Dict, List, Any
-from .data_loader import get_programs
+
+from .data_loader import load_programs
+
+_EMPTY: Dict[str, Any] = {
+    "summary": {
+        "total_records": 0,
+        "unique_institutes": 0,
+        "unique_programs": 0,
+        "unique_quotas": 0,
+        "unique_seat_types": 0,
+    },
+    "quota_counts": {},
+    "highest_cutoffs": [],
+    "lowest_cutoffs": [],
+    "inst_competitiveness": {},
+    "branch_popularity": [],
+    "branch_counts": {},
+    "round_averages": {},
+}
+
 
 def compute_kcet_stats() -> Dict[str, Any]:
-    """Compute statistical insights for KCET 2025 dataset."""
-    programs = get_programs()
+    programs = load_programs()
     if not programs:
-        return {
-            "summary": {
-                "total_records": 0,
-                "unique_institutes": 0,
-                "unique_programs": 0,
-                "unique_quotas": 0,
-                "unique_seat_types": 0
-            },
-            "quota_counts": {},
-            "highest_cutoffs": [],
-            "lowest_cutoffs": [],
-            "inst_competitiveness": {},
-            "branch_popularity": [],
-            "branch_counts": {},
-            "round_averages": {},
-            "round_averages_main": {},
-            "round_averages_adv": {}
-        }
+        return _EMPTY
 
-    df = pd.DataFrame(programs)
+    df = pd.DataFrame(
+        {
+            "institute": p.institute,
+            "program": p.program,
+            "quota": p.seat_category,
+            "cutoff_rank": p.closing_rank,
+        }
+        for p in programs
+    )
 
     unique_institutes = int(df["institute"].nunique())
     unique_programs = int(df["program"].nunique())
-    unique_quotas = df["quota"].unique().tolist()
+    unique_quotas = sorted(df["quota"].unique().tolist())
     quota_counts = df["quota"].value_counts().to_dict()
 
-    # Determine dominant/preferred quota to calculate competitiveness metrics.
-    # For KCET, "GM" is General Merit. Fall back to the most common quota if GM is not present.
-    ref_quota = "GM"
-    if ref_quota not in df["quota"].values:
-        if len(unique_quotas) > 0:
-            ref_quota = df["quota"].value_counts().index[0]
-        else:
-            ref_quota = ""
-
+    ref_quota = "GM" if "GM" in df["quota"].values else (unique_quotas[0] if unique_quotas else "")
     comp_df = df[df["quota"] == ref_quota].copy() if ref_quota else df.copy()
 
     highest_cutoffs = []
     lowest_cutoffs = []
-    
     if not comp_df.empty:
-        # Highest cutoffs (lowest numerical rank values)
-        top_competitive = comp_df.nsmallest(10, "cutoff_rank")
-        for _, row in top_competitive.iterrows():
-            highest_cutoffs.append({
-                "institute": row["institute"],
-                "program": row["program"],
-                "quota": row.get("quota", "GM"),
-                "closing_rank": int(row["cutoff_rank"]),
-                "inst_type": "KCET"
-            })
+        for _, row in comp_df.nsmallest(10, "cutoff_rank").iterrows():
+            highest_cutoffs.append(
+                {
+                    "institute": row["institute"],
+                    "program": row["program"],
+                    "quota": row["quota"],
+                    "closing_rank": int(row["cutoff_rank"]),
+                    "inst_type": "KCET",
+                }
+            )
+        for _, row in comp_df.nlargest(10, "cutoff_rank").iterrows():
+            lowest_cutoffs.append(
+                {
+                    "institute": row["institute"],
+                    "program": row["program"],
+                    "quota": row["quota"],
+                    "closing_rank": int(row["cutoff_rank"]),
+                    "inst_type": "KCET",
+                }
+            )
 
-        # Lowest cutoffs (highest numerical rank values)
-        least_competitive = comp_df.nlargest(10, "cutoff_rank")
-        for _, row in least_competitive.iterrows():
-            lowest_cutoffs.append({
-                "institute": row["institute"],
-                "program": row["program"],
-                "quota": row.get("quota", "GM"),
-                "closing_rank": int(row["cutoff_rank"]),
-                "inst_type": "KCET"
-            })
-
-    # Institute Competitiveness - Grouped by institute
-    inst_competitiveness = {}
+    inst_competitiveness: Dict[str, list] = {"KCET": []}
     if not comp_df.empty:
-        grouped = comp_df.groupby("institute").agg(
-            avg_closing=("cutoff_rank", "mean"),
-            min_closing=("cutoff_rank", "min"),
-            total_programs=("program", "count")
-        ).reset_index()
-        grouped = grouped.sort_values("avg_closing")
-        
-        entries = []
+        grouped = (
+            comp_df.groupby("institute")
+            .agg(avg_closing=("cutoff_rank", "mean"), min_closing=("cutoff_rank", "min"), total_programs=("program", "count"))
+            .reset_index()
+            .sort_values("avg_closing")
+        )
         for _, row in grouped.head(15).iterrows():
-            entries.append({
-                "institute": row["institute"],
-                "avg_closing_rank": round(row["avg_closing"], 1),
-                "min_opening_rank": int(row["min_closing"]),
-                "total_programs": int(row["total_programs"])
-            })
-        inst_competitiveness["KCET"] = entries
+            inst_competitiveness["KCET"].append(
+                {
+                    "institute": row["institute"],
+                    "avg_closing_rank": round(float(row["avg_closing"]), 1),
+                    "min_opening_rank": int(row["min_closing"]),
+                    "total_programs": int(row["total_programs"]),
+                }
+            )
 
-    # Branch popularity / competitiveness
     branch_popularity = []
     if not comp_df.empty:
-        branch_pop = comp_df.groupby("program").agg(
-            avg_closing=("cutoff_rank", "mean"),
-            count=("institute", "count")
-        ).reset_index()
-        # Consider branches offered by at least 3 colleges
-        filtered_branch_pop = branch_pop[branch_pop["count"] >= 3]
-        if filtered_branch_pop.empty:
-            filtered_branch_pop = branch_pop
-        
-        filtered_branch_pop = filtered_branch_pop.sort_values("avg_closing").head(15)
-        
-        for _, row in filtered_branch_pop.iterrows():
-            branch_popularity.append({
-                "branch": row["program"],
-                "avg_closing_rank": round(row["avg_closing"], 1),
-                "total_programs": int(row["count"])
-            })
+        branch_pop = (
+            comp_df.groupby("program")
+            .agg(avg_closing=("cutoff_rank", "mean"), count=("institute", "count"))
+            .reset_index()
+        )
+        filtered = branch_pop[branch_pop["count"] >= 3]
+        if filtered.empty:
+            filtered = branch_pop
+        for _, row in filtered.sort_values("avg_closing").head(15).iterrows():
+            branch_popularity.append(
+                {
+                    "branch": row["program"],
+                    "avg_closing_rank": round(float(row["avg_closing"]), 1),
+                    "total_programs": int(row["count"]),
+                }
+            )
 
     return {
         "summary": {
@@ -118,7 +123,7 @@ def compute_kcet_stats() -> Dict[str, Any]:
             "unique_institutes": unique_institutes,
             "unique_programs": unique_programs,
             "unique_quotas": len(unique_quotas),
-            "unique_seat_types": 0
+            "unique_seat_types": len(unique_quotas),
         },
         "quota_counts": quota_counts,
         "highest_cutoffs": highest_cutoffs,
@@ -127,6 +132,4 @@ def compute_kcet_stats() -> Dict[str, Any]:
         "branch_popularity": branch_popularity,
         "branch_counts": {},
         "round_averages": {},
-        "round_averages_main": {},
-        "round_averages_adv": {}
     }
