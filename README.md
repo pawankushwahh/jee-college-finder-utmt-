@@ -108,6 +108,7 @@ pytest tests/ -v
 Three layers:
 
 - `tests/golden/` — **297 characterization cases across all three exams**, pinning the exact current API responses. Read [tests/golden/README.md](tests/golden/README.md) before changing engine code; this is the safety net that makes consolidation provable. Re-capture with `python -m tests.golden.capture`, and treat the resulting diff as the record of what you changed.
+- `tests/test_core.py` — unit tests for the shared engine: ordering, capping, top-rank detection, band clamping, bucket boundaries and the probability curve.
 - `tests/test_page_routes.py` — every registered exam's page and stats routes resolve, with the right cache headers. Derived from `registry.EXAMS`, so a new exam is covered automatically.
 - `tests/test_api.py`, `tests/test_recommender.py`, `tests/test_enhancements.py` — JEE-specific HTTP and unit tests.
 
@@ -157,6 +158,10 @@ incrementally, and the two layers now have different answers:
   character-identical apart from attribute names (`closing_rank` vs
   `cutoff_rank`, `branch` vs `program`), so they are now one implementation
   parameterised by attribute name.
+- `core/cutoff.py` — `PointCutoffModel`: band widths, bucketing and the
+  probability curve for exams that publish a single closing rank. Shared by
+  KCET and COMEDK, parameterised by each one's own measured constants. It has
+  no overqualification prune and must never gain one — see the module docstring.
 - `registry.py` — the single place an exam is registered. API router mounting
   and page-route generation derive from it.
 
@@ -169,7 +174,7 @@ differences, not duplication:
 
 | Concern | Why it can't be shared |
 |---|---|
-| Cutoff model | JoSAA publishes an opening–closing *window*; KCET and COMEDK publish a single *point*, so their admitted band has to be modelled. JEE's overqualification prune must **not** be applied to point-cutoff exams — doing so once caused a rank-500 COMEDK student to see 37 programmes instead of 459 (`comedk/recommender.py:36-46`). |
+| Cutoff model | JoSAA publishes an opening–closing *window*, so JEE keeps its own model. KCET and COMEDK publish a single *point* and now share `core/cutoff.py`. The two families cannot merge: JEE's overqualification prune must **not** be applied to point-cutoff exams — doing so once caused a rank-500 COMEDK student to see 37 programmes instead of 459. |
 | Tuning constants | Each exam's `config.py` documents percentiles measured from its own dataset. KCET's tail runs ~2.2× COMEDK's. |
 | Eligibility axes | JEE has home-state quota and a gender pool; COMEDK has neither (all colleges are in Karnataka); KCET folds region into the category code (`2AG`, `SCK`). |
 | Branch classifiers | Three genuinely different strategies. KCET's word-order-agnostic keyword bag exists because its source scrape is corrupted — `"BLO CK CHAIN"`, `"CYB ER SECURITY"`. |
@@ -218,7 +223,8 @@ and COMEDK had no automated coverage whatsoever.
 │   └── disha/
 │       ├── registry.py             # THE place an exam is registered — drives router mounting + page routes
 │       ├── core/                    # Exam-agnostic engine. Imports nothing from an exam package.
-│       │   └── curation.py          # Bucket ordering, per-institute capping, top-rank detection (shared by all 3)
+│       │   ├── curation.py          # Bucket ordering, per-institute capping, top-rank detection (all 3 exams)
+│       │   └── cutoff.py            # PointCutoffModel — bands/probability for single-cutoff exams (KCET + COMEDK)
 │       ├── routes.py               # JEE API endpoints; delegates all exam wiring to registry.py
 │       ├── config.py                # JEE settings (CORS, data paths, data_mode)
 │       ├── data_loader.py           # Reads josaa_merged_2025.csv, computes opening/closing ranks + volatility tags
