@@ -29,7 +29,17 @@ Every doc file in this repo (README.md, docs/API.md, this file, templates/disha_
 
 ## Copy-and-adapt exams: don't touch another exam's files
 
-Per the README's [Adding a new exam](README.md#adding-a-new-exam) section: JEE, COMEDK, and KCET are independently-maintained, structurally-parallel implementations, not a shared engine. When adding or fixing one exam, do not edit another exam's files (`app/disha/<exam>/*`, `templates/disha_templates/<exam>/*`) unless the change is specifically about that exam. The one shared integration point you're expected to edit across exams is `app/disha/routes.py` (to register a new exam's router and page routes) and `templates/disha_templates/js/landing.js` (to add its picker card) — everything else should be additive, new files, not edits to an existing exam's copy.
+Per the README's [Adding a new exam](README.md#adding-a-new-exam) section: the exams' *pipelines* are still independently maintained, but registration and curation are now shared. When adding or fixing one exam, do not edit another exam's files (`app/disha/<exam>/*`, `templates/disha_templates/<exam>/*`) unless the change is specifically about that exam.
+
+The shared files you *are* expected to edit across exams:
+
+- `app/disha/registry.py` — one `ExamRegistration` entry per exam; router mounting and page routes are generated from it. `app/disha/routes.py` no longer needs editing.
+- `templates/disha_templates/js/landing.js` — the picker card.
+- `tests/golden/matrix.py` — add your exam's request matrix, or it has no safety net.
+
+`app/disha/core/` is shared by every exam and must never import from an exam package. If you find yourself wanting to add an `if exam == "..."` there, that is the signal the abstraction is wrong — push the difference into the exam's own module instead.
+
+**Behaviour changes must not ride along inside a refactor.** If a change alters any API response, the golden suite will fail; re-capture it in its own commit so the diff is a reviewable record of what changed.
 
 ## Tests
 

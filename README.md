@@ -25,7 +25,7 @@ Disha helps engineering aspirants in India turn a rank into a shortlist of reali
 |---|---|---|---|
 | **JEE** (Main + Advanced, via JoSAA) | ✅ Original, most complete implementation | 2025, round-wise (`Opening_R1…R6`/`Closing_R1…R6`) | The reference implementation every other exam is patterned on. |
 | **COMEDK** | ✅ Complete, recently finished | 2025, single closing rank per programme/quota | Built by structurally porting JEE's frontend/backend patterns and adapting them to COMEDK's single-cutoff data — see [Architecture](#architecture-overview) below. |
-| **KCET** | ⚠️ Present in the code and linked from the landing page, but **`POST /api/kcet/recommend` currently returns HTTP 500 on every call** | 2025, round 1 only | A real, verified bug (missing `goal` field on the request schema — see [docs/API.md](docs/API.md#kcet-endpoints)), not a hypothetical one. Treat KCET as in-progress despite looking shipped in the UI. |
+| **KCET** | ✅ Complete | 2025, round 1 only | Rebuilt to JEE-architecture parity. An earlier README claimed `POST /api/kcet/recommend` returned HTTP 500 on every call; that was fixed and is now pinned by 70 golden cases, all returning 200. |
 
 This table, and everything below it, was written by reading the current code — not by trusting the previous README, which had drifted (wrong HTTP methods, wrong margin constants, a `Data/` folder that no longer exists, and no mention of COMEDK or KCET at all). If you find something here that no longer matches the code, that's a docs bug — fix it in the same change that changed the behavior.
 
@@ -76,7 +76,7 @@ Open:
 | `http://127.0.0.1:8000/` | Landing page — pick an exam |
 | `http://127.0.0.1:8000/exam/jee` | JEE recommender |
 | `http://127.0.0.1:8000/exam/comedk` | COMEDK recommender |
-| `http://127.0.0.1:8000/exam/kcet` | KCET recommender (frontend loads; recommend calls currently 500 — see status table above) |
+| `http://127.0.0.1:8000/exam/kcet` | KCET recommender |
 | `http://127.0.0.1:8000/stats` | JEE insights dashboard |
 | `http://127.0.0.1:8000/exam/comedk/stats` | COMEDK insights dashboard |
 | `http://127.0.0.1:8000/exam/kcet/stats` | KCET insights dashboard |
@@ -105,7 +105,13 @@ then visit `http://127.0.0.1:8001/learning_games/` — `mock_portal.py` mounts t
 pytest tests/ -v
 ```
 
-`tests/test_api.py` (HTTP-level, JEE only), `tests/test_recommender.py` and `tests/test_enhancements.py` (unit-level, JEE recommender internals). **There are currently no automated tests for COMEDK or KCET** — worth flagging if you're relying on test coverage as a safety net while changing either of those.
+Three layers:
+
+- `tests/golden/` — **297 characterization cases across all three exams**, pinning the exact current API responses. Read [tests/golden/README.md](tests/golden/README.md) before changing engine code; this is the safety net that makes consolidation provable. Re-capture with `python -m tests.golden.capture`, and treat the resulting diff as the record of what you changed.
+- `tests/test_page_routes.py` — every registered exam's page and stats routes resolve, with the right cache headers. Derived from `registry.EXAMS`, so a new exam is covered automatically.
+- `tests/test_api.py`, `tests/test_recommender.py`, `tests/test_enhancements.py` — JEE-specific HTTP and unit tests.
+
+COMEDK and KCET previously had **no automated coverage at all**; the golden suite is their first.
 
 ### Build steps
 
@@ -139,15 +145,56 @@ None. The frontend is hand-written HTML/CSS/vanilla JS served as-is; there is no
 - **Frontend approach:** no framework, no build step. Each exam is a **separate, independently-maintained vanilla-JS single-page app** — a static HTML shell plus a per-exam `app.js` that manages its own view state and talks to its own backend endpoints via `fetch`. There is a shared HTML+JS **landing page** (`index.html` + `js/landing.js`) that is just a config-driven list of `<a href="exam/...">` cards — clicking one is a real page navigation, not a client-side route change.
 - **Wiring between frontend and backend:** the frontend never hardcodes a hostname. `js/config.js` inspects its own `<script src>` URL at load time to figure out what prefix it's mounted under (`""` at root, `"/learning_games"` inside a portal, etc.) and sets `window.APP_CONFIG.API_BASE_URL` accordingly — this is what lets the *same* static files work standalone and inside the UTMT portal without editing anything.
 
-### JEE and COMEDK are separate implementations, not a shared engine — by design, for now
+### Mostly-separate implementations, converging on a shared core
 
-This is the most important architectural fact to internalize before touching either exam:
+The exams began as independent copy-and-adapt forks. That is being unwound
+incrementally, and the two layers now have different answers:
+
+**Already shared** (`app/disha/core/`, `app/disha/registry.py`):
+
+- `core/curation.py` — bucket ordering, per-institute capping and top-rank
+  detection. Previously implemented once per exam; the three copies were
+  character-identical apart from attribute names (`closing_rank` vs
+  `cutoff_rank`, `branch` vs `program`), so they are now one implementation
+  parameterised by attribute name.
+- `registry.py` — the single place an exam is registered. API router mounting
+  and page-route generation derive from it.
+
+Nothing in `core/` imports from an exam package. The dependency direction is
+strictly one-way, and that is what allows a new exam to be added without
+editing shared code.
+
+**Still per-exam, and deliberately so** — these are genuine domain
+differences, not duplication:
+
+| Concern | Why it can't be shared |
+|---|---|
+| Cutoff model | JoSAA publishes an opening–closing *window*; KCET and COMEDK publish a single *point*, so their admitted band has to be modelled. JEE's overqualification prune must **not** be applied to point-cutoff exams — doing so once caused a rank-500 COMEDK student to see 37 programmes instead of 459 (`comedk/recommender.py:36-46`). |
+| Tuning constants | Each exam's `config.py` documents percentiles measured from its own dataset. KCET's tail runs ~2.2× COMEDK's. |
+| Eligibility axes | JEE has home-state quota and a gender pool; COMEDK has neither (all colleges are in Karnataka); KCET folds region into the category code (`2AG`, `SCK`). |
+| Branch classifiers | Three genuinely different strategies. KCET's word-order-agnostic keyword bag exists because its source scrape is corrupted — `"BLO CK CHAIN"`, `"CYB ER SECURITY"`. |
+| Brand scoring | JEE hardcodes public prestige tiers; COMEDK derives them from cutoff percentiles; KCET has no signal at all, because no authoritative Karnataka tier list exists. |
+| `confidence` | Means different things: JEE's four round-volatility tags vs the point exams' z-score buckets. A shared enum would force one of them to lie. |
+
+The remaining structural facts below still hold for the per-exam layer:
 
 - **Backend:** `app/disha/` (JEE) and `app/disha/comedk/` (COMEDK) each have their own `config.py`, `data_loader.py`, `recommender.py`, `schemas.py`, `states.py`, `stats_loader.py`, and `routes.py`. None of these modules import from the other exam's package. COMEDK's docstrings explicitly say things like *"Mirrors `app/disha/config.py` in structure"* and *"Mirrors `app/disha/schemas.py` in shape"* — it was built by reading JEE's modules and writing COMEDK-shaped equivalents, not by extracting a shared base class or config schema. Where COMEDK's domain genuinely differs (a single published cutoff instead of an opening/closing pair; no home-state axis because all colleges are in Karnataka), its constants and formulas were **re-derived from scratch** — see the long design-rationale comments in `app/disha/comedk/config.py` for why COMEDK's band math can't just reuse JEE's percentages unchanged.
 - **Frontend:** `templates/disha_templates/comedk/js/app.js` opens with the comment *"Ported from JEE app.js — structurally identical, domain-adapted."* It reuses the shared `js/config.js` and `js/api.js` (API-base-URL detection and the generic fetch wrapper), but **not** `js/i18n.js` — COMEDK's UI is English-only, with no equivalent i18n layer built. Its own `comedk/js/app.js` was written by copying JEE's `js/app.js` view-state/rendering structure and adapting each section (fewer guided-flow steps, a single-cutoff "rank bar" instead of JEE's opening/closing rank ruler, quota pills instead of a home-state dropdown) rather than sharing code with it.
-- **KCET follows the same pattern** but less thoroughly — see the status table at the top of this README and [docs/API.md](docs/API.md#kcet-endpoints) for specifics on where it's incomplete.
+- **KCET follows the same pattern.** It was rebuilt to JEE-architecture parity and is complete; the "returns 500 on every call" warning in older revisions of this README is out of date.
 
-**The honest cost this implies:** every bug fix, every UI tweak, every new career-goal weight discovered to be wrong has to be applied to each exam's copy separately — there is currently no single place to fix it once. A shared "exam engine" (common config schema, common recommender base, common frontend shell parameterized by exam) does not exist yet. If/when one gets built, this section and [Adding a new exam](#adding-a-new-exam) below should be rewritten, since the whole point of that section is describing the current copy-and-adapt cost honestly.
+**The cost that remains.** Backend routing and curation are now fixed in one
+place, but the recommendation pipeline itself is still written out once per
+exam, and the **frontend is still fully forked**: `kcet/js/app.js` and
+`comedk/js/app.js` are ~99% identical after normalising renames, and their
+`index.html` files are 94% identical with every difference being a string
+swap. A UI fix still has to be applied three times, and that porting is
+already failing — see the frozen-bug list in
+[tests/golden/README.md](tests/golden/README.md).
+
+**Before changing any of this, read [tests/golden/README.md](tests/golden/README.md).**
+297 characterization cases pin the current API responses for all three exams.
+They are what makes further consolidation safe, and before they existed KCET
+and COMEDK had no automated coverage whatsoever.
 
 ---
 
@@ -169,7 +216,10 @@ This is the most important architectural fact to internalize before touching eit
 ├── app/
 │   ├── __init__.py
 │   └── disha/
-│       ├── routes.py               # JEE API + page routes; also includes comedk_router and kcet_router
+│       ├── registry.py             # THE place an exam is registered — drives router mounting + page routes
+│       ├── core/                    # Exam-agnostic engine. Imports nothing from an exam package.
+│       │   └── curation.py          # Bucket ordering, per-institute capping, top-rank detection (shared by all 3)
+│       ├── routes.py               # JEE API endpoints; delegates all exam wiring to registry.py
 │       ├── config.py                # JEE settings (CORS, data paths, data_mode)
 │       ├── data_loader.py           # Reads josaa_merged_2025.csv, computes opening/closing ranks + volatility tags
 │       ├── recommender.py           # JEE recommendation pipeline (filter → bucket → score → probability → sort)
@@ -184,7 +234,7 @@ This is the most important architectural fact to internalize before touching eit
 │       │   └── data/comedk_2025.csv    # COMEDK 2025 — single closing rank per programme/quota
 │       │
 │       └── kcet/                    # Independent KCET implementation (incomplete — see status table)
-│           ├── routes.py, schemas.py, data_loader.py, recommender.py, stats_loader.py   (no config.py)
+│           ├── routes.py, schemas.py, data_loader.py, recommender.py, stats_loader.py, config.py
 │           └── data/kcet_2025.csv      # KCET 2025 — round 1 only
 │
 ├── templates/disha_templates/       # The entire frontend — see its own README.md for the full breakdown
@@ -203,7 +253,7 @@ This is the most important architectural fact to internalize before touching eit
 │   ├── manifest.json                  # Shared PWA manifest (text is JEE-flavored/stale — see frontend README)
 │   └── sw.js                           # Shared service worker (app-shell cache; has a known-broken KCET path, see docs/API.md)
 │
-├── tests/                           # JEE-only test coverage (no COMEDK/KCET tests exist yet)
+├── tests/                           # Unit tests + tests/golden/: 297 characterization cases covering all 3 exams
 │   ├── test_api.py, test_recommender.py, test_enhancements.py
 │
 └── screenshots/hero.png             # Used in this README
@@ -233,7 +283,14 @@ Quick orientation:
 
 ## Adding a new exam
 
-This section documents **how COMEDK was actually built**, because that's the only exam that's been added since JEE — not a hypothetical process. Read the [Architecture](#architecture-overview) section above first: this is a **copy-and-adapt process today, not a config-driven plugin system.** There is no shared base class, no shared Pydantic schema, no exam registry to update — you write a new set of files that structurally mirror an existing exam's, and adapt every domain-specific number and assumption by hand.
+Read the [Architecture](#architecture-overview) section first. This is **partly config-driven and partly still copy-and-adapt**, and it is worth knowing which is which:
+
+- **Registration is config-driven.** `app/disha/registry.py` is the single place an exam is declared; router mounting and page routes are generated from it. You do not hand-write route handlers.
+- **Ordering, capping and top-rank detection are shared.** `app/disha/core/curation.py` serves all exams; do not reimplement them.
+- **The pipeline itself is still per-exam.** You write your own `data_loader.py`, `recommender.py` and `schemas.py`, because the genuine domain differences (cutoff shape, eligibility axes, brand signal) live there.
+- **The frontend is still fully copy-and-adapt**, and it is the expensive half.
+
+Before you start, read [tests/golden/README.md](tests/golden/README.md) and add your exam to the matrix — the safety net is only as good as its coverage.
 
 **Hard constraint, followed by COMEDK and enforced by this doc: never modify an existing exam's files while adding a new one.** JEE's files were not touched to build COMEDK; COMEDK's files should not be touched to build a fourth exam. Every exam's directory is additive.
 
@@ -249,7 +306,7 @@ Use COMEDK as the template to copy the *shape* of (not the literal file contents
 6. **`schemas.py`** — request/response Pydantic models. Decide explicitly whether to mirror an existing exam's response field names (COMEDK kept JEE's legacy field names like `safe`/`target`/`reach` for frontend compatibility, then added new JEE-parallel fields alongside them) or start clean. **Whatever fields your request model declares, make sure your recommender only reads fields that actually exist on it** — this is exactly the mistake that currently breaks KCET's `/recommend` (it reads `req.goal` on a schema with no `goal` field). Test the endpoint with `TestClient` before considering it done.
 7. **`stats_loader.py`** — a `compute_<exam>_stats()` function feeding the exam's `/stats` dashboard. Fine to leave placeholder/empty keys for anything you don't compute yet (both COMEDK and KCET do this), but say so in a comment rather than leaving it silently blank.
 8. **`routes.py`** — an `APIRouter(prefix="/api/<new_exam>")` with `meta`, `stats`, and `recommend` endpoints (page routes for the exam's HTML live in the *root* `app/disha/routes.py`, not here — see below).
-9. Wire it in: in **`app/disha/routes.py`** (the one shared file you're allowed to edit — it's the integration point, not an exam's own file), add `from app.disha.<new_exam>.routes import router as <new_exam>_router`, `router.include_router(<new_exam>_router)`, and the two page routes (`GET /exam/<new_exam>`, `GET /exam/<new_exam>/stats`) following the existing COMEDK/KCET examples immediately above them in that file.
+9. Wire it in: add one `ExamRegistration` entry to **`app/disha/registry.py`** — id, label, page route + template, stats route + template, and your `APIRouter`. Router mounting and both page routes are generated from that entry; `app/disha/routes.py` needs no edit at all. `tests/test_page_routes.py` will start covering your exam automatically, and will fail if a template path is wrong.
 
 ### Frontend — new files under `templates/disha_templates/<new_exam>/`
 
@@ -261,7 +318,13 @@ Use COMEDK as the template to copy the *shape* of (not the literal file contents
 
 ### The honest cost
 
-Building COMEDK this way — reading JEE's ~7 backend modules and ~3100-line `app.js`, and writing COMEDK-shaped equivalents of each — was a multi-file, multi-domain-decision port, not a config change. Expect the same order of effort for a fourth exam: a new `config.py` with re-derived constants, a new `recommender.py` with a deliberately-chosen bucketing model, a new multi-hundred-line `app.js`, and a new stats dashboard — plus the discipline to test the new `/recommend` endpoint end-to-end before calling it done (KCET didn't, and its recommend endpoint has been silently broken as a result). If you find yourself doing this a third time, that repetition is itself the signal that a shared engine is now worth building — see the closing note in [Architecture](#architecture-overview).
+Cheaper than it was, but not yet cheap.
+
+**Now free:** route registration, page routes, bucket ordering, per-institute capping, top-rank detection, and page-route test coverage.
+
+**Still real work:** a `config.py` with constants re-derived from your own dataset (do not copy another exam's — read the rationale in `comedk/config.py` for why), a `recommender.py` with a deliberately chosen bucketing model, a `data_loader.py`, and `schemas.py`.
+
+**Still expensive:** the frontend. `kcet/js/app.js` and `comedk/js/app.js` are ~99% identical after normalising renames, so a fourth exam means copying ~2,280 more lines of HTML+JS — and inheriting the copy-paste bugs listed in [tests/golden/README.md](tests/golden/README.md). Consolidating the three frontends behind one shell is the next high-value step, and is deliberately deferred: unlike the backend, there is no cheap way to prove a rewritten SPA renders identically, so it needs a DOM-snapshot harness first.
 
 ---
 
