@@ -16,7 +16,6 @@ import logging
 from pathlib import Path
 
 from fastapi import APIRouter
-from fastapi.responses import FileResponse
 
 from app.disha import states
 from app.disha.config import settings

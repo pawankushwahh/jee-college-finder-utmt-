@@ -63,12 +63,12 @@ Key structural differences from JEE (all intentional):
 
 from __future__ import annotations
 
-import math
 from typing import Dict, List, Optional, Set
 
 
 
 from ..core import curation
+from ..core.cutoff import PointCutoffModel
 from .config import settings
 from .data_loader import get_programs
 from .schemas import (
@@ -558,93 +558,55 @@ _NOTES = {
 # Core engine functions
 # ═══════════════════════════════════════════════════════════════════════════
 
-def _target_band(cutoff: float) -> float:
-    """Width of the modelled admitted window below ``cutoff``.
+# COMEDK's cutoff model. Shared with KCET — same formulas, COMEDK's own
+# constants, measured from this dataset's distribution (see config.py).
+#
+# dynamic_floor_fraction lowers the target-band floor for very competitive
+# programmes: at cutoff 692 a flat 1,000-rank floor would swallow the whole
+# rank range below it and stop top ranks reading as Safe. KCET does not need
+# this and leaves it None.
+CUTOFF_MODEL = PointCutoffModel(
+    safe_margin=SAFE_MARGIN,
+    target_band_floor=TARGET_BAND_FLOOR,
+    target_band_ceiling=TARGET_BAND_CEILING,
+    upper_margin=UPPER_MARGIN,
+    reach_band_ceiling=REACH_BAND_CEILING,
+    sigma_fraction=SIGMA_FRACTION,
+    sigma_floor=SIGMA_FLOOR,
+    sigma_ceiling=SIGMA_CEILING,
+    steepness=STEEPNESS,
+    dynamic_floor_fraction=0.5,
+)
 
-    ``clamp(SAFE_MARGIN * cutoff, min(TARGET_BAND_FLOOR, cutoff * 0.5), TARGET_BAND_CEILING)``.
-
-    The fraction is JEE's; the clamps are what make a single published cutoff
-    usable across a 692 → 111,800 range. The dynamic floor ensures that for
-    highly competitive programmes (e.g. cutoff 692), the target band does not
-    swallow the entire rank range, allowing top ranks to correctly show as Safe.
-    """
-    floor = min(TARGET_BAND_FLOOR, cutoff * 0.5)
-    return _clamp(SAFE_MARGIN * cutoff, floor, TARGET_BAND_CEILING)
-
-
-def _reach_band(cutoff: float) -> float:
-    """How far past ``cutoff`` a programme is still worth listing as a Dream.
-
-    ``min(UPPER_MARGIN * cutoff, REACH_BAND_CEILING)`` — JEE's fraction with an
-    absolute cap and deliberately *no* floor.  A floor would tell a rank-2,000
-    student that a programme which closed at 692 is a Dream, when their true
-    chance there is ~0 %.  The cap is what finally stops a rank-130,000 student
-    being handed 82 "options" against a table whose worst cutoff is 111,800.
-    """
-    return min(UPPER_MARGIN * cutoff, REACH_BAND_CEILING)
-
-
-def _categorize(rank: int, cutoff: float) -> Optional[str]:
-    """Assign a programme to Safe / Target / Reach, or ``None`` (dropped).
-
-    Reads as a single number line, with ``gap = cutoff - rank`` (positive means
-    the student is ahead of the cutoff, i.e. has headroom):
-
-        gap < -reach_band   →  None    no realistic chance
-        -reach_band ≤ gap<0 →  Reach   just past the cutoff, worth listing
-        0 ≤ gap < band      →  Target  inside the modelled admitted window
-        gap ≥ band          →  Safe    clears the whole window with room spare
-    """
-    gap = cutoff - rank
-    if gap < -_reach_band(cutoff):
-        return None
-    if gap < 0:
-        return "Reach"
-    if gap < _target_band(cutoff):
-        return "Target"
-    return "Safe"
-
-
-def _calculate_probability(rank: int, cutoff: float) -> float:
-    """Sigmoid admission probability (0.0 – 100.0), same curve shape as JEE.
-
-    ``rank == cutoff`` gives exactly 50.0 %.  Sigma is proportional to the
-    cutoff — year-over-year drift is larger for higher-numbered cutoffs — but
-    clamped at both ends for the same reason the bands are: an unclamped sigma
-    of 13,400 at cutoff 111,800 read a 6,800-rank cushion as only 79 % likely.
-
-    See the module-level constants for the honesty caveat on SIGMA_FRACTION.
-    """
-    std_dev = _clamp(SIGMA_FRACTION * cutoff, SIGMA_FLOOR, SIGMA_CEILING)
-    z = (cutoff - rank) / std_dev
-    try:
-        prob = 100.0 / (1.0 + math.exp(-STEEPNESS * z))
-    except OverflowError:
-        prob = 100.0 if z > 0 else 0.0
-    return round(prob, 1)
+_target_band = CUTOFF_MODEL.target_band
+_reach_band = CUTOFF_MODEL.reach_band
+_categorize = CUTOFF_MODEL.categorize
+_calculate_probability = CUTOFF_MODEL.probability
 
 
 def _confidence(rank: int, cutoff: float) -> str:
     """Headroom-based confidence — no fabricated volatility.
 
-    COMEDK has one round, so there is no spread to measure.  What *can* be
+    COMEDK has one round, so there is no spread to measure. What *can* be
     stated factually is how far the student sits from the decision boundary.
-    This uses the *same* z-score that drives ``_calculate_probability``, so the
-    label and the percentage on a card can never disagree — the earlier version
-    measured headroom as a raw fraction of the cutoff and could call a 99.9 %
-    option "medium".
+    Uses the *same* z-score that drives the probability, so the label and the
+    percentage on a card can never disagree.
 
-        |z| < 0.5   →  borderline   (roughly 46–54 % — a coin flip)
-        z  >= 1.5   →  high         (roughly 90 % and up)
-        otherwise   →  medium
+        |z| < 0.5   ->  borderline   (roughly 46-54 % — a coin flip)
+        z  >= 1.5   ->  high         (roughly 90 % and up)
+        otherwise   ->  medium
+
+    Three values, deliberately not shared: KCET uses two (no ``borderline``)
+    and JEE uses four round-volatility tags. Same field name, different
+    questions.
     """
-    std_dev = _clamp(SIGMA_FRACTION * cutoff, SIGMA_FLOOR, SIGMA_CEILING)
-    z = (cutoff - rank) / std_dev
+    z = CUTOFF_MODEL.z_score(rank, cutoff)
     if abs(z) < 0.5:
         return "borderline"
     if z >= 1.5:
         return "high"
     return "medium"
+
 
 
 def _quality_score(competitiveness: float, brand_score: float) -> float:

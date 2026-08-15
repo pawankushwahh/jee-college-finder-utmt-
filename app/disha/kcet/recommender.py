@@ -15,11 +15,13 @@ app.disha.comedk.*.
 
 from __future__ import annotations
 
-import math
 from typing import Dict, List, Optional
 
 from . import states
 from ..core import curation
+# Imported by name: `cutoff` is used as a local variable throughout this
+# module, so binding the module to that name would shadow it.
+from ..core.cutoff import PointCutoffModel, clamp as _core_clamp
 from .config import settings
 from .data_loader import KcetProgram, load_programs
 from .schemas import (
@@ -68,61 +70,39 @@ CATEGORY_BLURBS = {
 }
 
 
-def _clamp(value: float, low: float, high: float) -> float:
-    return max(low, min(high, value))
+# KCET's cutoff model. Shared with COMEDK — same formulas, KCET's own
+# constants, measured from this dataset's distribution (see config.py).
+# No dynamic_floor_fraction: KCET uses a flat target-band floor.
+CUTOFF_MODEL = PointCutoffModel(
+    safe_margin=settings.safe_margin,
+    target_band_floor=settings.target_band_floor,
+    target_band_ceiling=settings.target_band_ceiling,
+    upper_margin=settings.upper_margin,
+    reach_band_ceiling=settings.reach_band_ceiling,
+    sigma_fraction=settings.sigma_fraction,
+    sigma_floor=settings.sigma_floor,
+    sigma_ceiling=settings.sigma_ceiling,
+    steepness=settings.steepness,
+)
+
+_clamp = _core_clamp
+_target_band = CUTOFF_MODEL.target_band
+_reach_band = CUTOFF_MODEL.reach_band
+_categorize = CUTOFF_MODEL.categorize
 
 
-def _target_band(cutoff: float) -> float:
-    return _clamp(settings.safe_margin * cutoff, settings.target_band_floor, settings.target_band_ceiling)
-
-
-def _reach_band(cutoff: float) -> float:
-    return min(settings.upper_margin * cutoff, settings.reach_band_ceiling)
-
-
-def _categorize(rank: int, cutoff: float) -> Optional[str]:
-    """Safe / Target / Reach, or None if the option should be dropped.
-
-    Reads as one number line, with gap = cutoff - rank (positive means the
-    student has headroom below the cutoff):
-
-        gap < -reach_band        -> None    no realistic chance
-        -reach_band <= gap < 0   -> Reach    just past the cutoff
-        0 <= gap < target_band   -> Target   right at the cutoff
-        gap >= target_band       -> Safe     comfortably clear of it
-
-    No lower-bound "overqualified" prune, deliberately — unlike JoSAA, this
-    dataset publishes no opening rank, so there is no factual basis for
-    calling a rank "too good" for a seat. A rank-1 student's Safe bucket is
-    every seat they would clear; curation (below) bounds what is *shown*,
-    not what is eligible.
-    """
-    reach_band = _reach_band(cutoff)
-    if rank > cutoff + reach_band:
-        return None
-    target_band = _target_band(cutoff)
-    gap = cutoff - rank
-    if gap >= target_band:
-        return "Safe"
-    if gap >= 0:
-        return "Target"
-    return "Reach"
-
-
-def _z_score(rank: int, cutoff: float) -> float:
-    sigma = _clamp(settings.sigma_fraction * cutoff, settings.sigma_floor, settings.sigma_ceiling)
-    return (cutoff - rank) / sigma
-
-
-def _calculate_probability(z: float) -> float:
-    try:
-        prob = 1.0 / (1.0 + math.exp(-settings.steepness * z))
-    except OverflowError:
-        prob = 1.0 if z > 0 else 0.0
-    return round(prob * 100.0, 1)
+_z_score = CUTOFF_MODEL.z_score
+_calculate_probability = CUTOFF_MODEL.probability_from_z
 
 
 def _confidence(z: float) -> str:
+    """Two-value headroom label, derived from the same z-score as the
+    percentage so the two can never disagree on a card.
+
+    Deliberately *not* shared with COMEDK, which uses three values (it adds
+    ``borderline``), or with JEE, whose four values describe round-to-round
+    volatility rather than headroom. Same field name, different questions.
+    """
     return "high" if abs(z) >= 1.5 else "medium"
 
 

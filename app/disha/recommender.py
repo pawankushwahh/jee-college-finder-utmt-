@@ -202,8 +202,6 @@ def _calculate_probability(rank: int, opening_rank: int, closing_rank: int, hist
     Uses the historical volatility (standard deviation of closing ranks) if history is available.
     Otherwise, defaults to a volatility based on the opening-closing span.
     """
-    ranks = list(history.values())
-    
     margin = closing_rank - rank
     span = max(1, closing_rank - opening_rank)
     
