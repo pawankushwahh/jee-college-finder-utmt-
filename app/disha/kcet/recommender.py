@@ -16,9 +16,10 @@ app.disha.comedk.*.
 from __future__ import annotations
 
 import math
-from typing import Dict, List, Optional, Set
+from typing import Dict, List, Optional
 
 from . import states
+from ..core import curation
 from .config import settings
 from .data_loader import KcetProgram, load_programs
 from .schemas import (
@@ -147,39 +148,15 @@ def _build_reason(prog: KcetProgram, category: str, matched: bool, confidence: s
 
 
 def _order_bucket(rows: List[KcetRecommendation], bucket: str) -> List[KcetRecommendation]:
-    """Best-first ordering. Reach inverts the closing-rank tiebreak: the
-    *highest* closing rank inside the Dream band is the one the student is
-    closest to actually reaching."""
-    if bucket == "Reach":
-        return sorted(rows, key=lambda r: (-r.interest_score, -r.closing_rank, r.institute, r.program))
-    return sorted(rows, key=lambda r: (-r.interest_score, r.closing_rank, r.institute, r.program))
+    """Best-first ordering — see ``core.curation.order_bucket``."""
+    return curation.order_bucket(
+        rows, bucket, rank_attr="closing_rank", name_attr="program"
+    )
 
 
-def _curate_bucket(rows: List[KcetRecommendation], cap: int, max_per_institute: int) -> List[KcetRecommendation]:
-    """First ``cap`` options, at most ``max_per_institute`` per college,
-    relaxed one seat at a time so a bucket smaller than its cap still shows
-    every eligible row even if they share one college."""
-    if cap <= 0 or not rows:
-        return []
-    kept: List[KcetRecommendation] = []
-    taken: Set[int] = set()
-    per_institute: Dict[str, int] = {}
-    allowance = max(1, max_per_institute)
-    while len(kept) < cap:
-        progressed = False
-        for idx, row in enumerate(rows):
-            if len(kept) >= cap:
-                break
-            if idx in taken or per_institute.get(row.institute, 0) >= allowance:
-                continue
-            kept.append(row)
-            taken.add(idx)
-            per_institute[row.institute] = per_institute.get(row.institute, 0) + 1
-            progressed = True
-        if not progressed:
-            break
-        allowance += 1
-    return kept
+# Signature is identical to the shared implementation, so this is a plain
+# alias rather than a wrapper.
+_curate_bucket = curation.curate_bucket
 
 
 def recommend(req: KcetRecommendRequest) -> KcetRecommendResponse:
@@ -242,7 +219,9 @@ def recommend(req: KcetRecommendRequest) -> KcetRecommendResponse:
     count_target, count_reach, count_safe = len(eligible["Target"]), len(eligible["Reach"]), len(eligible["Safe"])
     total_unfiltered = count_target + count_reach + count_safe
 
-    is_top_rank = total_unfiltered > 0 and count_target == 0 and count_reach == 0
+    is_top_rank = curation.detect_top_rank(
+        total_unfiltered, count_target, count_reach
+    )
 
     requested_bucket = _SINGLE_BUCKETS.get((req.bucket or "all").lower())
     single_bucket = requested_bucket is not None

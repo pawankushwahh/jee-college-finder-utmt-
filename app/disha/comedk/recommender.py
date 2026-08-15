@@ -68,6 +68,7 @@ from typing import Dict, List, Optional, Set
 
 
 
+from ..core import curation
 from .config import settings
 from .data_loader import get_programs
 from .schemas import (
@@ -659,71 +660,15 @@ def _quality_score(competitiveness: float, brand_score: float) -> float:
 
 
 def _order_bucket(nodes: List[ComedkProgramNode], bucket: str) -> List[ComedkProgramNode]:
-    """Order one bucket best-first.
-
-    Target and Safe: best option first, so the cap keeps the strongest colleges
-    the rank can reach rather than an arbitrary slice.
-
-    Reach: also best-first, with the smallest overshoot breaking ties.  The
-    previous code sorted Reach by ascending cutoff, which put the *least*
-    attainable Dream at the top of the section.
-    """
-    if bucket == "Reach":
-        return sorted(
-            nodes,
-            key=lambda r: (-r.interest_score, -r.cutoff_rank, r.institute, r.branch),
-        )
-    return sorted(
-        nodes,
-        key=lambda r: (-r.interest_score, r.cutoff_rank, r.institute, r.branch),
+    """Order one bucket best-first — see ``core.curation.order_bucket``."""
+    return curation.order_bucket(
+        nodes, bucket, rank_attr="cutoff_rank", name_attr="branch"
     )
 
 
-def _curate_bucket(
-    nodes: List[ComedkProgramNode], cap: int, max_per_institute: int
-) -> List[ComedkProgramNode]:
-    """Take the first ``cap`` options, allowing at most N per institute.
-
-    Nothing is deleted from the caller's data — this only chooses what the
-    default response displays.  ``nodes`` must already be ordered best-first.
-
-    The limit is raised one seat at a time rather than abandoned, so a bucket
-    that cannot fill under a strict limit still fills — fairly.  Relaxing it in
-    plain quality order instead would hand the spare seats to whichever college
-    happens to sit highest in the ordering: at rank 20,000 KKR that produced
-    four BMS rows in an eight-card bucket.  Raising the allowance gives every
-    college a third seat before any college gets a fourth.
-
-    Diversity therefore never costs the student options.  At rank 1 only three
-    programmes are Targets and all three belong to one college, so all three are
-    still shown.
-    """
-    if cap <= 0 or not nodes:
-        return []
-
-    kept: List[ComedkProgramNode] = []
-    taken: Set[int] = set()
-    per_institute: Dict[str, int] = {}
-    allowance = max(1, max_per_institute)
-
-    while len(kept) < cap:
-        progressed = False
-        for idx, node in enumerate(nodes):
-            if len(kept) >= cap:
-                break
-            if idx in taken:
-                continue
-            if per_institute.get(node.institute, 0) >= allowance:
-                continue
-            kept.append(node)
-            taken.add(idx)
-            per_institute[node.institute] = per_institute.get(node.institute, 0) + 1
-            progressed = True
-        if not progressed:
-            break
-        allowance += 1
-
-    return kept
+# Signature is identical to the shared implementation, so this is a plain
+# alias rather than a wrapper.
+_curate_bucket = curation.curate_bucket
 
 
 def _brand_phrase(brand_tier: str, lang: str = "en") -> str:
@@ -916,11 +861,14 @@ def recommend(req: ComedkRecommendRequest) -> ComedkRecommendResponse:
     # and the three-bucket framing provides no signal.  Show a curated
     # shortlist of the TOP_RANK_CAP most competitive programmes with
     # institute diversity — mirroring JEE's _apply_top_rank_fallback().
-    is_top_rank = (
-        req.rank <= TOP_RANK_THRESHOLD
-        and total_all > 0
-        and count_target == 0
-        and count_reach == 0
+    # COMEDK is the only exam passing a rank_gate: JEE and KCET derive
+    # top-rank purely from the bucket counts.
+    is_top_rank = curation.detect_top_rank(
+        total_all,
+        count_target,
+        count_reach,
+        rank=req.rank,
+        rank_gate=TOP_RANK_THRESHOLD,
     )
 
     if is_top_rank:
