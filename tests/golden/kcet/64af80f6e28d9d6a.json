@@ -1,0 +1,840 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "These closed right around your rank last year. They are your most realistic picks.",
+        "category": "Target",
+        "count": 9
+      },
+      {
+        "blurb": "These closed slightly above your rank last year. Cutoffs move between rounds, so list a few as ambitious choices.",
+        "category": "Reach",
+        "count": 26
+      },
+      {
+        "blurb": "Your rank comfortably beats last year's closing rank here, so these are strong backups you are very likely to get.",
+        "category": "Safe",
+        "count": 19
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 26,
+        "Safe": 19,
+        "Target": 9
+      },
+      "is_curated": true,
+      "is_top_rank": false,
+      "shown": 39,
+      "shown_by_category": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 9
+      },
+      "total": 54
+    },
+    "guidance": "Found 54 eligible college-programme options for your profile (showing 39). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
+    "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
+    "notes": [
+      "Showing the 39 strongest picks out of 54 eligible options, with at most a couple of programmes per college. Open a single section to see every option in it."
+    ],
+    "recommendations": [
+      {
+        "admission_probability": 52.5,
+        "category": "Target",
+        "closing_rank": 200742,
+        "college_code": "E206",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Shri Madhwa Vadiraja Institute of Technology and Management",
+        "interest_score": 3.61,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.22,
+        "reason": "Target for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at Shri Madhwa Vadiraja Institute of Technology and Management), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 63.0,
+        "category": "Target",
+        "closing_rank": 203905,
+        "college_code": "E193",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Srinivas University SRINIVAS CAMPUS MUKKA MANGALURU",
+        "interest_score": 3.6,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING B TECH IN CIVIL",
+        "quality_score": 0.21,
+        "reason": "Target for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING B TECH IN CIVIL at Srinivas University SRINIVAS CAMPUS MUKKA MANGALURU), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 63.5,
+        "category": "Target",
+        "closing_rank": 204050,
+        "college_code": "E041",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "P D A College of Engineering",
+        "interest_score": 3.6,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG INDUSTRIAL &",
+        "quality_score": 0.2,
+        "reason": "Target for you - strong fit for your goal (COMMUNICATION ENGG INDUSTRIAL & at P D A College of Engineering), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "production"
+        ]
+      },
+      {
+        "admission_probability": 65.1,
+        "category": "Target",
+        "closing_rank": 204564,
+        "college_code": "E116",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "R.L.Jalappa Institute of Technology",
+        "interest_score": 3.6,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.19,
+        "reason": "Target for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at R.L.Jalappa Institute of Technology), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 53.8,
+        "category": "Target",
+        "closing_rank": 201103,
+        "college_code": "E177",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Rajeev Institute of Technology",
+        "interest_score": 3.1,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING MECHANICAL",
+        "quality_score": 0.21,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING MECHANICAL at Rajeev Institute of Technology), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 73.4,
+        "category": "Target",
+        "closing_rank": 207450,
+        "college_code": "E064",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Adhichunchanagiri Institute of Technology",
+        "interest_score": 3.09,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING MECHANICAL",
+        "quality_score": 0.18,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING MECHANICAL at Adhichunchanagiri Institute of Technology), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 76.6,
+        "category": "Target",
+        "closing_rank": 208685,
+        "college_code": "E174",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Dr. Sri Sri Sri Shivakumara Mahaswamyji College of Engineering",
+        "interest_score": 3.08,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING MECHANICAL",
+        "quality_score": 0.17,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING MECHANICAL at Dr. Sri Sri Sri Shivakumara Mahaswamyji College of Engineering), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 79.8,
+        "category": "Target",
+        "closing_rank": 210085,
+        "college_code": "E081",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "SRI SIDDHARTHA SCHOOL OF ENGINEERING",
+        "interest_score": 3.08,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING MECHANICAL",
+        "quality_score": 0.16,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING MECHANICAL at SRI SIDDHARTHA SCHOOL OF ENGINEERING), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 78.8,
+        "category": "Target",
+        "closing_rank": 209617,
+        "college_code": "E033",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Sri Taralabalu Jagadguru Institute of Technology",
+        "interest_score": 2.58,
+        "matched_interest": true,
+        "program": "CIVIL",
+        "quality_score": 0.16,
+        "reason": "Target for you - strong fit for your goal (CIVIL at Sri Taralabalu Jagadguru Institute of Technology), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 10.6,
+        "category": "Reach",
+        "closing_rank": 184366,
+        "college_code": "E188",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Vijaya Vittala Institute of Technology",
+        "interest_score": 3.71,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.41,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at Vijaya Vittala Institute of Technology), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 9.0,
+        "category": "Reach",
+        "closing_rank": 183014,
+        "college_code": "E255",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "GANDHI INSTITUTE OF TECHNOLOGY AND MANAGEMENT GITAM OFF CAMPUS BENGALURU NH 207",
+        "interest_score": 3.71,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.43,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at GANDHI INSTITUTE OF TECHNOLOGY AND MANAGEMENT GITAM OFF CAMPUS BENGALURU NH 207), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 10.8,
+        "category": "Reach",
+        "closing_rank": 184496,
+        "college_code": "E065",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Jawaharlal Nehru New College of Engineering",
+        "interest_score": 3.7,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING CIVIL",
+        "quality_score": 0.4,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING CIVIL at Jawaharlal Nehru New College of Engineering), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 15.8,
+        "category": "Reach",
+        "closing_rank": 187703,
+        "college_code": "E100",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "K N S Institute of Technology",
+        "interest_score": 3.69,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING CIVIL",
+        "quality_score": 0.37,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING CIVIL at K N S Institute of Technology), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 15.3,
+        "category": "Reach",
+        "closing_rank": 187475,
+        "college_code": "E142",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Adhichunchanagiri University (Formerly B G S Institute of Technology) B.G.NAGARA",
+        "interest_score": 3.69,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING CIVIL",
+        "quality_score": 0.38,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING CIVIL at Adhichunchanagiri University (Formerly B G S Institute of Technology) B.G.NAGARA), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 12.6,
+        "category": "Reach",
+        "closing_rank": 185804,
+        "college_code": "E032",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "R.T.E. Soceity's Rural Engineering College",
+        "interest_score": 3.69,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING CIVIL",
+        "quality_score": 0.39,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING CIVIL at R.T.E. Soceity's Rural Engineering College), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 10.8,
+        "category": "Reach",
+        "closing_rank": 184519,
+        "college_code": "E155",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Government Engineering College",
+        "interest_score": 3.69,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.39,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at Government Engineering College), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 16.4,
+        "category": "Reach",
+        "closing_rank": 188071,
+        "college_code": "E196",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Jain College of Engineering",
+        "interest_score": 3.68,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.36,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at Jain College of Engineering), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 18.6,
+        "category": "Reach",
+        "closing_rank": 189194,
+        "college_code": "E203",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "K S School of Engineering & Management",
+        "interest_score": 3.67,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND DATA SCIENCE CIVIL",
+        "quality_score": 0.34,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND DATA SCIENCE CIVIL at K S School of Engineering & Management), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "civil",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 16.6,
+        "category": "Reach",
+        "closing_rank": 188187,
+        "college_code": "E150",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "P E S Institute of Technology & Management",
+        "interest_score": 3.67,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING CIVIL",
+        "quality_score": 0.35,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING CIVIL at P E S Institute of Technology & Management), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 29.2,
+        "category": "Reach",
+        "closing_rank": 193510,
+        "college_code": "E203",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "K S School of Engineering & Management",
+        "interest_score": 3.65,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.29,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at K S School of Engineering & Management), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 29.1,
+        "category": "Reach",
+        "closing_rank": 193479,
+        "college_code": "E156",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "K R PET KRISHNA",
+        "interest_score": 3.65,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.3,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at K R PET KRISHNA), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 32.2,
+        "category": "Reach",
+        "closing_rank": 194534,
+        "college_code": "E199",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "AGM Rural Engineering College",
+        "interest_score": 3.64,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.28,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at AGM Rural Engineering College), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 33.9,
+        "category": "Reach",
+        "closing_rank": 195096,
+        "college_code": "E094",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Coorg Institute of Technology",
+        "interest_score": 3.63,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.26,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at Coorg Institute of Technology), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 32.8,
+        "category": "Reach",
+        "closing_rank": 194756,
+        "college_code": "E301",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "KISHKINDA UNIVERSITY BALLARI INSTITUTE OF TECHNOLOGY & MANAGEMENT (BITM) CAMPUS",
+        "interest_score": 3.63,
+        "matched_interest": true,
+        "program": "ELECTRONICS & COMMUNICATION ENGINEERING BTECH IN",
+        "quality_score": 0.27,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS & COMMUNICATION ENGINEERING BTECH IN at KISHKINDA UNIVERSITY BALLARI INSTITUTE OF TECHNOLOGY & MANAGEMENT (BITM) CAMPUS), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 93.9,
+        "category": "Safe",
+        "closing_rank": 220077,
+        "college_code": "E146",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Shreedevi Institute of Technology",
+        "interest_score": 3.56,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND DATA SCIENCE CIVIL",
+        "quality_score": 0.12,
+        "reason": "Safe for you - strong fit for your goal (INTELLIGENCE AND DATA SCIENCE CIVIL at Shreedevi Institute of Technology), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "civil",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 95.4,
+        "category": "Safe",
+        "closing_rank": 222166,
+        "college_code": "E161",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Government Engineering College",
+        "interest_score": 3.55,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.1,
+        "reason": "Safe for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at Government Engineering College), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 95.5,
+        "category": "Safe",
+        "closing_rank": 222449,
+        "college_code": "E274",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Government Engineering College",
+        "interest_score": 3.54,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.09,
+        "reason": "Safe for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at Government Engineering College), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 96.2,
+        "category": "Safe",
+        "closing_rank": 223616,
+        "college_code": "E130",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Shridevi Institute of Engineering & Technology",
+        "interest_score": 3.54,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING CIVIL",
+        "quality_score": 0.08,
+        "reason": "Safe for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING CIVIL at Shridevi Institute of Engineering & Technology), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 97.1,
+        "category": "Safe",
+        "closing_rank": 225629,
+        "college_code": "E064",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Adhichunchanagiri Institute of Technology",
+        "interest_score": 3.54,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING CIVIL",
+        "quality_score": 0.07,
+        "reason": "Safe for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING CIVIL at Adhichunchanagiri Institute of Technology), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 98.9,
+        "category": "Safe",
+        "closing_rank": 233180,
+        "college_code": "E029",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Maratha Mandal Engineering College",
+        "interest_score": 3.54,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.07,
+        "reason": "Safe for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at Maratha Mandal Engineering College), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 99.4,
+        "category": "Safe",
+        "closing_rank": 236979,
+        "college_code": "E136",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Moodalakatte Institute of Technology",
+        "interest_score": 3.52,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING CIVIL",
+        "quality_score": 0.05,
+        "reason": "Safe for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING CIVIL at Moodalakatte Institute of Technology), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 99.6,
+        "category": "Safe",
+        "closing_rank": 240899,
+        "college_code": "E040",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Hira Sugar Institute of Technology",
+        "interest_score": 3.52,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.04,
+        "reason": "Safe for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at Hira Sugar Institute of Technology), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 91.7,
+        "category": "Safe",
+        "closing_rank": 217622,
+        "college_code": "E184",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "C Byre Gowda Institute of Technology",
+        "interest_score": 3.06,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING MECHANICAL",
+        "quality_score": 0.13,
+        "reason": "Safe for you - strong fit for your goal (SCIENCE AND ENGINEERING MECHANICAL at C Byre Gowda Institute of Technology), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 95.1,
+        "category": "Safe",
+        "closing_rank": 221796,
+        "college_code": "E045",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Rao Bahadur Y.Mahabaleswarappa Engineering College",
+        "interest_score": 3.06,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING MECHANICAL",
+        "quality_score": 0.11,
+        "reason": "Safe for you - strong fit for your goal (SCIENCE AND ENGINEERING MECHANICAL at Rao Bahadur Y.Mahabaleswarappa Engineering College), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 261869,
+        "college_code": "E191",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Akshaya Institute of Technology",
+        "interest_score": 3.0,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING MECHANICAL",
+        "quality_score": 0.0,
+        "reason": "Safe for you - strong fit for your goal (SCIENCE AND ENGINEERING MECHANICAL at Akshaya Institute of Technology), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 94.5,
+        "category": "Safe",
+        "closing_rank": 220863,
+        "college_code": "E076",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Proudadevaraya Institute of Technology",
+        "interest_score": 2.56,
+        "matched_interest": true,
+        "program": "CIVIL",
+        "quality_score": 0.11,
+        "reason": "Safe for you - strong fit for your goal (CIVIL at Proudadevaraya Institute of Technology), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 258998,
+        "college_code": "E035",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Anjuman Institute of Technology & Management",
+        "interest_score": 2.5,
+        "matched_interest": true,
+        "program": "CIVIL",
+        "quality_score": 0.01,
+        "reason": "Safe for you - strong fit for your goal (CIVIL at Anjuman Institute of Technology & Management), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 88.3,
+        "category": "Safe",
+        "closing_rank": 214831,
+        "college_code": "E303",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "GM University KARUR VILLAGE",
+        "interest_score": 0.07,
+        "matched_interest": false,
+        "program": "ENGINEERING ENGINEERING",
+        "quality_score": 0.14,
+        "reason": "Safe for you - a sensible option to keep on your list (ENGINEERING ENGINEERING at GM University KARUR VILLAGE), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "other"
+        ]
+      },
+      {
+        "admission_probability": 98.9,
+        "category": "Safe",
+        "closing_rank": 233289,
+        "college_code": "E157",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Government Engineering College",
+        "interest_score": 3.53,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL AND",
+        "quality_score": 0.06,
+        "reason": "Safe for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL AND at Government Engineering College), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      }
+    ],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "max_per_institute": 2,
+      "reach_band_ceiling": 18000.0,
+      "safe_margin": 0.15,
+      "target_band_ceiling": 13000.0,
+      "target_band_floor": 1500.0,
+      "top_rank_cap": 25,
+      "upper_margin": 0.25
+    },
+    "total_count": 54
+  },
+  "note": "core grid rank=200000 cat=1G",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/kcet/recommend",
+    "payload": {
+      "rank": 200000,
+      "seat_category": "1G"
+    }
+  },
+  "status": 200
+}

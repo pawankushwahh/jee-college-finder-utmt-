@@ -1,0 +1,241 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "These closed right around your rank last year. They are your most realistic picks.",
+        "category": "Target",
+        "count": 3
+      },
+      {
+        "blurb": "These closed slightly above your rank last year. Cutoffs move between rounds, so list a few as ambitious choices.",
+        "category": "Reach",
+        "count": 6
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 6,
+        "Safe": 0,
+        "Target": 3
+      },
+      "is_curated": false,
+      "is_top_rank": false,
+      "shown": 9,
+      "shown_by_category": {
+        "Reach": 6,
+        "Safe": 0,
+        "Target": 3
+      },
+      "total": 9
+    },
+    "guidance": "Found 9 eligible college-programme options for your profile (showing 9). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
+    "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
+    "notes": [],
+    "recommendations": [
+      {
+        "admission_probability": 58.6,
+        "category": "Target",
+        "closing_rank": 252292,
+        "college_code": "E164",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Government Engineering College",
+        "interest_score": 3.51,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.02,
+        "reason": "Target for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at Government Engineering College), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 84.0,
+        "category": "Target",
+        "closing_rank": 261869,
+        "college_code": "E191",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Akshaya Institute of Technology",
+        "interest_score": 3.0,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING MECHANICAL",
+        "quality_score": 0.0,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING MECHANICAL at Akshaya Institute of Technology), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 78.0,
+        "category": "Target",
+        "closing_rank": 258998,
+        "college_code": "E035",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Anjuman Institute of Technology & Management",
+        "interest_score": 2.5,
+        "matched_interest": true,
+        "program": "CIVIL",
+        "quality_score": 0.01,
+        "reason": "Target for you - strong fit for your goal (CIVIL at Anjuman Institute of Technology & Management), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 9.5,
+        "category": "Reach",
+        "closing_rank": 233180,
+        "college_code": "E029",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Maratha Mandal Engineering College",
+        "interest_score": 3.54,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.07,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at Maratha Mandal Engineering College), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 9.6,
+        "category": "Reach",
+        "closing_rank": 233289,
+        "college_code": "E157",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Government Engineering College",
+        "interest_score": 3.53,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL AND",
+        "quality_score": 0.06,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL AND at Government Engineering College), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 32.0,
+        "category": "Reach",
+        "closing_rank": 244197,
+        "college_code": "E163",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Government Engineering College",
+        "interest_score": 3.52,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.03,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at Government Engineering College), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 23.1,
+        "category": "Reach",
+        "closing_rank": 240899,
+        "college_code": "E040",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Hira Sugar Institute of Technology",
+        "interest_score": 3.52,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.04,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at Hira Sugar Institute of Technology), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 14.9,
+        "category": "Reach",
+        "closing_rank": 236979,
+        "college_code": "E136",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Moodalakatte Institute of Technology",
+        "interest_score": 3.52,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING CIVIL",
+        "quality_score": 0.05,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING CIVIL at Moodalakatte Institute of Technology), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 37.7,
+        "category": "Reach",
+        "closing_rank": 246036,
+        "college_code": "E194",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Government Engineering College",
+        "interest_score": 3.51,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.02,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at Government Engineering College), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      }
+    ],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "max_per_institute": 2,
+      "reach_band_ceiling": 18000.0,
+      "safe_margin": 0.15,
+      "target_band_ceiling": 13000.0,
+      "target_band_floor": 1500.0,
+      "top_rank_cap": 25,
+      "upper_margin": 0.25
+    },
+    "total_count": 9
+  },
+  "note": "core grid rank=249733 cat=1G",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/kcet/recommend",
+    "payload": {
+      "rank": 249733,
+      "seat_category": "1G"
+    }
+  },
+  "status": 200
+}

@@ -1,0 +1,431 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "These closed right around your rank last year. They are your most realistic picks.",
+        "category": "Target",
+        "count": 4
+      },
+      {
+        "blurb": "Your rank comfortably beats last year's closing rank here, so these are strong backups you are very likely to get.",
+        "category": "Safe",
+        "count": 1216
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 0,
+        "Safe": 1216,
+        "Target": 4
+      },
+      "is_curated": true,
+      "is_top_rank": false,
+      "shown": 19,
+      "shown_by_category": {
+        "Reach": 0,
+        "Safe": 15,
+        "Target": 4
+      },
+      "total": 1220
+    },
+    "guidance": "Found 1220 eligible college-programme options for your profile (showing 19). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
+    "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
+    "notes": [
+      "Showing the 19 strongest picks out of 1220 eligible options, with at most a couple of programmes per college. Open a single section to see every option in it."
+    ],
+    "recommendations": [
+      {
+        "admission_probability": 80.2,
+        "category": "Target",
+        "closing_rank": 514,
+        "college_code": "E005",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "R. V. College of Engineering",
+        "interest_score": 8.5,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 10.0,
+        "reason": "Target for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at R. V. College of Engineering), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 98.8,
+        "category": "Target",
+        "closing_rank": 1122,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "R. V. College of Engineering",
+        "interest_score": 8.5,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING (CYBER SECURITY) COMPUTER",
+        "quality_score": 9.99,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING (CYBER SECURITY) COMPUTER at R. V. College of Engineering), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.9,
+        "category": "Target",
+        "closing_rank": 1637,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "R. V. College of Engineering",
+        "interest_score": 8.49,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 9.98,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at R. V. College of Engineering), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.9,
+        "category": "Target",
+        "closing_rank": 1660,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "R. V. College of Engineering",
+        "interest_score": 8.49,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING COMPUTER",
+        "quality_score": 9.98,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING COMPUTER at R. V. College of Engineering), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 2682,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "R. V. College of Engineering",
+        "interest_score": 8.48,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 9.97,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at R. V. College of Engineering), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 3067,
+        "college_code": "E009",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "PES University 100 Feet Ring Road",
+        "interest_score": 8.48,
+        "matched_interest": true,
+        "program": "INTELLIGENCE & MACHINE LEARNING) B TECH IN",
+        "quality_score": 9.96,
+        "reason": "Safe for you - strong fit for your goal (INTELLIGENCE & MACHINE LEARNING) B TECH IN at PES University 100 Feet Ring Road), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 3437,
+        "college_code": "E006",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology",
+        "interest_score": 8.47,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 9.95,
+        "reason": "Safe for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at M S Ramaiah Institute of Technology), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 3626,
+        "college_code": "E006",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology",
+        "interest_score": 8.46,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND DATA SCIENCE ARTIFICIAL",
+        "quality_score": 9.93,
+        "reason": "Safe for you - strong fit for your goal (INTELLIGENCE AND DATA SCIENCE ARTIFICIAL at M S Ramaiah Institute of Technology), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 3856,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "R. V. College of Engineering",
+        "interest_score": 8.46,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL &",
+        "quality_score": 9.92,
+        "reason": "Safe for you - strong fit for your goal (SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL & at R. V. College of Engineering), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "cse",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 4212,
+        "college_code": "E003",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B M S College of Engineering",
+        "interest_score": 8.45,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 9.89,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at B M S College of Engineering), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 4581,
+        "college_code": "E048",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B M S College of Engineering",
+        "interest_score": 8.44,
+        "matched_interest": true,
+        "program": "CYBER SECURITY INCLUDING BLOCK CHAIN TECH) COMPUTER",
+        "quality_score": 9.88,
+        "reason": "Safe for you - strong fit for your goal (CYBER SECURITY INCLUDING BLOCK CHAIN TECH) COMPUTER at B M S College of Engineering), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 4683,
+        "college_code": "E021",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Sri Jayachamarajendra College of Engineering(Constituent College of JSS Science & Technology University)",
+        "interest_score": 8.43,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 9.86,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at Sri Jayachamarajendra College of Engineering(Constituent College of JSS Science & Technology University)), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 4763,
+        "college_code": "E284",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Sri Jayachamarajendra College of Engineering(Constituent College of JSS Science & Technology University)",
+        "interest_score": 8.43,
+        "matched_interest": true,
+        "program": "COMPUTER",
+        "quality_score": 9.85,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER at Sri Jayachamarajendra College of Engineering(Constituent College of JSS Science & Technology University)), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 6538,
+        "college_code": "E009",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "PES University 100 Feet Ring Road",
+        "interest_score": 8.38,
+        "matched_interest": true,
+        "program": "ELECTRICAL & ELECTRONICS ENGINEERING B TECH IN",
+        "quality_score": 9.77,
+        "reason": "Safe for you - strong fit for your goal (ELECTRICAL & ELECTRONICS ENGINEERING B TECH IN at PES University 100 Feet Ring Road), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 6560,
+        "college_code": "E001",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle",
+        "interest_score": 8.38,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 9.76,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 6869,
+        "college_code": "E007",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Dayananda Sagar College of Engineering",
+        "interest_score": 8.38,
+        "matched_interest": true,
+        "program": "CYBER SECURITY INCLUDING BLOCK CHAIN TECH) COMPUTER",
+        "quality_score": 9.75,
+        "reason": "Safe for you - strong fit for your goal (CYBER SECURITY INCLUDING BLOCK CHAIN TECH) COMPUTER at Dayananda Sagar College of Engineering), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 7052,
+        "college_code": "E007",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Dayananda Sagar College of Engineering",
+        "interest_score": 8.37,
+        "matched_interest": true,
+        "program": "ENGINEERING ARTIFICIAL",
+        "quality_score": 9.74,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING ARTIFICIAL at Dayananda Sagar College of Engineering), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 7516,
+        "college_code": "E001",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle",
+        "interest_score": 8.37,
+        "matched_interest": true,
+        "program": "ARTIFICIAL",
+        "quality_score": 9.73,
+        "reason": "Safe for you - strong fit for your goal (ARTIFICIAL at Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "category": "Safe",
+        "closing_rank": 8075,
+        "college_code": "E141",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "PES UNIVERSITY(Electronic City Campus) Hosur Rd",
+        "interest_score": 8.35,
+        "matched_interest": true,
+        "program": "INTELLIGENCE & MACHINE LEARNING) B TECH IN",
+        "quality_score": 9.7,
+        "reason": "Safe for you - strong fit for your goal (INTELLIGENCE & MACHINE LEARNING) B TECH IN at PES UNIVERSITY(Electronic City Campus) Hosur Rd), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ai_ds"
+        ]
+      }
+    ],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "max_per_institute": 2,
+      "reach_band_ceiling": 18000.0,
+      "safe_margin": 0.15,
+      "target_band_ceiling": 13000.0,
+      "target_band_floor": 1500.0,
+      "top_rank_cap": 25,
+      "upper_margin": 0.25
+    },
+    "total_count": 1220
+  },
+  "note": "core grid rank=234 cat=1G",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/kcet/recommend",
+    "payload": {
+      "rank": 234,
+      "seat_category": "1G"
+    }
+  },
+  "status": 200
+}

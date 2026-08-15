@@ -1,0 +1,188 @@
+{
+  "body": {
+    "branch_preferences": [
+      {
+        "label": "Computer Science",
+        "value": "cse"
+      },
+      {
+        "label": "Information Science / IT",
+        "value": "it"
+      },
+      {
+        "label": "AI / Data Science",
+        "value": "ai_ds"
+      },
+      {
+        "label": "Electronics & Communication",
+        "value": "ece"
+      },
+      {
+        "label": "Electrical",
+        "value": "electrical"
+      },
+      {
+        "label": "Mechanical",
+        "value": "mechanical"
+      },
+      {
+        "label": "Civil",
+        "value": "civil"
+      },
+      {
+        "label": "Chemical",
+        "value": "chemical"
+      },
+      {
+        "label": "Aeronautical / Aerospace",
+        "value": "aerospace"
+      },
+      {
+        "label": "Biotechnology",
+        "value": "biotech"
+      },
+      {
+        "label": "Industrial / Production / Robotics",
+        "value": "production"
+      },
+      {
+        "label": "Mining / Petroleum / Marine / Textile",
+        "value": "other_core"
+      }
+    ],
+    "goals": [
+      {
+        "label": "Software / coding career",
+        "value": "coding"
+      },
+      {
+        "label": "Research / higher studies",
+        "value": "research"
+      },
+      {
+        "label": "Science-adjacent (Biotech, Materials, Chemical)",
+        "value": "pure_science"
+      },
+      {
+        "label": "Management / MBA / business",
+        "value": "mba"
+      },
+      {
+        "label": "Core engineering",
+        "value": "core"
+      },
+      {
+        "label": "Undecided / keeping options open",
+        "value": "undecided"
+      }
+    ],
+    "seat_categories": [
+      {
+        "label": "Category 1 (State-wide (General))",
+        "value": "1G"
+      },
+      {
+        "label": "Category 1 (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "value": "1K"
+      },
+      {
+        "label": "Category 1 (Rural home-region quota)",
+        "value": "1R"
+      },
+      {
+        "label": "Category 2A (State-wide (General))",
+        "value": "2AG"
+      },
+      {
+        "label": "Category 2A (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "value": "2AK"
+      },
+      {
+        "label": "Category 2A (Rural home-region quota)",
+        "value": "2AR"
+      },
+      {
+        "label": "Category 2B (State-wide (General))",
+        "value": "2BG"
+      },
+      {
+        "label": "Category 2B (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "value": "2BK"
+      },
+      {
+        "label": "Category 2B (Rural home-region quota)",
+        "value": "2BR"
+      },
+      {
+        "label": "Category 3A (State-wide (General))",
+        "value": "3AG"
+      },
+      {
+        "label": "Category 3A (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "value": "3AK"
+      },
+      {
+        "label": "Category 3A (Rural home-region quota)",
+        "value": "3AR"
+      },
+      {
+        "label": "Category 3B (State-wide (General))",
+        "value": "3BG"
+      },
+      {
+        "label": "Category 3B (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "value": "3BK"
+      },
+      {
+        "label": "Category 3B (Rural home-region quota)",
+        "value": "3BR"
+      },
+      {
+        "label": "General Merit",
+        "value": "GM"
+      },
+      {
+        "label": "General Merit",
+        "value": "GMK"
+      },
+      {
+        "label": "General Merit",
+        "value": "GMR"
+      },
+      {
+        "label": "Scheduled Caste (State-wide (General))",
+        "value": "SCG"
+      },
+      {
+        "label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "value": "SCK"
+      },
+      {
+        "label": "Scheduled Caste (Rural home-region quota)",
+        "value": "SCR"
+      },
+      {
+        "label": "Scheduled Tribe (State-wide (General))",
+        "value": "STG"
+      },
+      {
+        "label": "Scheduled Tribe (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "value": "STK"
+      },
+      {
+        "label": "Scheduled Tribe (Rural home-region quota)",
+        "value": "STR"
+      }
+    ],
+    "total_institutes": 200,
+    "total_programs": 18800
+  },
+  "note": "meta",
+  "request": {
+    "method": "GET",
+    "params": null,
+    "path": "/api/kcet/meta",
+    "payload": null
+  },
+  "status": 200
+}

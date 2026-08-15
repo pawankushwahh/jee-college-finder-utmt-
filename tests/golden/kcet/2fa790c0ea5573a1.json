@@ -1,0 +1,121 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "These closed right around your rank last year. They are your most realistic picks.",
+        "category": "Target",
+        "count": 1
+      },
+      {
+        "blurb": "These closed slightly above your rank last year. Cutoffs move between rounds, so list a few as ambitious choices.",
+        "category": "Reach",
+        "count": 2
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 2,
+        "Safe": 0,
+        "Target": 1
+      },
+      "is_curated": false,
+      "is_top_rank": false,
+      "shown": 3,
+      "shown_by_category": {
+        "Reach": 2,
+        "Safe": 0,
+        "Target": 1
+      },
+      "total": 3
+    },
+    "guidance": "Found 3 eligible college-programme options for your profile (showing 3). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
+    "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
+    "notes": [],
+    "recommendations": [
+      {
+        "admission_probability": 50.0,
+        "category": "Target",
+        "closing_rank": 249733,
+        "college_code": "E181",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Sri Basaveswara Institute of Technology",
+        "interest_score": 3.5,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 0.0,
+        "reason": "Target for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at Sri Basaveswara Institute of Technology). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 25.0,
+        "category": "Reach",
+        "closing_rank": 241691,
+        "college_code": "E264",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "BASAV ENGINEERING SCHOOL OF TECHNOLOGY",
+        "interest_score": 3.0,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING MECHANICAL",
+        "quality_score": 0.01,
+        "reason": "Reach for you - strong fit for your goal (SCIENCE AND ENGINEERING MECHANICAL at BASAV ENGINEERING SCHOOL OF TECHNOLOGY). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 8.4,
+        "category": "Reach",
+        "closing_rank": 232230,
+        "college_code": "E181",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Sri Basaveswara Institute of Technology",
+        "interest_score": 2.5,
+        "matched_interest": true,
+        "program": "CIVIL",
+        "quality_score": 0.01,
+        "reason": "Reach for you - strong fit for your goal (CIVIL at Sri Basaveswara Institute of Technology). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "civil"
+        ]
+      }
+    ],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "max_per_institute": 2,
+      "reach_band_ceiling": 18000.0,
+      "safe_margin": 0.15,
+      "target_band_ceiling": 13000.0,
+      "target_band_floor": 1500.0,
+      "top_rank_cap": 25,
+      "upper_margin": 0.25
+    },
+    "total_count": 3
+  },
+  "note": "core grid rank=249733 cat=GM",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/kcet/recommend",
+    "payload": {
+      "rank": 249733,
+      "seat_category": "GM"
+    }
+  },
+  "status": 200
+}

@@ -1,0 +1,444 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "These programmes have cutoffs close to your rank. They are your most realistic picks.",
+        "category": "Target",
+        "count": 7
+      },
+      {
+        "blurb": "These closed slightly above your rank last year. Cutoffs fluctuate, so list a few as ambitious choices.",
+        "category": "Reach",
+        "count": 8
+      },
+      {
+        "blurb": "Your rank comfortably beats the cutoff here, so these are strong backups you are very likely to get.",
+        "category": "Safe",
+        "count": 406
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 8,
+        "Reach_total_attainable": 8,
+        "Safe": 406,
+        "Safe_total_attainable": 406,
+        "Target": 7,
+        "Target_total_attainable": 7
+      },
+      "curated": false,
+      "shown": 7,
+      "total": 421,
+      "total_attainable": 421
+    },
+    "guidance": "Found 421 eligible programme options for your COMEDK profile (showing 7). They are grouped into Target, Reach and Safe, and ordered to match your stated interest.",
+    "has_next": false,
+    "interest_guidance": "",
+    "notes": [],
+    "reach": [],
+    "recommendations": [
+      {
+        "admission_probability": 59.0,
+        "branch": "Civil Engineering",
+        "branch_family": "civil",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Target",
+        "category": "Target",
+        "confidence": "borderline",
+        "cutoff_rank": 20599.0,
+        "degree": "4 Years, Bachelor of Technology",
+        "fit_label": "Achievable — your rank is inside the range that secured a seat here last year.",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "interest_score": 9.3,
+        "is_metro": true,
+        "kkr_gap": 56868.0,
+        "matched_interest": false,
+        "program": "Civil Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM",
+        "rank_gap": 599,
+        "reason": "Target for you — a sensible option to keep on your list (Civil Engineering at an elite-tier college). Your rank is very close to this cutoff — treat as volatile.",
+        "tags": [
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 66.9,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Target",
+        "category": "Target",
+        "confidence": "borderline",
+        "cutoff_rank": 21189.0,
+        "degree": "4 Years, Bachelor of Technology",
+        "fit_label": "Achievable — your rank is inside the range that secured a seat here last year.",
+        "institute": "R V Institute of Technology and Management-J P Nagar, Bengaluru",
+        "interest_score": 9.27,
+        "is_metro": true,
+        "kkr_gap": 10348.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM",
+        "rank_gap": 1189,
+        "reason": "Target for you — a sensible option to keep on your list (Computer Science & Engineering at an elite-tier college). Your rank is very close to this cutoff — treat as volatile.",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 73.7,
+        "branch": "Mechanical Engineering",
+        "branch_family": "mechanical",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Target",
+        "category": "Target",
+        "confidence": "medium",
+        "cutoff_rank": 21793.0,
+        "degree": "4 Years, Bachelor of Technology",
+        "fit_label": "Achievable — your rank is inside the range that secured a seat here last year.",
+        "institute": "BMS College of Engineering-Basavanagudi, Bengaluru",
+        "interest_score": 9.25,
+        "is_metro": true,
+        "kkr_gap": 51210.0,
+        "matched_interest": false,
+        "program": "Mechanical Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM",
+        "rank_gap": 1793,
+        "reason": "Target for you — a sensible option to keep on your list (Mechanical Engineering at an elite-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 77.2,
+        "branch": "Electronics & Communication Engineering",
+        "branch_family": "ece",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Target",
+        "category": "Target",
+        "confidence": "medium",
+        "cutoff_rank": 22166.0,
+        "degree": "4 Years, Bachelor of Technology",
+        "fit_label": "Achievable — your rank is inside the range that secured a seat here last year.",
+        "institute": "R V Institute of Technology and Management-J P Nagar, Bengaluru",
+        "interest_score": 9.24,
+        "is_metro": true,
+        "kkr_gap": 23397.0,
+        "matched_interest": false,
+        "program": "Electronics & Communication Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM",
+        "rank_gap": 2166,
+        "reason": "Target for you — a sensible option to keep on your list (Electronics & Communication Engineering at an elite-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 61.4,
+        "branch": "Computer Science & Engineering (Artificial Intelligence & Machine Learning)",
+        "branch_family": "ai_ds",
+        "brand_score": 0.88,
+        "brand_tier": "top",
+        "bucket": "Target",
+        "category": "Target",
+        "confidence": "borderline",
+        "cutoff_rank": 20772.0,
+        "degree": "4 Years, Bachelor of Technology",
+        "fit_label": "Achievable — your rank is inside the range that secured a seat here last year.",
+        "institute": "Siddaganga Institute of Technology-B H Road, Tumakuru",
+        "interest_score": 8.92,
+        "is_metro": false,
+        "kkr_gap": 7138.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering (Artificial Intelligence & Machine Learning) (4 Years, Bachelor of Technology)",
+        "quota": "GM",
+        "rank_gap": 772,
+        "reason": "Target for you — a sensible option to keep on your list (Computer Science & Engineering (Artificial Intelligence & Machine Learning) at a top-tier college). Your rank is very close to this cutoff — treat as volatile.",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 82.7,
+        "branch": "Artificial Intelligence & Machine Learning",
+        "branch_family": "ai_ds",
+        "brand_score": 0.88,
+        "brand_tier": "top",
+        "bucket": "Target",
+        "category": "Target",
+        "confidence": "medium",
+        "cutoff_rank": 22868.0,
+        "degree": "4 Years, Bachelor of Technology",
+        "fit_label": "Achievable — your rank is inside the range that secured a seat here last year.",
+        "institute": "Bangalore Institute of Technology-V V Puram, Bengaluru",
+        "interest_score": 8.86,
+        "is_metro": true,
+        "kkr_gap": 10392.0,
+        "matched_interest": false,
+        "program": "Artificial Intelligence & Machine Learning (4 Years, Bachelor of Technology)",
+        "quota": "GM",
+        "rank_gap": 2868,
+        "reason": "Target for you — a sensible option to keep on your list (Artificial Intelligence & Machine Learning at a top-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 83.4,
+        "branch": "Computer Science & Business Systems",
+        "branch_family": "cse",
+        "brand_score": 0.88,
+        "brand_tier": "top",
+        "bucket": "Target",
+        "category": "Target",
+        "confidence": "medium",
+        "cutoff_rank": 22972.0,
+        "degree": "4 Years, Bachelor of Technology",
+        "fit_label": "Achievable — your rank is inside the range that secured a seat here last year.",
+        "institute": "BMS Institute of Technology and Management-Yelahanka, Bengaluru",
+        "interest_score": 8.85,
+        "is_metro": true,
+        "kkr_gap": 20933.0,
+        "matched_interest": false,
+        "program": "Computer Science & Business Systems (4 Years, Bachelor of Technology)",
+        "quota": "GM",
+        "rank_gap": 2972,
+        "reason": "Target for you — a sensible option to keep on your list (Computer Science & Business Systems at a top-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "cse"
+        ]
+      }
+    ],
+    "safe": [],
+    "target": [
+      {
+        "admission_probability": 59.0,
+        "branch": "Civil Engineering",
+        "branch_family": "civil",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Target",
+        "category": "Target",
+        "confidence": "borderline",
+        "cutoff_rank": 20599.0,
+        "degree": "4 Years, Bachelor of Technology",
+        "fit_label": "Achievable — your rank is inside the range that secured a seat here last year.",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "interest_score": 9.3,
+        "is_metro": true,
+        "kkr_gap": 56868.0,
+        "matched_interest": false,
+        "program": "Civil Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM",
+        "rank_gap": 599,
+        "reason": "Target for you — a sensible option to keep on your list (Civil Engineering at an elite-tier college). Your rank is very close to this cutoff — treat as volatile.",
+        "tags": [
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 66.9,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Target",
+        "category": "Target",
+        "confidence": "borderline",
+        "cutoff_rank": 21189.0,
+        "degree": "4 Years, Bachelor of Technology",
+        "fit_label": "Achievable — your rank is inside the range that secured a seat here last year.",
+        "institute": "R V Institute of Technology and Management-J P Nagar, Bengaluru",
+        "interest_score": 9.27,
+        "is_metro": true,
+        "kkr_gap": 10348.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM",
+        "rank_gap": 1189,
+        "reason": "Target for you — a sensible option to keep on your list (Computer Science & Engineering at an elite-tier college). Your rank is very close to this cutoff — treat as volatile.",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 73.7,
+        "branch": "Mechanical Engineering",
+        "branch_family": "mechanical",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Target",
+        "category": "Target",
+        "confidence": "medium",
+        "cutoff_rank": 21793.0,
+        "degree": "4 Years, Bachelor of Technology",
+        "fit_label": "Achievable — your rank is inside the range that secured a seat here last year.",
+        "institute": "BMS College of Engineering-Basavanagudi, Bengaluru",
+        "interest_score": 9.25,
+        "is_metro": true,
+        "kkr_gap": 51210.0,
+        "matched_interest": false,
+        "program": "Mechanical Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM",
+        "rank_gap": 1793,
+        "reason": "Target for you — a sensible option to keep on your list (Mechanical Engineering at an elite-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 77.2,
+        "branch": "Electronics & Communication Engineering",
+        "branch_family": "ece",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Target",
+        "category": "Target",
+        "confidence": "medium",
+        "cutoff_rank": 22166.0,
+        "degree": "4 Years, Bachelor of Technology",
+        "fit_label": "Achievable — your rank is inside the range that secured a seat here last year.",
+        "institute": "R V Institute of Technology and Management-J P Nagar, Bengaluru",
+        "interest_score": 9.24,
+        "is_metro": true,
+        "kkr_gap": 23397.0,
+        "matched_interest": false,
+        "program": "Electronics & Communication Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM",
+        "rank_gap": 2166,
+        "reason": "Target for you — a sensible option to keep on your list (Electronics & Communication Engineering at an elite-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 61.4,
+        "branch": "Computer Science & Engineering (Artificial Intelligence & Machine Learning)",
+        "branch_family": "ai_ds",
+        "brand_score": 0.88,
+        "brand_tier": "top",
+        "bucket": "Target",
+        "category": "Target",
+        "confidence": "borderline",
+        "cutoff_rank": 20772.0,
+        "degree": "4 Years, Bachelor of Technology",
+        "fit_label": "Achievable — your rank is inside the range that secured a seat here last year.",
+        "institute": "Siddaganga Institute of Technology-B H Road, Tumakuru",
+        "interest_score": 8.92,
+        "is_metro": false,
+        "kkr_gap": 7138.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering (Artificial Intelligence & Machine Learning) (4 Years, Bachelor of Technology)",
+        "quota": "GM",
+        "rank_gap": 772,
+        "reason": "Target for you — a sensible option to keep on your list (Computer Science & Engineering (Artificial Intelligence & Machine Learning) at a top-tier college). Your rank is very close to this cutoff — treat as volatile.",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 82.7,
+        "branch": "Artificial Intelligence & Machine Learning",
+        "branch_family": "ai_ds",
+        "brand_score": 0.88,
+        "brand_tier": "top",
+        "bucket": "Target",
+        "category": "Target",
+        "confidence": "medium",
+        "cutoff_rank": 22868.0,
+        "degree": "4 Years, Bachelor of Technology",
+        "fit_label": "Achievable — your rank is inside the range that secured a seat here last year.",
+        "institute": "Bangalore Institute of Technology-V V Puram, Bengaluru",
+        "interest_score": 8.86,
+        "is_metro": true,
+        "kkr_gap": 10392.0,
+        "matched_interest": false,
+        "program": "Artificial Intelligence & Machine Learning (4 Years, Bachelor of Technology)",
+        "quota": "GM",
+        "rank_gap": 2868,
+        "reason": "Target for you — a sensible option to keep on your list (Artificial Intelligence & Machine Learning at a top-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 83.4,
+        "branch": "Computer Science & Business Systems",
+        "branch_family": "cse",
+        "brand_score": 0.88,
+        "brand_tier": "top",
+        "bucket": "Target",
+        "category": "Target",
+        "confidence": "medium",
+        "cutoff_rank": 22972.0,
+        "degree": "4 Years, Bachelor of Technology",
+        "fit_label": "Achievable — your rank is inside the range that secured a seat here last year.",
+        "institute": "BMS Institute of Technology and Management-Yelahanka, Bengaluru",
+        "interest_score": 8.85,
+        "is_metro": true,
+        "kkr_gap": 20933.0,
+        "matched_interest": false,
+        "program": "Computer Science & Business Systems (4 Years, Bachelor of Technology)",
+        "quota": "GM",
+        "rank_gap": 2972,
+        "reason": "Target for you — a sensible option to keep on your list (Computer Science & Business Systems at a top-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "cse"
+        ]
+      }
+    ],
+    "thresholds": {
+      "caps": {
+        "Reach": 20,
+        "Safe": 25,
+        "Target": 30
+      },
+      "max_per_institute": 2,
+      "reach_band_ceiling": 8000.0,
+      "safe_margin": 0.15,
+      "target_band_ceiling": 6000.0,
+      "target_band_floor": 1000.0,
+      "top_rank_cap": 10,
+      "top_rank_threshold": 100,
+      "upper_margin": 0.25
+    },
+    "total_by_type": {
+      "all": {
+        "total": 421,
+        "total_attainable": 421
+      },
+      "dream": {
+        "total": 8,
+        "total_attainable": 8
+      },
+      "safe": {
+        "total": 406,
+        "total_attainable": 406
+      },
+      "target": {
+        "total": 7,
+        "total_attainable": 7
+      }
+    },
+    "total_count": 421,
+    "total_reach": 8,
+    "total_safe": 406,
+    "total_target": 7
+  },
+  "note": "variation bucket='target'",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/comedk/recommend",
+    "payload": {
+      "bucket": "target",
+      "quota": "GM",
+      "rank": 20000
+    }
+  },
+  "status": 200
+}

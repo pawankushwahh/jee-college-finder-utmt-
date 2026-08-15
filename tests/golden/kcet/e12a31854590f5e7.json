@@ -1,0 +1,1145 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "These closed right around your rank last year. They are your most realistic picks.",
+        "category": "Target",
+        "count": 76
+      },
+      {
+        "blurb": "These closed slightly above your rank last year. Cutoffs move between rounds, so list a few as ambitious choices.",
+        "category": "Reach",
+        "count": 71
+      },
+      {
+        "blurb": "Your rank comfortably beats last year's closing rank here, so these are strong backups you are very likely to get.",
+        "category": "Safe",
+        "count": 598
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 71,
+        "Safe": 598,
+        "Target": 76
+      },
+      "is_curated": true,
+      "is_top_rank": false,
+      "shown": 55,
+      "shown_by_category": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "total": 745
+    },
+    "guidance": "Found 745 eligible college-programme options for your profile (showing 55). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
+    "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
+    "notes": [
+      "Showing only your preferred branches (Computer Science, Electronics & Communication). Clear the branch filter to see every eligible option.",
+      "Showing the 55 strongest picks out of 745 eligible options, with at most a couple of programmes per college. Open a single section to see every option in it."
+    ],
+    "recommendations": [
+      {
+        "admission_probability": 51.7,
+        "category": "Target",
+        "closing_rank": 45244,
+        "college_code": "E092",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Vemana Institute of Technology",
+        "interest_score": 6.96,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 6.91,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at Vemana Institute of Technology). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 51.8,
+        "category": "Target",
+        "closing_rank": 45258,
+        "college_code": "E269",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Jain College Of Engineering and Research",
+        "interest_score": 6.95,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 6.9,
+        "reason": "Target for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at Jain College Of Engineering and Research). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 52.3,
+        "category": "Target",
+        "closing_rank": 45327,
+        "college_code": "E121",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Vivekananada College of Engineering Technology",
+        "interest_score": 6.95,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 6.9,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at Vivekananada College of Engineering Technology). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 52.3,
+        "category": "Target",
+        "closing_rank": 45336,
+        "college_code": "E108",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "SAPTHAGIRI NPS UNIVERISTY #14/5",
+        "interest_score": 6.95,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 6.89,
+        "reason": "Target for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at SAPTHAGIRI NPS UNIVERISTY #14/5). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 52.4,
+        "category": "Target",
+        "closing_rank": 45348,
+        "college_code": "E205",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "ATME College of Engineering",
+        "interest_score": 6.94,
+        "matched_interest": true,
+        "program": "SCIENCE AND DESIGN COMPUTER",
+        "quality_score": 6.88,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND DESIGN COMPUTER at ATME College of Engineering). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse",
+          "design"
+        ]
+      },
+      {
+        "admission_probability": 52.6,
+        "category": "Target",
+        "closing_rank": 45377,
+        "college_code": "E145",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Rajarajeswari College of Engineering",
+        "interest_score": 6.94,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG INFORMATION",
+        "quality_score": 6.88,
+        "reason": "Target for you - strong fit for your goal (COMMUNICATION ENGG INFORMATION at Rajarajeswari College of Engineering). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece",
+          "it"
+        ]
+      },
+      {
+        "admission_probability": 52.6,
+        "category": "Target",
+        "closing_rank": 45378,
+        "college_code": "E209",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Jyothi Institute of Technology",
+        "interest_score": 6.94,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG INFORMATION",
+        "quality_score": 6.87,
+        "reason": "Target for you - strong fit for your goal (COMMUNICATION ENGG INFORMATION at Jyothi Institute of Technology). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece",
+          "it"
+        ]
+      },
+      {
+        "admission_probability": 53.3,
+        "category": "Target",
+        "closing_rank": 45486,
+        "college_code": "E001",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle",
+        "interest_score": 6.93,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND DATA SCIENCE CIVIL",
+        "quality_score": 6.86,
+        "reason": "Target for you - strong fit for your goal (INTELLIGENCE AND DATA SCIENCE CIVIL at Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "civil",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 53.6,
+        "category": "Target",
+        "closing_rank": 45532,
+        "college_code": "E106",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "East West Institute Of Technology",
+        "interest_score": 6.93,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 6.86,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at East West Institute Of Technology). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 54.7,
+        "category": "Target",
+        "closing_rank": 45688,
+        "college_code": "E265",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Jain College of Engineering and Technology",
+        "interest_score": 6.92,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 6.85,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at Jain College of Engineering and Technology). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 56.5,
+        "category": "Target",
+        "closing_rank": 45960,
+        "college_code": "E118",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "RNS Institute of Technology",
+        "interest_score": 6.92,
+        "matched_interest": true,
+        "program": "COMMUNICATION 5 ENGG MECHANICAL",
+        "quality_score": 6.83,
+        "reason": "Target for you - strong fit for your goal (COMMUNICATION 5 ENGG MECHANICAL at RNS Institute of Technology). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 57.1,
+        "category": "Target",
+        "closing_rank": 46054,
+        "college_code": "E222",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Cambridge Institute Of Technology",
+        "interest_score": 6.92,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING (CYBER SECURITY) COMPUTER",
+        "quality_score": 6.83,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING (CYBER SECURITY) COMPUTER at Cambridge Institute Of Technology). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 57.8,
+        "category": "Target",
+        "closing_rank": 46168,
+        "college_code": "E158",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Maharaja Institute of Technology Mysore",
+        "interest_score": 6.9,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING COMPUTER",
+        "quality_score": 6.81,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING COMPUTER at Maharaja Institute of Technology Mysore). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 60.5,
+        "category": "Target",
+        "closing_rank": 46595,
+        "college_code": "E150",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "P E S Institute of Technology & Management",
+        "interest_score": 6.89,
+        "matched_interest": true,
+        "program": "SCIENCE AND DESIGN COMPUTER",
+        "quality_score": 6.79,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND DESIGN COMPUTER at P E S Institute of Technology & Management). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse",
+          "design"
+        ]
+      },
+      {
+        "admission_probability": 61.4,
+        "category": "Target",
+        "closing_rank": 46735,
+        "college_code": "E255",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "GANDHI INSTITUTE OF TECHNOLOGY AND MANAGEMENT GITAM OFF CAMPUS BENGALURU NH 207",
+        "interest_score": 6.89,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 6.78,
+        "reason": "Target for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at GANDHI INSTITUTE OF TECHNOLOGY AND MANAGEMENT GITAM OFF CAMPUS BENGALURU NH 207). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 61.5,
+        "category": "Target",
+        "closing_rank": 46751,
+        "college_code": "E095",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "AMC Engineering College",
+        "interest_score": 6.88,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 6.77,
+        "reason": "Target for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at AMC Engineering College). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 62.7,
+        "category": "Target",
+        "closing_rank": 46951,
+        "college_code": "E114",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "G M Institute of Technology",
+        "interest_score": 6.88,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING ELECTRONICS AND",
+        "quality_score": 6.77,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING ELECTRONICS AND at G M Institute of Technology). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 62.9,
+        "category": "Target",
+        "closing_rank": 46983,
+        "college_code": "E151",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Mangalore Institute of Technology & Engineering",
+        "interest_score": 6.88,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING ELECTRONICS AND",
+        "quality_score": 6.76,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING ELECTRONICS AND at Mangalore Institute of Technology & Engineering). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 63.5,
+        "category": "Target",
+        "closing_rank": 47079,
+        "college_code": "E237",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "PRESIDENCY University ITGALPURA",
+        "interest_score": 6.88,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING(IOT) B TECH IN",
+        "quality_score": 6.76,
+        "reason": "Target for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING(IOT) B TECH IN at PRESIDENCY University ITGALPURA). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 64.0,
+        "category": "Target",
+        "closing_rank": 47166,
+        "college_code": "E173",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Sai Vidya Institute of Technology",
+        "interest_score": 6.88,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 6.75,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at Sai Vidya Institute of Technology). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 64.0,
+        "category": "Target",
+        "closing_rank": 47175,
+        "college_code": "E239",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "East West College Of Engineering",
+        "interest_score": 6.87,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 6.74,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at East West College Of Engineering). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 65.4,
+        "category": "Target",
+        "closing_rank": 47415,
+        "college_code": "E145",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Rajarajeswari College of Engineering",
+        "interest_score": 6.86,
+        "matched_interest": true,
+        "program": "SCIENCE AND DESIGN COMPUTER",
+        "quality_score": 6.72,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND DESIGN COMPUTER at Rajarajeswari College of Engineering). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse",
+          "design"
+        ]
+      },
+      {
+        "admission_probability": 66.1,
+        "category": "Target",
+        "closing_rank": 47543,
+        "college_code": "E085",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "APS College of Engineering",
+        "interest_score": 6.85,
+        "matched_interest": true,
+        "program": "COMPUTER",
+        "quality_score": 6.7,
+        "reason": "Target for you - strong fit for your goal (COMPUTER at APS College of Engineering). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 66.9,
+        "category": "Target",
+        "closing_rank": 47680,
+        "college_code": "E017",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Sri Siddhartha Institute of Technology MARALUR",
+        "interest_score": 6.85,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 6.69,
+        "reason": "Target for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at Sri Siddhartha Institute of Technology MARALUR). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 66.9,
+        "category": "Target",
+        "closing_rank": 47685,
+        "college_code": "E265",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Jain College of Engineering and Technology",
+        "interest_score": 6.84,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING ELECTRONICS AND",
+        "quality_score": 6.68,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING ELECTRONICS AND at Jain College of Engineering and Technology). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 4.6,
+        "category": "Reach",
+        "closing_rank": 36219,
+        "college_code": "E049",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "B V V Sangha`s Basaveshwara Engineering College",
+        "interest_score": 7.3,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG INFORMATION",
+        "quality_score": 7.6,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGG INFORMATION at B V V Sangha`s Basaveshwara Engineering College). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece",
+          "it"
+        ]
+      },
+      {
+        "admission_probability": 5.5,
+        "category": "Reach",
+        "closing_rank": 36665,
+        "college_code": "E056",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "The National Institute of Engineering(SOUTH CAMPUS)",
+        "interest_score": 7.29,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 7.57,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at The National Institute of Engineering(SOUTH CAMPUS)). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 5.4,
+        "category": "Reach",
+        "closing_rank": 36628,
+        "college_code": "E091",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "K S Institute of Technology",
+        "interest_score": 7.29,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING ELECTRONICS AND",
+        "quality_score": 7.58,
+        "reason": "Reach for you - strong fit for your goal (SCIENCE AND ENGINEERING ELECTRONICS AND at K S Institute of Technology). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 5.0,
+        "category": "Reach",
+        "closing_rank": 36411,
+        "college_code": "E014",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "S J C Institute of Technology",
+        "interest_score": 7.29,
+        "matched_interest": true,
+        "program": "SCIENCE AND DESIGN COMPUTER",
+        "quality_score": 7.58,
+        "reason": "Reach for you - strong fit for your goal (SCIENCE AND DESIGN COMPUTER at S J C Institute of Technology). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse",
+          "design"
+        ]
+      },
+      {
+        "admission_probability": 6.5,
+        "category": "Reach",
+        "closing_rank": 37104,
+        "college_code": "E062",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Bapuji Institute of Engineering & Technology",
+        "interest_score": 7.28,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 7.55,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at Bapuji Institute of Engineering & Technology). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 6.0,
+        "category": "Reach",
+        "closing_rank": 36897,
+        "college_code": "E011",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "M V J College of Engineering",
+        "interest_score": 7.28,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL &",
+        "quality_score": 7.56,
+        "reason": "Reach for you - strong fit for your goal (SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL & at M V J College of Engineering). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 5.6,
+        "category": "Reach",
+        "closing_rank": 36719,
+        "college_code": "E062",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Bapuji Institute of Engineering & Technology",
+        "interest_score": 7.28,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING COMPUTER",
+        "quality_score": 7.56,
+        "reason": "Reach for you - strong fit for your goal (SCIENCE AND ENGINEERING COMPUTER at Bapuji Institute of Engineering & Technology). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 7.0,
+        "category": "Reach",
+        "closing_rank": 37291,
+        "college_code": "E004",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Dr. Ambedkar Institute of Technology",
+        "interest_score": 7.27,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG ELECTRONICS AND",
+        "quality_score": 7.53,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGG ELECTRONICS AND at Dr. Ambedkar Institute of Technology). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 6.8,
+        "category": "Reach",
+        "closing_rank": 37222,
+        "college_code": "E114",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "G M Institute of Technology",
+        "interest_score": 7.27,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING COMPUTER",
+        "quality_score": 7.54,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING COMPUTER at G M Institute of Technology). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 7.5,
+        "category": "Reach",
+        "closing_rank": 37478,
+        "college_code": "E240",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Dayananda Sagar University DEVARAKAGGALAHALLI VILLAGE",
+        "interest_score": 7.26,
+        "matched_interest": true,
+        "program": "ELECTRONICS & COMMUNICATION ENGINEERING B TECH IN",
+        "quality_score": 7.52,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS & COMMUNICATION ENGINEERING B TECH IN at Dayananda Sagar University DEVARAKAGGALAHALLI VILLAGE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 10.7,
+        "category": "Reach",
+        "closing_rank": 38479,
+        "college_code": "E091",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "K S Institute of Technology",
+        "interest_score": 7.25,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGINEERING COMPUTER",
+        "quality_score": 7.49,
+        "reason": "Reach for you - strong fit for your goal (COMMUNICATION ENGINEERING COMPUTER at K S Institute of Technology). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse",
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 9.6,
+        "category": "Reach",
+        "closing_rank": 38168,
+        "college_code": "E047",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Malnad College of Engineering",
+        "interest_score": 7.25,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 7.49,
+        "reason": "Reach for you - strong fit for your goal (ENGINEERING COMPUTER at Malnad College of Engineering). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 7.8,
+        "category": "Reach",
+        "closing_rank": 37584,
+        "college_code": "E095",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "AMC Engineering College",
+        "interest_score": 7.25,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 7.51,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at AMC Engineering College). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 7.7,
+        "category": "Reach",
+        "closing_rank": 37533,
+        "college_code": "E155",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Government Engineering College",
+        "interest_score": 7.25,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 7.51,
+        "reason": "Reach for you - strong fit for your goal (ENGINEERING COMPUTER at Government Engineering College). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 11.9,
+        "category": "Reach",
+        "closing_rank": 38800,
+        "college_code": "E220",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "ALLIANCE University Central Campus",
+        "interest_score": 7.23,
+        "matched_interest": true,
+        "program": "ELECTRICAL & ELECTRONICS ENGINEERING B TECH IN",
+        "quality_score": 7.46,
+        "reason": "Reach for you - strong fit for your goal (ELECTRICAL & ELECTRONICS ENGINEERING B TECH IN at ALLIANCE University Central Campus). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 87.0,
+        "category": "Safe",
+        "closing_rank": 53067,
+        "college_code": "E237",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "PRESIDENCY University ITGALPURA",
+        "interest_score": 6.61,
+        "matched_interest": true,
+        "program": "ROBOTICS AND ARTIFICIAL INTELLIGENCE B.Tech in VLSI",
+        "quality_score": 6.21,
+        "reason": "Safe for you - strong fit for your goal (ROBOTICS AND ARTIFICIAL INTELLIGENCE B.Tech in VLSI at PRESIDENCY University ITGALPURA). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse",
+          "production"
+        ]
+      },
+      {
+        "admission_probability": 87.2,
+        "category": "Safe",
+        "closing_rank": 53162,
+        "college_code": "E042",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Khaja Bandanawaz University KBN University Street",
+        "interest_score": 6.6,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 6.2,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at Khaja Bandanawaz University KBN University Street). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 87.5,
+        "category": "Safe",
+        "closing_rank": 53292,
+        "college_code": "E111",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Sri Venkateshwara College of Engineering",
+        "interest_score": 6.6,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGG (ARTIFICIAL INTELLIGENCE) COMPUTER",
+        "quality_score": 6.19,
+        "reason": "Safe for you - strong fit for your goal (SCIENCE AND ENGG (ARTIFICIAL INTELLIGENCE) COMPUTER at Sri Venkateshwara College of Engineering). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 87.9,
+        "category": "Safe",
+        "closing_rank": 53473,
+        "college_code": "E085",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "APS College of Engineering",
+        "interest_score": 6.59,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 6.18,
+        "reason": "Safe for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at APS College of Engineering). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 88.0,
+        "category": "Safe",
+        "closing_rank": 53538,
+        "college_code": "E095",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "AMC Engineering College",
+        "interest_score": 6.59,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL &",
+        "quality_score": 6.18,
+        "reason": "Safe for you - strong fit for your goal (SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL & at AMC Engineering College). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 88.1,
+        "category": "Safe",
+        "closing_rank": 53574,
+        "college_code": "E186",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "ACS College of Engineering",
+        "interest_score": 6.58,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGG(INTERNET OF THINGS) COMPUTER",
+        "quality_score": 6.17,
+        "reason": "Safe for you - strong fit for your goal (SCIENCE AND ENGG(INTERNET OF THINGS) COMPUTER at ACS College of Engineering). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 88.5,
+        "category": "Safe",
+        "closing_rank": 53780,
+        "college_code": "E173",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Sai Vidya Institute of Technology",
+        "interest_score": 6.58,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING COMPUTER",
+        "quality_score": 6.16,
+        "reason": "Safe for you - strong fit for your goal (SCIENCE AND ENGINEERING COMPUTER at Sai Vidya Institute of Technology). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 88.5,
+        "category": "Safe",
+        "closing_rank": 53785,
+        "college_code": "E145",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Rajarajeswari College of Engineering",
+        "interest_score": 6.58,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 6.16,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at Rajarajeswari College of Engineering). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 88.6,
+        "category": "Safe",
+        "closing_rank": 53829,
+        "college_code": "E106",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "East West Institute Of Technology",
+        "interest_score": 6.58,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG INFORMATION",
+        "quality_score": 6.15,
+        "reason": "Safe for you - strong fit for your goal (COMMUNICATION ENGG INFORMATION at East West Institute Of Technology). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece",
+          "it"
+        ]
+      },
+      {
+        "admission_probability": 88.6,
+        "category": "Safe",
+        "closing_rank": 53842,
+        "college_code": "E306",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "THE CHANAKYA UNIVERSITY NO 29 HARALURU",
+        "interest_score": 6.58,
+        "matched_interest": true,
+        "program": "ENGINEERING AND COMPUTER SCIENCE B.TECH IN",
+        "quality_score": 6.15,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING AND COMPUTER SCIENCE B.TECH IN at THE CHANAKYA UNIVERSITY NO 29 HARALURU). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 88.6,
+        "category": "Safe",
+        "closing_rank": 53848,
+        "college_code": "E157",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Government Engineering College",
+        "interest_score": 6.57,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 6.14,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at Government Engineering College). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 89.7,
+        "category": "Safe",
+        "closing_rank": 54450,
+        "college_code": "E059",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "P D A College of Engineering",
+        "interest_score": 6.55,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 6.1,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at P D A College of Engineering). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 89.9,
+        "category": "Safe",
+        "closing_rank": 54555,
+        "college_code": "E135",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "K L S Viswanathrao Deshpande Institute of Technology",
+        "interest_score": 6.54,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 6.09,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at K L S Viswanathrao Deshpande Institute of Technology). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 90.2,
+        "category": "Safe",
+        "closing_rank": 54700,
+        "college_code": "E038",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "BLDEA's VP. Dr.P.G. Hallakatti College of Engineering & Technology",
+        "interest_score": 6.54,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING COMPUTER",
+        "quality_score": 6.08,
+        "reason": "Safe for you - strong fit for your goal (SCIENCE AND ENGINEERING COMPUTER at BLDEA's VP. Dr.P.G. Hallakatti College of Engineering & Technology). Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 90.7,
+        "category": "Safe",
+        "closing_rank": 55011,
+        "college_code": "E106",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "East West Institute Of Technology",
+        "interest_score": 6.53,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 6.05,
+        "reason": "Safe for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at East West Institute Of Technology). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      }
+    ],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "max_per_institute": 2,
+      "reach_band_ceiling": 18000.0,
+      "safe_margin": 0.15,
+      "target_band_ceiling": 13000.0,
+      "target_band_floor": 1500.0,
+      "top_rank_cap": 25,
+      "upper_margin": 0.25
+    },
+    "total_count": 745
+  },
+  "note": "variation branch_preferences=['cse', 'ece']",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/kcet/recommend",
+    "payload": {
+      "branch_preferences": [
+        "cse",
+        "ece"
+      ],
+      "rank": 45000,
+      "seat_category": "GM"
+    }
+  },
+  "status": 200
+}

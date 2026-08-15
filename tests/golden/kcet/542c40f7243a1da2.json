@@ -1,0 +1,53 @@
+{
+  "body": {
+    "category_guidance": [],
+    "counts": {
+      "by_category": {
+        "Reach": 0,
+        "Safe": 0,
+        "Target": 0
+      },
+      "is_curated": false,
+      "is_top_rank": false,
+      "shown": 0,
+      "shown_by_category": {
+        "Reach": 0,
+        "Safe": 0,
+        "Target": 0
+      },
+      "total": 0
+    },
+    "guidance": "Your rank (400,001) is past the last seat you are eligible for under 1G in this dataset — the weakest cutoff closed at 261,869. Adding a different rank will not change this; try another category, or check KEA's special/extended rounds.",
+    "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
+    "notes": [
+      "A rank of 400,001 is well outside KCET's published range and may be a typo."
+    ],
+    "recommendations": [],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "max_per_institute": 2,
+      "reach_band_ceiling": 18000.0,
+      "safe_margin": 0.15,
+      "target_band_ceiling": 13000.0,
+      "target_band_floor": 1500.0,
+      "top_rank_cap": 25,
+      "upper_margin": 0.25
+    },
+    "total_count": 0
+  },
+  "note": "core grid rank=400001 cat=1G",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/kcet/recommend",
+    "payload": {
+      "rank": 400001,
+      "seat_category": "1G"
+    }
+  },
+  "status": 200
+}

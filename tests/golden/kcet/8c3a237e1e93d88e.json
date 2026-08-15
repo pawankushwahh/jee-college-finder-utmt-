@@ -1,0 +1,14 @@
+{
+  "body": {
+    "programs": 18800,
+    "status": "ok"
+  },
+  "note": "health",
+  "request": {
+    "method": "GET",
+    "params": null,
+    "path": "/api/kcet/health",
+    "payload": null
+  },
+  "status": 200
+}

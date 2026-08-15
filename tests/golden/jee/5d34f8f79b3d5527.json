@@ -1,0 +1,4682 @@
+{
+  "body": {
+    "branch_counts": {
+      "Artificial Intelligence": 140,
+      "Artificial Intelligence and Data Science": 135,
+      "Bio Technology": 170,
+      "Chemical Engineering": 641,
+      "Civil Engineering": 988,
+      "Computer Science and Engineering": 1778,
+      "Electrical Engineering": 822,
+      "Electrical and Electronics Engineering": 338,
+      "Electronics and Communication Engineering": 1264,
+      "Engineering Physics": 222,
+      "Information Technology": 225,
+      "Mathematics and Computing": 364,
+      "Mechanical Engineering": 1123,
+      "Metallurgical and Materials Engineering": 336,
+      "Mining Engineering": 125
+    },
+    "cse_premium": [
+      {
+        "cse_avg": 3159.5,
+        "cse_programs": 59,
+        "inst_type": "IIT",
+        "non_cse_avg": 8890.3,
+        "non_cse_programs": 239,
+        "overall_avg": 7755.7
+      },
+      {
+        "cse_avg": 36894.3,
+        "cse_programs": 128,
+        "inst_type": "NIT",
+        "non_cse_avg": 66841.4,
+        "non_cse_programs": 493,
+        "overall_avg": 60668.7
+      },
+      {
+        "cse_avg": 31990.2,
+        "cse_programs": 68,
+        "inst_type": "IIIT",
+        "non_cse_avg": 39362.6,
+        "non_cse_programs": 43,
+        "overall_avg": 34846.2
+      },
+      {
+        "cse_avg": 57288.4,
+        "cse_programs": 77,
+        "inst_type": "GFTI",
+        "non_cse_avg": 91334.9,
+        "non_cse_programs": 187,
+        "overall_avg": 81404.6
+      }
+    ],
+    "duration_comparison": [
+      {
+        "five_year_avg": 9562.8,
+        "five_year_count": 40,
+        "four_year_avg": 7475.5,
+        "four_year_count": 258,
+        "inst_type": "IIT"
+      },
+      {
+        "five_year_avg": 50942.4,
+        "five_year_count": 86,
+        "four_year_avg": 62232.2,
+        "four_year_count": 535,
+        "inst_type": "NIT"
+      },
+      {
+        "five_year_avg": 31927.2,
+        "five_year_count": 9,
+        "four_year_avg": 35103.8,
+        "four_year_count": 102,
+        "inst_type": "IIIT"
+      },
+      {
+        "five_year_avg": 75589.7,
+        "five_year_count": 24,
+        "four_year_avg": 81986.1,
+        "four_year_count": 240,
+        "inst_type": "GFTI"
+      }
+    ],
+    "gender_advantage": [
+      {
+        "avg_multiplier": 1.212,
+        "avg_rank_difference": 2468.4,
+        "inst_type": "GFTI"
+      },
+      {
+        "avg_multiplier": 1.313,
+        "avg_rank_difference": 2883.7,
+        "inst_type": "IIIT"
+      },
+      {
+        "avg_multiplier": 2.04,
+        "avg_rank_difference": 2383.3,
+        "inst_type": "IIT"
+      },
+      {
+        "avg_multiplier": 1.54,
+        "avg_rank_difference": 5779.8,
+        "inst_type": "NIT"
+      }
+    ],
+    "gender_counts": {
+      "Female-only (including Supernumerary)": 4338,
+      "Gender-Neutral": 7604
+    },
+    "highest_cutoffs": [
+      {
+        "closing_rank": 66,
+        "gender": "Gender-Neutral",
+        "inst_type": "IIT",
+        "institute": "Indian Institute of Technology Bombay",
+        "opening_rank": 1,
+        "program": "Computer Science and Engineering (4 Years, Bachelor of Technology)",
+        "quota": "AI"
+      },
+      {
+        "closing_rank": 126,
+        "gender": "Gender-Neutral",
+        "inst_type": "IIT",
+        "institute": "Indian Institute of Technology Delhi",
+        "opening_rank": 24,
+        "program": "Computer Science and Engineering (4 Years, Bachelor of Technology)",
+        "quota": "AI"
+      },
+      {
+        "closing_rank": 171,
+        "gender": "Gender-Neutral",
+        "inst_type": "IIT",
+        "institute": "Indian Institute of Technology Madras",
+        "opening_rank": 79,
+        "program": "Computer Science and Engineering (4 Years, Bachelor of Technology)",
+        "quota": "AI"
+      },
+      {
+        "closing_rank": 186,
+        "gender": "Gender-Neutral",
+        "inst_type": "IIT",
+        "institute": "Indian Institute of Technology Delhi",
+        "opening_rank": 134,
+        "program": "Computer Science and Engineering (5 Years, Bachelor and Master of Technology (Dual Degree))",
+        "quota": "AI"
+      },
+      {
+        "closing_rank": 271,
+        "gender": "Gender-Neutral",
+        "inst_type": "IIT",
+        "institute": "Indian Institute of Technology Kanpur",
+        "opening_rank": 147,
+        "program": "Computer Science and Engineering (4 Years, Bachelor of Technology)",
+        "quota": "AI"
+      },
+      {
+        "closing_rank": 306,
+        "gender": "Gender-Neutral",
+        "inst_type": "IIT",
+        "institute": "Indian Institute of Technology Madras",
+        "opening_rank": 102,
+        "program": "Artificial Intelligence and Data Analytics (4 Years, Bachelor of Technology)",
+        "quota": "AI"
+      },
+      {
+        "closing_rank": 323,
+        "gender": "Gender-Neutral",
+        "inst_type": "IIT",
+        "institute": "Indian Institute of Technology Delhi",
+        "opening_rank": 154,
+        "program": "Mathematics and Computing (4 Years, Bachelor of Technology)",
+        "quota": "AI"
+      },
+      {
+        "closing_rank": 355,
+        "gender": "Gender-Neutral",
+        "inst_type": "IIT",
+        "institute": "Indian Institute of Technology Delhi",
+        "opening_rank": 319,
+        "program": "Mathematics and Computing (5 Years, Bachelor and Master of Technology (Dual Degree))",
+        "quota": "AI"
+      },
+      {
+        "closing_rank": 433,
+        "gender": "Gender-Neutral",
+        "inst_type": "IIT",
+        "institute": "Indian Institute of Technology Bombay",
+        "opening_rank": 106,
+        "program": "Electrical Engineering (4 Years, Bachelor of Technology)",
+        "quota": "AI"
+      },
+      {
+        "closing_rank": 466,
+        "gender": "Gender-Neutral",
+        "inst_type": "IIT",
+        "institute": "Indian Institute of Technology Kharagpur",
+        "opening_rank": 238,
+        "program": "Computer Science and Engineering (4 Years, Bachelor of Technology)",
+        "quota": "AI"
+      }
+    ],
+    "inst_competitiveness": {
+      "GFTI": [
+        {
+          "avg_closing_rank": 23968.3,
+          "institute": "International Institute of Information Technology, Naya Raipur",
+          "min_opening_rank": 14537,
+          "total_programs": 3
+        },
+        {
+          "avg_closing_rank": 35791.7,
+          "institute": "Indian Institute of Engineering Science and Technology, Shibpur",
+          "min_opening_rank": 6346,
+          "total_programs": 18
+        },
+        {
+          "avg_closing_rank": 36495.0,
+          "institute": "Jawaharlal Nehru University, Delhi",
+          "min_opening_rank": 11749,
+          "total_programs": 2
+        },
+        {
+          "avg_closing_rank": 41100.8,
+          "institute": "International Institute of Information Technology, Bhubaneswar",
+          "min_opening_rank": 5244,
+          "total_programs": 5
+        },
+        {
+          "avg_closing_rank": 42917.9,
+          "institute": "Punjab Engineering College, Chandigarh",
+          "min_opening_rank": 5317,
+          "total_programs": 24
+        },
+        {
+          "avg_closing_rank": 50593.1,
+          "institute": "Shri G. S. Institute of Technology and Science Indore",
+          "min_opening_rank": 9767,
+          "total_programs": 9
+        },
+        {
+          "avg_closing_rank": 50647.0,
+          "institute": "National Institute of Electronics and Information Technology, Ropar (Punjab)",
+          "min_opening_rank": 13853,
+          "total_programs": 1
+        },
+        {
+          "avg_closing_rank": 54261.0,
+          "institute": "University of Hyderabad",
+          "min_opening_rank": 16128,
+          "total_programs": 2
+        },
+        {
+          "avg_closing_rank": 56562.5,
+          "institute": "National Institute of Electronics and Information Technology, Aurangabad (Maharashtra)",
+          "min_opening_rank": 17660,
+          "total_programs": 2
+        },
+        {
+          "avg_closing_rank": 57224.5,
+          "institute": "J.K. Institute of Applied Physics & Technology, Department of Electronics & Communication, University of Allahabad- Allahabad",
+          "min_opening_rank": 28392,
+          "total_programs": 2
+        }
+      ],
+      "IIIT": [
+        {
+          "avg_closing_rank": 6764.7,
+          "institute": "Indian Institute of Information Technology, Allahabad",
+          "min_opening_rank": 1783,
+          "total_programs": 3
+        },
+        {
+          "avg_closing_rank": 10462.5,
+          "institute": "Indian Institute of Information Technology Lucknow",
+          "min_opening_rank": 5372,
+          "total_programs": 4
+        },
+        {
+          "avg_closing_rank": 13551.2,
+          "institute": "Atal Bihari Vajpayee Indian Institute of Information Technology & Management Gwalior",
+          "min_opening_rank": 5514,
+          "total_programs": 5
+        },
+        {
+          "avg_closing_rank": 24204.5,
+          "institute": "Indian Institute of Information Technology (IIIT) Pune",
+          "min_opening_rank": 9436,
+          "total_programs": 2
+        },
+        {
+          "avg_closing_rank": 26646.5,
+          "institute": "Indian Institute of Information Technology Guwahati",
+          "min_opening_rank": 6552,
+          "total_programs": 2
+        },
+        {
+          "avg_closing_rank": 29091.3,
+          "institute": "Indian Institute of Information Technology (IIIT), Sri City, Chittoor",
+          "min_opening_rank": 11759,
+          "total_programs": 3
+        },
+        {
+          "avg_closing_rank": 30194.5,
+          "institute": "Indian Institute of Information Technology Surat",
+          "min_opening_rank": 9203,
+          "total_programs": 4
+        },
+        {
+          "avg_closing_rank": 30406.5,
+          "institute": "Indian Institute of Information Technology(IIIT), Vadodara, Gujrat",
+          "min_opening_rank": 12919,
+          "total_programs": 4
+        },
+        {
+          "avg_closing_rank": 31449.7,
+          "institute": "Indian Institute of Information Technology (IIIT)Kota, Rajasthan",
+          "min_opening_rank": 11210,
+          "total_programs": 3
+        },
+        {
+          "avg_closing_rank": 31759.5,
+          "institute": "Indian Institute of Information Technology Tiruchirappalli",
+          "min_opening_rank": 4992,
+          "total_programs": 4
+        }
+      ],
+      "IIT": [
+        {
+          "avg_closing_rank": 2861.1,
+          "institute": "Indian Institute of Technology Bombay",
+          "min_opening_rank": 1,
+          "total_programs": 16
+        },
+        {
+          "avg_closing_rank": 3291.8,
+          "institute": "Indian Institute of Technology Delhi",
+          "min_opening_rank": 24,
+          "total_programs": 22
+        },
+        {
+          "avg_closing_rank": 3461.9,
+          "institute": "Indian Institute of Technology Madras",
+          "min_opening_rank": 79,
+          "total_programs": 16
+        },
+        {
+          "avg_closing_rank": 4565.4,
+          "institute": "Indian Institute of Technology Kanpur",
+          "min_opening_rank": 147,
+          "total_programs": 14
+        },
+        {
+          "avg_closing_rank": 4697.7,
+          "institute": "Indian Institute of Technology Hyderabad",
+          "min_opening_rank": 339,
+          "total_programs": 15
+        },
+        {
+          "avg_closing_rank": 4962.3,
+          "institute": "Indian Institute of Technology Guwahati",
+          "min_opening_rank": 504,
+          "total_programs": 12
+        },
+        {
+          "avg_closing_rank": 5492.2,
+          "institute": "Indian Institute of Technology Roorkee",
+          "min_opening_rank": 271,
+          "total_programs": 18
+        },
+        {
+          "avg_closing_rank": 6360.1,
+          "institute": "Indian Institute of Technology Gandhinagar",
+          "min_opening_rank": 905,
+          "total_programs": 8
+        },
+        {
+          "avg_closing_rank": 6475.5,
+          "institute": "Indian Institute of Technology Kharagpur",
+          "min_opening_rank": 238,
+          "total_programs": 21
+        },
+        {
+          "avg_closing_rank": 6844.3,
+          "institute": "Indian Institute of Technology Indore",
+          "min_opening_rank": 952,
+          "total_programs": 9
+        }
+      ],
+      "NIT": [
+        {
+          "avg_closing_rank": 12426.5,
+          "institute": "National Institute of Technology Karnataka, Surathkal",
+          "min_opening_rank": 753,
+          "total_programs": 22
+        },
+        {
+          "avg_closing_rank": 14106.4,
+          "institute": "National Institute of Technology, Tiruchirappalli",
+          "min_opening_rank": 559,
+          "total_programs": 18
+        },
+        {
+          "avg_closing_rank": 17317.4,
+          "institute": "National Institute of Technology Delhi",
+          "min_opening_rank": 1209,
+          "total_programs": 16
+        },
+        {
+          "avg_closing_rank": 18854.9,
+          "institute": "Malaviya National Institute of Technology Jaipur",
+          "min_opening_rank": 2937,
+          "total_programs": 16
+        },
+        {
+          "avg_closing_rank": 20316.2,
+          "institute": "National Institute of Technology, Warangal",
+          "min_opening_rank": 822,
+          "total_programs": 32
+        },
+        {
+          "avg_closing_rank": 21661.1,
+          "institute": "National Institute of Technology, Kurukshetra",
+          "min_opening_rank": 4139,
+          "total_programs": 38
+        },
+        {
+          "avg_closing_rank": 22248.2,
+          "institute": "Motilal Nehru National Institute of Technology Allahabad",
+          "min_opening_rank": 2500,
+          "total_programs": 20
+        },
+        {
+          "avg_closing_rank": 24709.7,
+          "institute": "National Institute of Technology Calicut",
+          "min_opening_rank": 2998,
+          "total_programs": 22
+        },
+        {
+          "avg_closing_rank": 26850.5,
+          "institute": "Visvesvaraya National Institute of Technology, Nagpur",
+          "min_opening_rank": 3387,
+          "total_programs": 16
+        },
+        {
+          "avg_closing_rank": 28418.5,
+          "institute": "Maulana Azad National Institute of Technology Bhopal",
+          "min_opening_rank": 5163,
+          "total_programs": 20
+        }
+      ]
+    },
+    "inst_type_counts": {
+      "GFTI": 1645,
+      "IIIT": 1226,
+      "IIT": 3096,
+      "NIT": 5975
+    },
+    "lowest_cutoffs": [
+      {
+        "closing_rank": 1314967,
+        "gender": "Gender-Neutral",
+        "inst_type": "NIT",
+        "institute": "National Institute of Technology, Mizoram",
+        "opening_rank": 309288,
+        "program": "Mechanical Engineering (4 Years, Bachelor of Technology)",
+        "quota": "HS"
+      },
+      {
+        "closing_rank": 1274910,
+        "gender": "Gender-Neutral",
+        "inst_type": "NIT",
+        "institute": "National Institute of Technology, Mizoram",
+        "opening_rank": 888104,
+        "program": "Chemical Science and Technology (4 Years, Bachelor of Technology)",
+        "quota": "HS"
+      },
+      {
+        "closing_rank": 1176727,
+        "gender": "Gender-Neutral",
+        "inst_type": "NIT",
+        "institute": "National Institute of Technology, Mizoram",
+        "opening_rank": 485704,
+        "program": "Electrical Engineering (4 Years, Bachelor of Technology)",
+        "quota": "HS"
+      },
+      {
+        "closing_rank": 1105820,
+        "gender": "Gender-Neutral",
+        "inst_type": "NIT",
+        "institute": "National Institute of Technology, Mizoram",
+        "opening_rank": 546208,
+        "program": "Electronics and Communication Engineering (4 Years, Bachelor of Technology)",
+        "quota": "HS"
+      },
+      {
+        "closing_rank": 764291,
+        "gender": "Gender-Neutral",
+        "inst_type": "NIT",
+        "institute": "National Institute of Technology, Mizoram",
+        "opening_rank": 667009,
+        "program": "Mathematics and Computing (4 Years, Bachelor of Technology)",
+        "quota": "HS"
+      },
+      {
+        "closing_rank": 629625,
+        "gender": "Gender-Neutral",
+        "inst_type": "NIT",
+        "institute": "National Institute of Technology Sikkim",
+        "opening_rank": 306018,
+        "program": "Civil Engineering (4 Years, Bachelor of Technology)",
+        "quota": "HS"
+      },
+      {
+        "closing_rank": 626461,
+        "gender": "Gender-Neutral",
+        "inst_type": "NIT",
+        "institute": "National Institute of Technology Sikkim",
+        "opening_rank": 295129,
+        "program": "Mechanical Engineering (4 Years, Bachelor of Technology)",
+        "quota": "HS"
+      },
+      {
+        "closing_rank": 563566,
+        "gender": "Gender-Neutral",
+        "inst_type": "NIT",
+        "institute": "National Institute of Technology, Mizoram",
+        "opening_rank": 112390,
+        "program": "Computer Science and Engineering (4 Years, Bachelor of Technology)",
+        "quota": "HS"
+      },
+      {
+        "closing_rank": 548694,
+        "gender": "Gender-Neutral",
+        "inst_type": "NIT",
+        "institute": "National Institute of Technology, Mizoram",
+        "opening_rank": 364422,
+        "program": "Civil Engineering (4 Years, Bachelor of Technology)",
+        "quota": "HS"
+      },
+      {
+        "closing_rank": 529893,
+        "gender": "Gender-Neutral",
+        "inst_type": "NIT",
+        "institute": "National Institute of Technology, Manipur",
+        "opening_rank": 234181,
+        "program": "Mechanical Engineering (4 Years, Bachelor of Technology)",
+        "quota": "HS"
+      }
+    ],
+    "popular_branches": [
+      {
+        "avg_closing_rank": 6280.6,
+        "branch": "Economics",
+        "total_programs": 5
+      },
+      {
+        "avg_closing_rank": 11386.8,
+        "branch": "Artificial Intelligence",
+        "total_programs": 13
+      },
+      {
+        "avg_closing_rank": 13210.8,
+        "branch": "Data Science and Artificial Intelligence",
+        "total_programs": 6
+      },
+      {
+        "avg_closing_rank": 14813.0,
+        "branch": "Engineering and Computational Mechanics",
+        "total_programs": 5
+      },
+      {
+        "avg_closing_rank": 20645.2,
+        "branch": "Electronics Engineering",
+        "total_programs": 6
+      },
+      {
+        "avg_closing_rank": 22583.2,
+        "branch": "Aerospace Engineering",
+        "total_programs": 12
+      },
+      {
+        "avg_closing_rank": 23584.9,
+        "branch": "Energy Engineering",
+        "total_programs": 7
+      },
+      {
+        "avg_closing_rank": 24570.9,
+        "branch": "Artificial Intelligence and Data Science",
+        "total_programs": 14
+      },
+      {
+        "avg_closing_rank": 28051.1,
+        "branch": "Materials Engineering",
+        "total_programs": 7
+      },
+      {
+        "avg_closing_rank": 31350.4,
+        "branch": "Engineering Physics",
+        "total_programs": 26
+      },
+      {
+        "avg_closing_rank": 34081.9,
+        "branch": "Computer Science and Engineering",
+        "total_programs": 168
+      },
+      {
+        "avg_closing_rank": 39907.7,
+        "branch": "Mathematics and Computing",
+        "total_programs": 42
+      },
+      {
+        "avg_closing_rank": 40223.4,
+        "branch": "Instrumentation and Control Engineering",
+        "total_programs": 5
+      },
+      {
+        "avg_closing_rank": 41075.7,
+        "branch": "Information Technology",
+        "total_programs": 24
+      },
+      {
+        "avg_closing_rank": 41764.1,
+        "branch": "Mining Engineering",
+        "total_programs": 15
+      }
+    ],
+    "quota_counts": {
+      "AI": 5436,
+      "GO": 34,
+      "HS": 3050,
+      "JK": 80,
+      "LA": 14,
+      "OS": 3328
+    },
+    "rank_availability": {
+      "advanced": [
+        {
+          "rank": 0,
+          "total_institutes": 0,
+          "total_programs": 0
+        },
+        {
+          "rank": 500,
+          "total_institutes": 6,
+          "total_programs": 12
+        },
+        {
+          "rank": 1000,
+          "total_institutes": 11,
+          "total_programs": 25
+        },
+        {
+          "rank": 1500,
+          "total_institutes": 11,
+          "total_programs": 23
+        },
+        {
+          "rank": 2000,
+          "total_institutes": 12,
+          "total_programs": 27
+        },
+        {
+          "rank": 2500,
+          "total_institutes": 17,
+          "total_programs": 38
+        },
+        {
+          "rank": 3000,
+          "total_institutes": 18,
+          "total_programs": 39
+        },
+        {
+          "rank": 3500,
+          "total_institutes": 18,
+          "total_programs": 40
+        },
+        {
+          "rank": 4000,
+          "total_institutes": 17,
+          "total_programs": 41
+        },
+        {
+          "rank": 4500,
+          "total_institutes": 21,
+          "total_programs": 45
+        },
+        {
+          "rank": 5000,
+          "total_institutes": 23,
+          "total_programs": 48
+        },
+        {
+          "rank": 5500,
+          "total_institutes": 23,
+          "total_programs": 53
+        },
+        {
+          "rank": 6000,
+          "total_institutes": 23,
+          "total_programs": 52
+        },
+        {
+          "rank": 6500,
+          "total_institutes": 22,
+          "total_programs": 54
+        },
+        {
+          "rank": 7000,
+          "total_institutes": 22,
+          "total_programs": 57
+        },
+        {
+          "rank": 7500,
+          "total_institutes": 23,
+          "total_programs": 62
+        },
+        {
+          "rank": 8000,
+          "total_institutes": 23,
+          "total_programs": 59
+        },
+        {
+          "rank": 8500,
+          "total_institutes": 22,
+          "total_programs": 56
+        },
+        {
+          "rank": 9000,
+          "total_institutes": 22,
+          "total_programs": 58
+        },
+        {
+          "rank": 9500,
+          "total_institutes": 22,
+          "total_programs": 59
+        },
+        {
+          "rank": 10000,
+          "total_institutes": 22,
+          "total_programs": 59
+        },
+        {
+          "rank": 10500,
+          "total_institutes": 19,
+          "total_programs": 56
+        },
+        {
+          "rank": 11000,
+          "total_institutes": 18,
+          "total_programs": 59
+        },
+        {
+          "rank": 11500,
+          "total_institutes": 15,
+          "total_programs": 54
+        },
+        {
+          "rank": 12000,
+          "total_institutes": 15,
+          "total_programs": 56
+        },
+        {
+          "rank": 12500,
+          "total_institutes": 14,
+          "total_programs": 49
+        },
+        {
+          "rank": 13000,
+          "total_institutes": 14,
+          "total_programs": 45
+        },
+        {
+          "rank": 13500,
+          "total_institutes": 13,
+          "total_programs": 45
+        },
+        {
+          "rank": 14000,
+          "total_institutes": 12,
+          "total_programs": 42
+        },
+        {
+          "rank": 14500,
+          "total_institutes": 10,
+          "total_programs": 39
+        },
+        {
+          "rank": 15000,
+          "total_institutes": 10,
+          "total_programs": 36
+        },
+        {
+          "rank": 15500,
+          "total_institutes": 10,
+          "total_programs": 27
+        },
+        {
+          "rank": 16000,
+          "total_institutes": 10,
+          "total_programs": 24
+        },
+        {
+          "rank": 16500,
+          "total_institutes": 9,
+          "total_programs": 19
+        },
+        {
+          "rank": 17000,
+          "total_institutes": 6,
+          "total_programs": 11
+        },
+        {
+          "rank": 17500,
+          "total_institutes": 4,
+          "total_programs": 7
+        },
+        {
+          "rank": 18000,
+          "total_institutes": 4,
+          "total_programs": 5
+        },
+        {
+          "rank": 18500,
+          "total_institutes": 1,
+          "total_programs": 1
+        },
+        {
+          "rank": 19000,
+          "total_institutes": 0,
+          "total_programs": 0
+        },
+        {
+          "rank": 19500,
+          "total_institutes": 0,
+          "total_programs": 0
+        },
+        {
+          "rank": 20000,
+          "total_institutes": 0,
+          "total_programs": 0
+        }
+      ],
+      "advanced_by_category": {
+        "EWS": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 250,
+            "total_institutes": 9,
+            "total_programs": 15
+          },
+          {
+            "rank": 500,
+            "total_institutes": 14,
+            "total_programs": 22
+          },
+          {
+            "rank": 750,
+            "total_institutes": 15,
+            "total_programs": 26
+          },
+          {
+            "rank": 1000,
+            "total_institutes": 21,
+            "total_programs": 31
+          },
+          {
+            "rank": 1250,
+            "total_institutes": 20,
+            "total_programs": 31
+          },
+          {
+            "rank": 1500,
+            "total_institutes": 20,
+            "total_programs": 33
+          },
+          {
+            "rank": 1750,
+            "total_institutes": 18,
+            "total_programs": 34
+          },
+          {
+            "rank": 2000,
+            "total_institutes": 13,
+            "total_programs": 32
+          },
+          {
+            "rank": 2250,
+            "total_institutes": 14,
+            "total_programs": 33
+          },
+          {
+            "rank": 2500,
+            "total_institutes": 10,
+            "total_programs": 20
+          },
+          {
+            "rank": 2750,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 3000,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 3250,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 3500,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 3750,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 4000,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 4250,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 4500,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 4750,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 5000,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ],
+        "EWS (PwD)": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 2,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 4,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 6,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 8,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 10,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 12,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 14,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 16,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 18,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 20,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 22,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 24,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 26,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 28,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 30,
+            "total_institutes": 4,
+            "total_programs": 4
+          },
+          {
+            "rank": 32,
+            "total_institutes": 5,
+            "total_programs": 5
+          },
+          {
+            "rank": 34,
+            "total_institutes": 3,
+            "total_programs": 3
+          },
+          {
+            "rank": 36,
+            "total_institutes": 3,
+            "total_programs": 4
+          },
+          {
+            "rank": 38,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 40,
+            "total_institutes": 1,
+            "total_programs": 2
+          },
+          {
+            "rank": 42,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 44,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 46,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 48,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 50,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 52,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ],
+        "OBC-NCL": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 250,
+            "total_institutes": 6,
+            "total_programs": 7
+          },
+          {
+            "rank": 500,
+            "total_institutes": 9,
+            "total_programs": 19
+          },
+          {
+            "rank": 750,
+            "total_institutes": 12,
+            "total_programs": 22
+          },
+          {
+            "rank": 1000,
+            "total_institutes": 14,
+            "total_programs": 23
+          },
+          {
+            "rank": 1250,
+            "total_institutes": 15,
+            "total_programs": 28
+          },
+          {
+            "rank": 1500,
+            "total_institutes": 15,
+            "total_programs": 32
+          },
+          {
+            "rank": 1750,
+            "total_institutes": 17,
+            "total_programs": 36
+          },
+          {
+            "rank": 2000,
+            "total_institutes": 20,
+            "total_programs": 37
+          },
+          {
+            "rank": 2250,
+            "total_institutes": 20,
+            "total_programs": 36
+          },
+          {
+            "rank": 2500,
+            "total_institutes": 22,
+            "total_programs": 45
+          },
+          {
+            "rank": 2750,
+            "total_institutes": 22,
+            "total_programs": 43
+          },
+          {
+            "rank": 3000,
+            "total_institutes": 22,
+            "total_programs": 40
+          },
+          {
+            "rank": 3250,
+            "total_institutes": 22,
+            "total_programs": 43
+          },
+          {
+            "rank": 3500,
+            "total_institutes": 23,
+            "total_programs": 47
+          },
+          {
+            "rank": 3750,
+            "total_institutes": 23,
+            "total_programs": 47
+          },
+          {
+            "rank": 4000,
+            "total_institutes": 23,
+            "total_programs": 53
+          },
+          {
+            "rank": 4250,
+            "total_institutes": 21,
+            "total_programs": 50
+          },
+          {
+            "rank": 4500,
+            "total_institutes": 18,
+            "total_programs": 44
+          },
+          {
+            "rank": 4750,
+            "total_institutes": 17,
+            "total_programs": 41
+          },
+          {
+            "rank": 5000,
+            "total_institutes": 13,
+            "total_programs": 37
+          },
+          {
+            "rank": 5250,
+            "total_institutes": 14,
+            "total_programs": 37
+          },
+          {
+            "rank": 5500,
+            "total_institutes": 14,
+            "total_programs": 33
+          },
+          {
+            "rank": 5750,
+            "total_institutes": 10,
+            "total_programs": 24
+          },
+          {
+            "rank": 6000,
+            "total_institutes": 7,
+            "total_programs": 13
+          },
+          {
+            "rank": 6250,
+            "total_institutes": 3,
+            "total_programs": 4
+          },
+          {
+            "rank": 6500,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 6750,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 7000,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 7250,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 7500,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 7750,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 8000,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 8250,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 8500,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 8750,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 9000,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 9250,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 9500,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 9750,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 10000,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ],
+        "OBC-NCL (PwD)": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 10,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 20,
+            "total_institutes": 5,
+            "total_programs": 7
+          },
+          {
+            "rank": 30,
+            "total_institutes": 7,
+            "total_programs": 8
+          },
+          {
+            "rank": 40,
+            "total_institutes": 7,
+            "total_programs": 11
+          },
+          {
+            "rank": 50,
+            "total_institutes": 7,
+            "total_programs": 13
+          },
+          {
+            "rank": 60,
+            "total_institutes": 9,
+            "total_programs": 12
+          },
+          {
+            "rank": 70,
+            "total_institutes": 7,
+            "total_programs": 10
+          },
+          {
+            "rank": 80,
+            "total_institutes": 7,
+            "total_programs": 11
+          },
+          {
+            "rank": 90,
+            "total_institutes": 5,
+            "total_programs": 5
+          },
+          {
+            "rank": 100,
+            "total_institutes": 7,
+            "total_programs": 7
+          },
+          {
+            "rank": 110,
+            "total_institutes": 4,
+            "total_programs": 4
+          },
+          {
+            "rank": 120,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 130,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 140,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 150,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 160,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 170,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ],
+        "OPEN": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 500,
+            "total_institutes": 6,
+            "total_programs": 12
+          },
+          {
+            "rank": 1000,
+            "total_institutes": 11,
+            "total_programs": 25
+          },
+          {
+            "rank": 1500,
+            "total_institutes": 11,
+            "total_programs": 23
+          },
+          {
+            "rank": 2000,
+            "total_institutes": 12,
+            "total_programs": 27
+          },
+          {
+            "rank": 2500,
+            "total_institutes": 17,
+            "total_programs": 38
+          },
+          {
+            "rank": 3000,
+            "total_institutes": 18,
+            "total_programs": 39
+          },
+          {
+            "rank": 3500,
+            "total_institutes": 18,
+            "total_programs": 40
+          },
+          {
+            "rank": 4000,
+            "total_institutes": 17,
+            "total_programs": 41
+          },
+          {
+            "rank": 4500,
+            "total_institutes": 21,
+            "total_programs": 45
+          },
+          {
+            "rank": 5000,
+            "total_institutes": 23,
+            "total_programs": 48
+          },
+          {
+            "rank": 5500,
+            "total_institutes": 23,
+            "total_programs": 53
+          },
+          {
+            "rank": 6000,
+            "total_institutes": 23,
+            "total_programs": 52
+          },
+          {
+            "rank": 6500,
+            "total_institutes": 22,
+            "total_programs": 54
+          },
+          {
+            "rank": 7000,
+            "total_institutes": 22,
+            "total_programs": 57
+          },
+          {
+            "rank": 7500,
+            "total_institutes": 23,
+            "total_programs": 62
+          },
+          {
+            "rank": 8000,
+            "total_institutes": 23,
+            "total_programs": 59
+          },
+          {
+            "rank": 8500,
+            "total_institutes": 22,
+            "total_programs": 56
+          },
+          {
+            "rank": 9000,
+            "total_institutes": 22,
+            "total_programs": 58
+          },
+          {
+            "rank": 9500,
+            "total_institutes": 22,
+            "total_programs": 59
+          },
+          {
+            "rank": 10000,
+            "total_institutes": 22,
+            "total_programs": 59
+          },
+          {
+            "rank": 10500,
+            "total_institutes": 19,
+            "total_programs": 56
+          },
+          {
+            "rank": 11000,
+            "total_institutes": 18,
+            "total_programs": 59
+          },
+          {
+            "rank": 11500,
+            "total_institutes": 15,
+            "total_programs": 54
+          },
+          {
+            "rank": 12000,
+            "total_institutes": 15,
+            "total_programs": 56
+          },
+          {
+            "rank": 12500,
+            "total_institutes": 14,
+            "total_programs": 49
+          },
+          {
+            "rank": 13000,
+            "total_institutes": 14,
+            "total_programs": 45
+          },
+          {
+            "rank": 13500,
+            "total_institutes": 13,
+            "total_programs": 45
+          },
+          {
+            "rank": 14000,
+            "total_institutes": 12,
+            "total_programs": 42
+          },
+          {
+            "rank": 14500,
+            "total_institutes": 10,
+            "total_programs": 39
+          },
+          {
+            "rank": 15000,
+            "total_institutes": 10,
+            "total_programs": 36
+          },
+          {
+            "rank": 15500,
+            "total_institutes": 10,
+            "total_programs": 27
+          },
+          {
+            "rank": 16000,
+            "total_institutes": 10,
+            "total_programs": 24
+          },
+          {
+            "rank": 16500,
+            "total_institutes": 9,
+            "total_programs": 19
+          },
+          {
+            "rank": 17000,
+            "total_institutes": 6,
+            "total_programs": 11
+          },
+          {
+            "rank": 17500,
+            "total_institutes": 4,
+            "total_programs": 7
+          },
+          {
+            "rank": 18000,
+            "total_institutes": 4,
+            "total_programs": 5
+          },
+          {
+            "rank": 18500,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 19000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 19500,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 20000,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ],
+        "OPEN (PwD)": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 10,
+            "total_institutes": 2,
+            "total_programs": 3
+          },
+          {
+            "rank": 20,
+            "total_institutes": 3,
+            "total_programs": 5
+          },
+          {
+            "rank": 30,
+            "total_institutes": 4,
+            "total_programs": 5
+          },
+          {
+            "rank": 40,
+            "total_institutes": 6,
+            "total_programs": 8
+          },
+          {
+            "rank": 50,
+            "total_institutes": 6,
+            "total_programs": 8
+          },
+          {
+            "rank": 60,
+            "total_institutes": 8,
+            "total_programs": 12
+          },
+          {
+            "rank": 70,
+            "total_institutes": 9,
+            "total_programs": 15
+          },
+          {
+            "rank": 80,
+            "total_institutes": 9,
+            "total_programs": 16
+          },
+          {
+            "rank": 90,
+            "total_institutes": 10,
+            "total_programs": 17
+          },
+          {
+            "rank": 100,
+            "total_institutes": 8,
+            "total_programs": 15
+          },
+          {
+            "rank": 110,
+            "total_institutes": 9,
+            "total_programs": 16
+          },
+          {
+            "rank": 120,
+            "total_institutes": 10,
+            "total_programs": 17
+          },
+          {
+            "rank": 130,
+            "total_institutes": 10,
+            "total_programs": 18
+          },
+          {
+            "rank": 140,
+            "total_institutes": 9,
+            "total_programs": 16
+          },
+          {
+            "rank": 150,
+            "total_institutes": 9,
+            "total_programs": 15
+          },
+          {
+            "rank": 160,
+            "total_institutes": 9,
+            "total_programs": 14
+          },
+          {
+            "rank": 170,
+            "total_institutes": 9,
+            "total_programs": 11
+          },
+          {
+            "rank": 180,
+            "total_institutes": 8,
+            "total_programs": 11
+          },
+          {
+            "rank": 190,
+            "total_institutes": 8,
+            "total_programs": 13
+          },
+          {
+            "rank": 200,
+            "total_institutes": 8,
+            "total_programs": 13
+          },
+          {
+            "rank": 210,
+            "total_institutes": 8,
+            "total_programs": 12
+          },
+          {
+            "rank": 220,
+            "total_institutes": 7,
+            "total_programs": 12
+          },
+          {
+            "rank": 230,
+            "total_institutes": 6,
+            "total_programs": 11
+          },
+          {
+            "rank": 240,
+            "total_institutes": 5,
+            "total_programs": 6
+          },
+          {
+            "rank": 250,
+            "total_institutes": 6,
+            "total_programs": 6
+          },
+          {
+            "rank": 260,
+            "total_institutes": 4,
+            "total_programs": 5
+          },
+          {
+            "rank": 270,
+            "total_institutes": 3,
+            "total_programs": 3
+          },
+          {
+            "rank": 280,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 290,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 300,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 310,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 320,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 330,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 340,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 350,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 360,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 370,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 380,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ],
+        "SC": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 250,
+            "total_institutes": 10,
+            "total_programs": 23
+          },
+          {
+            "rank": 500,
+            "total_institutes": 15,
+            "total_programs": 34
+          },
+          {
+            "rank": 750,
+            "total_institutes": 19,
+            "total_programs": 32
+          },
+          {
+            "rank": 1000,
+            "total_institutes": 22,
+            "total_programs": 42
+          },
+          {
+            "rank": 1250,
+            "total_institutes": 22,
+            "total_programs": 43
+          },
+          {
+            "rank": 1500,
+            "total_institutes": 22,
+            "total_programs": 43
+          },
+          {
+            "rank": 1750,
+            "total_institutes": 22,
+            "total_programs": 40
+          },
+          {
+            "rank": 2000,
+            "total_institutes": 21,
+            "total_programs": 37
+          },
+          {
+            "rank": 2250,
+            "total_institutes": 20,
+            "total_programs": 47
+          },
+          {
+            "rank": 2500,
+            "total_institutes": 20,
+            "total_programs": 43
+          },
+          {
+            "rank": 2750,
+            "total_institutes": 18,
+            "total_programs": 48
+          },
+          {
+            "rank": 3000,
+            "total_institutes": 14,
+            "total_programs": 40
+          },
+          {
+            "rank": 3250,
+            "total_institutes": 11,
+            "total_programs": 19
+          },
+          {
+            "rank": 3500,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 3750,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 4000,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 4250,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 4500,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ],
+        "SC (PwD)": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 2,
+            "total_institutes": 3,
+            "total_programs": 3
+          },
+          {
+            "rank": 4,
+            "total_institutes": 3,
+            "total_programs": 3
+          },
+          {
+            "rank": 6,
+            "total_institutes": 5,
+            "total_programs": 5
+          },
+          {
+            "rank": 8,
+            "total_institutes": 4,
+            "total_programs": 4
+          },
+          {
+            "rank": 10,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 12,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 14,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 16,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 18,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 20,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 22,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 24,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 26,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ],
+        "ST": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 50,
+            "total_institutes": 5,
+            "total_programs": 9
+          },
+          {
+            "rank": 100,
+            "total_institutes": 6,
+            "total_programs": 10
+          },
+          {
+            "rank": 150,
+            "total_institutes": 12,
+            "total_programs": 17
+          },
+          {
+            "rank": 200,
+            "total_institutes": 12,
+            "total_programs": 22
+          },
+          {
+            "rank": 250,
+            "total_institutes": 12,
+            "total_programs": 23
+          },
+          {
+            "rank": 300,
+            "total_institutes": 13,
+            "total_programs": 22
+          },
+          {
+            "rank": 350,
+            "total_institutes": 15,
+            "total_programs": 24
+          },
+          {
+            "rank": 400,
+            "total_institutes": 15,
+            "total_programs": 29
+          },
+          {
+            "rank": 450,
+            "total_institutes": 19,
+            "total_programs": 31
+          },
+          {
+            "rank": 500,
+            "total_institutes": 13,
+            "total_programs": 24
+          },
+          {
+            "rank": 550,
+            "total_institutes": 16,
+            "total_programs": 24
+          },
+          {
+            "rank": 600,
+            "total_institutes": 20,
+            "total_programs": 30
+          },
+          {
+            "rank": 650,
+            "total_institutes": 19,
+            "total_programs": 34
+          },
+          {
+            "rank": 700,
+            "total_institutes": 19,
+            "total_programs": 35
+          },
+          {
+            "rank": 750,
+            "total_institutes": 20,
+            "total_programs": 35
+          },
+          {
+            "rank": 800,
+            "total_institutes": 21,
+            "total_programs": 32
+          },
+          {
+            "rank": 850,
+            "total_institutes": 18,
+            "total_programs": 36
+          },
+          {
+            "rank": 900,
+            "total_institutes": 20,
+            "total_programs": 36
+          },
+          {
+            "rank": 950,
+            "total_institutes": 20,
+            "total_programs": 36
+          },
+          {
+            "rank": 1000,
+            "total_institutes": 20,
+            "total_programs": 41
+          },
+          {
+            "rank": 1050,
+            "total_institutes": 20,
+            "total_programs": 38
+          },
+          {
+            "rank": 1100,
+            "total_institutes": 17,
+            "total_programs": 31
+          },
+          {
+            "rank": 1150,
+            "total_institutes": 17,
+            "total_programs": 32
+          },
+          {
+            "rank": 1200,
+            "total_institutes": 19,
+            "total_programs": 31
+          },
+          {
+            "rank": 1250,
+            "total_institutes": 18,
+            "total_programs": 32
+          },
+          {
+            "rank": 1300,
+            "total_institutes": 17,
+            "total_programs": 32
+          },
+          {
+            "rank": 1350,
+            "total_institutes": 16,
+            "total_programs": 32
+          },
+          {
+            "rank": 1400,
+            "total_institutes": 14,
+            "total_programs": 30
+          },
+          {
+            "rank": 1450,
+            "total_institutes": 11,
+            "total_programs": 25
+          },
+          {
+            "rank": 1500,
+            "total_institutes": 7,
+            "total_programs": 14
+          },
+          {
+            "rank": 1550,
+            "total_institutes": 4,
+            "total_programs": 5
+          },
+          {
+            "rank": 1600,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 1650,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 1700,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 1750,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ],
+        "ST (PwD)": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 2,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 4,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 6,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 8,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 10,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 12,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 14,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ]
+      },
+      "mains": [
+        {
+          "rank": 0,
+          "total_institutes": 0,
+          "total_programs": 0
+        },
+        {
+          "rank": 10000,
+          "total_institutes": 42,
+          "total_programs": 112
+        },
+        {
+          "rank": 20000,
+          "total_institutes": 63,
+          "total_programs": 205
+        },
+        {
+          "rank": 30000,
+          "total_institutes": 76,
+          "total_programs": 263
+        },
+        {
+          "rank": 40000,
+          "total_institutes": 74,
+          "total_programs": 264
+        },
+        {
+          "rank": 50000,
+          "total_institutes": 65,
+          "total_programs": 215
+        },
+        {
+          "rank": 60000,
+          "total_institutes": 54,
+          "total_programs": 164
+        },
+        {
+          "rank": 70000,
+          "total_institutes": 48,
+          "total_programs": 148
+        },
+        {
+          "rank": 80000,
+          "total_institutes": 43,
+          "total_programs": 127
+        },
+        {
+          "rank": 90000,
+          "total_institutes": 35,
+          "total_programs": 93
+        },
+        {
+          "rank": 100000,
+          "total_institutes": 33,
+          "total_programs": 71
+        },
+        {
+          "rank": 110000,
+          "total_institutes": 25,
+          "total_programs": 47
+        },
+        {
+          "rank": 120000,
+          "total_institutes": 18,
+          "total_programs": 36
+        },
+        {
+          "rank": 130000,
+          "total_institutes": 12,
+          "total_programs": 24
+        },
+        {
+          "rank": 140000,
+          "total_institutes": 11,
+          "total_programs": 23
+        },
+        {
+          "rank": 150000,
+          "total_institutes": 10,
+          "total_programs": 20
+        },
+        {
+          "rank": 160000,
+          "total_institutes": 10,
+          "total_programs": 26
+        },
+        {
+          "rank": 170000,
+          "total_institutes": 10,
+          "total_programs": 25
+        },
+        {
+          "rank": 180000,
+          "total_institutes": 10,
+          "total_programs": 25
+        },
+        {
+          "rank": 190000,
+          "total_institutes": 9,
+          "total_programs": 24
+        },
+        {
+          "rank": 200000,
+          "total_institutes": 10,
+          "total_programs": 26
+        },
+        {
+          "rank": 210000,
+          "total_institutes": 8,
+          "total_programs": 23
+        },
+        {
+          "rank": 220000,
+          "total_institutes": 8,
+          "total_programs": 22
+        },
+        {
+          "rank": 230000,
+          "total_institutes": 8,
+          "total_programs": 23
+        },
+        {
+          "rank": 240000,
+          "total_institutes": 9,
+          "total_programs": 23
+        },
+        {
+          "rank": 250000,
+          "total_institutes": 8,
+          "total_programs": 20
+        },
+        {
+          "rank": 260000,
+          "total_institutes": 8,
+          "total_programs": 21
+        },
+        {
+          "rank": 270000,
+          "total_institutes": 8,
+          "total_programs": 22
+        },
+        {
+          "rank": 280000,
+          "total_institutes": 8,
+          "total_programs": 21
+        },
+        {
+          "rank": 290000,
+          "total_institutes": 8,
+          "total_programs": 19
+        },
+        {
+          "rank": 300000,
+          "total_institutes": 8,
+          "total_programs": 19
+        },
+        {
+          "rank": 310000,
+          "total_institutes": 8,
+          "total_programs": 19
+        },
+        {
+          "rank": 320000,
+          "total_institutes": 6,
+          "total_programs": 16
+        },
+        {
+          "rank": 330000,
+          "total_institutes": 6,
+          "total_programs": 15
+        },
+        {
+          "rank": 340000,
+          "total_institutes": 6,
+          "total_programs": 15
+        },
+        {
+          "rank": 350000,
+          "total_institutes": 5,
+          "total_programs": 12
+        },
+        {
+          "rank": 360000,
+          "total_institutes": 5,
+          "total_programs": 11
+        },
+        {
+          "rank": 370000,
+          "total_institutes": 5,
+          "total_programs": 12
+        },
+        {
+          "rank": 380000,
+          "total_institutes": 5,
+          "total_programs": 12
+        },
+        {
+          "rank": 390000,
+          "total_institutes": 5,
+          "total_programs": 11
+        },
+        {
+          "rank": 400000,
+          "total_institutes": 6,
+          "total_programs": 12
+        },
+        {
+          "rank": 410000,
+          "total_institutes": 6,
+          "total_programs": 12
+        },
+        {
+          "rank": 420000,
+          "total_institutes": 6,
+          "total_programs": 11
+        },
+        {
+          "rank": 430000,
+          "total_institutes": 5,
+          "total_programs": 10
+        },
+        {
+          "rank": 440000,
+          "total_institutes": 5,
+          "total_programs": 10
+        },
+        {
+          "rank": 450000,
+          "total_institutes": 5,
+          "total_programs": 10
+        },
+        {
+          "rank": 460000,
+          "total_institutes": 5,
+          "total_programs": 9
+        },
+        {
+          "rank": 470000,
+          "total_institutes": 4,
+          "total_programs": 8
+        },
+        {
+          "rank": 480000,
+          "total_institutes": 4,
+          "total_programs": 8
+        },
+        {
+          "rank": 490000,
+          "total_institutes": 4,
+          "total_programs": 9
+        },
+        {
+          "rank": 500000,
+          "total_institutes": 4,
+          "total_programs": 9
+        }
+      ],
+      "mains_by_category": {
+        "EWS": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 10000,
+            "total_institutes": 40,
+            "total_programs": 98
+          },
+          {
+            "rank": 20000,
+            "total_institutes": 11,
+            "total_programs": 23
+          },
+          {
+            "rank": 30000,
+            "total_institutes": 10,
+            "total_programs": 18
+          },
+          {
+            "rank": 40000,
+            "total_institutes": 7,
+            "total_programs": 20
+          },
+          {
+            "rank": 50000,
+            "total_institutes": 7,
+            "total_programs": 20
+          },
+          {
+            "rank": 60000,
+            "total_institutes": 7,
+            "total_programs": 16
+          },
+          {
+            "rank": 70000,
+            "total_institutes": 6,
+            "total_programs": 14
+          },
+          {
+            "rank": 80000,
+            "total_institutes": 6,
+            "total_programs": 11
+          },
+          {
+            "rank": 90000,
+            "total_institutes": 4,
+            "total_programs": 6
+          },
+          {
+            "rank": 100000,
+            "total_institutes": 3,
+            "total_programs": 3
+          },
+          {
+            "rank": 110000,
+            "total_institutes": 3,
+            "total_programs": 3
+          },
+          {
+            "rank": 120000,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 130000,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 140000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 150000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 160000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 170000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 180000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 190000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 200000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 210000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 220000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 230000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 240000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 250000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 260000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 270000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 280000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 290000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 300000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 310000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 320000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 330000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 340000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 350000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 360000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 370000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 380000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 390000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 400000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 410000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 420000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 430000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 440000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 450000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 460000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 470000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 480000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 490000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 500000,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ],
+        "EWS (PwD)": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 20,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 40,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 60,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 80,
+            "total_institutes": 3,
+            "total_programs": 3
+          },
+          {
+            "rank": 100,
+            "total_institutes": 3,
+            "total_programs": 3
+          },
+          {
+            "rank": 120,
+            "total_institutes": 5,
+            "total_programs": 6
+          },
+          {
+            "rank": 140,
+            "total_institutes": 6,
+            "total_programs": 7
+          },
+          {
+            "rank": 160,
+            "total_institutes": 8,
+            "total_programs": 9
+          },
+          {
+            "rank": 180,
+            "total_institutes": 10,
+            "total_programs": 11
+          },
+          {
+            "rank": 200,
+            "total_institutes": 10,
+            "total_programs": 11
+          },
+          {
+            "rank": 220,
+            "total_institutes": 12,
+            "total_programs": 13
+          },
+          {
+            "rank": 240,
+            "total_institutes": 14,
+            "total_programs": 15
+          },
+          {
+            "rank": 260,
+            "total_institutes": 13,
+            "total_programs": 14
+          },
+          {
+            "rank": 280,
+            "total_institutes": 14,
+            "total_programs": 14
+          },
+          {
+            "rank": 300,
+            "total_institutes": 19,
+            "total_programs": 20
+          },
+          {
+            "rank": 320,
+            "total_institutes": 18,
+            "total_programs": 20
+          },
+          {
+            "rank": 340,
+            "total_institutes": 13,
+            "total_programs": 16
+          },
+          {
+            "rank": 360,
+            "total_institutes": 12,
+            "total_programs": 14
+          },
+          {
+            "rank": 380,
+            "total_institutes": 7,
+            "total_programs": 9
+          },
+          {
+            "rank": 400,
+            "total_institutes": 4,
+            "total_programs": 4
+          },
+          {
+            "rank": 420,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 440,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 460,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 480,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 500,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 520,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ],
+        "OBC-NCL": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 10000,
+            "total_institutes": 51,
+            "total_programs": 135
+          },
+          {
+            "rank": 20000,
+            "total_institutes": 46,
+            "total_programs": 107
+          },
+          {
+            "rank": 30000,
+            "total_institutes": 37,
+            "total_programs": 96
+          },
+          {
+            "rank": 40000,
+            "total_institutes": 19,
+            "total_programs": 33
+          },
+          {
+            "rank": 50000,
+            "total_institutes": 9,
+            "total_programs": 19
+          },
+          {
+            "rank": 60000,
+            "total_institutes": 8,
+            "total_programs": 15
+          },
+          {
+            "rank": 70000,
+            "total_institutes": 11,
+            "total_programs": 22
+          },
+          {
+            "rank": 80000,
+            "total_institutes": 9,
+            "total_programs": 24
+          },
+          {
+            "rank": 90000,
+            "total_institutes": 9,
+            "total_programs": 25
+          },
+          {
+            "rank": 100000,
+            "total_institutes": 9,
+            "total_programs": 22
+          },
+          {
+            "rank": 110000,
+            "total_institutes": 9,
+            "total_programs": 22
+          },
+          {
+            "rank": 120000,
+            "total_institutes": 9,
+            "total_programs": 20
+          },
+          {
+            "rank": 130000,
+            "total_institutes": 8,
+            "total_programs": 21
+          },
+          {
+            "rank": 140000,
+            "total_institutes": 8,
+            "total_programs": 21
+          },
+          {
+            "rank": 150000,
+            "total_institutes": 7,
+            "total_programs": 17
+          },
+          {
+            "rank": 160000,
+            "total_institutes": 7,
+            "total_programs": 18
+          },
+          {
+            "rank": 170000,
+            "total_institutes": 7,
+            "total_programs": 20
+          },
+          {
+            "rank": 180000,
+            "total_institutes": 8,
+            "total_programs": 21
+          },
+          {
+            "rank": 190000,
+            "total_institutes": 8,
+            "total_programs": 20
+          },
+          {
+            "rank": 200000,
+            "total_institutes": 7,
+            "total_programs": 18
+          },
+          {
+            "rank": 210000,
+            "total_institutes": 7,
+            "total_programs": 17
+          },
+          {
+            "rank": 220000,
+            "total_institutes": 7,
+            "total_programs": 16
+          },
+          {
+            "rank": 230000,
+            "total_institutes": 7,
+            "total_programs": 15
+          },
+          {
+            "rank": 240000,
+            "total_institutes": 5,
+            "total_programs": 14
+          },
+          {
+            "rank": 250000,
+            "total_institutes": 5,
+            "total_programs": 13
+          },
+          {
+            "rank": 260000,
+            "total_institutes": 5,
+            "total_programs": 13
+          },
+          {
+            "rank": 270000,
+            "total_institutes": 5,
+            "total_programs": 13
+          },
+          {
+            "rank": 280000,
+            "total_institutes": 5,
+            "total_programs": 13
+          },
+          {
+            "rank": 290000,
+            "total_institutes": 5,
+            "total_programs": 13
+          },
+          {
+            "rank": 300000,
+            "total_institutes": 5,
+            "total_programs": 14
+          },
+          {
+            "rank": 310000,
+            "total_institutes": 5,
+            "total_programs": 14
+          },
+          {
+            "rank": 320000,
+            "total_institutes": 5,
+            "total_programs": 13
+          },
+          {
+            "rank": 330000,
+            "total_institutes": 5,
+            "total_programs": 12
+          },
+          {
+            "rank": 340000,
+            "total_institutes": 5,
+            "total_programs": 12
+          },
+          {
+            "rank": 350000,
+            "total_institutes": 4,
+            "total_programs": 10
+          },
+          {
+            "rank": 360000,
+            "total_institutes": 3,
+            "total_programs": 9
+          },
+          {
+            "rank": 370000,
+            "total_institutes": 3,
+            "total_programs": 9
+          },
+          {
+            "rank": 380000,
+            "total_institutes": 3,
+            "total_programs": 9
+          },
+          {
+            "rank": 390000,
+            "total_institutes": 2,
+            "total_programs": 8
+          },
+          {
+            "rank": 400000,
+            "total_institutes": 2,
+            "total_programs": 7
+          },
+          {
+            "rank": 410000,
+            "total_institutes": 2,
+            "total_programs": 7
+          },
+          {
+            "rank": 420000,
+            "total_institutes": 2,
+            "total_programs": 7
+          },
+          {
+            "rank": 430000,
+            "total_institutes": 2,
+            "total_programs": 7
+          },
+          {
+            "rank": 440000,
+            "total_institutes": 2,
+            "total_programs": 6
+          },
+          {
+            "rank": 450000,
+            "total_institutes": 2,
+            "total_programs": 6
+          },
+          {
+            "rank": 460000,
+            "total_institutes": 2,
+            "total_programs": 6
+          },
+          {
+            "rank": 470000,
+            "total_institutes": 2,
+            "total_programs": 4
+          },
+          {
+            "rank": 480000,
+            "total_institutes": 2,
+            "total_programs": 3
+          },
+          {
+            "rank": 490000,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 500000,
+            "total_institutes": 2,
+            "total_programs": 2
+          }
+        ],
+        "OBC-NCL (PwD)": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 100,
+            "total_institutes": 5,
+            "total_programs": 6
+          },
+          {
+            "rank": 200,
+            "total_institutes": 7,
+            "total_programs": 7
+          },
+          {
+            "rank": 300,
+            "total_institutes": 11,
+            "total_programs": 12
+          },
+          {
+            "rank": 400,
+            "total_institutes": 16,
+            "total_programs": 19
+          },
+          {
+            "rank": 500,
+            "total_institutes": 25,
+            "total_programs": 33
+          },
+          {
+            "rank": 600,
+            "total_institutes": 27,
+            "total_programs": 40
+          },
+          {
+            "rank": 700,
+            "total_institutes": 33,
+            "total_programs": 47
+          },
+          {
+            "rank": 800,
+            "total_institutes": 37,
+            "total_programs": 60
+          },
+          {
+            "rank": 900,
+            "total_institutes": 37,
+            "total_programs": 61
+          },
+          {
+            "rank": 1000,
+            "total_institutes": 35,
+            "total_programs": 60
+          },
+          {
+            "rank": 1100,
+            "total_institutes": 34,
+            "total_programs": 62
+          },
+          {
+            "rank": 1200,
+            "total_institutes": 33,
+            "total_programs": 60
+          },
+          {
+            "rank": 1300,
+            "total_institutes": 30,
+            "total_programs": 55
+          },
+          {
+            "rank": 1400,
+            "total_institutes": 30,
+            "total_programs": 55
+          },
+          {
+            "rank": 1500,
+            "total_institutes": 29,
+            "total_programs": 51
+          },
+          {
+            "rank": 1600,
+            "total_institutes": 21,
+            "total_programs": 33
+          },
+          {
+            "rank": 1700,
+            "total_institutes": 14,
+            "total_programs": 18
+          },
+          {
+            "rank": 1800,
+            "total_institutes": 3,
+            "total_programs": 3
+          },
+          {
+            "rank": 1900,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 2000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 2100,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 2200,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 2300,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ],
+        "OPEN": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 10000,
+            "total_institutes": 42,
+            "total_programs": 112
+          },
+          {
+            "rank": 20000,
+            "total_institutes": 63,
+            "total_programs": 205
+          },
+          {
+            "rank": 30000,
+            "total_institutes": 76,
+            "total_programs": 263
+          },
+          {
+            "rank": 40000,
+            "total_institutes": 74,
+            "total_programs": 264
+          },
+          {
+            "rank": 50000,
+            "total_institutes": 65,
+            "total_programs": 215
+          },
+          {
+            "rank": 60000,
+            "total_institutes": 54,
+            "total_programs": 164
+          },
+          {
+            "rank": 70000,
+            "total_institutes": 48,
+            "total_programs": 148
+          },
+          {
+            "rank": 80000,
+            "total_institutes": 43,
+            "total_programs": 127
+          },
+          {
+            "rank": 90000,
+            "total_institutes": 35,
+            "total_programs": 93
+          },
+          {
+            "rank": 100000,
+            "total_institutes": 33,
+            "total_programs": 71
+          },
+          {
+            "rank": 110000,
+            "total_institutes": 25,
+            "total_programs": 47
+          },
+          {
+            "rank": 120000,
+            "total_institutes": 18,
+            "total_programs": 36
+          },
+          {
+            "rank": 130000,
+            "total_institutes": 12,
+            "total_programs": 24
+          },
+          {
+            "rank": 140000,
+            "total_institutes": 11,
+            "total_programs": 23
+          },
+          {
+            "rank": 150000,
+            "total_institutes": 10,
+            "total_programs": 20
+          },
+          {
+            "rank": 160000,
+            "total_institutes": 10,
+            "total_programs": 26
+          },
+          {
+            "rank": 170000,
+            "total_institutes": 10,
+            "total_programs": 25
+          },
+          {
+            "rank": 180000,
+            "total_institutes": 10,
+            "total_programs": 25
+          },
+          {
+            "rank": 190000,
+            "total_institutes": 9,
+            "total_programs": 24
+          },
+          {
+            "rank": 200000,
+            "total_institutes": 10,
+            "total_programs": 26
+          },
+          {
+            "rank": 210000,
+            "total_institutes": 8,
+            "total_programs": 23
+          },
+          {
+            "rank": 220000,
+            "total_institutes": 8,
+            "total_programs": 22
+          },
+          {
+            "rank": 230000,
+            "total_institutes": 8,
+            "total_programs": 23
+          },
+          {
+            "rank": 240000,
+            "total_institutes": 9,
+            "total_programs": 23
+          },
+          {
+            "rank": 250000,
+            "total_institutes": 8,
+            "total_programs": 20
+          },
+          {
+            "rank": 260000,
+            "total_institutes": 8,
+            "total_programs": 21
+          },
+          {
+            "rank": 270000,
+            "total_institutes": 8,
+            "total_programs": 22
+          },
+          {
+            "rank": 280000,
+            "total_institutes": 8,
+            "total_programs": 21
+          },
+          {
+            "rank": 290000,
+            "total_institutes": 8,
+            "total_programs": 19
+          },
+          {
+            "rank": 300000,
+            "total_institutes": 8,
+            "total_programs": 19
+          },
+          {
+            "rank": 310000,
+            "total_institutes": 8,
+            "total_programs": 19
+          },
+          {
+            "rank": 320000,
+            "total_institutes": 6,
+            "total_programs": 16
+          },
+          {
+            "rank": 330000,
+            "total_institutes": 6,
+            "total_programs": 15
+          },
+          {
+            "rank": 340000,
+            "total_institutes": 6,
+            "total_programs": 15
+          },
+          {
+            "rank": 350000,
+            "total_institutes": 5,
+            "total_programs": 12
+          },
+          {
+            "rank": 360000,
+            "total_institutes": 5,
+            "total_programs": 11
+          },
+          {
+            "rank": 370000,
+            "total_institutes": 5,
+            "total_programs": 12
+          },
+          {
+            "rank": 380000,
+            "total_institutes": 5,
+            "total_programs": 12
+          },
+          {
+            "rank": 390000,
+            "total_institutes": 5,
+            "total_programs": 11
+          },
+          {
+            "rank": 400000,
+            "total_institutes": 6,
+            "total_programs": 12
+          },
+          {
+            "rank": 410000,
+            "total_institutes": 6,
+            "total_programs": 12
+          },
+          {
+            "rank": 420000,
+            "total_institutes": 6,
+            "total_programs": 11
+          },
+          {
+            "rank": 430000,
+            "total_institutes": 5,
+            "total_programs": 10
+          },
+          {
+            "rank": 440000,
+            "total_institutes": 5,
+            "total_programs": 10
+          },
+          {
+            "rank": 450000,
+            "total_institutes": 5,
+            "total_programs": 10
+          },
+          {
+            "rank": 460000,
+            "total_institutes": 5,
+            "total_programs": 9
+          },
+          {
+            "rank": 470000,
+            "total_institutes": 4,
+            "total_programs": 8
+          },
+          {
+            "rank": 480000,
+            "total_institutes": 4,
+            "total_programs": 8
+          },
+          {
+            "rank": 490000,
+            "total_institutes": 4,
+            "total_programs": 9
+          },
+          {
+            "rank": 500000,
+            "total_institutes": 4,
+            "total_programs": 9
+          }
+        ],
+        "OPEN (PwD)": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 100,
+            "total_institutes": 4,
+            "total_programs": 4
+          },
+          {
+            "rank": 200,
+            "total_institutes": 8,
+            "total_programs": 12
+          },
+          {
+            "rank": 300,
+            "total_institutes": 13,
+            "total_programs": 17
+          },
+          {
+            "rank": 400,
+            "total_institutes": 22,
+            "total_programs": 30
+          },
+          {
+            "rank": 500,
+            "total_institutes": 24,
+            "total_programs": 32
+          },
+          {
+            "rank": 600,
+            "total_institutes": 28,
+            "total_programs": 42
+          },
+          {
+            "rank": 700,
+            "total_institutes": 29,
+            "total_programs": 41
+          },
+          {
+            "rank": 800,
+            "total_institutes": 32,
+            "total_programs": 42
+          },
+          {
+            "rank": 900,
+            "total_institutes": 36,
+            "total_programs": 47
+          },
+          {
+            "rank": 1000,
+            "total_institutes": 34,
+            "total_programs": 46
+          },
+          {
+            "rank": 1100,
+            "total_institutes": 38,
+            "total_programs": 56
+          },
+          {
+            "rank": 1200,
+            "total_institutes": 38,
+            "total_programs": 54
+          },
+          {
+            "rank": 1300,
+            "total_institutes": 37,
+            "total_programs": 51
+          },
+          {
+            "rank": 1400,
+            "total_institutes": 38,
+            "total_programs": 61
+          },
+          {
+            "rank": 1500,
+            "total_institutes": 42,
+            "total_programs": 65
+          },
+          {
+            "rank": 1600,
+            "total_institutes": 40,
+            "total_programs": 62
+          },
+          {
+            "rank": 1700,
+            "total_institutes": 38,
+            "total_programs": 57
+          },
+          {
+            "rank": 1800,
+            "total_institutes": 38,
+            "total_programs": 57
+          },
+          {
+            "rank": 1900,
+            "total_institutes": 36,
+            "total_programs": 58
+          },
+          {
+            "rank": 2000,
+            "total_institutes": 39,
+            "total_programs": 62
+          },
+          {
+            "rank": 2100,
+            "total_institutes": 41,
+            "total_programs": 63
+          },
+          {
+            "rank": 2200,
+            "total_institutes": 46,
+            "total_programs": 69
+          },
+          {
+            "rank": 2300,
+            "total_institutes": 44,
+            "total_programs": 66
+          },
+          {
+            "rank": 2400,
+            "total_institutes": 37,
+            "total_programs": 60
+          },
+          {
+            "rank": 2500,
+            "total_institutes": 38,
+            "total_programs": 60
+          },
+          {
+            "rank": 2600,
+            "total_institutes": 36,
+            "total_programs": 56
+          },
+          {
+            "rank": 2700,
+            "total_institutes": 35,
+            "total_programs": 57
+          },
+          {
+            "rank": 2800,
+            "total_institutes": 35,
+            "total_programs": 57
+          },
+          {
+            "rank": 2900,
+            "total_institutes": 33,
+            "total_programs": 56
+          },
+          {
+            "rank": 3000,
+            "total_institutes": 34,
+            "total_programs": 57
+          },
+          {
+            "rank": 3100,
+            "total_institutes": 31,
+            "total_programs": 50
+          },
+          {
+            "rank": 3200,
+            "total_institutes": 31,
+            "total_programs": 49
+          },
+          {
+            "rank": 3300,
+            "total_institutes": 29,
+            "total_programs": 44
+          },
+          {
+            "rank": 3400,
+            "total_institutes": 28,
+            "total_programs": 39
+          },
+          {
+            "rank": 3500,
+            "total_institutes": 29,
+            "total_programs": 40
+          },
+          {
+            "rank": 3600,
+            "total_institutes": 28,
+            "total_programs": 38
+          },
+          {
+            "rank": 3700,
+            "total_institutes": 23,
+            "total_programs": 30
+          },
+          {
+            "rank": 3800,
+            "total_institutes": 21,
+            "total_programs": 27
+          },
+          {
+            "rank": 3900,
+            "total_institutes": 18,
+            "total_programs": 23
+          },
+          {
+            "rank": 4000,
+            "total_institutes": 11,
+            "total_programs": 15
+          },
+          {
+            "rank": 4100,
+            "total_institutes": 7,
+            "total_programs": 8
+          },
+          {
+            "rank": 4200,
+            "total_institutes": 3,
+            "total_programs": 4
+          },
+          {
+            "rank": 4300,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 4400,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 4500,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 4600,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 4700,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ],
+        "SC": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 10000,
+            "total_institutes": 61,
+            "total_programs": 153
+          },
+          {
+            "rank": 20000,
+            "total_institutes": 11,
+            "total_programs": 32
+          },
+          {
+            "rank": 30000,
+            "total_institutes": 10,
+            "total_programs": 25
+          },
+          {
+            "rank": 40000,
+            "total_institutes": 7,
+            "total_programs": 13
+          },
+          {
+            "rank": 50000,
+            "total_institutes": 5,
+            "total_programs": 8
+          },
+          {
+            "rank": 60000,
+            "total_institutes": 4,
+            "total_programs": 5
+          },
+          {
+            "rank": 70000,
+            "total_institutes": 3,
+            "total_programs": 3
+          },
+          {
+            "rank": 80000,
+            "total_institutes": 2,
+            "total_programs": 3
+          },
+          {
+            "rank": 90000,
+            "total_institutes": 1,
+            "total_programs": 2
+          },
+          {
+            "rank": 100000,
+            "total_institutes": 1,
+            "total_programs": 2
+          },
+          {
+            "rank": 110000,
+            "total_institutes": 1,
+            "total_programs": 1
+          },
+          {
+            "rank": 120000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 130000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 140000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 150000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 160000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 170000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 180000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 190000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 200000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 210000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 220000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 230000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 240000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 250000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 260000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 270000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 280000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 290000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 300000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 310000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 320000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 330000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 340000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 350000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 360000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 370000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 380000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 390000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 400000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 410000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 420000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 430000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 440000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 450000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 460000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 470000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 480000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 490000,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 500000,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ],
+        "SC (PwD)": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 20,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 40,
+            "total_institutes": 3,
+            "total_programs": 3
+          },
+          {
+            "rank": 60,
+            "total_institutes": 5,
+            "total_programs": 5
+          },
+          {
+            "rank": 80,
+            "total_institutes": 7,
+            "total_programs": 8
+          },
+          {
+            "rank": 100,
+            "total_institutes": 6,
+            "total_programs": 6
+          },
+          {
+            "rank": 120,
+            "total_institutes": 8,
+            "total_programs": 9
+          },
+          {
+            "rank": 140,
+            "total_institutes": 11,
+            "total_programs": 12
+          },
+          {
+            "rank": 160,
+            "total_institutes": 9,
+            "total_programs": 9
+          },
+          {
+            "rank": 180,
+            "total_institutes": 9,
+            "total_programs": 9
+          },
+          {
+            "rank": 200,
+            "total_institutes": 9,
+            "total_programs": 9
+          },
+          {
+            "rank": 220,
+            "total_institutes": 7,
+            "total_programs": 7
+          },
+          {
+            "rank": 240,
+            "total_institutes": 6,
+            "total_programs": 7
+          },
+          {
+            "rank": 260,
+            "total_institutes": 7,
+            "total_programs": 8
+          },
+          {
+            "rank": 280,
+            "total_institutes": 7,
+            "total_programs": 7
+          },
+          {
+            "rank": 300,
+            "total_institutes": 6,
+            "total_programs": 7
+          },
+          {
+            "rank": 320,
+            "total_institutes": 5,
+            "total_programs": 6
+          },
+          {
+            "rank": 340,
+            "total_institutes": 3,
+            "total_programs": 3
+          },
+          {
+            "rank": 360,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 380,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 400,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 420,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 440,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ],
+        "ST": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 2500,
+            "total_institutes": 63,
+            "total_programs": 137
+          },
+          {
+            "rank": 5000,
+            "total_institutes": 54,
+            "total_programs": 126
+          },
+          {
+            "rank": 7500,
+            "total_institutes": 31,
+            "total_programs": 73
+          },
+          {
+            "rank": 10000,
+            "total_institutes": 17,
+            "total_programs": 48
+          },
+          {
+            "rank": 12500,
+            "total_institutes": 15,
+            "total_programs": 49
+          },
+          {
+            "rank": 15000,
+            "total_institutes": 14,
+            "total_programs": 51
+          },
+          {
+            "rank": 17500,
+            "total_institutes": 14,
+            "total_programs": 48
+          },
+          {
+            "rank": 20000,
+            "total_institutes": 13,
+            "total_programs": 49
+          },
+          {
+            "rank": 22500,
+            "total_institutes": 13,
+            "total_programs": 45
+          },
+          {
+            "rank": 25000,
+            "total_institutes": 13,
+            "total_programs": 45
+          },
+          {
+            "rank": 27500,
+            "total_institutes": 11,
+            "total_programs": 43
+          },
+          {
+            "rank": 30000,
+            "total_institutes": 10,
+            "total_programs": 38
+          },
+          {
+            "rank": 32500,
+            "total_institutes": 10,
+            "total_programs": 33
+          },
+          {
+            "rank": 35000,
+            "total_institutes": 9,
+            "total_programs": 28
+          },
+          {
+            "rank": 37500,
+            "total_institutes": 7,
+            "total_programs": 24
+          },
+          {
+            "rank": 40000,
+            "total_institutes": 6,
+            "total_programs": 18
+          },
+          {
+            "rank": 42500,
+            "total_institutes": 5,
+            "total_programs": 11
+          },
+          {
+            "rank": 45000,
+            "total_institutes": 2,
+            "total_programs": 2
+          },
+          {
+            "rank": 47500,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 50000,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ],
+        "ST (PwD)": [
+          {
+            "rank": 0,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 20,
+            "total_institutes": 4,
+            "total_programs": 4
+          },
+          {
+            "rank": 40,
+            "total_institutes": 5,
+            "total_programs": 5
+          },
+          {
+            "rank": 60,
+            "total_institutes": 6,
+            "total_programs": 6
+          },
+          {
+            "rank": 80,
+            "total_institutes": 4,
+            "total_programs": 4
+          },
+          {
+            "rank": 100,
+            "total_institutes": 4,
+            "total_programs": 4
+          },
+          {
+            "rank": 120,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 140,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 160,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 180,
+            "total_institutes": 0,
+            "total_programs": 0
+          },
+          {
+            "rank": 200,
+            "total_institutes": 0,
+            "total_programs": 0
+          }
+        ]
+      }
+    },
+    "round_averages": {
+      "Closing_R1": 13913.554178529559,
+      "Closing_R2": 15326.638945752304,
+      "Closing_R3": 15443.208454810496,
+      "Closing_R4": 15608.538223938223,
+      "Closing_R5": 15780.038293122692,
+      "Closing_R6": 16418.061666810012
+    },
+    "round_averages_adv": {
+      "Closing_R1": 3529.3989018087855,
+      "Closing_R2": 3627.1458333333335,
+      "Closing_R3": 3636.9368489583335,
+      "Closing_R4": 3642.7141927083335,
+      "Closing_R5": 3659.5931596091204,
+      "Closing_R6": 3813.740789044669
+    },
+    "round_averages_main": {
+      "Closing_R1": 17547.89113723717,
+      "Closing_R2": 19480.689204808135,
+      "Closing_R3": 19665.42805587893,
+      "Closing_R4": 19891.307817779332,
+      "Closing_R5": 20118.357817418677,
+      "Closing_R6": 20934.119158878504
+    },
+    "seat_type_counts": {
+      "EWS": 1915,
+      "EWS (PwD)": 159,
+      "OBC-NCL": 2111,
+      "OBC-NCL (PwD)": 505,
+      "OPEN": 2340,
+      "OPEN (PwD)": 811,
+      "SC": 2074,
+      "SC (PwD)": 146,
+      "ST": 1831,
+      "ST (PwD)": 50
+    },
+    "state_counts": {
+      "Andhra Pradesh": 340,
+      "Arunachal Pradesh": 91,
+      "Assam": 440,
+      "Bihar": 681,
+      "Chandigarh": 98,
+      "Chhattisgarh": 432,
+      "Daman and Diu": 37,
+      "Delhi": 402,
+      "Goa": 140,
+      "Gujarat": 552,
+      "Haryana": 392,
+      "Himachal Pradesh": 384,
+      "Jammu and Kashmir": 344,
+      "Jharkhand": 683,
+      "Karnataka": 421,
+      "Kerala": 363,
+      "Madhya Pradesh": 548,
+      "Maharashtra": 482,
+      "Manipur": 133,
+      "Meghalaya": 92,
+      "Mizoram": 94,
+      "Nagaland": 58,
+      "Odisha": 512,
+      "Puducherry": 165,
+      "Punjab": 501,
+      "Rajasthan": 370,
+      "Sikkim": 81,
+      "Tamil Nadu": 585,
+      "Telangana": 494,
+      "Tripura": 240,
+      "Uttar Pradesh": 713,
+      "Uttarakhand": 310,
+      "West Bengal": 764
+    },
+    "summary": {
+      "total_records": 11930,
+      "unique_genders": 2,
+      "unique_institutes": 124,
+      "unique_programs": 249,
+      "unique_quotas": 6,
+      "unique_seat_types": 10
+    },
+    "top_branches_by_type": {
+      "IIIT": [
+        {
+          "avg_closing": 24098.6,
+          "branch": "Information Technology",
+          "count": 5
+        },
+        {
+          "avg_closing": 30707.3,
+          "branch": "Computer Science Engineering",
+          "count": 3
+        },
+        {
+          "avg_closing": 32209.8,
+          "branch": "Computer Science and Engineering",
+          "count": 38
+        },
+        {
+          "avg_closing": 35302.7,
+          "branch": "Artificial Intelligence and Data Science",
+          "count": 3
+        },
+        {
+          "avg_closing": 38238.7,
+          "branch": "Electronics and Communication Engineering",
+          "count": 24
+        }
+      ],
+      "IIT": [
+        {
+          "avg_closing": 1350.0,
+          "branch": "Artificial Intelligence",
+          "count": 3
+        },
+        {
+          "avg_closing": 2862.9,
+          "branch": "Computer Science and Engineering",
+          "count": 25
+        },
+        {
+          "avg_closing": 3411.4,
+          "branch": "Aerospace Engineering",
+          "count": 5
+        },
+        {
+          "avg_closing": 3446.2,
+          "branch": "Data Science and Artificial Intelligence",
+          "count": 4
+        },
+        {
+          "avg_closing": 3772.9,
+          "branch": "Mathematics and Computing",
+          "count": 16
+        }
+      ],
+      "NIT": [
+        {
+          "avg_closing": 8944.8,
+          "branch": "Artificial Intelligence",
+          "count": 8
+        },
+        {
+          "avg_closing": 12823.3,
+          "branch": "Artificial Intelligence and Data Science",
+          "count": 6
+        },
+        {
+          "avg_closing": 18240.5,
+          "branch": "Engineering and Computational Mechanics",
+          "count": 4
+        },
+        {
+          "avg_closing": 19445.8,
+          "branch": "Electronics and VLSI Engineering",
+          "count": 4
+        },
+        {
+          "avg_closing": 24389.5,
+          "branch": "Instrumentation and Control Engineering",
+          "count": 4
+        }
+      ]
+    },
+    "top_programs_by_type": {
+      "GFTI": [
+        {
+          "avg_closing": 16468.0,
+          "branch": "Computer Science and Engineering",
+          "count": 2,
+          "program": "Computer Science and Engineering @ Punjab Engineering College, Chandigarh"
+        },
+        {
+          "avg_closing": 16670.5,
+          "branch": "Computer Science and Engineering",
+          "count": 2,
+          "program": "Computer Science and Engineering @ Indian Institute of Engineering Science and Technology, Shibpur"
+        },
+        {
+          "avg_closing": 18840.2,
+          "branch": "Computer Science Engineering",
+          "count": 4,
+          "program": "Computer Science Engineering @ Punjab Engineering College, Chandigarh"
+        },
+        {
+          "avg_closing": 18851.0,
+          "branch": "Computer Science and Engineering",
+          "count": 1,
+          "program": "Computer Science and Engineering @ International Institute of Information Technology, Naya Raipur"
+        },
+        {
+          "avg_closing": 21295.0,
+          "branch": "Information Technology",
+          "count": 2,
+          "program": "Information Technology @ Indian Institute of Engineering Science and Technology, Shibpur"
+        },
+        {
+          "avg_closing": 22152.0,
+          "branch": "Data Science and Artificial Intelligence",
+          "count": 1,
+          "program": "Data Science and Artificial Intelligence @ International Institute of Information Technology, Naya Raipur"
+        },
+        {
+          "avg_closing": 22972.0,
+          "branch": "Electronics and Telecommunication Engineering",
+          "count": 2,
+          "program": "Electronics and Telecommunication Engineering @ Indian Institute of Engineering Science and Technology, Shibpur"
+        },
+        {
+          "avg_closing": 24668.0,
+          "branch": "Mathematics and Computing",
+          "count": 2,
+          "program": "Mathematics and Computing @ Punjab Engineering College, Chandigarh"
+        },
+        {
+          "avg_closing": 25651.5,
+          "branch": "Computer Science and Engineering",
+          "count": 2,
+          "program": "Computer Science and Engineering @ Birla Institute of Technology, Mesra, Ranchi"
+        },
+        {
+          "avg_closing": 27947.0,
+          "branch": "Computer Science and Engineering",
+          "count": 1,
+          "program": "Computer Science and Engineering @ Shri G. S. Institute of Technology and Science Indore"
+        }
+      ],
+      "IIIT": [
+        {
+          "avg_closing": 6094.0,
+          "branch": "Information Technology",
+          "count": 1,
+          "program": "Information Technology @ IIIT, Allahabad"
+        },
+        {
+          "avg_closing": 6150.0,
+          "branch": "Information Technology-Business Informatics",
+          "count": 1,
+          "program": "Information Technology-Business Informatics @ IIIT, Allahabad"
+        },
+        {
+          "avg_closing": 8050.0,
+          "branch": "Electronics and Communication Engineering",
+          "count": 1,
+          "program": "Electronics and Communication Engineering @ IIIT, Allahabad"
+        },
+        {
+          "avg_closing": 9527.0,
+          "branch": "Computer Science and Engineering",
+          "count": 1,
+          "program": "Computer Science and Engineering @ Atal Bihari Vajpayee IIIT & Management Gwalior"
+        },
+        {
+          "avg_closing": 9562.0,
+          "branch": "Computer Science and Artificial Intelligence",
+          "count": 1,
+          "program": "Computer Science and Artificial Intelligence @ IIIT Lucknow"
+        },
+        {
+          "avg_closing": 9580.0,
+          "branch": "Computer Science",
+          "count": 1,
+          "program": "Computer Science @ IIIT Lucknow"
+        },
+        {
+          "avg_closing": 11292.0,
+          "branch": "Computer Science and Business",
+          "count": 1,
+          "program": "Computer Science and Business @ IIIT Lucknow"
+        },
+        {
+          "avg_closing": 11416.0,
+          "branch": "Information Technology",
+          "count": 1,
+          "program": "Information Technology @ IIIT Lucknow"
+        },
+        {
+          "avg_closing": 11710.0,
+          "branch": "Mathematics and Scientific Computing",
+          "count": 1,
+          "program": "Mathematics and Scientific Computing @ Atal Bihari Vajpayee IIIT & Management Gwalior"
+        },
+        {
+          "avg_closing": 14576.5,
+          "branch": "Integrated B. Tech.",
+          "count": 2,
+          "program": "Integrated B. Tech. @ Atal Bihari Vajpayee IIIT & Management Gwalior"
+        }
+      ],
+      "IIT": [
+        {
+          "avg_closing": 66.0,
+          "branch": "Computer Science and Engineering",
+          "count": 1,
+          "program": "Computer Science and Engineering @ IIT Bombay"
+        },
+        {
+          "avg_closing": 156.0,
+          "branch": "Computer Science and Engineering",
+          "count": 2,
+          "program": "Computer Science and Engineering @ IIT Delhi"
+        },
+        {
+          "avg_closing": 171.0,
+          "branch": "Computer Science and Engineering",
+          "count": 1,
+          "program": "Computer Science and Engineering @ IIT Madras"
+        },
+        {
+          "avg_closing": 271.0,
+          "branch": "Computer Science and Engineering",
+          "count": 1,
+          "program": "Computer Science and Engineering @ IIT Kanpur"
+        },
+        {
+          "avg_closing": 306.0,
+          "branch": "Artificial Intelligence and Data Analytics",
+          "count": 1,
+          "program": "Artificial Intelligence and Data Analytics @ IIT Madras"
+        },
+        {
+          "avg_closing": 339.0,
+          "branch": "Mathematics and Computing",
+          "count": 2,
+          "program": "Mathematics and Computing @ IIT Delhi"
+        },
+        {
+          "avg_closing": 466.0,
+          "branch": "Computer Science and Engineering",
+          "count": 1,
+          "program": "Computer Science and Engineering @ IIT Kharagpur"
+        },
+        {
+          "avg_closing": 592.0,
+          "branch": "Computer Science and Engineering",
+          "count": 1,
+          "program": "Computer Science and Engineering @ IIT Roorkee"
+        },
+        {
+          "avg_closing": 637.0,
+          "branch": "Electrical Engineering",
+          "count": 2,
+          "program": "Electrical Engineering @ IIT Bombay"
+        },
+        {
+          "avg_closing": 673.0,
+          "branch": "Computer Science and Engineering",
+          "count": 1,
+          "program": "Computer Science and Engineering @ IIT Hyderabad"
+        }
+      ],
+      "NIT": [
+        {
+          "avg_closing": 2313.5,
+          "branch": "Computer Science and Engineering",
+          "count": 2,
+          "program": "Computer Science and Engineering @ NIT Karnataka, Surathkal"
+        },
+        {
+          "avg_closing": 3009.0,
+          "branch": "Computer Science and Engineering",
+          "count": 2,
+          "program": "Computer Science and Engineering @ NIT, Tiruchirappalli"
+        },
+        {
+          "avg_closing": 3114.5,
+          "branch": "Artificial Intelligence",
+          "count": 2,
+          "program": "Artificial Intelligence @ NIT Karnataka, Surathkal"
+        },
+        {
+          "avg_closing": 3301.8,
+          "branch": "Computer Science and Engineering",
+          "count": 4,
+          "program": "Computer Science and Engineering @ NIT, Warangal"
+        },
+        {
+          "avg_closing": 3623.0,
+          "branch": "Information Technology",
+          "count": 2,
+          "program": "Information Technology @ NIT Karnataka, Surathkal"
+        },
+        {
+          "avg_closing": 4138.0,
+          "branch": "Computational and Data Science",
+          "count": 2,
+          "program": "Computational and Data Science @ NIT Karnataka, Surathkal"
+        },
+        {
+          "avg_closing": 4357.5,
+          "branch": "Mathematics and Computing",
+          "count": 2,
+          "program": "Mathematics and Computing @ NIT, Warangal"
+        },
+        {
+          "avg_closing": 4960.0,
+          "branch": "Electronics and Communication Engineering",
+          "count": 2,
+          "program": "Electronics and Communication Engineering @ NIT Karnataka, Surathkal"
+        },
+        {
+          "avg_closing": 5179.5,
+          "branch": "Electronics and Communication Engineering",
+          "count": 2,
+          "program": "Electronics and Communication Engineering @ NIT, Tiruchirappalli"
+        },
+        {
+          "avg_closing": 5578.0,
+          "branch": "Computer Science and Engineering",
+          "count": 2,
+          "program": "Computer Science and Engineering @ Motilal Nehru NIT Allahabad"
+        }
+      ]
+    },
+    "volatility_counts": {
+      "highly_stable": 4320,
+      "stable_drift": 711,
+      "volatile_erratic": 5010,
+      "volatile_vacancy": 1889
+    }
+  },
+  "note": "stats",
+  "request": {
+    "method": "GET",
+    "params": null,
+    "path": "/api/stats",
+    "payload": null
+  },
+  "status": 200
+}

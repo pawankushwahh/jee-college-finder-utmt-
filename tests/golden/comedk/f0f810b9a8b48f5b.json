@@ -1,0 +1,342 @@
+{
+  "body": {
+    "branch_counts": {},
+    "branch_popularity": [
+      {
+        "avg_closing_rank": 28526.4,
+        "branch": "Electronics & Telecommunication Engineering (4 Years, Bachelor of Technology)",
+        "total_programs": 5
+      },
+      {
+        "avg_closing_rank": 45220.2,
+        "branch": "Computer Science & Business Systems (4 Years, Bachelor of Technology)",
+        "total_programs": 5
+      },
+      {
+        "avg_closing_rank": 45811.0,
+        "branch": "Electronics & Instrumentation Engineering (4 Years, Bachelor of Technology)",
+        "total_programs": 3
+      },
+      {
+        "avg_closing_rank": 47686.2,
+        "branch": "Aerospace Engineering (4 Years, Bachelor of Technology)",
+        "total_programs": 4
+      },
+      {
+        "avg_closing_rank": 49764.3,
+        "branch": "Robotics & Artificial Intelligence (4 Years, Bachelor of Technology)",
+        "total_programs": 6
+      },
+      {
+        "avg_closing_rank": 50369.5,
+        "branch": "Chemical Engineering (4 Years, Bachelor of Technology)",
+        "total_programs": 6
+      },
+      {
+        "avg_closing_rank": 60630.3,
+        "branch": "Computer Science & Engineering (Cyber Security) (4 Years, Bachelor of Technology)",
+        "total_programs": 11
+      },
+      {
+        "avg_closing_rank": 64309.7,
+        "branch": "Electronics Engineering (VLSI Design & Technology) (4 Years, Bachelor of Technology)",
+        "total_programs": 3
+      },
+      {
+        "avg_closing_rank": 66112.1,
+        "branch": "Computer Science & Engineering (IOT & Cyber Security Including Block Chain Technology) (4 Years, Bachelor of Technology)",
+        "total_programs": 13
+      },
+      {
+        "avg_closing_rank": 66823.7,
+        "branch": "Electrical & Electronics Engineering (4 Years, Bachelor of Technology)",
+        "total_programs": 18
+      },
+      {
+        "avg_closing_rank": 67123.7,
+        "branch": "Computer Science & Engineering (Artificial Intelligence & Machine Learning) (4 Years, Bachelor of Technology)",
+        "total_programs": 37
+      },
+      {
+        "avg_closing_rank": 69002.2,
+        "branch": "Computer Science & Engineering (Data Science) (4 Years, Bachelor of Technology)",
+        "total_programs": 30
+      },
+      {
+        "avg_closing_rank": 69307.5,
+        "branch": "Bio-Technology (4 Years, Bachelor of Technology)",
+        "total_programs": 10
+      },
+      {
+        "avg_closing_rank": 69988.0,
+        "branch": "Mechanical Engineering (4 Years, Bachelor of Technology)",
+        "total_programs": 21
+      },
+      {
+        "avg_closing_rank": 70157.8,
+        "branch": "Aeronautical Engineering (4 Years, Bachelor of Technology)",
+        "total_programs": 6
+      }
+    ],
+    "highest_cutoffs": [
+      {
+        "closing_rank": 692,
+        "inst_type": "COMEDK",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "program": "Computer Science & Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 890,
+        "inst_type": "COMEDK",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "program": "Computer Science & Engineering (Data Science) (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 975,
+        "inst_type": "COMEDK",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "program": "Computer Science & Engineering (Artificial Intelligence & Machine Learning) (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 1091,
+        "inst_type": "COMEDK",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "program": "Computer Science & Engineering (Cyber Security) (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 1399,
+        "inst_type": "COMEDK",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "program": "Electronics & Communication Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 1621,
+        "inst_type": "COMEDK",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "program": "Electronics & Telecommunication Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 1667,
+        "inst_type": "COMEDK",
+        "institute": "M.S. Ramaiah Institute of Technology-MSR Nagar, Bengaluru",
+        "program": "Computer Science & Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 2098,
+        "inst_type": "COMEDK",
+        "institute": "M.S. Ramaiah Institute of Technology-MSR Nagar, Bengaluru",
+        "program": "Computer Science & Engineering (Artificial Intelligence & Machine Learning) (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 2424,
+        "inst_type": "COMEDK",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "program": "Electrical & Electronics Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 2845,
+        "inst_type": "COMEDK",
+        "institute": "M.S. Ramaiah Institute of Technology-MSR Nagar, Bengaluru",
+        "program": "Computer Science & Engineering (Cyber Security) (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      }
+    ],
+    "inst_competitiveness": {
+      "COMEDK": [
+        {
+          "avg_closing_rank": 7039.0,
+          "institute": "Sri Jayachamarajendra College of Engineering constituent college of JSS Science and Technology University-",
+          "min_opening_rank": 7039,
+          "total_programs": 1
+        },
+        {
+          "avg_closing_rank": 7056.2,
+          "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+          "min_opening_rank": 692,
+          "total_programs": 13
+        },
+        {
+          "avg_closing_rank": 17911.8,
+          "institute": "BMS College of Engineering-Basavanagudi, Bengaluru",
+          "min_opening_rank": 5312,
+          "total_programs": 11
+        },
+        {
+          "avg_closing_rank": 17943.6,
+          "institute": "M.S. Ramaiah Institute of Technology-MSR Nagar, Bengaluru",
+          "min_opening_rank": 1667,
+          "total_programs": 17
+        },
+        {
+          "avg_closing_rank": 22676.0,
+          "institute": "R V Institute of Technology and Management-J P Nagar, Bengaluru",
+          "min_opening_rank": 21189,
+          "total_programs": 3
+        },
+        {
+          "avg_closing_rank": 24693.0,
+          "institute": "The National Institute of Engineering North Campus- Koorgalli, Mysuru",
+          "min_opening_rank": 24347,
+          "total_programs": 2
+        },
+        {
+          "avg_closing_rank": 25946.0,
+          "institute": "Siddaganga Institute of Technology-B H Road, Tumakuru",
+          "min_opening_rank": 19599,
+          "total_programs": 4
+        },
+        {
+          "avg_closing_rank": 32533.6,
+          "institute": "Dayananda Sagar College of Engineering-Kumaraswamy Layout, Bengaluru",
+          "min_opening_rank": 7819,
+          "total_programs": 18
+        },
+        {
+          "avg_closing_rank": 32957.0,
+          "institute": "Brindavan College of Engineering-Yelahanka, Bengaluru",
+          "min_opening_rank": 32957,
+          "total_programs": 1
+        },
+        {
+          "avg_closing_rank": 36600.4,
+          "institute": "CMR Institute of Technology-Brookefield, Bengaluru",
+          "min_opening_rank": 26223,
+          "total_programs": 7
+        },
+        {
+          "avg_closing_rank": 40862.0,
+          "institute": "East West College of Engineering-Yelahanka, Bengaluru",
+          "min_opening_rank": 40862,
+          "total_programs": 1
+        },
+        {
+          "avg_closing_rank": 42278.0,
+          "institute": "The National Institute of Engineering South Campus- Mananthavady Road, Mysuru",
+          "min_opening_rank": 30072,
+          "total_programs": 3
+        },
+        {
+          "avg_closing_rank": 43003.3,
+          "institute": "Bangalore Institute of Technology-V V Puram, Bengaluru",
+          "min_opening_rank": 16385,
+          "total_programs": 13
+        },
+        {
+          "avg_closing_rank": 44496.7,
+          "institute": "BMS Institute of Technology and Management-Yelahanka, Bengaluru",
+          "min_opening_rank": 19940,
+          "total_programs": 7
+        },
+        {
+          "avg_closing_rank": 52265.0,
+          "institute": "Bangalore Technological Institute-Chikkanayakanahalli Dinne, Bengaluru",
+          "min_opening_rank": 37912,
+          "total_programs": 3
+        }
+      ]
+    },
+    "lowest_cutoffs": [
+      {
+        "closing_rank": 111800,
+        "inst_type": "COMEDK",
+        "institute": "Global Academy of Technology-Rajarajeshwari Nagar, Bengaluru",
+        "program": "Electronics & Communication Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 111716,
+        "inst_type": "COMEDK",
+        "institute": "Bapuji Institute of Engineering and Technology-Shamanur Road, Davangere",
+        "program": "Computer Science & Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 111412,
+        "inst_type": "COMEDK",
+        "institute": "Bapuji Institute of Engineering and Technology-Shamanur Road, Davangere",
+        "program": "Artificial Intelligence & Machine Learning (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 111127,
+        "inst_type": "COMEDK",
+        "institute": "KLE Technological University Formerly known as BVBCET- Vidyanagar, Hubballi",
+        "program": "Civil Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 111099,
+        "inst_type": "COMEDK",
+        "institute": "Maharaja Institute of Technology-Belawadi, Mandya",
+        "program": "Computer Science & Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 111074,
+        "inst_type": "COMEDK",
+        "institute": "KLS Vishwanathrao Deshpande Institute of Technology- Dandeli Road, Haliyal",
+        "program": "Computer Science & Engineering (Artificial Intelligence) (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 111070,
+        "inst_type": "COMEDK",
+        "institute": "Malnad College of Engineering-Rangoli Halla, Hassan",
+        "program": "Computer Science & Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 111065,
+        "inst_type": "COMEDK",
+        "institute": "SJB Institute of Technology-Kengeri, Bengaluru",
+        "program": "Computer Science & Engineering (Data Science) (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 110996,
+        "inst_type": "COMEDK",
+        "institute": "Jain College of Engineering and Research-Udyambag, Belagavi",
+        "program": "Computer Science & Engineering (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 110976,
+        "inst_type": "COMEDK",
+        "institute": "AMC Engineering College-Bannerghatta Rd, Bengaluru",
+        "program": "Computer Science & Engineering (Artificial Intelligence & Machine Learning) (4 Years, Bachelor of Technology)",
+        "quota": "GM"
+      }
+    ],
+    "quota_counts": {
+      "GM": 459,
+      "KKR": 178
+    },
+    "round_averages": {},
+    "round_averages_adv": {},
+    "round_averages_main": {},
+    "summary": {
+      "total_records": 637,
+      "unique_institutes": 101,
+      "unique_programs": 46,
+      "unique_quotas": 2,
+      "unique_seat_types": 0
+    }
+  },
+  "note": "stats",
+  "request": {
+    "method": "GET",
+    "params": null,
+    "path": "/api/comedk/stats",
+    "payload": null
+  },
+  "status": 200
+}

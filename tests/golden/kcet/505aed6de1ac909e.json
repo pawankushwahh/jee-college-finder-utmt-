@@ -1,0 +1,925 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "These closed right around your rank last year. They are your most realistic picks.",
+        "category": "Target",
+        "count": 14
+      },
+      {
+        "blurb": "These closed slightly above your rank last year. Cutoffs move between rounds, so list a few as ambitious choices.",
+        "category": "Reach",
+        "count": 24
+      },
+      {
+        "blurb": "Your rank comfortably beats last year's closing rank here, so these are strong backups you are very likely to get.",
+        "category": "Safe",
+        "count": 356
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 24,
+        "Safe": 356,
+        "Target": 14
+      },
+      "is_curated": true,
+      "is_top_rank": false,
+      "shown": 44,
+      "shown_by_category": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 14
+      },
+      "total": 394
+    },
+    "guidance": "Found 394 eligible college-programme options for your profile (showing 44). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
+    "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
+    "notes": [
+      "Showing the 44 strongest picks out of 394 eligible options, with at most a couple of programmes per college. Open a single section to see every option in it."
+    ],
+    "recommendations": [
+      {
+        "admission_probability": 53.1,
+        "category": "Target",
+        "closing_rank": 67997,
+        "college_code": "E126",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "B M S Institute of Technology & Management",
+        "interest_score": 7.76,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 8.52,
+        "reason": "Target for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at B M S Institute of Technology & Management), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 54.6,
+        "category": "Target",
+        "closing_rank": 68344,
+        "college_code": "E060",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Dr. Ambedkar Institute of Technology",
+        "interest_score": 7.75,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRONICS AND",
+        "quality_score": 8.5,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRONICS AND at Dr. Ambedkar Institute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse",
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 59.5,
+        "category": "Target",
+        "closing_rank": 69462,
+        "college_code": "E141",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "PES UNIVERSITY(Electronic City Campus) Hosur Rd",
+        "interest_score": 7.74,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING B TECH IN",
+        "quality_score": 8.48,
+        "reason": "Target for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING B TECH IN at PES UNIVERSITY(Electronic City Campus) Hosur Rd), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 63.0,
+        "category": "Target",
+        "closing_rank": 70331,
+        "college_code": "E058",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "P E S College of Engineering",
+        "interest_score": 7.72,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 8.45,
+        "reason": "Target for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at P E S College of Engineering), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 64.6,
+        "category": "Target",
+        "closing_rank": 70722,
+        "college_code": "E212",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Dayananda Sagar Academy of Technology & Management Technical Campus",
+        "interest_score": 7.71,
+        "matched_interest": true,
+        "program": "CYBER SECURITY INCLUDING BLOCK CHAIN TECH) COMPUTER",
+        "quality_score": 8.43,
+        "reason": "Target for you - strong fit for your goal (CYBER SECURITY INCLUDING BLOCK CHAIN TECH) COMPUTER at Dayananda Sagar Academy of Technology & Management Technical Campus), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 65.3,
+        "category": "Target",
+        "closing_rank": 70908,
+        "college_code": "E079",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Acharya Institute of Technology",
+        "interest_score": 7.71,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 8.41,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at Acharya Institute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 70.4,
+        "category": "Target",
+        "closing_rank": 72338,
+        "college_code": "E290",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Visvesvaraya Technological University",
+        "interest_score": 7.69,
+        "matched_interest": true,
+        "program": "ELECTRONICS & COMMUNICATION ENGINEERING COMPUTER",
+        "quality_score": 8.38,
+        "reason": "Target for you - strong fit for your goal (ELECTRONICS & COMMUNICATION ENGINEERING COMPUTER at Visvesvaraya Technological University), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse",
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 72.3,
+        "category": "Target",
+        "closing_rank": 72926,
+        "college_code": "E057",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "JSS Science and Technology University JSS TECHNICAL INSTITUTIONS CAMPUS",
+        "interest_score": 7.68,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 8.36,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at JSS Science and Technology University JSS TECHNICAL INSTITUTIONS CAMPUS), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 74.4,
+        "category": "Target",
+        "closing_rank": 73626,
+        "college_code": "E011",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "M V J College of Engineering",
+        "interest_score": 7.67,
+        "matched_interest": true,
+        "program": "SCIENCE AND DESIGN COMPUTER",
+        "quality_score": 8.34,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND DESIGN COMPUTER at M V J College of Engineering), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse",
+          "design"
+        ]
+      },
+      {
+        "admission_probability": 77.0,
+        "category": "Target",
+        "closing_rank": 74522,
+        "college_code": "E154",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Government Engineering College",
+        "interest_score": 7.66,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 8.31,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at Government Engineering College), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 80.4,
+        "category": "Target",
+        "closing_rank": 75894,
+        "college_code": "E066",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "University B.D.T. college of Engineering",
+        "interest_score": 7.64,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 8.29,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at University B.D.T. college of Engineering), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 82.0,
+        "category": "Target",
+        "closing_rank": 76603,
+        "college_code": "E021",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Sri Jayachamarajendra College of Engineering(Constituent College of JSS Science & Technology University)",
+        "interest_score": 7.63,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS &",
+        "quality_score": 8.27,
+        "reason": "Target for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS & at Sri Jayachamarajendra College of Engineering(Constituent College of JSS Science & Technology University)), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 82.1,
+        "category": "Target",
+        "closing_rank": 76667,
+        "college_code": "E118",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "RNS Institute of Technology",
+        "interest_score": 7.62,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 8.24,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at RNS Institute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 84.1,
+        "category": "Target",
+        "closing_rank": 77692,
+        "college_code": "E012",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Sir M.Visvesvaraya Institute of Technology",
+        "interest_score": 7.61,
+        "matched_interest": true,
+        "program": "TELECOMMUNICAT ION ENGINEERING INFORMATION",
+        "quality_score": 8.22,
+        "reason": "Target for you - strong fit for your goal (TELECOMMUNICAT ION ENGINEERING INFORMATION at Sir M.Visvesvaraya Institute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ece",
+          "it"
+        ]
+      },
+      {
+        "admission_probability": 5.2,
+        "category": "Reach",
+        "closing_rank": 54628,
+        "college_code": "E126",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "B M S Institute of Technology & Management",
+        "interest_score": 8.04,
+        "matched_interest": true,
+        "program": "ARTIFICIAL",
+        "quality_score": 9.08,
+        "reason": "Reach for you - strong fit for your goal (ARTIFICIAL at B M S Institute of Technology & Management), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 5.6,
+        "category": "Reach",
+        "closing_rank": 54924,
+        "college_code": "E141",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "PES UNIVERSITY(Electronic City Campus) Hosur Rd",
+        "interest_score": 8.03,
+        "matched_interest": true,
+        "program": "INTELLIGENCE & MACHINE LEARNING) B TECH IN",
+        "quality_score": 9.05,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE & MACHINE LEARNING) B TECH IN at PES UNIVERSITY(Electronic City Campus) Hosur Rd), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 9.0,
+        "category": "Reach",
+        "closing_rank": 56799,
+        "college_code": "E031",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "B V V Sangha`s Basaveshwara Engineering College",
+        "interest_score": 8.02,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 9.03,
+        "reason": "Reach for you - strong fit for your goal (ENGINEERING COMPUTER at B V V Sangha`s Basaveshwara Engineering College), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 9.7,
+        "category": "Reach",
+        "closing_rank": 57145,
+        "college_code": "E099",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "New Horizon College of Engineering",
+        "interest_score": 8.0,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING COMPUTER",
+        "quality_score": 9.01,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING COMPUTER at New Horizon College of Engineering), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 11.1,
+        "category": "Reach",
+        "closing_rank": 57736,
+        "college_code": "E008",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Bangalore Institute of Technology",
+        "interest_score": 7.98,
+        "matched_interest": true,
+        "program": "ENGINEERING(VLSI DESIGN & TECHNOLOGY) ELECTRONICS AND",
+        "quality_score": 8.96,
+        "reason": "Reach for you - strong fit for your goal (ENGINEERING(VLSI DESIGN & TECHNOLOGY) ELECTRONICS AND at Bangalore Institute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse",
+          "design",
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 12.0,
+        "category": "Reach",
+        "closing_rank": 58070,
+        "college_code": "E099",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "New Horizon College of Engineering",
+        "interest_score": 7.97,
+        "matched_interest": true,
+        "program": "ARTIFICIAL",
+        "quality_score": 8.94,
+        "reason": "Reach for you - strong fit for your goal (ARTIFICIAL at New Horizon College of Engineering), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 12.0,
+        "category": "Reach",
+        "closing_rank": 58072,
+        "college_code": "E079",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Acharya Institute of Technology",
+        "interest_score": 7.96,
+        "matched_interest": true,
+        "program": "ENGINEERING ARTIFICIAL",
+        "quality_score": 8.91,
+        "reason": "Reach for you - strong fit for your goal (ENGINEERING ARTIFICIAL at Acharya Institute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 14.0,
+        "category": "Reach",
+        "closing_rank": 58791,
+        "college_code": "E232",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "REVA University RUKMINI KNOWLEDGE PARK",
+        "interest_score": 7.93,
+        "matched_interest": true,
+        "program": "INTELLIGENCE & MACHINE LEARNING) B TECH IN",
+        "quality_score": 8.87,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE & MACHINE LEARNING) B TECH IN at REVA University RUKMINI KNOWLEDGE PARK), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 16.3,
+        "category": "Reach",
+        "closing_rank": 59525,
+        "college_code": "E004",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Dr. Ambedkar Institute of Technology",
+        "interest_score": 7.92,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 8.85,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at Dr. Ambedkar Institute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 16.7,
+        "category": "Reach",
+        "closing_rank": 59656,
+        "college_code": "E097",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "C M R Institute of Technology",
+        "interest_score": 7.91,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 8.82,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at C M R Institute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 19.2,
+        "category": "Reach",
+        "closing_rank": 60391,
+        "college_code": "E009",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "PES University 100 Feet Ring Road",
+        "interest_score": 7.9,
+        "matched_interest": true,
+        "program": "ELECTRICAL & ELECTRONICS ENGINEERING B TECH IN",
+        "quality_score": 8.8,
+        "reason": "Reach for you - strong fit for your goal (ELECTRICAL & ELECTRONICS ENGINEERING B TECH IN at PES University 100 Feet Ring Road), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ece",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 23.5,
+        "category": "Reach",
+        "closing_rank": 61522,
+        "college_code": "E118",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "RNS Institute of Technology",
+        "interest_score": 7.89,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 8.78,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at RNS Institute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 27.1,
+        "category": "Reach",
+        "closing_rank": 62392,
+        "college_code": "E048",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "B M S College of Engineering",
+        "interest_score": 7.88,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRONICS AND",
+        "quality_score": 8.75,
+        "reason": "Reach for you - strong fit for your goal (SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRONICS AND at B M S College of Engineering), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse",
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 31.0,
+        "category": "Reach",
+        "closing_rank": 63283,
+        "college_code": "E036",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "K L E Technological Univeristy",
+        "interest_score": 7.87,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGG (ARTIFICIAL INTELLIGENCE) COMPUTER",
+        "quality_score": 8.73,
+        "reason": "Reach for you - strong fit for your goal (SCIENCE AND ENGG (ARTIFICIAL INTELLIGENCE) COMPUTER at K L E Technological Univeristy), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 32.5,
+        "category": "Reach",
+        "closing_rank": 63599,
+        "college_code": "E037",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "K.L.S. Gogte Institute of Technology",
+        "interest_score": 7.83,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 8.66,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at K.L.S. Gogte Institute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 87.1,
+        "category": "Safe",
+        "closing_rank": 79488,
+        "college_code": "E099",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "New Horizon College of Engineering",
+        "interest_score": 7.6,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 8.2,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at New Horizon College of Engineering), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 89.4,
+        "category": "Safe",
+        "closing_rank": 81147,
+        "college_code": "E012",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Sir M.Visvesvaraya Institute of Technology",
+        "interest_score": 7.58,
+        "matched_interest": true,
+        "program": "COMPUTER ENGINEERING ELECTRONICS AND",
+        "quality_score": 8.15,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER ENGINEERING ELECTRONICS AND at Sir M.Visvesvaraya Institute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse",
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 91.7,
+        "category": "Safe",
+        "closing_rank": 83358,
+        "college_code": "E115",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "S.J B. Institute of Technology",
+        "interest_score": 7.57,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 8.13,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at S.J B. Institute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 91.8,
+        "category": "Safe",
+        "closing_rank": 83500,
+        "college_code": "E007",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Dayananda Sagar College of Engineering",
+        "interest_score": 7.55,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG ELECTRONICS AND",
+        "quality_score": 8.11,
+        "reason": "Safe for you - strong fit for your goal (COMMUNICATION ENGG ELECTRONICS AND at Dayananda Sagar College of Engineering), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 92.4,
+        "category": "Safe",
+        "closing_rank": 84111,
+        "college_code": "E118",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "RNS Institute of Technology",
+        "interest_score": 7.54,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING COMPUTER",
+        "quality_score": 8.08,
+        "reason": "Safe for you - strong fit for your goal (SCIENCE AND ENGINEERING COMPUTER at RNS Institute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 92.9,
+        "category": "Safe",
+        "closing_rank": 84805,
+        "college_code": "E118",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "RNS Institute of Technology",
+        "interest_score": 7.53,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 8.06,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at RNS Institute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 93.5,
+        "category": "Safe",
+        "closing_rank": 85547,
+        "college_code": "E107",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B N M Institute of Technology",
+        "interest_score": 7.52,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 8.04,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at B N M Institute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 93.5,
+        "category": "Safe",
+        "closing_rank": 85597,
+        "college_code": "E097",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "C M R Institute of Technology",
+        "interest_score": 7.5,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRONICS AND",
+        "quality_score": 8.01,
+        "reason": "Safe for you - strong fit for your goal (SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRONICS AND at C M R Institute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse",
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 93.9,
+        "category": "Safe",
+        "closing_rank": 86233,
+        "college_code": "E149",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Cambridge Institutute of Technology",
+        "interest_score": 7.5,
+        "matched_interest": true,
+        "program": "CYBER SECURITY INCLUDING BLOCK CHAIN TECH) COMPUTER",
+        "quality_score": 7.99,
+        "reason": "Safe for you - strong fit for your goal (CYBER SECURITY INCLUDING BLOCK CHAIN TECH) COMPUTER at Cambridge Institutute of Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 94.0,
+        "category": "Safe",
+        "closing_rank": 86294,
+        "college_code": "E071",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Vidya Vardhaka College of Engineering",
+        "interest_score": 7.48,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 7.97,
+        "reason": "Safe for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at Vidya Vardhaka College of Engineering), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 94.4,
+        "category": "Safe",
+        "closing_rank": 86993,
+        "college_code": "E001",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle",
+        "interest_score": 7.46,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND DATA SCIENCE CIVIL",
+        "quality_score": 7.92,
+        "reason": "Safe for you - strong fit for your goal (INTELLIGENCE AND DATA SCIENCE CIVIL at Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ai_ds",
+          "civil",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 95.3,
+        "category": "Safe",
+        "closing_rank": 88706,
+        "college_code": "E038",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "BLDEA's VP. Dr.P.G. Hallakatti College of Engineering & Technology",
+        "interest_score": 7.45,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 7.9,
+        "reason": "Safe for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at BLDEA's VP. Dr.P.G. Hallakatti College of Engineering & Technology), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 95.9,
+        "category": "Safe",
+        "closing_rank": 90051,
+        "college_code": "E212",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Dayananda Sagar Academy of Technology & Management Technical Campus",
+        "interest_score": 7.44,
+        "matched_interest": true,
+        "program": "SCIENCE AND 5 ENGINEERING (CYBER SECURITY) COMPUTER",
+        "quality_score": 7.88,
+        "reason": "Safe for you - strong fit for your goal (SCIENCE AND 5 ENGINEERING (CYBER SECURITY) COMPUTER at Dayananda Sagar Academy of Technology & Management Technical Campus), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 96.0,
+        "category": "Safe",
+        "closing_rank": 90303,
+        "college_code": "E078",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "The Oxford College of Engineering",
+        "interest_score": 7.42,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 7.85,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at The Oxford College of Engineering), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 96.7,
+        "category": "Safe",
+        "closing_rank": 92043,
+        "college_code": "E049",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B V V Sangha`s Basaveshwara Engineering College",
+        "interest_score": 7.42,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 7.83,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at B V V Sangha`s Basaveshwara Engineering College), under the Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kalyana Karnataka (Hyderabad-Karnataka) home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      }
+    ],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "max_per_institute": 2,
+      "reach_band_ceiling": 18000.0,
+      "safe_margin": 0.15,
+      "target_band_ceiling": 13000.0,
+      "target_band_floor": 1500.0,
+      "top_rank_cap": 25,
+      "upper_margin": 0.25
+    },
+    "total_count": 394
+  },
+  "note": "core grid rank=67328 cat=SCK",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/kcet/recommend",
+    "payload": {
+      "rank": 67328,
+      "seat_category": "SCK"
+    }
+  },
+  "status": 200
+}

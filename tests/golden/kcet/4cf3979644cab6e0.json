@@ -1,0 +1,1136 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "These closed right around your rank last year. They are your most realistic picks.",
+        "category": "Target",
+        "count": 25
+      },
+      {
+        "blurb": "These closed slightly above your rank last year. Cutoffs move between rounds, so list a few as ambitious choices.",
+        "category": "Reach",
+        "count": 21
+      },
+      {
+        "blurb": "Your rank comfortably beats last year's closing rank here, so these are strong backups you are very likely to get.",
+        "category": "Safe",
+        "count": 403
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 21,
+        "Safe": 403,
+        "Target": 25
+      },
+      "is_curated": true,
+      "is_top_rank": false,
+      "shown": 55,
+      "shown_by_category": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "total": 449
+    },
+    "guidance": "Found 449 eligible college-programme options for your profile (showing 55). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
+    "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
+    "notes": [
+      "Showing the 55 strongest picks out of 449 eligible options, with at most a couple of programmes per college. Open a single section to see every option in it."
+    ],
+    "recommendations": [
+      {
+        "admission_probability": 50.9,
+        "category": "Target",
+        "closing_rank": 67522,
+        "college_code": "E126",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "B M S Institute of Technology & Management",
+        "interest_score": 7.82,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 8.63,
+        "reason": "Target for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at B M S Institute of Technology & Management), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 51.5,
+        "category": "Target",
+        "closing_rank": 67660,
+        "college_code": "E079",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Acharya Institute of Technology",
+        "interest_score": 7.8,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 8.61,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at Acharya Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 52.3,
+        "category": "Target",
+        "closing_rank": 67828,
+        "college_code": "E118",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "RNS Institute of Technology",
+        "interest_score": 7.79,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 8.59,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at RNS Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 56.1,
+        "category": "Target",
+        "closing_rank": 68673,
+        "college_code": "E034",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "SDM College of Engineering",
+        "interest_score": 7.79,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 8.57,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at SDM College of Engineering), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 57.2,
+        "category": "Target",
+        "closing_rank": 68928,
+        "college_code": "E160",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Sahyadri College Of Engineering & Management",
+        "interest_score": 7.78,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 8.55,
+        "reason": "Target for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at Sahyadri College Of Engineering & Management), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 62.1,
+        "category": "Target",
+        "closing_rank": 70102,
+        "college_code": "E232",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "REVA University RUKMINI KNOWLEDGE PARK",
+        "interest_score": 7.76,
+        "matched_interest": true,
+        "program": "INTELLIGENCE & MACHINE LEARNING) B TECH IN",
+        "quality_score": 8.53,
+        "reason": "Target for you - strong fit for your goal (INTELLIGENCE & MACHINE LEARNING) B TECH IN at REVA University RUKMINI KNOWLEDGE PARK), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 62.2,
+        "category": "Target",
+        "closing_rank": 70120,
+        "college_code": "E118",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "RNS Institute of Technology",
+        "interest_score": 7.75,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING (CYBER SECURITY) COMPUTER",
+        "quality_score": 8.51,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING (CYBER SECURITY) COMPUTER at RNS Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 62.3,
+        "category": "Target",
+        "closing_rank": 70144,
+        "college_code": "E071",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Vidya Vardhaka College of Engineering",
+        "interest_score": 7.74,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 8.48,
+        "reason": "Target for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at Vidya Vardhaka College of Engineering), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 64.3,
+        "category": "Target",
+        "closing_rank": 70642,
+        "college_code": "E012",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Sir M.Visvesvaraya Institute of Technology",
+        "interest_score": 7.73,
+        "matched_interest": true,
+        "program": "COMPUTER ENGINEERING ELECTRONICS AND",
+        "quality_score": 8.46,
+        "reason": "Target for you - strong fit for your goal (COMPUTER ENGINEERING ELECTRONICS AND at Sir M.Visvesvaraya Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse",
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 65.8,
+        "category": "Target",
+        "closing_rank": 71047,
+        "college_code": "E012",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Sir M.Visvesvaraya Institute of Technology",
+        "interest_score": 7.72,
+        "matched_interest": true,
+        "program": "TELECOMMUNICAT ION ENGINEERING INFORMATION",
+        "quality_score": 8.44,
+        "reason": "Target for you - strong fit for your goal (TELECOMMUNICAT ION ENGINEERING INFORMATION at Sir M.Visvesvaraya Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ece",
+          "it"
+        ]
+      },
+      {
+        "admission_probability": 68.0,
+        "category": "Target",
+        "closing_rank": 71641,
+        "college_code": "E212",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Dayananda Sagar Academy of Technology & Management Technical Campus",
+        "interest_score": 7.7,
+        "matched_interest": true,
+        "program": "COMPUTER",
+        "quality_score": 8.4,
+        "reason": "Target for you - strong fit for your goal (COMPUTER at Dayananda Sagar Academy of Technology & Management Technical Campus), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 69.0,
+        "category": "Target",
+        "closing_rank": 71944,
+        "college_code": "E082",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "J S S Academy of Technical Education",
+        "interest_score": 7.69,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 8.38,
+        "reason": "Target for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at J S S Academy of Technical Education), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 71.4,
+        "category": "Target",
+        "closing_rank": 72659,
+        "college_code": "E241",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "KLE Technological University(Formerly (BVBCET) BVBHOOMARADDI COLLEGE CAMPUS",
+        "interest_score": 7.68,
+        "matched_interest": true,
+        "program": "ENGINEERING(VLSI DESIGN & TECHNOLOGY) ELECTRONICS AND",
+        "quality_score": 8.36,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING(VLSI DESIGN & TECHNOLOGY) ELECTRONICS AND at KLE Technological University(Formerly (BVBCET) BVBHOOMARADDI COLLEGE CAMPUS), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse",
+          "design",
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 77.3,
+        "category": "Target",
+        "closing_rank": 74662,
+        "college_code": "E133",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "G S S S Institute of Engineering & Technology for Women",
+        "interest_score": 7.65,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 8.3,
+        "reason": "Target for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at G S S S Institute of Engineering & Technology for Women), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 77.7,
+        "category": "Target",
+        "closing_rank": 74809,
+        "college_code": "E160",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Sahyadri College Of Engineering & Management",
+        "interest_score": 7.64,
+        "matched_interest": true,
+        "program": "COMPUTER",
+        "quality_score": 8.28,
+        "reason": "Target for you - strong fit for your goal (COMPUTER at Sahyadri College Of Engineering & Management), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 81.0,
+        "category": "Target",
+        "closing_rank": 76174,
+        "college_code": "E212",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Dayananda Sagar Academy of Technology & Management Technical Campus",
+        "interest_score": 7.63,
+        "matched_interest": true,
+        "program": "CYBER SECURITY INCLUDING BLOCK CHAIN TECH) COMPUTER",
+        "quality_score": 8.26,
+        "reason": "Target for you - strong fit for your goal (CYBER SECURITY INCLUDING BLOCK CHAIN TECH) COMPUTER at Dayananda Sagar Academy of Technology & Management Technical Campus), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 84.7,
+        "category": "Target",
+        "closing_rank": 78027,
+        "college_code": "E097",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "C M R Institute of Technology",
+        "interest_score": 7.6,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG INFORMATION",
+        "quality_score": 8.2,
+        "reason": "Target for you - strong fit for your goal (COMMUNICATION ENGG INFORMATION at C M R Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ece",
+          "it"
+        ]
+      },
+      {
+        "admission_probability": 85.3,
+        "category": "Target",
+        "closing_rank": 78369,
+        "college_code": "E007",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Dayananda Sagar College of Engineering",
+        "interest_score": 7.59,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL &",
+        "quality_score": 8.18,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL & at Dayananda Sagar College of Engineering), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 85.6,
+        "category": "Target",
+        "closing_rank": 78525,
+        "college_code": "E037",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "K.L.S. Gogte Institute of Technology",
+        "interest_score": 7.58,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 8.16,
+        "reason": "Target for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at K.L.S. Gogte Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 86.1,
+        "category": "Target",
+        "closing_rank": 78814,
+        "college_code": "E058",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "P E S College of Engineering",
+        "interest_score": 7.57,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 8.14,
+        "reason": "Target for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at P E S College of Engineering), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 81.4,
+        "category": "Target",
+        "closing_rank": 76351,
+        "college_code": "E005",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "R. V. College of Engineering",
+        "interest_score": 7.12,
+        "matched_interest": true,
+        "program": "ENGINEERING & MANAGEMENT MECHANICAL",
+        "quality_score": 8.24,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING & MANAGEMENT MECHANICAL at R. V. College of Engineering), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 71.8,
+        "category": "Target",
+        "closing_rank": 72756,
+        "college_code": "E232",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "REVA University RUKMINI KNOWLEDGE PARK",
+        "interest_score": 4.17,
+        "matched_interest": false,
+        "program": "ENGINEERING B TECH IN",
+        "quality_score": 8.34,
+        "reason": "Target for you - a sensible option to keep on your list (ENGINEERING B TECH IN at REVA University RUKMINI KNOWLEDGE PARK), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "other"
+        ]
+      },
+      {
+        "admission_probability": 72.3,
+        "category": "Target",
+        "closing_rank": 72920,
+        "college_code": "E235",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "M . S . Ramaiah University of Applied Sciences UNIVERSITY HOUSE",
+        "interest_score": 4.16,
+        "matched_interest": false,
+        "program": "ENGINEERING B TECH IN",
+        "quality_score": 8.32,
+        "reason": "Target for you - a sensible option to keep on your list (ENGINEERING B TECH IN at M . S . Ramaiah University of Applied Sciences UNIVERSITY HOUSE), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "other"
+        ]
+      },
+      {
+        "admission_probability": 66.3,
+        "category": "Target",
+        "closing_rank": 71183,
+        "college_code": "E118",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "RNS Institute of Technology",
+        "interest_score": 7.71,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 8.42,
+        "reason": "Target for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at RNS Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 84.1,
+        "category": "Target",
+        "closing_rank": 77670,
+        "college_code": "E212",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Dayananda Sagar Academy of Technology & Management Technical Campus",
+        "interest_score": 7.61,
+        "matched_interest": true,
+        "program": "SCIENCE AND 5 ENGINEERING (CYBER SECURITY) COMPUTER",
+        "quality_score": 8.22,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND 5 ENGINEERING (CYBER SECURITY) COMPUTER at Dayananda Sagar Academy of Technology & Management Technical Campus), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 5.0,
+        "category": "Reach",
+        "closing_rank": 54482,
+        "college_code": "E004",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Dr. Ambedkar Institute of Technology",
+        "interest_score": 8.03,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 9.05,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at Dr. Ambedkar Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 5.1,
+        "category": "Reach",
+        "closing_rank": 54571,
+        "college_code": "E060",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Dr. Ambedkar Institute of Technology",
+        "interest_score": 8.02,
+        "matched_interest": true,
+        "program": "SCIENCE AND BUSINESS SYSTEMS COMPUTER",
+        "quality_score": 9.03,
+        "reason": "Reach for you - strong fit for your goal (SCIENCE AND BUSINESS SYSTEMS COMPUTER at Dr. Ambedkar Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 5.8,
+        "category": "Reach",
+        "closing_rank": 55083,
+        "college_code": "E079",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Acharya Institute of Technology",
+        "interest_score": 8.0,
+        "matched_interest": true,
+        "program": "ENGINEERING ARTIFICIAL",
+        "quality_score": 9.01,
+        "reason": "Reach for you - strong fit for your goal (ENGINEERING ARTIFICIAL at Acharya Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 8.9,
+        "category": "Reach",
+        "closing_rank": 56774,
+        "college_code": "E126",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "B M S Institute of Technology & Management",
+        "interest_score": 7.99,
+        "matched_interest": true,
+        "program": "SCIENCE AND BUSINESS SYSTEMS COMPUTER",
+        "quality_score": 8.97,
+        "reason": "Reach for you - strong fit for your goal (SCIENCE AND BUSINESS SYSTEMS COMPUTER at B M S Institute of Technology & Management), under the Scheduled Tribe (Rural home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 11.8,
+        "category": "Reach",
+        "closing_rank": 58014,
+        "college_code": "E097",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "C M R Institute of Technology",
+        "interest_score": 7.97,
+        "matched_interest": true,
+        "program": "ARTIFICIAL",
+        "quality_score": 8.95,
+        "reason": "Reach for you - strong fit for your goal (ARTIFICIAL at C M R Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 13.7,
+        "category": "Reach",
+        "closing_rank": 58685,
+        "college_code": "E011",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "M V J College of Engineering",
+        "interest_score": 7.96,
+        "matched_interest": true,
+        "program": "SCIENCE AND DESIGN COMPUTER",
+        "quality_score": 8.93,
+        "reason": "Reach for you - strong fit for your goal (SCIENCE AND DESIGN COMPUTER at M V J College of Engineering), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse",
+          "design"
+        ]
+      },
+      {
+        "admission_probability": 17.7,
+        "category": "Reach",
+        "closing_rank": 59943,
+        "college_code": "E099",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "New Horizon College of Engineering",
+        "interest_score": 7.95,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING COMPUTER",
+        "quality_score": 8.89,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING COMPUTER at New Horizon College of Engineering), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 17.9,
+        "category": "Reach",
+        "closing_rank": 60024,
+        "college_code": "E037",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "K.L.S. Gogte Institute of Technology",
+        "interest_score": 7.93,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 8.87,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at K.L.S. Gogte Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 18.4,
+        "category": "Reach",
+        "closing_rank": 60172,
+        "college_code": "E031",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "B V V Sangha`s Basaveshwara Engineering College",
+        "interest_score": 7.92,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 8.85,
+        "reason": "Reach for you - strong fit for your goal (ENGINEERING COMPUTER at B V V Sangha`s Basaveshwara Engineering College), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 31.6,
+        "category": "Reach",
+        "closing_rank": 63413,
+        "college_code": "E082",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "J S S Academy of Technical Education",
+        "interest_score": 7.89,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 8.79,
+        "reason": "Reach for you - strong fit for your goal (ENGINEERING COMPUTER at J S S Academy of Technical Education), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 35.9,
+        "category": "Reach",
+        "closing_rank": 64349,
+        "college_code": "E107",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "B N M Institute of Technology",
+        "interest_score": 7.88,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING COMPUTER",
+        "quality_score": 8.75,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING COMPUTER at B N M Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 36.1,
+        "category": "Reach",
+        "closing_rank": 64395,
+        "college_code": "E097",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "C M R Institute of Technology",
+        "interest_score": 7.87,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 8.73,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at C M R Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 42.8,
+        "category": "Reach",
+        "closing_rank": 65794,
+        "college_code": "E002",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Govt.S K S J T Institute of Engineering",
+        "interest_score": 7.86,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING ELECTRONICS AND",
+        "quality_score": 8.71,
+        "reason": "Reach for you - strong fit for your goal (SCIENCE AND ENGINEERING ELECTRONICS AND at Govt.S K S J T Institute of Engineering), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 45.7,
+        "category": "Reach",
+        "closing_rank": 66412,
+        "college_code": "E118",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "RNS Institute of Technology",
+        "interest_score": 7.84,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 8.69,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at RNS Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 49.5,
+        "category": "Reach",
+        "closing_rank": 67211,
+        "college_code": "E036",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "K L E Technological Univeristy",
+        "interest_score": 7.83,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGG (ARTIFICIAL INTELLIGENCE) COMPUTER",
+        "quality_score": 8.65,
+        "reason": "Reach for you - strong fit for your goal (SCIENCE AND ENGG (ARTIFICIAL INTELLIGENCE) COMPUTER at K L E Technological Univeristy), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 87.0,
+        "category": "Safe",
+        "closing_rank": 79396,
+        "college_code": "E115",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "S.J B. Institute of Technology",
+        "interest_score": 7.56,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 8.12,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at S.J B. Institute of Technology), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 87.6,
+        "category": "Safe",
+        "closing_rank": 79814,
+        "college_code": "E049",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B V V Sangha`s Basaveshwara Engineering College",
+        "interest_score": 7.54,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 8.08,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at B V V Sangha`s Basaveshwara Engineering College), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 87.8,
+        "category": "Safe",
+        "closing_rank": 79957,
+        "college_code": "E099",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "New Horizon College of Engineering",
+        "interest_score": 7.53,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 8.06,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at New Horizon College of Engineering), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 88.4,
+        "category": "Safe",
+        "closing_rank": 80355,
+        "college_code": "E031",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B V V Sangha`s Basaveshwara Engineering College",
+        "interest_score": 7.52,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 8.04,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at B V V Sangha`s Basaveshwara Engineering College), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 88.4,
+        "category": "Safe",
+        "closing_rank": 80360,
+        "college_code": "E155",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Government Engineering College",
+        "interest_score": 7.51,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 8.02,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at Government Engineering College), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 90.4,
+        "category": "Safe",
+        "closing_rank": 82084,
+        "college_code": "E075",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Ballari Institute of Technology & Management",
+        "interest_score": 7.5,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGG (ARTIFICIAL INTELLIGENCE) COMPUTER",
+        "quality_score": 8.0,
+        "reason": "Safe for you - strong fit for your goal (SCIENCE AND ENGG (ARTIFICIAL INTELLIGENCE) COMPUTER at Ballari Institute of Technology & Management), under the Scheduled Tribe (Rural home-region quota) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 90.9,
+        "category": "Safe",
+        "closing_rank": 82512,
+        "college_code": "E066",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "University B.D.T. college of Engineering",
+        "interest_score": 7.48,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 7.96,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at University B.D.T. college of Engineering), under the Scheduled Tribe (Rural home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 91.7,
+        "category": "Safe",
+        "closing_rank": 83298,
+        "college_code": "E007",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Dayananda Sagar College of Engineering",
+        "interest_score": 7.47,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG ELECTRONICS AND",
+        "quality_score": 7.94,
+        "reason": "Safe for you - strong fit for your goal (COMMUNICATION ENGG ELECTRONICS AND at Dayananda Sagar College of Engineering), under the Scheduled Tribe (Rural home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 92.0,
+        "category": "Safe",
+        "closing_rank": 83715,
+        "college_code": "E151",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Mangalore Institute of Technology & Engineering",
+        "interest_score": 7.46,
+        "matched_interest": true,
+        "program": "CYBER SECURITY INCLUDING BLOCK CHAIN TECH) COMPUTER",
+        "quality_score": 7.92,
+        "reason": "Safe for you - strong fit for your goal (CYBER SECURITY INCLUDING BLOCK CHAIN TECH) COMPUTER at Mangalore Institute of Technology & Engineering), under the Scheduled Tribe (Rural home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 92.2,
+        "category": "Safe",
+        "closing_rank": 83903,
+        "college_code": "E149",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Cambridge Institutute of Technology",
+        "interest_score": 7.45,
+        "matched_interest": true,
+        "program": "ARTIFICIAL",
+        "quality_score": 7.9,
+        "reason": "Safe for you - strong fit for your goal (ARTIFICIAL at Cambridge Institutute of Technology), under the Scheduled Tribe (Rural home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 92.8,
+        "category": "Safe",
+        "closing_rank": 84593,
+        "college_code": "E071",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Vidya Vardhaka College of Engineering",
+        "interest_score": 7.44,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 7.88,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at Vidya Vardhaka College of Engineering), under the Scheduled Tribe (Rural home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 93.4,
+        "category": "Safe",
+        "closing_rank": 85493,
+        "college_code": "E212",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Dayananda Sagar Academy of Technology & Management Technical Campus",
+        "interest_score": 7.43,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG INFORMATION",
+        "quality_score": 7.86,
+        "reason": "Safe for you - strong fit for your goal (COMMUNICATION ENGG INFORMATION at Dayananda Sagar Academy of Technology & Management Technical Campus), under the Scheduled Tribe (Rural home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ece",
+          "it"
+        ]
+      },
+      {
+        "admission_probability": 94.0,
+        "category": "Safe",
+        "closing_rank": 86289,
+        "college_code": "E103",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Global Academy of Technology",
+        "interest_score": 7.42,
+        "matched_interest": true,
+        "program": "ENGINEERING ARTIFICIAL",
+        "quality_score": 7.84,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING ARTIFICIAL at Global Academy of Technology), under the Scheduled Tribe (Rural home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 94.0,
+        "category": "Safe",
+        "closing_rank": 86340,
+        "college_code": "E289",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Visvesvaraya Technological University",
+        "interest_score": 7.41,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE COMPUTER",
+        "quality_score": 7.82,
+        "reason": "Safe for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND DATA SCIENCE COMPUTER at Visvesvaraya Technological University), under the Scheduled Tribe (Rural home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 94.3,
+        "category": "Safe",
+        "closing_rank": 86864,
+        "college_code": "E281",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Government Engineering College",
+        "interest_score": 7.4,
+        "matched_interest": true,
+        "program": "ARTIFICIAL",
+        "quality_score": 7.8,
+        "reason": "Safe for you - strong fit for your goal (ARTIFICIAL at Government Engineering College), under the Scheduled Tribe (Rural home-region quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "STR",
+        "seat_category_label": "Scheduled Tribe (Rural home-region quota)",
+        "tags": [
+          "ai_ds"
+        ]
+      }
+    ],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "max_per_institute": 2,
+      "reach_band_ceiling": 18000.0,
+      "safe_margin": 0.15,
+      "target_band_ceiling": 13000.0,
+      "target_band_floor": 1500.0,
+      "top_rank_cap": 25,
+      "upper_margin": 0.25
+    },
+    "total_count": 449
+  },
+  "note": "core grid rank=67328 cat=STR",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/kcet/recommend",
+    "payload": {
+      "rank": 67328,
+      "seat_category": "STR"
+    }
+  },
+  "status": 200
+}

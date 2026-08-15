@@ -1,0 +1,94 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "These programmes have cutoffs close to your rank. They are your most realistic picks.",
+        "category": "Target",
+        "count": 7
+      },
+      {
+        "blurb": "These closed slightly above your rank last year. Cutoffs fluctuate, so list a few as ambitious choices.",
+        "category": "Reach",
+        "count": 8
+      },
+      {
+        "blurb": "Your rank comfortably beats the cutoff here, so these are strong backups you are very likely to get.",
+        "category": "Safe",
+        "count": 25
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 8,
+        "Reach_total_attainable": 8,
+        "Safe": 25,
+        "Safe_total_attainable": 406,
+        "Target": 7,
+        "Target_total_attainable": 7
+      },
+      "curated": true,
+      "shown": 0,
+      "total": 40,
+      "total_attainable": 421
+    },
+    "guidance": "Found 421 eligible programme options for your COMEDK profile (showing 0). They are grouped into Target, Reach and Safe, and ordered to match your stated interest.",
+    "has_next": false,
+    "interest_guidance": "",
+    "notes": [
+      "Showing the strongest 40 of 421 options you are eligible for, best first, with at most 2 programmes per college."
+    ],
+    "reach": [],
+    "recommendations": [],
+    "safe": [],
+    "target": [],
+    "thresholds": {
+      "caps": {
+        "Reach": 20,
+        "Safe": 25,
+        "Target": 30
+      },
+      "max_per_institute": 2,
+      "reach_band_ceiling": 8000.0,
+      "safe_margin": 0.15,
+      "target_band_ceiling": 6000.0,
+      "target_band_floor": 1000.0,
+      "top_rank_cap": 10,
+      "top_rank_threshold": 100,
+      "upper_margin": 0.25
+    },
+    "total_by_type": {
+      "all": {
+        "total": 40,
+        "total_attainable": 421
+      },
+      "dream": {
+        "total": 8,
+        "total_attainable": 8
+      },
+      "safe": {
+        "total": 25,
+        "total_attainable": 406
+      },
+      "target": {
+        "total": 7,
+        "total_attainable": 7
+      }
+    },
+    "total_count": 40,
+    "total_reach": 8,
+    "total_safe": 25,
+    "total_target": 7
+  },
+  "note": "variation page=2",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/comedk/recommend",
+    "payload": {
+      "page": 2,
+      "quota": "GM",
+      "rank": 20000
+    }
+  },
+  "status": 200
+}

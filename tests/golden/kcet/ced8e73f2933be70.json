@@ -1,0 +1,362 @@
+{
+  "body": {
+    "branch_counts": {},
+    "branch_popularity": [
+      {
+        "avg_closing_rank": 14018.0,
+        "branch": "INSTRUMENTATION ENGINEERING ELECTRONICS AND",
+        "total_programs": 5
+      },
+      {
+        "avg_closing_rank": 20281.2,
+        "branch": "AERO SPACE",
+        "total_programs": 5
+      },
+      {
+        "avg_closing_rank": 21975.8,
+        "branch": "TELECOMMUNICAT ION ENGINEERING INFORMATION",
+        "total_programs": 5
+      },
+      {
+        "avg_closing_rank": 24662.8,
+        "branch": "SPACE ENGINEERING B TECH IN",
+        "total_programs": 4
+      },
+      {
+        "avg_closing_rank": 24961.3,
+        "branch": "ENGINEERING BIO-TECHNOLOGY",
+        "total_programs": 3
+      },
+      {
+        "avg_closing_rank": 25890.0,
+        "branch": "ENGINEERING & MANAGEMENT MECHANICAL",
+        "total_programs": 3
+      },
+      {
+        "avg_closing_rank": 27029.9,
+        "branch": "INTELLIGENCE & MACHINE LEARNING) B TECH IN",
+        "total_programs": 7
+      },
+      {
+        "avg_closing_rank": 31893.3,
+        "branch": "CHEMICAL",
+        "total_programs": 6
+      },
+      {
+        "avg_closing_rank": 34869.2,
+        "branch": "TELECOMMUNICAT ION ENGINEERING INDUSTRIAL",
+        "total_programs": 4
+      },
+      {
+        "avg_closing_rank": 35623.3,
+        "branch": "SCIENCE AND ENGINEERING(CYB ER SECURITY) B TECH IN",
+        "total_programs": 3
+      },
+      {
+        "avg_closing_rank": 35922.4,
+        "branch": "ENGINEERING ELECTRICAL &",
+        "total_programs": 5
+      },
+      {
+        "avg_closing_rank": 36290.7,
+        "branch": "SCIENCE AND BUSINESS SYSTEMS COMPUTER",
+        "total_programs": 13
+      },
+      {
+        "avg_closing_rank": 38679.0,
+        "branch": "INTELLIGENCE AND MACHINE LEARNING BIO-TECHNOLOGY",
+        "total_programs": 5
+      },
+      {
+        "avg_closing_rank": 39122.9,
+        "branch": "ENGINEERING B TECH IN",
+        "total_programs": 7
+      },
+      {
+        "avg_closing_rank": 40640.9,
+        "branch": "SCIENCE AND ENGG (ARTIFICIAL INTELLIGENCE) COMPUTER",
+        "total_programs": 7
+      }
+    ],
+    "highest_cutoffs": [
+      {
+        "closing_rank": 234,
+        "inst_type": "KCET",
+        "institute": "R. V. College of Engineering",
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 367,
+        "inst_type": "KCET",
+        "institute": "R. V. College of Engineering",
+        "program": "SCIENCE AND ENGINEERING (CYBER SECURITY) COMPUTER",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 429,
+        "inst_type": "KCET",
+        "institute": "R. V. College of Engineering",
+        "program": "ENGINEERING COMPUTER",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 508,
+        "inst_type": "KCET",
+        "institute": "R. V. College of Engineering",
+        "program": "SCIENCE AND ENGINEERING COMPUTER",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 573,
+        "inst_type": "KCET",
+        "institute": "R. V. College of Engineering",
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 934,
+        "inst_type": "KCET",
+        "institute": "PES University 100 Feet Ring Road",
+        "program": "INTELLIGENCE & MACHINE LEARNING) B TECH IN",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 987,
+        "inst_type": "KCET",
+        "institute": "R. V. College of Engineering",
+        "program": "COMMUNICATION ENGG ELECTRONICS AND",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 1100,
+        "inst_type": "KCET",
+        "institute": "M S Ramaiah Institute of Technology",
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 1126,
+        "inst_type": "KCET",
+        "institute": "R. V. College of Engineering",
+        "program": "SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL &",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 1417,
+        "inst_type": "KCET",
+        "institute": "B M S College of Engineering",
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quota": "GM"
+      }
+    ],
+    "inst_competitiveness": {
+      "KCET": [
+        {
+          "avg_closing_rank": 2859.0,
+          "institute": "R. V. College of Engineering",
+          "min_opening_rank": 234,
+          "total_programs": 13
+        },
+        {
+          "avg_closing_rank": 3435.2,
+          "institute": "PES University 100 Feet Ring Road",
+          "min_opening_rank": 934,
+          "total_programs": 6
+        },
+        {
+          "avg_closing_rank": 4068.3,
+          "institute": "PES UNIVERSITY(Electronic City Campus) Hosur Rd",
+          "min_opening_rank": 3588,
+          "total_programs": 3
+        },
+        {
+          "avg_closing_rank": 6109.0,
+          "institute": "RV University R.V. VIDYANIKETAN POST",
+          "min_opening_rank": 6109,
+          "total_programs": 1
+        },
+        {
+          "avg_closing_rank": 7669.2,
+          "institute": "M S Ramaiah Institute of Technology",
+          "min_opening_rank": 1100,
+          "total_programs": 17
+        },
+        {
+          "avg_closing_rank": 7843.3,
+          "institute": "R V Institute Of Technology and Management",
+          "min_opening_rank": 7208,
+          "total_programs": 3
+        },
+        {
+          "avg_closing_rank": 8248.5,
+          "institute": "The National Institute of Engineering(NORTH CAMPUS)",
+          "min_opening_rank": 8002,
+          "total_programs": 2
+        },
+        {
+          "avg_closing_rank": 8937.0,
+          "institute": "B M S College of Engineering",
+          "min_opening_rank": 1417,
+          "total_programs": 16
+        },
+        {
+          "avg_closing_rank": 14596.6,
+          "institute": "Dayananda Sagar College of Engineering",
+          "min_opening_rank": 4080,
+          "total_programs": 18
+        },
+        {
+          "avg_closing_rank": 15120.1,
+          "institute": "C M R Institute of Technology",
+          "min_opening_rank": 12029,
+          "total_programs": 7
+        },
+        {
+          "avg_closing_rank": 15710.7,
+          "institute": "Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle",
+          "min_opening_rank": 3473,
+          "total_programs": 7
+        },
+        {
+          "avg_closing_rank": 15956.0,
+          "institute": "Bangalore Institute of Technology",
+          "min_opening_rank": 5036,
+          "total_programs": 13
+        },
+        {
+          "avg_closing_rank": 18037.0,
+          "institute": "B N M Institute of Technology",
+          "min_opening_rank": 9231,
+          "total_programs": 6
+        },
+        {
+          "avg_closing_rank": 19919.4,
+          "institute": "B M S Institute of Technology & Management",
+          "min_opening_rank": 9233,
+          "total_programs": 7
+        },
+        {
+          "avg_closing_rank": 20701.4,
+          "institute": "M . S . Ramaiah University of Applied Sciences UNIVERSITY HOUSE",
+          "min_opening_rank": 8400,
+          "total_programs": 11
+        }
+      ]
+    },
+    "lowest_cutoffs": [
+      {
+        "closing_rank": 249733,
+        "inst_type": "KCET",
+        "institute": "Sri Basaveswara Institute of Technology",
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 241691,
+        "inst_type": "KCET",
+        "institute": "BASAV ENGINEERING SCHOOL OF TECHNOLOGY",
+        "program": "SCIENCE AND ENGINEERING MECHANICAL",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 232230,
+        "inst_type": "KCET",
+        "institute": "Sri Basaveswara Institute of Technology",
+        "program": "CIVIL",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 217343,
+        "inst_type": "KCET",
+        "institute": "H K E's Society's Sir M Visvesvaraya College of Engineering",
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 213786,
+        "inst_type": "KCET",
+        "institute": "Veerappa Nisty Engineering College",
+        "program": "CIVIL",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 211336,
+        "inst_type": "KCET",
+        "institute": "Government Engineering College",
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 209115,
+        "inst_type": "KCET",
+        "institute": "Shreedevi Institute of Technology",
+        "program": "INTELLIGENCE AND DATA SCIENCE CIVIL",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 208258,
+        "inst_type": "KCET",
+        "institute": "K C T Engineering College",
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 206395,
+        "inst_type": "KCET",
+        "institute": "Rao Bahadur Y.Mahabaleswarappa Engineering College",
+        "program": "SCIENCE AND ENGINEERING MECHANICAL",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 206298,
+        "inst_type": "KCET",
+        "institute": "Karavali Institute of Technology",
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quota": "GM"
+      }
+    ],
+    "quota_counts": {
+      "1G": 1220,
+      "1K": 100,
+      "1R": 293,
+      "2AG": 1552,
+      "2AK": 402,
+      "2AR": 981,
+      "2BG": 1236,
+      "2BK": 79,
+      "2BR": 291,
+      "3AG": 1230,
+      "3AK": 100,
+      "3AR": 303,
+      "3BG": 1343,
+      "3BK": 146,
+      "3BR": 409,
+      "GM": 1573,
+      "GMK": 958,
+      "GMR": 1526,
+      "SCG": 1558,
+      "SCK": 434,
+      "SCR": 991,
+      "STG": 1425,
+      "STK": 154,
+      "STR": 496
+    },
+    "round_averages": {},
+    "summary": {
+      "total_records": 18800,
+      "unique_institutes": 200,
+      "unique_programs": 224,
+      "unique_quotas": 24,
+      "unique_seat_types": 24
+    }
+  },
+  "note": "stats",
+  "request": {
+    "method": "GET",
+    "params": null,
+    "path": "/api/kcet/stats",
+    "payload": null
+  },
+  "status": 200
+}

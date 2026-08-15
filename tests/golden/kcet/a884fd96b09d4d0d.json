@@ -1,0 +1,1136 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "These closed right around your rank last year. They are your most realistic picks.",
+        "category": "Target",
+        "count": 138
+      },
+      {
+        "blurb": "These closed slightly above your rank last year. Cutoffs move between rounds, so list a few as ambitious choices.",
+        "category": "Reach",
+        "count": 154
+      },
+      {
+        "blurb": "Your rank comfortably beats last year's closing rank here, so these are strong backups you are very likely to get.",
+        "category": "Safe",
+        "count": 533
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 154,
+        "Safe": 533,
+        "Target": 138
+      },
+      "is_curated": true,
+      "is_top_rank": false,
+      "shown": 55,
+      "shown_by_category": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "total": 825
+    },
+    "guidance": "Found 825 eligible college-programme options for your profile (showing 55). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
+    "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
+    "notes": [
+      "Showing the 55 strongest picks out of 825 eligible options, with at most a couple of programmes per college. Open a single section to see every option in it."
+    ],
+    "recommendations": [
+      {
+        "admission_probability": 50.0,
+        "category": "Target",
+        "closing_rank": 67338,
+        "college_code": "E204",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Bangalore Technological Institute",
+        "interest_score": 6.0,
+        "matched_interest": true,
+        "program": "ARTIFICIAL",
+        "quality_score": 4.99,
+        "reason": "Target for you - strong fit for your goal (ARTIFICIAL at Bangalore Technological Institute), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 50.3,
+        "category": "Target",
+        "closing_rank": 67401,
+        "college_code": "E201",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Gopalan College of Engineering & Management",
+        "interest_score": 6.0,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING COMPUTER",
+        "quality_score": 4.99,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING COMPUTER at Gopalan College of Engineering & Management), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 50.8,
+        "category": "Target",
+        "closing_rank": 67490,
+        "college_code": "E111",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Sri Venkateshwara College of Engineering",
+        "interest_score": 5.99,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING COMPUTER",
+        "quality_score": 4.98,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING COMPUTER at Sri Venkateshwara College of Engineering), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 50.9,
+        "category": "Target",
+        "closing_rank": 67526,
+        "college_code": "E274",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Government Engineering College",
+        "interest_score": 5.98,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 4.97,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at Government Engineering College), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 52.0,
+        "category": "Target",
+        "closing_rank": 67763,
+        "college_code": "E109",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "City Engineering College",
+        "interest_score": 5.98,
+        "matched_interest": true,
+        "program": "ARTIFICIAL",
+        "quality_score": 4.96,
+        "reason": "Target for you - strong fit for your goal (ARTIFICIAL at City Engineering College), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 52.6,
+        "category": "Target",
+        "closing_rank": 67902,
+        "college_code": "E071",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Vidya Vardhaka College of Engineering",
+        "interest_score": 5.97,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG MECHANICAL",
+        "quality_score": 4.95,
+        "reason": "Target for you - strong fit for your goal (COMMUNICATION ENGG MECHANICAL at Vidya Vardhaka College of Engineering), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ece",
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 53.1,
+        "category": "Target",
+        "closing_rank": 68008,
+        "college_code": "E101",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Channabasaveshwara Institute of Technology",
+        "interest_score": 5.97,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG INFORMATION",
+        "quality_score": 4.94,
+        "reason": "Target for you - strong fit for your goal (COMMUNICATION ENGG INFORMATION at Channabasaveshwara Institute of Technology), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ece",
+          "it"
+        ]
+      },
+      {
+        "admission_probability": 53.3,
+        "category": "Target",
+        "closing_rank": 68042,
+        "college_code": "E018",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Kalpatharu Institute of Technology",
+        "interest_score": 5.96,
+        "matched_interest": true,
+        "program": "ARTIFICIAL",
+        "quality_score": 4.93,
+        "reason": "Target for you - strong fit for your goal (ARTIFICIAL at Kalpatharu Institute of Technology), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 53.9,
+        "category": "Target",
+        "closing_rank": 68177,
+        "college_code": "E004",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Dr. Ambedkar Institute of Technology",
+        "interest_score": 5.96,
+        "matched_interest": true,
+        "program": "TELECOMMUNICAT ION ENGINEERING INDUSTRIAL",
+        "quality_score": 4.92,
+        "reason": "Target for you - strong fit for your goal (TELECOMMUNICAT ION ENGINEERING INDUSTRIAL at Dr. Ambedkar Institute of Technology), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ece",
+          "production"
+        ]
+      },
+      {
+        "admission_probability": 53.9,
+        "category": "Target",
+        "closing_rank": 68186,
+        "college_code": "E255",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "GANDHI INSTITUTE OF TECHNOLOGY AND MANAGEMENT GITAM OFF CAMPUS BENGALURU NH 207",
+        "interest_score": 5.96,
+        "matched_interest": true,
+        "program": "ENGINEERING(VLSI DESIGN & TECHNOLOGY) ELECTRONICS AND",
+        "quality_score": 4.91,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING(VLSI DESIGN & TECHNOLOGY) ELECTRONICS AND at GANDHI INSTITUTE OF TECHNOLOGY AND MANAGEMENT GITAM OFF CAMPUS BENGALURU NH 207), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse",
+          "design",
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 54.3,
+        "category": "Target",
+        "closing_rank": 68268,
+        "college_code": "E283",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "University of Mysuru B.N.BAHADUR INSTITUTE OF MANAGEMENT SCIENCES",
+        "interest_score": 5.95,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING BIOMEDICAL AND",
+        "quality_score": 4.9,
+        "reason": "Target for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING BIOMEDICAL AND at University of Mysuru B.N.BAHADUR INSTITUTE OF MANAGEMENT SCIENCES), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "biotech"
+        ]
+      },
+      {
+        "admission_probability": 54.5,
+        "category": "Target",
+        "closing_rank": 68324,
+        "college_code": "E029",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Maratha Mandal Engineering College",
+        "interest_score": 5.95,
+        "matched_interest": true,
+        "program": "COMPUTER",
+        "quality_score": 4.9,
+        "reason": "Target for you - strong fit for your goal (COMPUTER at Maratha Mandal Engineering College), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 55.5,
+        "category": "Target",
+        "closing_rank": 68548,
+        "college_code": "E104",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Nagarjuna College of Engineering & Technology",
+        "interest_score": 5.95,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 4.89,
+        "reason": "Target for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at Nagarjuna College of Engineering & Technology), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 55.6,
+        "category": "Target",
+        "closing_rank": 68573,
+        "college_code": "E113",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Sambhram Institute of Technology",
+        "interest_score": 5.94,
+        "matched_interest": true,
+        "program": "ARTIFICIAL",
+        "quality_score": 4.88,
+        "reason": "Target for you - strong fit for your goal (ARTIFICIAL at Sambhram Institute of Technology), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 56.9,
+        "category": "Target",
+        "closing_rank": 68860,
+        "college_code": "E017",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Sri Siddhartha Institute of Technology MARALUR",
+        "interest_score": 5.94,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL &",
+        "quality_score": 4.87,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL & at Sri Siddhartha Institute of Technology MARALUR), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 57.2,
+        "category": "Target",
+        "closing_rank": 68937,
+        "college_code": "E147",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "T.John Institute of technology",
+        "interest_score": 5.92,
+        "matched_interest": true,
+        "program": "CYBER SECURITY INCLUDING BLOCK CHAIN TECH) COMPUTER",
+        "quality_score": 4.85,
+        "reason": "Target for you - strong fit for your goal (CYBER SECURITY INCLUDING BLOCK CHAIN TECH) COMPUTER at T.John Institute of technology), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 58.1,
+        "category": "Target",
+        "closing_rank": 69126,
+        "college_code": "E144",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Srinivas Institute of Technology",
+        "interest_score": 5.92,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND DATA SCIENCE ARTIFICIAL",
+        "quality_score": 4.84,
+        "reason": "Target for you - strong fit for your goal (INTELLIGENCE AND DATA SCIENCE ARTIFICIAL at Srinivas Institute of Technology), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 58.2,
+        "category": "Target",
+        "closing_rank": 69160,
+        "college_code": "E028",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Tontadarya College of Engineering",
+        "interest_score": 5.92,
+        "matched_interest": true,
+        "program": "ENGINEERING ARTIFICIAL",
+        "quality_score": 4.83,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING ARTIFICIAL at Tontadarya College of Engineering), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 58.7,
+        "category": "Target",
+        "closing_rank": 69280,
+        "college_code": "E092",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Vemana Institute of Technology",
+        "interest_score": 5.91,
+        "matched_interest": true,
+        "program": "SCIENCE AND 5 ENGINEERING(DAT A SCIENCE) ELECTRONICS AND",
+        "quality_score": 4.82,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND 5 ENGINEERING(DAT A SCIENCE) ELECTRONICS AND at Vemana Institute of Technology), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse",
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 59.0,
+        "category": "Target",
+        "closing_rank": 69358,
+        "college_code": "E164",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Government Engineering College",
+        "interest_score": 5.9,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 4.81,
+        "reason": "Target for you - strong fit for your goal (ENGINEERING COMPUTER at Government Engineering College), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 59.8,
+        "category": "Target",
+        "closing_rank": 69543,
+        "college_code": "E254",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "A J Institute Of Engineering And Technology.Kottar chowki Boloor Village Mangalore KOTTARA CHOWKI BOLOOR VILLAGE",
+        "interest_score": 5.9,
+        "matched_interest": true,
+        "program": "CYBER SECURITY INCLUDING BLOCK CHAIN TECH) COMPUTER",
+        "quality_score": 4.81,
+        "reason": "Target for you - strong fit for your goal (CYBER SECURITY INCLUDING BLOCK CHAIN TECH) COMPUTER at A J Institute Of Engineering And Technology.Kottar chowki Boloor Village Mangalore KOTTARA CHOWKI BOLOOR VILLAGE), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 60.7,
+        "category": "Target",
+        "closing_rank": 69748,
+        "college_code": "E008",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Bangalore Institute of Technology",
+        "interest_score": 5.9,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING CIVIL",
+        "quality_score": 4.8,
+        "reason": "Target for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING CIVIL at Bangalore Institute of Technology), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 62.5,
+        "category": "Target",
+        "closing_rank": 70194,
+        "college_code": "E083",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "H.K.B.K.College of Engineering",
+        "interest_score": 5.89,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING ELECTRONICS AND",
+        "quality_score": 4.78,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING ELECTRONICS AND at H.K.B.K.College of Engineering), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 62.6,
+        "category": "Target",
+        "closing_rank": 70234,
+        "college_code": "E065",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "Jawaharlal Nehru New College of Engineering",
+        "interest_score": 5.88,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG ELECTRONICS AND",
+        "quality_score": 4.77,
+        "reason": "Target for you - strong fit for your goal (COMMUNICATION ENGG ELECTRONICS AND at Jawaharlal Nehru New College of Engineering), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 62.8,
+        "category": "Target",
+        "closing_rank": 70277,
+        "college_code": "E205",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "ATME College of Engineering",
+        "interest_score": 5.88,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING COMPUTER",
+        "quality_score": 4.76,
+        "reason": "Target for you - strong fit for your goal (SCIENCE AND ENGINEERING COMPUTER at ATME College of Engineering), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 4.4,
+        "category": "Reach",
+        "closing_rank": 54001,
+        "college_code": "E064",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Adhichunchanagiri Institute of Technology",
+        "interest_score": 6.57,
+        "matched_interest": true,
+        "program": "ARTIFICIAL",
+        "quality_score": 6.14,
+        "reason": "Reach for you - strong fit for your goal (ARTIFICIAL at Adhichunchanagiri Institute of Technology), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 4.9,
+        "category": "Reach",
+        "closing_rank": 54383,
+        "college_code": "E283",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "University of Mysuru B.N.BAHADUR INSTITUTE OF MANAGEMENT SCIENCES",
+        "interest_score": 6.55,
+        "matched_interest": true,
+        "program": "ARTIFICIAL",
+        "quality_score": 6.1,
+        "reason": "Reach for you - strong fit for your goal (ARTIFICIAL at University of Mysuru B.N.BAHADUR INSTITUTE OF MANAGEMENT SCIENCES), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 4.6,
+        "category": "Reach",
+        "closing_rank": 54194,
+        "college_code": "E258",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Maharaja Institute of Technology",
+        "interest_score": 6.55,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING ELECTRONICS AND",
+        "quality_score": 6.11,
+        "reason": "Reach for you - strong fit for your goal (SCIENCE AND ENGINEERING ELECTRONICS AND at Maharaja Institute of Technology), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 5.7,
+        "category": "Reach",
+        "closing_rank": 54971,
+        "college_code": "E203",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "K S School of Engineering & Management",
+        "interest_score": 6.54,
+        "matched_interest": true,
+        "program": "SCIENCE AND BUSINESS SYSTEMS COMPUTER",
+        "quality_score": 6.07,
+        "reason": "Reach for you - strong fit for your goal (SCIENCE AND BUSINESS SYSTEMS COMPUTER at K S School of Engineering & Management), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 5.5,
+        "category": "Reach",
+        "closing_rank": 54864,
+        "college_code": "E126",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "B M S Institute of Technology & Management",
+        "interest_score": 6.54,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING CIVIL",
+        "quality_score": 6.07,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING CIVIL at B M S Institute of Technology & Management), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "civil"
+        ]
+      },
+      {
+        "admission_probability": 5.5,
+        "category": "Reach",
+        "closing_rank": 54863,
+        "college_code": "E001",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle",
+        "interest_score": 6.54,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND DATA SCIENCE CIVIL",
+        "quality_score": 6.08,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND DATA SCIENCE CIVIL at Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "civil",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 5.2,
+        "category": "Reach",
+        "closing_rank": 54620,
+        "college_code": "E066",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "University B.D.T. college of Engineering",
+        "interest_score": 6.54,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 6.09,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at University B.D.T. college of Engineering), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 5.8,
+        "category": "Reach",
+        "closing_rank": 55032,
+        "college_code": "E135",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "K L S Viswanathrao Deshpande Institute of Technology",
+        "interest_score": 6.53,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 6.05,
+        "reason": "Reach for you - strong fit for your goal (ENGINEERING COMPUTER at K L S Viswanathrao Deshpande Institute of Technology), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 5.7,
+        "category": "Reach",
+        "closing_rank": 54990,
+        "college_code": "E306",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "THE CHANAKYA UNIVERSITY NO 29 HARALURU",
+        "interest_score": 6.53,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING B.Tech In",
+        "quality_score": 6.06,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING B.Tech In at THE CHANAKYA UNIVERSITY NO 29 HARALURU), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 6.1,
+        "category": "Reach",
+        "closing_rank": 55252,
+        "college_code": "E147",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "T.John Institute of technology",
+        "interest_score": 6.52,
+        "matched_interest": true,
+        "program": "ARTIFICIAL",
+        "quality_score": 6.03,
+        "reason": "Reach for you - strong fit for your goal (ARTIFICIAL at T.John Institute of technology), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 6.1,
+        "category": "Reach",
+        "closing_rank": 55215,
+        "college_code": "E038",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "BLDEA's VP. Dr.P.G. Hallakatti College of Engineering & Technology",
+        "interest_score": 6.52,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING COMPUTER",
+        "quality_score": 6.04,
+        "reason": "Reach for you - strong fit for your goal (SCIENCE AND ENGINEERING COMPUTER at BLDEA's VP. Dr.P.G. Hallakatti College of Engineering & Technology), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 5.8,
+        "category": "Reach",
+        "closing_rank": 55059,
+        "college_code": "E108",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "SAPTHAGIRI NPS UNIVERISTY #14/5",
+        "interest_score": 6.52,
+        "matched_interest": true,
+        "program": "COMPUTER",
+        "quality_score": 6.04,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER at SAPTHAGIRI NPS UNIVERISTY #14/5), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 6.5,
+        "category": "Reach",
+        "closing_rank": 55482,
+        "college_code": "E152",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "S D M Institute of Tech.",
+        "interest_score": 6.51,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 6.02,
+        "reason": "Reach for you - strong fit for your goal (ENGINEERING COMPUTER at S D M Institute of Tech.), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 7.9,
+        "category": "Reach",
+        "closing_rank": 56291,
+        "college_code": "E095",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "AMC Engineering College",
+        "interest_score": 6.5,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL &",
+        "quality_score": 5.99,
+        "reason": "Reach for you - strong fit for your goal (SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL & at AMC Engineering College), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 7.7,
+        "category": "Reach",
+        "closing_rank": 56157,
+        "college_code": "E158",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Maharaja Institute of Technology Mysore",
+        "interest_score": 6.5,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 6.0,
+        "reason": "Reach for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at Maharaja Institute of Technology Mysore), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 86.7,
+        "category": "Safe",
+        "closing_rank": 79234,
+        "college_code": "E168",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Amrutha Institute of Engineering & Management Science (AIEMS)",
+        "interest_score": 5.48,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 3.96,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at Amrutha Institute of Engineering & Management Science (AIEMS)), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 86.7,
+        "category": "Safe",
+        "closing_rank": 79237,
+        "college_code": "E307",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "SESHADRIPURAM INSTITUTE OF TECHNOLOGY MYSURU MYSURU",
+        "interest_score": 5.48,
+        "matched_interest": true,
+        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "quality_score": 3.96,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS ENGINEERING ELECTRONICS AND at SESHADRIPURAM INSTITUTE OF TECHNOLOGY MYSURU MYSURU), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 86.9,
+        "category": "Safe",
+        "closing_rank": 79330,
+        "college_code": "E045",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Rao Bahadur Y.Mahabaleswarappa Engineering College",
+        "interest_score": 5.47,
+        "matched_interest": true,
+        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "quality_score": 3.95,
+        "reason": "Safe for you - strong fit for your goal (INTELLIGENCE AND MACHINE LEARNING) COMPUTER at Rao Bahadur Y.Mahabaleswarappa Engineering College), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 86.9,
+        "category": "Safe",
+        "closing_rank": 79343,
+        "college_code": "E205",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "ATME College of Engineering",
+        "interest_score": 5.47,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL &",
+        "quality_score": 3.94,
+        "reason": "Safe for you - strong fit for your goal (SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL & at ATME College of Engineering), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 87.1,
+        "category": "Safe",
+        "closing_rank": 79465,
+        "college_code": "E033",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Sri Taralabalu Jagadguru Institute of Technology",
+        "interest_score": 5.46,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 3.93,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at Sri Taralabalu Jagadguru Institute of Technology), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 87.1,
+        "category": "Safe",
+        "closing_rank": 79502,
+        "college_code": "E021",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Sri Jayachamarajendra College of Engineering(Constituent College of JSS Science & Technology University)",
+        "interest_score": 5.46,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG ENVIRONMENTAL",
+        "quality_score": 3.91,
+        "reason": "Safe for you - strong fit for your goal (COMMUNICATION ENGG ENVIRONMENTAL at Sri Jayachamarajendra College of Engineering(Constituent College of JSS Science & Technology University)), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 87.2,
+        "category": "Safe",
+        "closing_rank": 79563,
+        "college_code": "E254",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "A J Institute Of Engineering And Technology.Kottar chowki Boloor Village Mangalore KOTTARA CHOWKI BOLOOR VILLAGE",
+        "interest_score": 5.45,
+        "matched_interest": true,
+        "program": "ARTIFICIAL",
+        "quality_score": 3.9,
+        "reason": "Safe for you - strong fit for your goal (ARTIFICIAL at A J Institute Of Engineering And Technology.Kottar chowki Boloor Village Mangalore KOTTARA CHOWKI BOLOOR VILLAGE), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 87.4,
+        "category": "Safe",
+        "closing_rank": 79661,
+        "college_code": "E204",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Bangalore Technological Institute",
+        "interest_score": 5.45,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING COMPUTER",
+        "quality_score": 3.9,
+        "reason": "Safe for you - strong fit for your goal (SCIENCE AND ENGINEERING COMPUTER at Bangalore Technological Institute), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 87.5,
+        "category": "Safe",
+        "closing_rank": 79763,
+        "college_code": "E100",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "K N S Institute of Technology",
+        "interest_score": 5.45,
+        "matched_interest": true,
+        "program": "COMPUTER ENGINEERING ELECTRONICS AND",
+        "quality_score": 3.89,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER ENGINEERING ELECTRONICS AND at K N S Institute of Technology), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse",
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 87.8,
+        "category": "Safe",
+        "closing_rank": 79967,
+        "college_code": "E139",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Impact College of Engineering & Applied Sciences",
+        "interest_score": 5.44,
+        "matched_interest": true,
+        "program": "ENGINEERING COMPUTER",
+        "quality_score": 3.87,
+        "reason": "Safe for you - strong fit for your goal (ENGINEERING COMPUTER at Impact College of Engineering & Applied Sciences), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 87.9,
+        "category": "Safe",
+        "closing_rank": 80032,
+        "college_code": "E065",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Jawaharlal Nehru New College of Engineering",
+        "interest_score": 5.44,
+        "matched_interest": true,
+        "program": "SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL &",
+        "quality_score": 3.87,
+        "reason": "Safe for you - strong fit for your goal (SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL & at Jawaharlal Nehru New College of Engineering), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 88.1,
+        "category": "Safe",
+        "closing_rank": 80155,
+        "college_code": "E201",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Gopalan College of Engineering & Management",
+        "interest_score": 5.43,
+        "matched_interest": true,
+        "program": "COMMUNICATION ENGG INFORMATION",
+        "quality_score": 3.86,
+        "reason": "Safe for you - strong fit for your goal (COMMUNICATION ENGG INFORMATION at Gopalan College of Engineering & Management), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ece",
+          "it"
+        ]
+      },
+      {
+        "admission_probability": 88.1,
+        "category": "Safe",
+        "closing_rank": 80180,
+        "college_code": "E147",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "T.John Institute of technology",
+        "interest_score": 5.42,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND",
+        "quality_score": 3.85,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS AND at T.John Institute of technology), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 88.4,
+        "category": "Safe",
+        "closing_rank": 80423,
+        "college_code": "E303",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "GM University KARUR VILLAGE",
+        "interest_score": 5.42,
+        "matched_interest": true,
+        "program": "ELECTRONICS & COMMUNICATION ENGINEERING B TECH IN",
+        "quality_score": 3.85,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS & COMMUNICATION ENGINEERING B TECH IN at GM University KARUR VILLAGE), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 88.5,
+        "category": "Safe",
+        "closing_rank": 80455,
+        "college_code": "E015",
+        "confidence": "medium",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Dr.T.Thimmaiah Institute of Technology",
+        "interest_score": 5.42,
+        "matched_interest": true,
+        "program": "COMPUTER",
+        "quality_score": 3.84,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER at Dr.T.Thimmaiah Institute of Technology), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      }
+    ],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "max_per_institute": 2,
+      "reach_band_ceiling": 18000.0,
+      "safe_margin": 0.15,
+      "target_band_ceiling": 13000.0,
+      "target_band_floor": 1500.0,
+      "top_rank_cap": 25,
+      "upper_margin": 0.25
+    },
+    "total_count": 825
+  },
+  "note": "core grid rank=67328 cat=3BG",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/kcet/recommend",
+    "payload": {
+      "rank": 67328,
+      "seat_category": "3BG"
+    }
+  },
+  "status": 200
+}

@@ -1,0 +1,100 @@
+{
+  "body": {
+    "category_guidance": [],
+    "counts": {
+      "by_category": {
+        "Reach": 0,
+        "Safe": 0,
+        "Target": 0
+      },
+      "by_type": {
+        "GFTI": 0,
+        "IIIT": 0,
+        "IIT": 0,
+        "NIT": 0,
+        "shown": 0,
+        "total": 0
+      },
+      "is_curated": false,
+      "is_top_rank": false,
+      "shown": 0,
+      "shown_by_category": {
+        "Reach": 0,
+        "Safe": 0,
+        "Target": 0
+      },
+      "total": 0
+    },
+    "guidance": "Your rank (900,000) is past the last seat you are eligible for in this dataset — the weakest cutoff open to your category, gender and home state closed at 8,388. Adding another rank will not change this. Look at state counselling, private universities, or the CSAB special rounds instead.",
+    "interest_guidance": "Since you are aiming for a software/coding career, Computer Science, Mathematics & Computing, AI/Data Science and IT branches are ranked highest for you. A strong CS-adjacent branch usually matters more for coding roles than the exact institute, but a higher-brand institute helps with internships and placements.",
+    "notes": [
+      "No JEE Advanced rank provided, so IITs are not shown. Add an Advanced rank to include them."
+    ],
+    "page": null,
+    "page_size": null,
+    "recommendations": [],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "lower_margin": 0.35,
+      "max_per_institute": 2,
+      "safe_fraction": 0.15,
+      "top_rank_cap": 25,
+      "upper_margin": 0.25
+    },
+    "total_by_type": {
+      "all": {
+        "GFTI": 0,
+        "IIIT": 0,
+        "IIT": 0,
+        "NIT": 0,
+        "shown": 0,
+        "total": 0
+      },
+      "dream": {
+        "GFTI": 0,
+        "IIIT": 0,
+        "IIT": 0,
+        "NIT": 0,
+        "shown": 0,
+        "total": 0
+      },
+      "safe": {
+        "GFTI": 0,
+        "IIIT": 0,
+        "IIT": 0,
+        "NIT": 0,
+        "shown": 0,
+        "total": 0
+      },
+      "target": {
+        "GFTI": 0,
+        "IIIT": 0,
+        "IIT": 0,
+        "NIT": 0,
+        "shown": 0,
+        "total": 0
+      }
+    },
+    "total_count": 0,
+    "total_pages": null
+  },
+  "note": "core grid rank=900000 cat=ST ranks=mains_only",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/recommend",
+    "payload": {
+      "adv_rank": null,
+      "gender": "female",
+      "goal": "coding",
+      "home_state": "Rajasthan",
+      "mains_rank": 900000,
+      "seat_category": "ST"
+    }
+  },
+  "status": 200
+}

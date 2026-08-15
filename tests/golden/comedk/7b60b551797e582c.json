@@ -1,0 +1,46 @@
+{
+  "body": {
+    "category_guidance": [],
+    "counts": {
+      "by_category": {
+        "Reach": 0,
+        "Reach_total_attainable": 0,
+        "Safe": 0,
+        "Safe_total_attainable": 0,
+        "Target": 0,
+        "Target_total_attainable": 0
+      },
+      "curated": false,
+      "shown": 0,
+      "total": 0,
+      "total_attainable": 0
+    },
+    "guidance": "A rank of 200,001 is outside COMEDK's plausible rank range (ranks are accepted up to 200,000), so this looks like a typo. Please check the rank printed on your result card.",
+    "has_next": false,
+    "interest_guidance": "",
+    "notes": [
+      "A rank of 200,001 is outside COMEDK's plausible rank range (ranks are accepted up to 200,000), so this looks like a typo. Please check the rank printed on your result card."
+    ],
+    "reach": [],
+    "recommendations": [],
+    "safe": [],
+    "target": [],
+    "thresholds": {},
+    "total_by_type": {},
+    "total_count": 0,
+    "total_reach": 0,
+    "total_safe": 0,
+    "total_target": 0
+  },
+  "note": "core grid rank=200001 quota=KKR",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/comedk/recommend",
+    "payload": {
+      "quota": "KKR",
+      "rank": 200001
+    }
+  },
+  "status": 200
+}
