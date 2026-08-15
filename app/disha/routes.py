@@ -14,8 +14,9 @@ from __future__ import annotations
 
 import logging
 from pathlib import Path
+from typing import Optional
 
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 
 from app.disha import states
 from app.disha.config import settings
@@ -56,10 +57,6 @@ def meta() -> MetaResponse:
         allow_toggle=False,
         extended_available=False,
     )
-
-
-from typing import Optional
-from fastapi import Query
 
 
 @router.api_route("/api/recommend", methods=["GET", "POST"], response_model=RecommendResponse, tags=["recommend"])

@@ -15,7 +15,8 @@ else:
     from pydantic import root_validator
 
 
-from . import states
+# Deliberately below the pydantic v1/v2 compatibility block above.
+from . import states  # noqa: E402
 
 
 class RecommendRequest(BaseModel):
