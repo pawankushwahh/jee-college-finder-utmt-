@@ -24,65 +24,17 @@ from app.disha.data_loader import load_programs
 from app.disha.stats_loader import compute_dataset_stats
 from app.disha.recommender import recommend
 from app.disha.schemas import MetaResponse, RecommendRequest, RecommendResponse
-from app.disha.comedk.routes import router as comedk_router
-from app.disha.kcet.routes import router as kcet_router
+from app.disha import registry
 
 logger = logging.getLogger(__name__)
 
 _TEMPLATES_DIR = Path(__file__).resolve().parent.parent.parent / "templates" / "disha_templates"
 
 router = APIRouter()
-router.include_router(comedk_router)
-router.include_router(kcet_router)
 
-
-# ── Page routes (extension-less clean URLs) ──────────────────────────────
-# StaticFiles(html=True) auto-resolves index.html for directory paths but
-# does NOT resolve other pages by clean URL.  We add explicit routes here
-# so they work under Sir's prefix (e.g. /learning_games/stats).
-
-@router.get("/stats", include_in_schema=False)
-def stats_page() -> FileResponse:
-    """Serve the Statistical Insights page at the clean URL /stats."""
-    return FileResponse(str(_TEMPLATES_DIR / "stats.html"))
-
-
-@router.get("/exam/jee", include_in_schema=False)
-def exam_jee_page() -> FileResponse:
-    return FileResponse(str(_TEMPLATES_DIR / "jee.html"))
-
-
-@router.get("/exam/kcet", include_in_schema=False)
-def exam_kcet_page() -> FileResponse:
-    return FileResponse(str(_TEMPLATES_DIR / "kcet" / "index.html"))
-
-
-@router.get("/exam/kcet/stats", include_in_schema=False)
-def exam_kcet_stats_page() -> FileResponse:
-    return FileResponse(
-        str(_TEMPLATES_DIR / "kcet" / "stats.html"),
-        headers={
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-            "Pragma": "no-cache",
-            "Expires": "0",
-        },
-    )
-
-
-@router.get("/exam/comedk", include_in_schema=False)
-def exam_comedk_page() -> FileResponse:
-    return FileResponse(str(_TEMPLATES_DIR / "comedk" / "index.html"))
-
-@router.get("/exam/comedk/stats", include_in_schema=False)
-def exam_comedk_stats_page() -> FileResponse:
-    return FileResponse(
-        str(_TEMPLATES_DIR / "comedk" / "stats.html"),
-        headers={
-            "Cache-Control": "no-cache, no-store, must-revalidate",
-            "Pragma": "no-cache",
-            "Expires": "0",
-        },
-    )
+# Every exam's API router and page routes come from app/disha/registry.py.
+# Adding an exam means adding one entry there, not editing this file.
+registry.register(router, _TEMPLATES_DIR)
 
 
 @router.get("/api/health", tags=["meta"])
