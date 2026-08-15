@@ -14,7 +14,6 @@ if IS_PYDANTIC_V2:
 else:
     from pydantic import root_validator
 
-from .config import settings
 
 from . import states
 

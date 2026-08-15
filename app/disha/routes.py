@@ -20,7 +20,7 @@ from fastapi.responses import FileResponse
 
 from app.disha import states
 from app.disha.config import settings
-from app.disha.data_loader import load_programs, load_programs_basic
+from app.disha.data_loader import load_programs
 from app.disha.stats_loader import compute_dataset_stats
 from app.disha.recommender import recommend
 from app.disha.schemas import MetaResponse, RecommendRequest, RecommendResponse

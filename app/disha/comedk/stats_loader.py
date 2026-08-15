@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import pandas as pd
-from typing import Dict, List, Any
+from typing import Dict, Any
 from .data_loader import get_programs
 
 def compute_comedk_stats() -> Dict[str, Any]:

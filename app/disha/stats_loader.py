@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import re
 import pandas as pd
-from typing import Dict, List, Any
+from typing import Dict, Any
 from .config import settings
 
 def _classify_institute_type(name: str) -> str:
