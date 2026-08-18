@@ -12,12 +12,17 @@ This applies equally to a human contributor and to an AI coding agent (Antigravi
 
 - [ ] **Did I add or change an API endpoint, or a request/response field?**
   → Update [docs/API.md](docs/API.md) (the authoritative per-exam contract, including the request/response tables and the cross-exam comparison table at the bottom). If the change is significant enough to affect the quick-orientation table in the README, update that too.
+- [ ] **Did I move logic between `app/disha/core/` and an exam package, or change how two exams differ from each other?**
+  → Update [docs/EXAM_DIFFERENCES.md](docs/EXAM_DIFFERENCES.md). It is the inventory of what the exams share and every axis on which they deliberately diverge, with the file to open for each one — it is the first thing someone reads before deciding whether a change belongs in `core/` or in one exam, so a stale entry there sends the next change to the wrong file.
 - [ ] **Did I add a new exam, or change how an existing exam's backend/frontend is structured?**
   → Update the README's [Architecture overview](README.md#architecture-overview), [Directory layout](README.md#directory-layout), and [Adding a new exam](README.md#adding-a-new-exam) sections. If you changed how the *frontend* is organized specifically, also update [templates/disha_templates/README.md](templates/disha_templates/README.md).
 - [ ] **Did I change setup, install, or run steps** (a new dependency, a new required env var, a new way to launch the server)?
   → Update the README's [Setup](README.md#setup) section.
 - [ ] **Did I discover or fix a bug that a doc currently describes as "working" or "broken"** (e.g. the KCET `/recommend` 500, or the service worker's stale `kcet.html` path)?
   → Update the specific caveat/warning in [docs/API.md](docs/API.md) or the README's exam-status table to reflect the new reality — don't leave a "known bug" note in place once the bug is fixed, and don't leave something documented as "working" once you've broken it.
+- [ ] **Did I change where cutoff data comes from, how a source document is parsed, or which documents feed a compiled dataset?**
+  → Update [docs/DATA_PIPELINE.md](docs/DATA_PIPELINE.md) — the runbook for refreshing cutoff data each year — and the relevant `raw_data/<exam>/README.md`. This matters more than most docs here, because the person doing next year's refresh will not have been part of the original work and the source documents contain traps that are invisible until they corrupt the output (wrapped course names, cut-offs that overflow onto the next line). If you discovered a new trap, write it down there even if you worked around it.
+
 - [ ] **Did I add, remove, or rename a file under `templates/disha_templates/`?**
   → Update the directory tree in [templates/disha_templates/README.md](templates/disha_templates/README.md) and, if it changes the shared-vs-per-exam picture, the README's Architecture section too.
 
@@ -29,7 +34,19 @@ Every doc file in this repo (README.md, docs/API.md, this file, templates/disha_
 
 ## Copy-and-adapt exams: don't touch another exam's files
 
-Per the README's [Adding a new exam](README.md#adding-a-new-exam) section: JEE, COMEDK, and KCET are independently-maintained, structurally-parallel implementations, not a shared engine. When adding or fixing one exam, do not edit another exam's files (`app/disha/<exam>/*`, `templates/disha_templates/<exam>/*`) unless the change is specifically about that exam. The one shared integration point you're expected to edit across exams is `app/disha/routes.py` (to register a new exam's router and page routes) and `templates/disha_templates/js/landing.js` (to add its picker card) — everything else should be additive, new files, not edits to an existing exam's copy.
+Per the README's [Adding a new exam](README.md#adding-a-new-exam) section: registration and every stage *rule* the engine uses are shared, but each exam still composes its own pipeline around them. When adding or fixing one exam, do not edit another exam's files (`app/disha/<exam>/*`, `templates/disha_templates/<exam>/*`) unless the change is specifically about that exam.
+
+Before deciding where a change goes, read [docs/EXAM_DIFFERENCES.md](docs/EXAM_DIFFERENCES.md) — it says which side of the line each concern already lives on, and §5 maps "the thing you want to change" to "the file to open".
+
+The shared files you *are* expected to edit across exams:
+
+- `app/disha/registry.py` — one `ExamRegistration` entry per exam; router mounting and page routes are generated from it. `app/disha/routes.py` no longer needs editing.
+- `templates/disha_templates/js/landing.js` — the picker card.
+- `tests/golden/matrix.py` — add your exam's request matrix, or it has no safety net.
+
+`app/disha/core/` is shared by every exam and must never import from an exam package. If you find yourself wanting to add an `if exam == "..."` there, that is the signal the abstraction is wrong — push the difference into the exam's own module instead. A flag whose value is effectively "which exam am I" counts as the same mistake wearing a parameter's clothing; a flag that names a *data rule* the caller is asserting (`ties="dense"`, `dynamic_floor_fraction`) does not.
+
+**Behaviour changes must not ride along inside a refactor.** If a change alters any API response, the golden suite will fail; re-capture it in its own commit so the diff is a reviewable record of what changed.
 
 ## Tests
 

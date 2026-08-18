@@ -4,10 +4,11 @@ categorized and interest-ranked list of institute + branch options.
 
 from __future__ import annotations
 
-from typing import Dict, List, Optional, Set
+from typing import Dict, List, Optional
 import math
 
 from . import states
+from .core import curation
 from .data_loader import (
     Program,
     female_seat_advantage_index,
@@ -201,8 +202,6 @@ def _calculate_probability(rank: int, opening_rank: int, closing_rank: int, hist
     Uses the historical volatility (standard deviation of closing ranks) if history is available.
     Otherwise, defaults to a volatility based on the opening-closing span.
     """
-    ranks = list(history.values())
-    
     margin = closing_rank - rank
     span = max(1, closing_rank - opening_rank)
     
@@ -719,66 +718,15 @@ _GUIDANCE = {
 
 
 def _order_bucket(rows: List[Recommendation], bucket: str) -> List[Recommendation]:
-    """Order one bucket best-first, so a cap keeps the strongest options.
-
-    Target and Safe lead with the most competitive programme the rank can
-    reach (lowest closing rank breaks an interest-score tie).  Reach inverts
-    that tiebreak: the *highest* closing rank inside the Dream band is the one
-    the student is closest to reaching, so sorting Dreams by ascending closing
-    rank — as the old flat sort did — put the least attainable Dream first.
-    """
-    if bucket == "Reach":
-        return sorted(
-            rows,
-            key=lambda r: (-r.interest_score, -r.closing_rank, r.institute, r.branch),
-        )
-    return sorted(
-        rows,
-        key=lambda r: (-r.interest_score, r.closing_rank, r.institute, r.branch),
+    """Order one bucket best-first — see ``core.curation.order_bucket``."""
+    return curation.order_bucket(
+        rows, bucket, rank_attr="closing_rank", name_attr="branch"
     )
 
 
-def _curate_bucket(
-    rows: List[Recommendation], cap: int, max_per_institute: int
-) -> List[Recommendation]:
-    """Take the first ``cap`` options, allowing at most N per institute.
-
-    ``rows`` must already be ordered best-first.  Nothing is deleted from the
-    caller's data — this only chooses what the default response displays.
-
-    The per-institute allowance is raised one seat at a time rather than
-    abandoned, so a bucket that cannot fill under a strict limit still fills,
-    fairly: every college gets a third seat before any college gets a fourth.
-    Diversity therefore never costs the student options — if a bucket holds
-    three programmes and all three are from one institute, all three are still
-    shown.
-    """
-    if cap <= 0 or not rows:
-        return []
-
-    kept: List[Recommendation] = []
-    taken: Set[int] = set()
-    per_institute: Dict[str, int] = {}
-    allowance = max(1, max_per_institute)
-
-    while len(kept) < cap:
-        progressed = False
-        for idx, row in enumerate(rows):
-            if len(kept) >= cap:
-                break
-            if idx in taken:
-                continue
-            if per_institute.get(row.institute, 0) >= allowance:
-                continue
-            kept.append(row)
-            taken.add(idx)
-            per_institute[row.institute] = per_institute.get(row.institute, 0) + 1
-            progressed = True
-        if not progressed:
-            break
-        allowance += 1
-
-    return kept
+# Signature is identical to the shared implementation, so this is a plain
+# alias rather than a wrapper.
+_curate_bucket = curation.curate_bucket
 
 
 def recommend(req: RecommendRequest) -> RecommendResponse:
@@ -918,7 +866,9 @@ def recommend(req: RecommendRequest) -> RecommendResponse:
     # 100 % probability). Show a short, institute-diverse list of the most
     # competitive programmes instead. Triggered by the bucket counts rather
     # than a rank threshold, so it adapts to each seat category's own scale.
-    is_top_rank = total_unfiltered > 0 and count_target == 0 and count_reach == 0
+    is_top_rank = curation.detect_top_rank(
+        total_unfiltered, count_target, count_reach
+    )
 
     requested_bucket = _SINGLE_BUCKETS.get((req.bucket or "all").lower())
     single_bucket = requested_bucket is not None

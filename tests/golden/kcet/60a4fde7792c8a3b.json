@@ -1,0 +1,629 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "These closed right around your rank last year. They are your most realistic picks.",
+        "category": "Target",
+        "count": 6
+      },
+      {
+        "blurb": "These closed slightly above your rank last year. Cutoffs move between rounds, so list a few as ambitious choices.",
+        "category": "Reach",
+        "count": 4
+      },
+      {
+        "blurb": "Your rank comfortably beats last year's closing rank here, so these are strong backups you are very likely to get.",
+        "category": "Safe",
+        "count": 33
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 4,
+        "Safe": 33,
+        "Target": 6
+      },
+      "is_curated": true,
+      "is_top_rank": false,
+      "shown": 25,
+      "shown_by_category": {
+        "Reach": 4,
+        "Safe": 15,
+        "Target": 6
+      },
+      "total": 43
+    },
+    "guidance": "Found 43 eligible college-programme options for your profile (showing 25). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
+    "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
+    "notes": [
+      "Showing the 25 strongest picks out of 43 eligible options, with at most a couple of programmes per college. Open a single section to see every option in it."
+    ],
+    "recommendations": [
+      {
+        "admission_probability": 70.4,
+        "band_imputed": false,
+        "category": "Target",
+        "closing_rank": 5259.0,
+        "college_code": "E006",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 8.46,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY)",
+        "quality_score": 9.92,
+        "rank_high": 5259.0,
+        "rank_low": 4363.0,
+        "reason": "Target for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY) at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.), under the Category 2A (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 79.9,
+        "band_imputed": false,
+        "category": "Target",
+        "closing_rank": 5749.0,
+        "college_code": "E006",
+        "confidence": "medium",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 8.46,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+        "quality_score": 9.91,
+        "rank_high": 5749.0,
+        "rank_low": 4119.0,
+        "reason": "Target for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND DATA SCIENCE at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.), under the Category 2A (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 93.3,
+        "band_imputed": false,
+        "category": "Target",
+        "closing_rank": 6531.0,
+        "college_code": "E048",
+        "confidence": "high",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE",
+        "interest_score": 8.45,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.9,
+        "rank_high": 6531.0,
+        "rank_low": 4789.0,
+        "reason": "Target for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 94.8,
+        "band_imputed": false,
+        "category": "Target",
+        "closing_rank": 6664.0,
+        "college_code": "E048",
+        "confidence": "high",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE",
+        "interest_score": 8.45,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+        "quality_score": 9.89,
+        "rank_high": 6664.0,
+        "rank_low": 4950.0,
+        "reason": "Target for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND DATA SCIENCE at B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 94.6,
+        "band_imputed": false,
+        "category": "Target",
+        "closing_rank": 6946.0,
+        "college_code": "E048",
+        "confidence": "high",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE",
+        "interest_score": 8.43,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING(DATA SCIENCE)",
+        "quality_score": 9.87,
+        "rank_high": 6946.0,
+        "rank_low": 4907.0,
+        "reason": "Target for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING(DATA SCIENCE) at B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 91.0,
+        "band_imputed": true,
+        "category": "Target",
+        "closing_rank": 4481.0,
+        "college_code": "E006",
+        "confidence": "high",
+        "fit_label": "Achievable - your rank is close to last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 7.97,
+        "matched_interest": true,
+        "program": "INFORMATION SCIENCE AND ENGINEERING",
+        "quality_score": 9.95,
+        "rank_high": 6766.31,
+        "rank_low": 4481.0,
+        "reason": "Target for you - strong fit for your goal (INFORMATION SCIENCE AND ENGINEERING at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "it"
+        ]
+      },
+      {
+        "admission_probability": 14.1,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 4363.0,
+        "college_code": "E006",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 8.48,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "quality_score": 9.96,
+        "rank_high": 4363.0,
+        "rank_low": 3304.0,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING) at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.), under the Category 2A (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 19.8,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 4720.0,
+        "college_code": "E005",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "interest_score": 8.47,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND TELECOMMUNIC ATION ENGINEERING",
+        "quality_score": 9.94,
+        "rank_high": 4720.0,
+        "rank_low": 4498.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS AND TELECOMMUNIC ATION ENGINEERING at R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE), under the Category 2A (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 11.6,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 4509.0,
+        "college_code": "E009",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085",
+        "interest_score": 8.47,
+        "matched_interest": true,
+        "program": "B TECH IN COMPUTER SCIENCE & ENGINEERING (ARTIFICAL INTELLIGENCE & MACHINE LEARNING)",
+        "quality_score": 9.94,
+        "rank_high": 4509.0,
+        "rank_low": 3782.0,
+        "reason": "Reach for you - strong fit for your goal (B TECH IN COMPUTER SCIENCE & ENGINEERING (ARTIFICAL INTELLIGENCE & MACHINE LEARNING) at PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085), under the Category 2A (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 42.3,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 4876.0,
+        "college_code": "E006",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 8.46,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+        "quality_score": 9.93,
+        "rank_high": 4876.0,
+        "rank_low": 3676.0,
+        "reason": "Reach for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.), under the Category 2A (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 96.1,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 5737.0,
+        "college_code": "E003",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE",
+        "interest_score": 8.46,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 9.92,
+        "rank_high": 5737.0,
+        "rank_low": 5049.0,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 99.3,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 5984.0,
+        "college_code": "E021",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Sri Jayachamarajendra College of Engineering(Constituent College of JSS Science & Technology University), Mysore JSS TECHNICAL INSTITUTIONS CAMPUS,MANASAGANGOTHRI PO,MYSORE",
+        "interest_score": 8.45,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.9,
+        "rank_high": 5984.0,
+        "rank_low": 5540.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Sri Jayachamarajendra College of Engineering(Constituent College of JSS Science & Technology University), Mysore JSS TECHNICAL INSTITUTIONS CAMPUS,MANASAGANGOTHRI PO,MYSORE), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.4,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 6845.0,
+        "college_code": "E284",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Sri Jayachamarajendra College of Engineering(Constituent College of JSS Science & Technology University), Mysore JSS TECHNICAL INSTITUTIONS CAMPUS,MANASAGANGOTHRI PO,MYSORE",
+        "interest_score": 8.44,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.88,
+        "rank_high": 6845.0,
+        "rank_low": 5749.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Sri Jayachamarajendra College of Engineering(Constituent College of JSS Science & Technology University), Mysore JSS TECHNICAL INSTITUTIONS CAMPUS,MANASAGANGOTHRI PO,MYSORE), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 97.8,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 6902.0,
+        "college_code": "E048",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE",
+        "interest_score": 8.44,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+        "quality_score": 9.88,
+        "rank_high": 6902.0,
+        "rank_low": 5398.0,
+        "reason": "Safe for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING at B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 98.6,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 7617.5,
+        "college_code": "E006",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 8.43,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 9.87,
+        "rank_high": 7617.5,
+        "rank_low": 5777.0,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 98.3,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 7750.0,
+        "college_code": "E001",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle, Bangalore",
+        "interest_score": 8.43,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.86,
+        "rank_high": 7750.0,
+        "rank_low": 5714.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle, Bangalore), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 98.8,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 7765.0,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "interest_score": 8.43,
+        "matched_interest": true,
+        "program": "ELECTRICAL & ELECTRONICS ENGINEERING",
+        "quality_score": 9.85,
+        "rank_high": 7765.0,
+        "rank_low": 5882.0,
+        "reason": "Safe for you - strong fit for your goal (ELECTRICAL & ELECTRONICS ENGINEERING at R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ece",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 99.6,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 8509.0,
+        "college_code": "E001",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle, Bangalore",
+        "interest_score": 8.42,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+        "quality_score": 9.84,
+        "rank_high": 8509.0,
+        "rank_low": 6634.0,
+        "reason": "Safe for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND DATA SCIENCE at Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle, Bangalore), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 98.7,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 8954.5,
+        "college_code": "E057",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "JSS Science and Technology University JSS TECHNICAL INSTITUTIONS CAMPUS, MANASAGANGOTHRI, MYSURU 570006",
+        "interest_score": 8.41,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "quality_score": 9.81,
+        "rank_high": 8954.5,
+        "rank_low": 6203.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING) at JSS Science and Technology University JSS TECHNICAL INSTITUTIONS CAMPUS, MANASAGANGOTHRI, MYSURU 570006), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 98.9,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 9107.0,
+        "college_code": "E009",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085",
+        "interest_score": 8.41,
+        "matched_interest": true,
+        "program": "B TECH IN ELECTRONICS & COMMUNICATION ENGINEERING",
+        "quality_score": 9.81,
+        "rank_high": 9107.0,
+        "rank_low": 6392.0,
+        "reason": "Safe for you - strong fit for your goal (B TECH IN ELECTRONICS & COMMUNICATION ENGINEERING at PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 99.3,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 9339.0,
+        "college_code": "E007",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Dayananda Sagar College of Engineering, Bangalore(AUTONOMOUS) SHAVIGE MALLESHWARA HILLS, KUMARASWAMY LAYOUT, BANGALORE-560078",
+        "interest_score": 8.4,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.8,
+        "rank_high": 9339.0,
+        "rank_low": 6718.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Dayananda Sagar College of Engineering, Bangalore(AUTONOMOUS) SHAVIGE MALLESHWARA HILLS, KUMARASWAMY LAYOUT, BANGALORE-560078), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.9,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 9389.0,
+        "college_code": "E007",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Dayananda Sagar College of Engineering, Bangalore(AUTONOMOUS) SHAVIGE MALLESHWARA HILLS, KUMARASWAMY LAYOUT, BANGALORE-560078",
+        "interest_score": 8.39,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING(DATA SCIENCE)",
+        "quality_score": 9.79,
+        "rank_high": 9389.0,
+        "rank_low": 7515.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING(DATA SCIENCE) at Dayananda Sagar College of Engineering, Bangalore(AUTONOMOUS) SHAVIGE MALLESHWARA HILLS, KUMARASWAMY LAYOUT, BANGALORE-560078), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.9,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 9794.0,
+        "college_code": "E057",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "JSS Science and Technology University JSS TECHNICAL INSTITUTIONS CAMPUS, MANASAGANGOTHRI, MYSURU 570006",
+        "interest_score": 8.39,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.78,
+        "rank_high": 9794.0,
+        "rank_low": 7789.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at JSS Science and Technology University JSS TECHNICAL INSTITUTIONS CAMPUS, MANASAGANGOTHRI, MYSURU 570006), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 10921.0,
+        "college_code": "E141",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "PES UNIVERSITY(Electronic City Campus) Hosur Rd, Konappana Agrahara, Electronic City, Bengaluru, Karnataka 560100",
+        "interest_score": 8.38,
+        "matched_interest": true,
+        "program": "B TECH IN COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.77,
+        "rank_high": 10921.0,
+        "rank_low": 8696.5,
+        "reason": "Safe for you - strong fit for your goal (B TECH IN COMPUTER SCIENCE AND ENGINEERING at PES UNIVERSITY(Electronic City Campus) Hosur Rd, Konappana Agrahara, Electronic City, Bengaluru, Karnataka 560100), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 10926.0,
+        "college_code": "E141",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "PES UNIVERSITY(Electronic City Campus) Hosur Rd, Konappana Agrahara, Electronic City, Bengaluru, Karnataka 560100",
+        "interest_score": 8.38,
+        "matched_interest": true,
+        "program": "B TECH IN COMPUTER SCIENCE & ENGINEERING (ARTIFICAL INTELLIGENCE & MACHINE LEARNING)",
+        "quality_score": 9.76,
+        "rank_high": 10926.0,
+        "rank_low": 9107.0,
+        "reason": "Safe for you - strong fit for your goal (B TECH IN COMPUTER SCIENCE & ENGINEERING (ARTIFICAL INTELLIGENCE & MACHINE LEARNING) at PES UNIVERSITY(Electronic City Campus) Hosur Rd, Konappana Agrahara, Electronic City, Bengaluru, Karnataka 560100), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      }
+    ],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "max_per_institute": 2,
+      "min_options": 25,
+      "relevance_ceiling_z": 4.0,
+      "safe_buffer_fraction": 0.0,
+      "top_rank_cap": 25,
+      "use_observed_range": true
+    },
+    "total_count": 43
+  },
+  "note": "core grid rank=5000 cat=2AG",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/kcet/recommend",
+    "payload": {
+      "rank": 5000,
+      "seat_category": "2AG"
+    }
+  },
+  "status": 200
+}

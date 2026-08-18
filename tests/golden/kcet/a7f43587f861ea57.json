@@ -1,0 +1,326 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "These closed slightly above your rank last year. Cutoffs move between rounds, so list a few as ambitious choices.",
+        "category": "Reach",
+        "count": 12
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 12,
+        "Safe": 0,
+        "Target": 0
+      },
+      "is_curated": false,
+      "is_top_rank": false,
+      "shown": 12,
+      "shown_by_category": {
+        "Reach": 12,
+        "Safe": 0,
+        "Target": 0
+      },
+      "total": 12
+    },
+    "guidance": "Found 12 eligible college-programme options for your profile (showing 12). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
+    "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
+    "notes": [
+      "A rank of 400,001 is well outside KCET's published range and may be a typo."
+    ],
+    "recommendations": [
+      {
+        "admission_probability": 5.4,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 237035.0,
+        "college_code": "E100",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "K N S Institute of Technology, Bangalore THIRUMENAHALLI, HEGGADENAGAR-KOGILU ROAD, YELAHANKA, BANGALORE-560064",
+        "interest_score": 3.58,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 0.15,
+        "rank_high": 237035.0,
+        "rank_low": 66530.0,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at K N S Institute of Technology, Bangalore THIRUMENAHALLI, HEGGADENAGAR-KOGILU ROAD, YELAHANKA, BANGALORE-560064), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 5.6,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 245522.0,
+        "college_code": "E112",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Sri Krishna Institute of Technology, Bangalore NO. 29, HESARAGHATTA MAIN ROAD,CHIMNEY HILLS, CHIKKABANAVARA POST,BANGALORE - 560090",
+        "interest_score": 3.56,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 0.13,
+        "rank_high": 245522.0,
+        "rank_low": 81593.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at Sri Krishna Institute of Technology, Bangalore NO. 29, HESARAGHATTA MAIN ROAD,CHIMNEY HILLS, CHIKKABANAVARA POST,BANGALORE - 560090), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 4.9,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 245436.0,
+        "college_code": "E302",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "AMITY UNIVERSITY National Highway 648 (old 207), Devanahalli - Doddaballapur Road",
+        "interest_score": 3.56,
+        "matched_interest": true,
+        "program": "B.Tech in Electrical and Electronics Engineering (Electrical Vehicle Technology)",
+        "quality_score": 0.13,
+        "rank_high": 245436.0,
+        "rank_low": 89066.0,
+        "reason": "Reach for you - strong fit for your goal (B.Tech in Electrical and Electronics Engineering (Electrical Vehicle Technology) at AMITY UNIVERSITY National Highway 648 (old 207), Devanahalli - Doddaballapur Road), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ece",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 6.3,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 251871.0,
+        "college_code": "E303",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "GM University KARUR VILLAGE, KASABA HOBLI, DAVANGERE TALUK AND DISTRICT",
+        "interest_score": 3.54,
+        "matched_interest": true,
+        "program": "B TECH IN COMPUTER SCIENCE (CLOUD COMPUTING)",
+        "quality_score": 0.07,
+        "rank_high": 251871.0,
+        "rank_low": 87217.0,
+        "reason": "Reach for you - strong fit for your goal (B TECH IN COMPUTER SCIENCE (CLOUD COMPUTING) at GM University KARUR VILLAGE, KASABA HOBLI, DAVANGERE TALUK AND DISTRICT), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 6.0,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 251871.0,
+        "college_code": "E150",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "P E S Institute of Technology & Management, Shimoga GUDDADAARAKERE, KOTEGANGOORSAGAR ROAD,SHIMOGA",
+        "interest_score": 3.54,
+        "matched_interest": true,
+        "program": "ELECTRICAL & ELECTRONICS ENGINEERING",
+        "quality_score": 0.08,
+        "rank_high": 251871.0,
+        "rank_low": 90808.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRICAL & ELECTRONICS ENGINEERING at P E S Institute of Technology & Management, Shimoga GUDDADAARAKERE, KOTEGANGOORSAGAR ROAD,SHIMOGA), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ece",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 4.8,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 253812.5,
+        "college_code": "E146",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Shreedevi Institute of Technology, Mangalore AIRPORT ROAD, KENJAR VILLAGE,MALAVOOR PANCHAYAT,DAKSHINA KANNADA",
+        "interest_score": 3.53,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 0.06,
+        "rank_high": 253812.5,
+        "rank_low": 106807.0,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Shreedevi Institute of Technology, Mangalore AIRPORT ROAD, KENJAR VILLAGE,MALAVOOR PANCHAYAT,DAKSHINA KANNADA), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 4.8,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 255457.0,
+        "college_code": "E130",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Shridevi Institute of Engineering & Technology, Tumkur MARELENAHALLY,SIRA ROAD ,TUMKUR",
+        "interest_score": 3.52,
+        "matched_interest": true,
+        "program": "CYBER SECURITY",
+        "quality_score": 0.04,
+        "rank_high": 255457.0,
+        "rank_low": 110692.0,
+        "reason": "Reach for you - strong fit for your goal (CYBER SECURITY at Shridevi Institute of Engineering & Technology, Tumkur MARELENAHALLY,SIRA ROAD ,TUMKUR), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 10.7,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 262058.0,
+        "college_code": "E252",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Mysore College Of Engineering and Management,Mysore CHIKAHALLI, VARUNA HOBALI, NEAR BIG BANYAN TREE, TN ROAD,MYSORE",
+        "interest_score": 3.5,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "quality_score": 0.0,
+        "rank_high": 262058.0,
+        "rank_low": 66694.0,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING) at Mysore College Of Engineering and Management,Mysore CHIKAHALLI, VARUNA HOBALI, NEAR BIG BANYAN TREE, TN ROAD,MYSORE), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 6.9,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 260068.0,
+        "college_code": "E136",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Moodalakatte Institute of Technology, Kundapura, Udupi MOODLAKATTE,KUNDAPURA TALUK,UDUPI DISTRICT",
+        "interest_score": 3.5,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 0.01,
+        "rank_high": 260068.0,
+        "rank_low": 99160.0,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Moodalakatte Institute of Technology, Kundapura, Udupi MOODLAKATTE,KUNDAPURA TALUK,UDUPI DISTRICT), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 6.1,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 247702.0,
+        "college_code": "E201",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Gopalan College of Engineering & Management, K.R. Puram, Bangalore SONNENAHALLI, HOODI VILLAGE, ITPL ROAD,BANGALORE",
+        "interest_score": 3.06,
+        "matched_interest": true,
+        "program": "INFORMATION SCIENCE AND ENGINEERING",
+        "quality_score": 0.11,
+        "rank_high": 247702.0,
+        "rank_low": 80155.0,
+        "reason": "Reach for you - strong fit for your goal (INFORMATION SCIENCE AND ENGINEERING at Gopalan College of Engineering & Management, K.R. Puram, Bangalore SONNENAHALLI, HOODI VILLAGE, ITPL ROAD,BANGALORE), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "it"
+        ]
+      },
+      {
+        "admission_probability": 6.8,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 249214.0,
+        "college_code": "E036",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "K L E Technological Univeristy, Belgaum Campus (Formerly KLE Dr M.S.Sheshagiri College of Engineering and Technology) UDYAMBAGH,BELGAUM",
+        "interest_score": 3.04,
+        "matched_interest": true,
+        "program": "MECHANICAL ENGINEERING",
+        "quality_score": 0.09,
+        "rank_high": 249214.0,
+        "rank_low": 76811.0,
+        "reason": "Reach for you - strong fit for your goal (MECHANICAL ENGINEERING at K L E Technological Univeristy, Belgaum Campus (Formerly KLE Dr M.S.Sheshagiri College of Engineering and Technology) UDYAMBAGH,BELGAUM), under the Category 3B (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "mechanical"
+        ]
+      },
+      {
+        "admission_probability": 10.0,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 248135.5,
+        "college_code": "E014",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "S J C Institute of Technology, Chickkaballapur(AUTONOMOUS) P B NO. 20, B B ROAD, CHICKBALLAPUR, CHICKBALLAPUR (DISTRICT)",
+        "interest_score": 0.05,
+        "matched_interest": false,
+        "program": "AERO SPACE ENGINEERING",
+        "quality_score": 0.1,
+        "rank_high": 248135.5,
+        "rank_low": 40611.0,
+        "reason": "Reach for you - a sensible option to keep on your list (AERO SPACE ENGINEERING at S J C Institute of Technology, Chickkaballapur(AUTONOMOUS) P B NO. 20, B B ROAD, CHICKBALLAPUR, CHICKBALLAPUR (DISTRICT)), under the Category 3B (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "3BG",
+        "seat_category_label": "Category 3B (State-wide (General))",
+        "tags": [
+          "aerospace"
+        ]
+      }
+    ],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "max_per_institute": 2,
+      "min_options": 25,
+      "relevance_ceiling_z": 4.0,
+      "safe_buffer_fraction": 0.0,
+      "top_rank_cap": 25,
+      "use_observed_range": true
+    },
+    "total_count": 12
+  },
+  "note": "core grid rank=400001 cat=3BG",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/kcet/recommend",
+    "payload": {
+      "rank": 400001,
+      "seat_category": "3BG"
+    }
+  },
+  "status": 200
+}

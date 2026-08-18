@@ -21,8 +21,8 @@ dist/
 .vscode/
 .env
 
-# Local tests & config (ignored in production/Github)
-conftest.py
-tests/
-mock_portal.py
+# Local config (ignored in production/Github)
 DISHA_INTEGRATION_QA.md
+
+# Golden baseline captures are tracked deliberately: they are the regression
+# safety net for the multi-exam refactor. See tests/golden/README.md.

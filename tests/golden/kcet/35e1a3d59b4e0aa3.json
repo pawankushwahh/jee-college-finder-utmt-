@@ -1,0 +1,396 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "These closed slightly above your rank last year. Cutoffs move between rounds, so list a few as ambitious choices.",
+        "category": "Reach",
+        "count": 304
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 304,
+        "Safe": 0,
+        "Target": 0
+      },
+      "is_curated": true,
+      "is_top_rank": false,
+      "shown": 15,
+      "shown_by_category": {
+        "Reach": 15,
+        "Safe": 0,
+        "Target": 0
+      },
+      "total": 304
+    },
+    "guidance": "Found 304 eligible college-programme options for your profile (showing 15). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
+    "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
+    "notes": [
+      "A rank of 400,001 is well outside KCET's published range and may be a typo.",
+      "Showing the 15 strongest picks out of 304 eligible options, with at most a couple of programmes per college. Open a single section to see every option in it."
+    ],
+    "recommendations": [
+      {
+        "admission_probability": 5.7,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 231660.0,
+        "college_code": "E206",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Shri Madhwa Vadiraja Institute of Technology and Management, Udupi VISHWOTHAMA NAGAR,",
+        "interest_score": 5.24,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+        "quality_score": 3.48,
+        "rank_high": 231660.0,
+        "rank_low": 52014.0,
+        "reason": "Reach for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND DATA SCIENCE at Shri Madhwa Vadiraja Institute of Technology and Management, Udupi VISHWOTHAMA NAGAR,). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 5.4,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 234212.0,
+        "college_code": "E102",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "DONBOSCO Institute of Technology, Bangalore(AUTONOMOUS) KUMBALAGODU, MYSORE ROAD, KENGERI HOBLI,BANGALORE-560074",
+        "interest_score": 5.19,
+        "matched_interest": true,
+        "program": "ELECTRICAL & ELECTRONICS ENGINEERING",
+        "quality_score": 3.38,
+        "rank_high": 234212.0,
+        "rank_low": 60511.5,
+        "reason": "Reach for you - strong fit for your goal (ELECTRICAL & ELECTRONICS ENGINEERING at DONBOSCO Institute of Technology, Bangalore(AUTONOMOUS) KUMBALAGODU, MYSORE ROAD, KENGERI HOBLI,BANGALORE-560074). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 6.3,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 236008.0,
+        "college_code": "E306",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "THE CHANAKYA UNIVERSITY NO 29 HARALURU, DEVANAHALLI TALUK (NEAR BENGALURU INTERNATIONLA AIRPORT)",
+        "interest_score": 5.17,
+        "matched_interest": true,
+        "program": "B.TECH IN ELECTRONICS ENGINEERING (VLSI AND EMBEDDED SYSTEM)",
+        "quality_score": 3.33,
+        "rank_high": 236008.0,
+        "rank_low": 53842.0,
+        "reason": "Reach for you - strong fit for your goal (B.TECH IN ELECTRONICS ENGINEERING (VLSI AND EMBEDDED SYSTEM) at THE CHANAKYA UNIVERSITY NO 29 HARALURU, DEVANAHALLI TALUK (NEAR BENGALURU INTERNATIONLA AIRPORT)). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse",
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 5.9,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 235197.0,
+        "college_code": "E152",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "S D M Institute of Tech., Ujire, Dakshina Kannada UJIRE-574240 DAKSHINA KANNADA KARNATAKA",
+        "interest_score": 5.17,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+        "quality_score": 3.35,
+        "rank_high": 235197.0,
+        "rank_low": 56304.0,
+        "reason": "Reach for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND DATA SCIENCE at S D M Institute of Tech., Ujire, Dakshina Kannada UJIRE-574240 DAKSHINA KANNADA KARNATAKA). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 5.2,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 236706.0,
+        "college_code": "E092",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Vemana Institute of Technology, Bangalore #1, MAHAYOGI VEMANA ROAD, 3RD BLOCK, KORMANGALA, BANGALORE -560034.",
+        "interest_score": 5.15,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 3.3,
+        "rank_high": 236706.0,
+        "rank_low": 67938.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at Vemana Institute of Technology, Bangalore #1, MAHAYOGI VEMANA ROAD, 3RD BLOCK, KORMANGALA, BANGALORE -560034.). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 6.8,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 237586.0,
+        "college_code": "E206",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Shri Madhwa Vadiraja Institute of Technology and Management, Udupi VISHWOTHAMA NAGAR,",
+        "interest_score": 5.12,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 3.24,
+        "rank_high": 237586.0,
+        "rank_low": 51700.5,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Shri Madhwa Vadiraja Institute of Technology and Management, Udupi VISHWOTHAMA NAGAR,). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 6.2,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 239332.0,
+        "college_code": "E144",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Srinivas Institute of Technology, Mangalore SRINIVAS CAMPUS",
+        "interest_score": 5.09,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+        "quality_score": 3.19,
+        "rank_high": 239332.0,
+        "rank_low": 62278.0,
+        "reason": "Reach for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING at Srinivas Institute of Technology, Mangalore SRINIVAS CAMPUS). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 5.6,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 240137.0,
+        "college_code": "E252",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Mysore College Of Engineering and Management,Mysore CHIKAHALLI, VARUNA HOBALI, NEAR BIG BANYAN TREE, TN ROAD,MYSORE",
+        "interest_score": 5.06,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 3.12,
+        "rank_high": 240137.0,
+        "rank_low": 70212.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at Mysore College Of Engineering and Management,Mysore CHIKAHALLI, VARUNA HOBALI, NEAR BIG BANYAN TREE, TN ROAD,MYSORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 5.4,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 240508.0,
+        "college_code": "E013",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Ghousia Engineering College, Ramanagara BANGALORE - MYSORE ROAD,RAMANAGARA",
+        "interest_score": 5.05,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY)",
+        "quality_score": 3.1,
+        "rank_high": 240508.0,
+        "rank_low": 73478.0,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY) at Ghousia Engineering College, Ramanagara BANGALORE - MYSORE ROAD,RAMANAGARA). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 5.2,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 241013.0,
+        "college_code": "E013",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Ghousia Engineering College, Ramanagara BANGALORE - MYSORE ROAD,RAMANAGARA",
+        "interest_score": 5.03,
+        "matched_interest": true,
+        "program": "ROBOTICS AND ARTIFICIAL INTELLIGENCE",
+        "quality_score": 3.06,
+        "rank_high": 241013.0,
+        "rank_low": 77000.0,
+        "reason": "Reach for you - strong fit for your goal (ROBOTICS AND ARTIFICIAL INTELLIGENCE at Ghousia Engineering College, Ramanagara BANGALORE - MYSORE ROAD,RAMANAGARA). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "production"
+        ]
+      },
+      {
+        "admission_probability": 5.5,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 242328.0,
+        "college_code": "E124",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Rajiv Gandhi Institute of Technology, Bangalore CHOLANGAR,R.T.NAGAR POST, HEBBAL,BANGALORE-560032",
+        "interest_score": 4.99,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 2.97,
+        "rank_high": 242328.0,
+        "rank_low": 76021.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at Rajiv Gandhi Institute of Technology, Bangalore CHOLANGAR,R.T.NAGAR POST, HEBBAL,BANGALORE-560032). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 6.6,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 242842.0,
+        "college_code": "E144",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Srinivas Institute of Technology, Mangalore SRINIVAS CAMPUS",
+        "interest_score": 4.97,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 2.94,
+        "rank_high": 242842.0,
+        "rank_low": 65279.0,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Srinivas Institute of Technology, Mangalore SRINIVAS CAMPUS). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 5.8,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 243154.0,
+        "college_code": "E147",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "T.John Institute of technology, Bangalore #86/1, KAMMANAHALLI,GOTTIGERE,BANNERUGATTA ROAD,BANGALORE",
+        "interest_score": 4.96,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 2.92,
+        "rank_high": 243154.0,
+        "rank_low": 74490.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at T.John Institute of technology, Bangalore #86/1, KAMMANAHALLI,GOTTIGERE,BANNERUGATTA ROAD,BANGALORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 5.1,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 243396.0,
+        "college_code": "E300",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "AKASH INTITUTE OF ENGINEERING AND TECHNOLOGY PRASANNAHALLI MAIN RAOD, AKKUPETE VILLAGE, KASABA HOBLI",
+        "interest_score": 4.95,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING(DATA SCIENCE)",
+        "quality_score": 2.9,
+        "rank_high": 243396.0,
+        "rank_low": 83149.0,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING(DATA SCIENCE) at AKASH INTITUTE OF ENGINEERING AND TECHNOLOGY PRASANNAHALLI MAIN RAOD, AKKUPETE VILLAGE, KASABA HOBLI). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 5.4,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 243380.0,
+        "college_code": "E169",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Alva's Institute of Engineering & Technology, Moodabidre, D.K (AUTONOMOUS) SHOBHAVANA CAMPUS,MIJAR,MOODBIDRI - 574225,MANGALORE TALUK,DHAKSHINA KANNADA",
+        "interest_score": 4.95,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 2.9,
+        "rank_high": 243380.0,
+        "rank_low": 78818.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at Alva's Institute of Engineering & Technology, Moodabidre, D.K (AUTONOMOUS) SHOBHAVANA CAMPUS,MIJAR,MOODBIDRI - 574225,MANGALORE TALUK,DHAKSHINA KANNADA). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      }
+    ],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "max_per_institute": 2,
+      "min_options": 25,
+      "relevance_ceiling_z": 4.0,
+      "safe_buffer_fraction": 0.0,
+      "top_rank_cap": 25,
+      "use_observed_range": true
+    },
+    "total_count": 304
+  },
+  "note": "core grid rank=400001 cat=GM",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/kcet/recommend",
+    "payload": {
+      "rank": 400001,
+      "seat_category": "GM"
+    }
+  },
+  "status": 200
+}

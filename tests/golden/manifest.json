@@ -1,0 +1,12 @@
+{
+  "case_counts": {
+    "comedk": 35,
+    "jee": 192,
+    "kcet": 70
+  },
+  "data_files": {
+    "app/disha/comedk/data/comedk_2025_all_rounds.csv": "d5f1624343530b3f6424bcaf22b0181c1098b8cc9729f75d265d4c7044d06e74",
+    "app/disha/data/josaa_merged_2025.csv": "bc605489b159ca200db979f97050c56847176cb18989dfe53caa31a3b8f60c6b",
+    "app/disha/kcet/data/kcet_2025_all_rounds.csv": "23c947baaa062041c7e6df7e256e4f442a024964467290d9fa22742ab38fc242"
+  }
+}

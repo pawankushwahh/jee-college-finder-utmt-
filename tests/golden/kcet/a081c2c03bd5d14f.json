@@ -1,0 +1,284 @@
+{
+  "body": {
+    "branch_preferences": [
+      {
+        "label": "Computer Science",
+        "value": "cse"
+      },
+      {
+        "label": "Information Science / IT",
+        "value": "it"
+      },
+      {
+        "label": "AI / Data Science",
+        "value": "ai_ds"
+      },
+      {
+        "label": "Electronics & Communication",
+        "value": "ece"
+      },
+      {
+        "label": "Electrical",
+        "value": "electrical"
+      },
+      {
+        "label": "Mechanical",
+        "value": "mechanical"
+      },
+      {
+        "label": "Civil",
+        "value": "civil"
+      },
+      {
+        "label": "Chemical",
+        "value": "chemical"
+      },
+      {
+        "label": "Aeronautical / Aerospace",
+        "value": "aerospace"
+      },
+      {
+        "label": "Biotechnology",
+        "value": "biotech"
+      },
+      {
+        "label": "Industrial / Production / Robotics",
+        "value": "production"
+      },
+      {
+        "label": "Mining / Petroleum / Marine / Textile",
+        "value": "other_core"
+      }
+    ],
+    "goals": [
+      {
+        "label": "Software / coding career",
+        "value": "coding"
+      },
+      {
+        "label": "Research / higher studies",
+        "value": "research"
+      },
+      {
+        "label": "Science-adjacent (Biotech, Materials, Chemical)",
+        "value": "pure_science"
+      },
+      {
+        "label": "Management / MBA / business",
+        "value": "mba"
+      },
+      {
+        "label": "Core engineering",
+        "value": "core"
+      },
+      {
+        "label": "Undecided / keeping options open",
+        "value": "undecided"
+      }
+    ],
+    "seat_categories": [
+      {
+        "label": "Category 1 (State-wide (General))",
+        "value": "1G"
+      },
+      {
+        "label": "371(j) — Category 1 (State-wide (General))",
+        "value": "1H"
+      },
+      {
+        "label": "Category 1 (Kannada-medium quota)",
+        "value": "1K"
+      },
+      {
+        "label": "371(j) — Category 1 (Kannada-medium quota)",
+        "value": "1KH"
+      },
+      {
+        "label": "Category 1 (Rural quota)",
+        "value": "1R"
+      },
+      {
+        "label": "371(j) — Category 1 (Rural quota)",
+        "value": "1RH"
+      },
+      {
+        "label": "Category 2A (State-wide (General))",
+        "value": "2AG"
+      },
+      {
+        "label": "371(j) — Category 2A (State-wide (General))",
+        "value": "2AH"
+      },
+      {
+        "label": "Category 2A (Kannada-medium quota)",
+        "value": "2AK"
+      },
+      {
+        "label": "371(j) — Category 2A (Kannada-medium quota)",
+        "value": "2AKH"
+      },
+      {
+        "label": "Category 2A (Rural quota)",
+        "value": "2AR"
+      },
+      {
+        "label": "371(j) — Category 2A (Rural quota)",
+        "value": "2ARH"
+      },
+      {
+        "label": "Category 2B (State-wide (General))",
+        "value": "2BG"
+      },
+      {
+        "label": "371(j) — Category 2B (State-wide (General))",
+        "value": "2BH"
+      },
+      {
+        "label": "Category 2B (Kannada-medium quota)",
+        "value": "2BK"
+      },
+      {
+        "label": "371(j) — Category 2B (Kannada-medium quota)",
+        "value": "2BKH"
+      },
+      {
+        "label": "Category 2B (Rural quota)",
+        "value": "2BR"
+      },
+      {
+        "label": "371(j) — Category 2B (Rural quota)",
+        "value": "2BRH"
+      },
+      {
+        "label": "Category 3A (State-wide (General))",
+        "value": "3AG"
+      },
+      {
+        "label": "371(j) — Category 3A (State-wide (General))",
+        "value": "3AH"
+      },
+      {
+        "label": "Category 3A (Kannada-medium quota)",
+        "value": "3AK"
+      },
+      {
+        "label": "371(j) — Category 3A (Kannada-medium quota)",
+        "value": "3AKH"
+      },
+      {
+        "label": "Category 3A (Rural quota)",
+        "value": "3AR"
+      },
+      {
+        "label": "371(j) — Category 3A (Rural quota)",
+        "value": "3ARH"
+      },
+      {
+        "label": "Category 3B (State-wide (General))",
+        "value": "3BG"
+      },
+      {
+        "label": "371(j) — Category 3B (State-wide (General))",
+        "value": "3BH"
+      },
+      {
+        "label": "Category 3B (Kannada-medium quota)",
+        "value": "3BK"
+      },
+      {
+        "label": "371(j) — Category 3B (Kannada-medium quota)",
+        "value": "3BKH"
+      },
+      {
+        "label": "Category 3B (Rural quota)",
+        "value": "3BR"
+      },
+      {
+        "label": "371(j) — Category 3B (Rural quota)",
+        "value": "3BRH"
+      },
+      {
+        "label": "General Merit",
+        "value": "GM"
+      },
+      {
+        "label": "371(j) — General Merit",
+        "value": "GMH"
+      },
+      {
+        "label": "General Merit (Kannada-medium quota)",
+        "value": "GMK"
+      },
+      {
+        "label": "371(j) — General Merit (Kannada-medium quota)",
+        "value": "GMKH"
+      },
+      {
+        "label": "General Merit (Rural quota)",
+        "value": "GMR"
+      },
+      {
+        "label": "371(j) — General Merit (Rural quota)",
+        "value": "GMRH"
+      },
+      {
+        "label": "Scheduled Caste (State-wide (General))",
+        "value": "SCG"
+      },
+      {
+        "label": "371(j) — Scheduled Caste (State-wide (General))",
+        "value": "SCH"
+      },
+      {
+        "label": "Scheduled Caste (Kannada-medium quota)",
+        "value": "SCK"
+      },
+      {
+        "label": "371(j) — Scheduled Caste (Kannada-medium quota)",
+        "value": "SCKH"
+      },
+      {
+        "label": "Scheduled Caste (Rural quota)",
+        "value": "SCR"
+      },
+      {
+        "label": "371(j) — Scheduled Caste (Rural quota)",
+        "value": "SCRH"
+      },
+      {
+        "label": "Scheduled Tribe (State-wide (General))",
+        "value": "STG"
+      },
+      {
+        "label": "371(j) — Scheduled Tribe (State-wide (General))",
+        "value": "STH"
+      },
+      {
+        "label": "Scheduled Tribe (Kannada-medium quota)",
+        "value": "STK"
+      },
+      {
+        "label": "371(j) — Scheduled Tribe (Kannada-medium quota)",
+        "value": "STKH"
+      },
+      {
+        "label": "Scheduled Tribe (Rural quota)",
+        "value": "STR"
+      },
+      {
+        "label": "371(j) — Scheduled Tribe (Rural quota)",
+        "value": "STRH"
+      }
+    ],
+    "total_institutes": 217,
+    "total_programs": 24495
+  },
+  "note": "meta",
+  "request": {
+    "method": "GET",
+    "params": null,
+    "path": "/api/kcet/meta",
+    "payload": null
+  },
+  "status": 200
+}

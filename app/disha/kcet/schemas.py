@@ -85,9 +85,21 @@ class KcetRecommendation(BaseModel):
     institute: str
     college_code: str
     program: str  # raw course name as published — see states.py module docstring
-    seat_category: str  # exact published code, e.g. "2AG"
+    seat_category: str  # exact published code, e.g. "2AG" (371(j): "2AH")
     seat_category_label: str  # human-readable, e.g. "Category 2A (State-wide)"
-    closing_rank: int
+    # Float, not int: KEA publishes fractional cut-offs such as 76553.5 and
+    # 15223.875. Declaring this int made pydantic reject every such programme.
+    closing_rank: float
+    # The range of ranks actually admitted across KEA's rounds: rank_low is the
+    # toughest round's cut-off, rank_high the loosest. These are the boundaries
+    # the Safe/Target/Dream bucket is derived from, so a card can show the same
+    # numbers the model used.
+    rank_low: float
+    rank_high: float
+    # True when the programme appeared in only one round, so rank_high is
+    # estimated rather than observed. Worth surfacing: it is 4% of GM rows but
+    # 54-62% of some 371(j) categories.
+    band_imputed: bool = False
     category: str  # Safe / Target / Reach (display bucket)
     fit_label: str
     interest_score: float

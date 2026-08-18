@@ -1,0 +1,617 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "Your rank comfortably beats last year's closing rank here, so these are strong backups you are very likely to get.",
+        "category": "Safe",
+        "count": 25
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 0,
+        "Safe": 25,
+        "Target": 0
+      },
+      "is_curated": false,
+      "is_top_rank": true,
+      "shown": 25,
+      "shown_by_category": {
+        "Reach": 0,
+        "Safe": 25,
+        "Target": 0
+      },
+      "total": 25
+    },
+    "guidance": "Found 25 eligible college-programme options for your profile (showing 25). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
+    "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
+    "notes": [
+      "Your rank clears the cutoff for all 25 options you are eligible for under GM, so there is nothing to mark Target or Dream. Showing the 25 most competitive of them."
+    ],
+    "recommendations": [
+      {
+        "admission_probability": 92.3,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 499.0,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "interest_score": 8.5,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 10.0,
+        "rank_high": 499.0,
+        "rank_low": 234.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 97.6,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 742.0,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "interest_score": 8.5,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "quality_score": 9.99,
+        "rank_high": 742.0,
+        "rank_low": 429.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING) at R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.9,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 1654.0,
+        "college_code": "E009",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085",
+        "interest_score": 8.48,
+        "matched_interest": true,
+        "program": "B TECH IN COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.96,
+        "rank_high": 1654.0,
+        "rank_low": 934.0,
+        "reason": "Safe for you - strong fit for your goal (B TECH IN COMPUTER SCIENCE AND ENGINEERING at PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.8,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 2076.0,
+        "college_code": "E006",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 8.47,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.95,
+        "rank_high": 2076.0,
+        "rank_low": 1100.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.9,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 2694.0,
+        "college_code": "E009",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085",
+        "interest_score": 8.47,
+        "matched_interest": true,
+        "program": "B TECH IN COMPUTER SCIENCE & ENGINEERING (ARTIFICAL INTELLIGENCE & MACHINE LEARNING)",
+        "quality_score": 9.94,
+        "rank_high": 2694.0,
+        "rank_low": 1494.0,
+        "reason": "Safe for you - strong fit for your goal (B TECH IN COMPUTER SCIENCE & ENGINEERING (ARTIFICAL INTELLIGENCE & MACHINE LEARNING) at PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 2791.0,
+        "college_code": "E006",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 8.46,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "quality_score": 9.93,
+        "rank_high": 2791.0,
+        "rank_low": 1694.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING) at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.6,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 3114.0,
+        "college_code": "E003",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE",
+        "interest_score": 8.46,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 9.92,
+        "rank_high": 3114.0,
+        "rank_low": 1417.0,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 3156.0,
+        "college_code": "E021",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Sri Jayachamarajendra College of Engineering(Constituent College of JSS Science & Technology University), Mysore JSS TECHNICAL INSTITUTIONS CAMPUS,MANASAGANGOTHRI PO,MYSORE",
+        "interest_score": 8.46,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.92,
+        "rank_high": 3156.0,
+        "rank_low": 2704.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Sri Jayachamarajendra College of Engineering(Constituent College of JSS Science & Technology University), Mysore JSS TECHNICAL INSTITUTIONS CAMPUS,MANASAGANGOTHRI PO,MYSORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.9,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 3870.0,
+        "college_code": "E048",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE",
+        "interest_score": 8.45,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.89,
+        "rank_high": 3870.0,
+        "rank_low": 2246.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.1,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 944.0,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "interest_score": 8.5,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING(DATA SCIENCE)",
+        "quality_score": 9.99,
+        "rank_high": 944.0,
+        "rank_low": 367.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING(DATA SCIENCE) at R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.9,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 3429.0,
+        "college_code": "E006",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 8.46,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+        "quality_score": 9.91,
+        "rank_high": 3429.0,
+        "rank_low": 1910.5,
+        "reason": "Safe for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 3765.0,
+        "college_code": "E009",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085",
+        "interest_score": 8.45,
+        "matched_interest": true,
+        "program": "B TECH IN ELECTRONICS & COMMUNICATION ENGINEERING",
+        "quality_score": 9.9,
+        "rank_high": 3765.0,
+        "rank_low": 2380.0,
+        "reason": "Safe for you - strong fit for your goal (B TECH IN ELECTRONICS & COMMUNICATION ENGINEERING at PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 99.9,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 4585.0,
+        "college_code": "E048",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE",
+        "interest_score": 8.43,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING(DATA SCIENCE)",
+        "quality_score": 9.86,
+        "rank_high": 4585.0,
+        "rank_low": 2497.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING(DATA SCIENCE) at B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.3,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 990.0,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "interest_score": 8.49,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY)",
+        "quality_score": 9.98,
+        "rank_high": 990.0,
+        "rank_low": 508.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY) at R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 4080.0,
+        "college_code": "E006",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 8.45,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 9.89,
+        "rank_high": 4080.0,
+        "rank_low": 2567.0,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 99.8,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 4646.0,
+        "college_code": "E048",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE",
+        "interest_score": 8.43,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+        "quality_score": 9.85,
+        "rank_high": 4646.0,
+        "rank_low": 2442.0,
+        "reason": "Safe for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND DATA SCIENCE at B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.6,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 1100.0,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "interest_score": 8.48,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 9.97,
+        "rank_high": 1100.0,
+        "rank_low": 573.0,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 99.7,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 4160.0,
+        "college_code": "E006",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 8.44,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+        "quality_score": 9.88,
+        "rank_high": 4160.0,
+        "rank_low": 2063.0,
+        "reason": "Safe for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND DATA SCIENCE at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.9,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 5087.5,
+        "college_code": "E048",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE",
+        "interest_score": 8.42,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+        "quality_score": 9.84,
+        "rank_high": 5087.5,
+        "rank_low": 2786.0,
+        "reason": "Safe for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING at B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 99.9,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 1507.0,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "interest_score": 8.48,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND TELECOMMUNIC ATION ENGINEERING",
+        "quality_score": 9.97,
+        "rank_high": 1507.0,
+        "rank_low": 987.0,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS AND TELECOMMUNIC ATION ENGINEERING at R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 99.6,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 4208.0,
+        "college_code": "E006",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 8.43,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY)",
+        "quality_score": 9.87,
+        "rank_high": 4208.0,
+        "rank_low": 1915.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY) at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.6,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 5707.0,
+        "college_code": "E048",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE",
+        "interest_score": 8.41,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGG(INTERNET OF THINGS & CYBER SECURITY INCLUDING BLOCK CHAIN TECH)",
+        "quality_score": 9.83,
+        "rank_high": 5707.0,
+        "rank_low": 2639.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGG(INTERNET OF THINGS & CYBER SECURITY INCLUDING BLOCK CHAIN TECH) at B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.4,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 2783.0,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "interest_score": 8.47,
+        "matched_interest": true,
+        "program": "ELECTRICAL & ELECTRONICS ENGINEERING",
+        "quality_score": 9.94,
+        "rank_high": 2783.0,
+        "rank_low": 1126.75,
+        "reason": "Safe for you - strong fit for your goal (ELECTRICAL & ELECTRONICS ENGINEERING at R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "ece",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 3196.0,
+        "college_code": "E006",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 7.96,
+        "matched_interest": true,
+        "program": "INFORMATION SCIENCE AND ENGINEERING",
+        "quality_score": 9.91,
+        "rank_high": 3196.0,
+        "rank_low": 2473.0,
+        "reason": "Safe for you - strong fit for your goal (INFORMATION SCIENCE AND ENGINEERING at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "it"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 2069.0,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "interest_score": 4.98,
+        "matched_interest": false,
+        "program": "AERO SPACE ENGINEERING",
+        "quality_score": 9.96,
+        "rank_high": 2069.0,
+        "rank_low": 1932.0,
+        "reason": "Safe for you - a sensible option to keep on your list (AERO SPACE ENGINEERING at R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE). This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "GM",
+        "seat_category_label": "General Merit",
+        "tags": [
+          "aerospace"
+        ]
+      }
+    ],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "max_per_institute": 2,
+      "min_options": 25,
+      "relevance_ceiling_z": 4.0,
+      "safe_buffer_fraction": 0.0,
+      "top_rank_cap": 25,
+      "use_observed_range": true
+    },
+    "total_count": 25
+  },
+  "note": "core grid rank=1 cat=GM",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/kcet/recommend",
+    "payload": {
+      "rank": 1,
+      "seat_category": "GM"
+    }
+  },
+  "status": 200
+}

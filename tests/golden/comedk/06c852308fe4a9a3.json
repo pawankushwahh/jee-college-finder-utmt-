@@ -1,0 +1,494 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "These programmes have cutoffs close to your rank. They are your most realistic picks.",
+        "category": "Target",
+        "count": 7
+      },
+      {
+        "blurb": "These closed slightly above your rank last year. Cutoffs fluctuate, so list a few as ambitious choices.",
+        "category": "Reach",
+        "count": 8
+      },
+      {
+        "blurb": "Your rank comfortably beats the cutoff here, so these are strong backups you are very likely to get.",
+        "category": "Safe",
+        "count": 777
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 8,
+        "Reach_total_attainable": 8,
+        "Safe": 777,
+        "Safe_total_attainable": 777,
+        "Target": 7,
+        "Target_total_attainable": 7
+      },
+      "curated": false,
+      "shown": 8,
+      "total": 792,
+      "total_attainable": 792
+    },
+    "guidance": "Found 792 eligible programme options for your COMEDK profile (showing 8). They are grouped into Target, Reach and Safe, and ordered to match your stated interest.",
+    "has_next": false,
+    "interest_guidance": "",
+    "notes": [],
+    "reach": [
+      {
+        "admission_probability": 14.7,
+        "branch": "Industrial Engineering & Management",
+        "branch_family": "industrial",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Reach",
+        "category": "Reach",
+        "confidence": "medium",
+        "cutoff_rank": 17533.0,
+        "degree": "",
+        "fit_label": "Ambitious — your rank is just beyond this programme's cutoff, but worth listing.",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "interest_score": 9.63,
+        "is_metro": true,
+        "kkr_gap": 31735.0,
+        "matched_interest": false,
+        "program": "Industrial Engineering & Management",
+        "quota": "GM",
+        "rank_gap": -2467,
+        "reason": "Reach for you — a sensible option to keep on your list (Industrial Engineering & Management at an elite-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "industrial"
+        ]
+      },
+      {
+        "admission_probability": 15.9,
+        "branch": "Electronics & Communication Engineering",
+        "branch_family": "ece",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Reach",
+        "category": "Reach",
+        "confidence": "medium",
+        "cutoff_rank": 17651.0,
+        "degree": "",
+        "fit_label": "Ambitious — your rank is just beyond this programme's cutoff, but worth listing.",
+        "institute": "Dayananda Sagar College of Engineering-Kumaraswamy Layout, Bengaluru",
+        "interest_score": 9.62,
+        "is_metro": true,
+        "kkr_gap": 11026.0,
+        "matched_interest": false,
+        "program": "Electronics & Communication Engineering",
+        "quota": "GM",
+        "rank_gap": -2349,
+        "reason": "Reach for you — a sensible option to keep on your list (Electronics & Communication Engineering at an elite-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 32.3,
+        "branch": "Biotechnology",
+        "branch_family": "biotech",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Reach",
+        "category": "Reach",
+        "confidence": "borderline",
+        "cutoff_rank": 18883.0,
+        "degree": "",
+        "fit_label": "Ambitious — your rank is just beyond this programme's cutoff, but worth listing.",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "interest_score": 9.61,
+        "is_metro": true,
+        "kkr_gap": 28294.0,
+        "matched_interest": false,
+        "program": "Biotechnology",
+        "quota": "GM",
+        "rank_gap": -1117,
+        "reason": "Reach for you — a sensible option to keep on your list (Biotechnology at an elite-tier college). Your rank is very close to this cutoff — treat as volatile.",
+        "tags": [
+          "biotech"
+        ]
+      },
+      {
+        "admission_probability": 45.1,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Reach",
+        "category": "Reach",
+        "confidence": "borderline",
+        "cutoff_rank": 19691.0,
+        "degree": "",
+        "fit_label": "Ambitious — your rank is just beyond this programme's cutoff, but worth listing.",
+        "institute": "Siddaganga Institute of Technology-B H Road, Tumakuru",
+        "interest_score": 9.6,
+        "is_metro": false,
+        "kkr_gap": 13264.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering",
+        "quota": "GM",
+        "rank_gap": -309,
+        "reason": "Reach for you — a sensible option to keep on your list (Computer Science & Engineering at an elite-tier college). Your rank is very close to this cutoff — treat as volatile.",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 4.6,
+        "branch": "Computer Science & Engineering (Artificial & Machine Learning)",
+        "branch_family": "ai_ds",
+        "brand_score": 0.88,
+        "brand_tier": "top",
+        "bucket": "Reach",
+        "category": "Reach",
+        "confidence": "medium",
+        "cutoff_rank": 16101.0,
+        "degree": "",
+        "fit_label": "Ambitious — your rank is just beyond this programme's cutoff, but worth listing.",
+        "institute": "JSS Science and Technology University-Mysuru",
+        "interest_score": 9.29,
+        "is_metro": false,
+        "kkr_gap": 7061.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering (Artificial & Machine Learning)",
+        "quota": "GM",
+        "rank_gap": -3899,
+        "reason": "Reach for you — a sensible option to keep on your list (Computer Science & Engineering (Artificial & Machine Learning) at a top-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 6.2,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 0.88,
+        "brand_tier": "top",
+        "bucket": "Reach",
+        "category": "Reach",
+        "confidence": "medium",
+        "cutoff_rank": 16423.0,
+        "degree": "",
+        "fit_label": "Ambitious — your rank is just beyond this programme's cutoff, but worth listing.",
+        "institute": "Bangalore Institute of Technology-V V Puram, Bengaluru",
+        "interest_score": 9.28,
+        "is_metro": true,
+        "kkr_gap": 12179.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering",
+        "quota": "GM",
+        "rank_gap": -3577,
+        "reason": "Reach for you — a sensible option to keep on your list (Computer Science & Engineering at a top-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 23.5,
+        "branch": "Computer Science & Engineering (Data Science)",
+        "branch_family": "ai_ds",
+        "brand_score": 0.88,
+        "brand_tier": "top",
+        "bucket": "Reach",
+        "category": "Reach",
+        "confidence": "medium",
+        "cutoff_rank": 18272.0,
+        "degree": "",
+        "fit_label": "Ambitious — your rank is just beyond this programme's cutoff, but worth listing.",
+        "institute": "Bangalore Institute of Technology-V V Puram, Bengaluru",
+        "interest_score": 9.25,
+        "is_metro": true,
+        "kkr_gap": 14279.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering (Data Science)",
+        "quota": "GM",
+        "rank_gap": -1728,
+        "reason": "Reach for you — a sensible option to keep on your list (Computer Science & Engineering (Data Science) at a top-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 49.7,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 0.88,
+        "brand_tier": "top",
+        "bucket": "Reach",
+        "category": "Reach",
+        "confidence": "borderline",
+        "cutoff_rank": 19984.0,
+        "degree": "",
+        "fit_label": "Ambitious — your rank is just beyond this programme's cutoff, but worth listing.",
+        "institute": "BMS Institute of Technology and Management-Yelahanka, Bengaluru",
+        "interest_score": 9.23,
+        "is_metro": true,
+        "kkr_gap": 20313.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering",
+        "quota": "GM",
+        "rank_gap": -16,
+        "reason": "Reach for you — a sensible option to keep on your list (Computer Science & Engineering at a top-tier college). Your rank is very close to this cutoff — treat as volatile.",
+        "tags": [
+          "cse"
+        ]
+      }
+    ],
+    "recommendations": [
+      {
+        "admission_probability": 14.7,
+        "branch": "Industrial Engineering & Management",
+        "branch_family": "industrial",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Reach",
+        "category": "Reach",
+        "confidence": "medium",
+        "cutoff_rank": 17533.0,
+        "degree": "",
+        "fit_label": "Ambitious — your rank is just beyond this programme's cutoff, but worth listing.",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "interest_score": 9.63,
+        "is_metro": true,
+        "kkr_gap": 31735.0,
+        "matched_interest": false,
+        "program": "Industrial Engineering & Management",
+        "quota": "GM",
+        "rank_gap": -2467,
+        "reason": "Reach for you — a sensible option to keep on your list (Industrial Engineering & Management at an elite-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "industrial"
+        ]
+      },
+      {
+        "admission_probability": 15.9,
+        "branch": "Electronics & Communication Engineering",
+        "branch_family": "ece",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Reach",
+        "category": "Reach",
+        "confidence": "medium",
+        "cutoff_rank": 17651.0,
+        "degree": "",
+        "fit_label": "Ambitious — your rank is just beyond this programme's cutoff, but worth listing.",
+        "institute": "Dayananda Sagar College of Engineering-Kumaraswamy Layout, Bengaluru",
+        "interest_score": 9.62,
+        "is_metro": true,
+        "kkr_gap": 11026.0,
+        "matched_interest": false,
+        "program": "Electronics & Communication Engineering",
+        "quota": "GM",
+        "rank_gap": -2349,
+        "reason": "Reach for you — a sensible option to keep on your list (Electronics & Communication Engineering at an elite-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 32.3,
+        "branch": "Biotechnology",
+        "branch_family": "biotech",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Reach",
+        "category": "Reach",
+        "confidence": "borderline",
+        "cutoff_rank": 18883.0,
+        "degree": "",
+        "fit_label": "Ambitious — your rank is just beyond this programme's cutoff, but worth listing.",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "interest_score": 9.61,
+        "is_metro": true,
+        "kkr_gap": 28294.0,
+        "matched_interest": false,
+        "program": "Biotechnology",
+        "quota": "GM",
+        "rank_gap": -1117,
+        "reason": "Reach for you — a sensible option to keep on your list (Biotechnology at an elite-tier college). Your rank is very close to this cutoff — treat as volatile.",
+        "tags": [
+          "biotech"
+        ]
+      },
+      {
+        "admission_probability": 45.1,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Reach",
+        "category": "Reach",
+        "confidence": "borderline",
+        "cutoff_rank": 19691.0,
+        "degree": "",
+        "fit_label": "Ambitious — your rank is just beyond this programme's cutoff, but worth listing.",
+        "institute": "Siddaganga Institute of Technology-B H Road, Tumakuru",
+        "interest_score": 9.6,
+        "is_metro": false,
+        "kkr_gap": 13264.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering",
+        "quota": "GM",
+        "rank_gap": -309,
+        "reason": "Reach for you — a sensible option to keep on your list (Computer Science & Engineering at an elite-tier college). Your rank is very close to this cutoff — treat as volatile.",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 4.6,
+        "branch": "Computer Science & Engineering (Artificial & Machine Learning)",
+        "branch_family": "ai_ds",
+        "brand_score": 0.88,
+        "brand_tier": "top",
+        "bucket": "Reach",
+        "category": "Reach",
+        "confidence": "medium",
+        "cutoff_rank": 16101.0,
+        "degree": "",
+        "fit_label": "Ambitious — your rank is just beyond this programme's cutoff, but worth listing.",
+        "institute": "JSS Science and Technology University-Mysuru",
+        "interest_score": 9.29,
+        "is_metro": false,
+        "kkr_gap": 7061.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering (Artificial & Machine Learning)",
+        "quota": "GM",
+        "rank_gap": -3899,
+        "reason": "Reach for you — a sensible option to keep on your list (Computer Science & Engineering (Artificial & Machine Learning) at a top-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 6.2,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 0.88,
+        "brand_tier": "top",
+        "bucket": "Reach",
+        "category": "Reach",
+        "confidence": "medium",
+        "cutoff_rank": 16423.0,
+        "degree": "",
+        "fit_label": "Ambitious — your rank is just beyond this programme's cutoff, but worth listing.",
+        "institute": "Bangalore Institute of Technology-V V Puram, Bengaluru",
+        "interest_score": 9.28,
+        "is_metro": true,
+        "kkr_gap": 12179.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering",
+        "quota": "GM",
+        "rank_gap": -3577,
+        "reason": "Reach for you — a sensible option to keep on your list (Computer Science & Engineering at a top-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 23.5,
+        "branch": "Computer Science & Engineering (Data Science)",
+        "branch_family": "ai_ds",
+        "brand_score": 0.88,
+        "brand_tier": "top",
+        "bucket": "Reach",
+        "category": "Reach",
+        "confidence": "medium",
+        "cutoff_rank": 18272.0,
+        "degree": "",
+        "fit_label": "Ambitious — your rank is just beyond this programme's cutoff, but worth listing.",
+        "institute": "Bangalore Institute of Technology-V V Puram, Bengaluru",
+        "interest_score": 9.25,
+        "is_metro": true,
+        "kkr_gap": 14279.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering (Data Science)",
+        "quota": "GM",
+        "rank_gap": -1728,
+        "reason": "Reach for you — a sensible option to keep on your list (Computer Science & Engineering (Data Science) at a top-tier college). You are within a reasonable margin of this cutoff.",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 49.7,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 0.88,
+        "brand_tier": "top",
+        "bucket": "Reach",
+        "category": "Reach",
+        "confidence": "borderline",
+        "cutoff_rank": 19984.0,
+        "degree": "",
+        "fit_label": "Ambitious — your rank is just beyond this programme's cutoff, but worth listing.",
+        "institute": "BMS Institute of Technology and Management-Yelahanka, Bengaluru",
+        "interest_score": 9.23,
+        "is_metro": true,
+        "kkr_gap": 20313.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering",
+        "quota": "GM",
+        "rank_gap": -16,
+        "reason": "Reach for you — a sensible option to keep on your list (Computer Science & Engineering at a top-tier college). Your rank is very close to this cutoff — treat as volatile.",
+        "tags": [
+          "cse"
+        ]
+      }
+    ],
+    "safe": [],
+    "target": [],
+    "thresholds": {
+      "caps": {
+        "Reach": 20,
+        "Safe": 25,
+        "Target": 30
+      },
+      "max_per_institute": 2,
+      "reach_band_ceiling": 8000.0,
+      "safe_margin": 0.15,
+      "target_band_ceiling": 6000.0,
+      "target_band_floor": 1000.0,
+      "top_rank_cap": 10,
+      "top_rank_threshold": 100,
+      "upper_margin": 0.25
+    },
+    "total_by_type": {
+      "all": {
+        "total": 792,
+        "total_attainable": 792
+      },
+      "dream": {
+        "total": 8,
+        "total_attainable": 8
+      },
+      "safe": {
+        "total": 777,
+        "total_attainable": 777
+      },
+      "target": {
+        "total": 7,
+        "total_attainable": 7
+      }
+    },
+    "total_count": 792,
+    "total_reach": 8,
+    "total_safe": 777,
+    "total_target": 7
+  },
+  "note": "variation bucket='dream'",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/comedk/recommend",
+    "payload": {
+      "bucket": "dream",
+      "quota": "GM",
+      "rank": 20000
+    }
+  },
+  "status": 200
+}

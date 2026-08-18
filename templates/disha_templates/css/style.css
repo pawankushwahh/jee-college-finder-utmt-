@@ -559,6 +559,263 @@ main {
   }
 }
 
+/* ── Landing / exam picker ─────────────────────────────────────────────────
+   The front door. Deliberately built from the same atoms as the welcome view
+   (.eyebrow, serif display title, lede) and the result cards (.ccard) so the
+   first screen already reads as the same product as everything behind it.
+   ──────────────────────────────────────────────────────────────────────── */
+
+.landing {
+  flex: 1;
+  width: 100%;
+  max-width: 1060px;
+  margin: 0 auto;
+  padding: clamp(24px, 6vw, 64px) 20px clamp(48px, 8vw, 80px);
+}
+
+.landing__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.landing__eyebrow {
+  animation: rise 0.6s var(--ease-out) both;
+}
+
+.landing__title {
+  font-family: var(--serif);
+  font-size: clamp(2.1rem, 6.5vw, 3.4rem);
+  line-height: 1.12;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin-top: 14px;
+  animation: rise 0.6s var(--ease-out) 0.08s both;
+}
+
+.landing__title em {
+  font-style: italic;
+  color: var(--pine);
+}
+
+.landing__lede {
+  margin-top: 18px;
+  max-width: 52ch;
+  font-size: 1.02rem;
+  color: var(--ink-soft);
+  animation: rise 0.6s var(--ease-out) 0.16s both;
+}
+
+/* search — the toolbar .searchbox pill, sized for a centred hero.
+   Doubled class: the base .searchbox rules live further down this file. */
+.searchbox.searchbox--landing {
+  flex: none;
+  width: min(100%, 420px);
+  margin: 30px auto 0;
+  padding: 0 18px;
+  animation: rise 0.6s var(--ease-out) 0.24s both;
+}
+
+.searchbox.searchbox--landing input {
+  font-size: 0.95rem;
+  padding: 12px 0;
+}
+
+/* ── Exam grid ─────────────────────────────────────────────────────────── */
+
+.exam-grid {
+  display: grid;
+  /* min() guard so the track can never out-grow a very narrow phone viewport */
+  grid-template-columns: repeat(auto-fit, minmax(min(268px, 100%), 1fr));
+  gap: 18px;
+  margin-top: clamp(36px, 6vw, 52px);
+}
+
+/* ── Exam card ───────────────────────────────────────────────────────────
+   Same shell as .ccard: cream card, hairline rule, 4px accent edge, warm
+   shadow. Hover borrows .goal-card's pine-tint response so the whole surface
+   reads as one tappable choice. */
+
+.exam-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--pine);
+  border-radius: var(--radius);
+  padding: 20px 18px 18px;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.18s var(--ease-out), box-shadow 0.22s, border-color 0.2s;
+  animation: rise 0.5s var(--ease-out) both;
+  animation-delay: calc(0.3s + var(--i, 0) * 0.06s);
+}
+
+.exam-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--pine);
+}
+
+/* stretched link: the whole card is the target, but the markup stays a single
+   anchor around the title — no nested interactives, no click handlers. */
+.exam-card__link {
+  color: inherit;
+  text-decoration: none;
+}
+
+.exam-card__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.exam-card__link:focus-visible {
+  outline: none;
+}
+
+.exam-card:focus-within {
+  border-color: var(--pine);
+}
+
+.exam-card__link:focus-visible::after {
+  outline: 2.5px solid var(--pine);
+  outline-offset: 2px;
+}
+
+.exam-card__badge {
+  position: absolute;
+  top: 13px;
+  right: 13px;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 999px;
+  background: var(--pine-tint);
+  color: var(--pine);
+  line-height: 1.4;
+}
+
+.exam-card__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  flex: none;
+  border-radius: 11px;
+  background: var(--paper-deep);
+  color: var(--pine);
+  margin-bottom: 15px;
+  transition: background-color 0.2s;
+}
+
+.exam-card:hover .exam-card__icon {
+  background: #d2e2da;
+}
+
+.exam-card__title {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+.exam-card__desc {
+  margin-top: 6px;
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.exam-card__stat {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 12px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--ink-faint);
+}
+
+.exam-card__stat svg {
+  flex: none;
+  color: var(--pine);
+}
+
+/* pushes the footer of every card onto the same baseline */
+.exam-card__spacer {
+  flex: 1;
+  min-height: 16px;
+}
+
+.exam-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 13px;
+  border-top: 1px solid var(--line-soft);
+  font-size: 0.76rem;
+  color: var(--ink-faint);
+}
+
+.exam-card__official {
+  position: relative;
+  z-index: 1;
+  color: var(--pine);
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.exam-card__official:hover {
+  text-decoration: underline;
+}
+
+.exam-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--pine);
+  transition: gap 0.2s var(--ease-out);
+}
+
+.exam-card:hover .exam-card__cta {
+  gap: 10px;
+}
+
+.exam-grid .empty-state {
+  grid-column: 1 / -1;
+}
+
+/* ── Landing footer ────────────────────────────────────────────────────── */
+
+.footer.footer--landing {
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.footer__note {
+  max-width: 62ch;
+  color: var(--ink-soft);
+}
+
+.footer__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
 .offline-note {
   margin: 28px auto 0;
   max-width: 420px;
@@ -813,6 +1070,25 @@ select.input {
   color: #fdfbf4;
   font-weight: 600;
   box-shadow: 0 2px 6px rgba(14, 66, 55, 0.15);
+}
+
+/* a combination the dataset has no published cutoff for */
+.choice[disabled] {
+  opacity: 0.4;
+  cursor: default;
+  pointer-events: none;
+  text-decoration: line-through;
+}
+
+/* the composed code echoed back under a two-axis picker (KCET) */
+.category-code {
+  margin-top: 18px;
+}
+
+.category-code kbd {
+  font-weight: 700;
+  color: var(--pine);
+  letter-spacing: 0.04em;
 }
 
 /* goal cards */

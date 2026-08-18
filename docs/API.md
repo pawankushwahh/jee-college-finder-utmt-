@@ -283,11 +283,11 @@ Defined in `app/disha/kcet/routes.py`, mounted under `APIRouter(prefix="/api/kce
 
 ### `GET /api/kcet/stats`
 
-Same shape/purpose as COMEDK's `/api/comedk/stats`, computed from `app/disha/kcet/data/kcet_2025.csv` via `app/disha/kcet/stats_loader.py`.
+Same shape/purpose as COMEDK's `/api/comedk/stats`, computed from `app/disha/kcet/data/kcet_2025_all_rounds.csv` via `app/disha/kcet/stats_loader.py`.
 
-### `POST /api/kcet/recommend` — **currently broken (500 on every call)**
+### `POST /api/kcet/recommend`
 
-> **Verified bug, not a guess:** `KcetRecommendRequest` (`app/disha/kcet/schemas.py`) has no `goal` field. `app/disha/kcet/recommender.py` line 86 calls `_matches_goal(prog, req.goal)`, which raises `AttributeError: 'KcetRecommendRequest' object has no attribute 'goal'` for every request — Pydantic silently drops the unrecognized `goal` key from the incoming JSON instead of rejecting it. This was reproduced directly against this repo (`TestClient(app).post("/api/kcet/recommend", json={...})` → `500 Internal Server Error`) while writing this document. `templates/disha_templates/kcet/js/app.js` *does* send `goal` in every request, so the KCET results page is currently non-functional end-to-end, even though it's linked from the landing page like a finished exam. Fixing this is an application-code change, out of scope for this docs pass — flagging it here so the contract below isn't mistaken for verified-working behavior.
+> **Previously documented here as returning HTTP 500 on every call.** That was accurate when written — `KcetRecommendRequest` had no `goal` field while the recommender read `req.goal`. The engine was subsequently rebuilt, `goal` exists on the schema, and the endpoint is now pinned by 70 golden cases in `tests/golden/kcet/`, all returning 200. `_matches_goal` no longer exists anywhere in the codebase.
 
 Request fields as written (`KcetRecommendRequest`):
 
@@ -319,7 +319,26 @@ There is no `guidance`, `notes`, `category_guidance`, `admission_probability`, `
 
 **Bucketing logic** (when it runs, ignoring the `goal` bug): purely ratio-based off the single `cutoff_rank`, relative to the student's `rank` — no probability model, no brand/institute tiering, no textual reason. See `app/disha/kcet/recommender.py::_categorize()` for the exact multipliers.
 
-**Quota codes — meaning not fully verified.** The dataset (`app/disha/kcet/data/kcet_2025.csv`) contains category codes crossing a reservation tier (`GM`, `1G`, `1K`, `1R`, `2AG`, `2AK`, `2AR`, `2BG`, `2BK`, `2BR`, `3AG`, `3AK`, `3AR`, `3BG`, `3BK`, `3BR`, `SCG`, `SCK`, `SCR`, `STG`, `STK`, `STR`, and possibly `GMK`/`GMR`) with a one-letter regional suffix. Based on KEA's published category scheme this is very likely reservation category (`GM`/`1`/`2A`/`2B`/`3A`/`3B`/`SC`/`ST`) × home-region (blank/`K`=Kalyana Karnataka/`R`=rest of state), but **no code comment or docstring in this repo states that explicitly** — treat the suffix meaning as unconfirmed until checked against an official KEA cutoff sheet, rather than repeating this guess as fact elsewhere.
+**Quota codes.** The dataset (`app/disha/kcet/data/kcet_2025_all_rounds.csv`) carries **48** codes, in two disjoint sets — `GET /api/kcet/meta` returns all of them with labels:
+
+| Seat pool | Codes | Count |
+|---|---|---|
+| Rest of Karnataka | `GM`, `GMK`, `GMR`, `1G`, `1K`, `1R`, `2AG`…`2AR`, `2BG`…`2BR`, `3AG`…`3AR`, `3BG`…`3BR`, `SCG`…`SCR`, `STG`…`STR` | 24 |
+| **371(j) Kalyana-Karnataka** | the same codes with `H` appended and a state-wide `G` replaced by `H`: `GMH`, `GMKH`, `GMRH`, `1H`, `1KH`, `1RH`, `2AH`, … `STRH` | 24 |
+
+The two sets never overlap (no Rest-of-Karnataka code ends in `H`), so **a category code identifies its own seat pool** and no separate seat-type request field exists. `seat_category: "GM"` returns only Rest-of-Karnataka rows; `"GMH"` returns only 371(j) rows. 371(j) labels are prefixed `371(j) — `.
+
+Before the all-rounds dataset landed, the 371(j) pool was absent entirely and requesting any of those 24 codes matched nothing.
+
+**Suffix meaning — resolved.** A code decomposes into exactly three independent axes, and all 48 combinations exist in the data:
+
+| Axis | Values |
+|---|---|
+| Reservation category | `GM`, `1`, `2A`, `2B`, `3A`, `3B`, `SC`, `ST` |
+| Sub-quota suffix | `G` = state-wide, `K` = Kannada medium, `R` = rural |
+| Seat pool | Rest of Karnataka, or Article 371(J) — appends `H`, replacing a state-wide `G` |
+
+The `K` suffix used to be labelled "Kalyana Karnataka home-region quota". Adding the 371(j) pool is what disproved it: Kalyana-Karnataka is the *pool* axis, published as its own KEA document, so `K` cannot also mean it — otherwise `SCKH` reads as Kalyana-Karnataka twice. `K` and `R` are KEA's medium-of-instruction and rural special-category reservations, the only reading consistent with 371(j) being published separately. The KCET frontend asks the three questions separately and composes the code, rather than listing all 48.
 
 ---
 
@@ -348,14 +367,16 @@ This is the honest side-by-side the task asked for — read this before assuming
 
 | Aspect | JEE | COMEDK | KCET |
 |---|---|---|---|
-| Cutoff shape | **Pair**: `opening_rank` + `closing_rank`, derived at runtime as MIN/MAX across 6 rounds | **Single**: `cutoff_rank` (`Closing_R1`; `Opening_R1` exists in the CSV but is assumed equal and unused) | **Single**: `cutoff_rank` (only round 1 present in the data) |
-| Reservation dimension | `seat_category` — canonical values `OPEN / OBC-NCL / SC / ST / EWS`, each with a `" (PwD)"` variant | `quota` — `GM` (General Merit) / `KKR` (Kalyana Karnataka Region) | `quota` — Karnataka category codes crossed with a regional suffix (~22–24 distinct values, see caveat above) |
-| Career-goal step | Yes — `goal` drives `interest_score` / `matched_interest` via a tag-weight model | No — replaced with a `branch_families` multi-select filter; `goals` in meta is always `[]` | Nominally yes (reuses JEE's `goal` values in `/meta`) but **the request schema has no `goal` field**, which is why `/recommend` 500s (see bug above) |
-| Home-state / gender quota | Yes — HS/OS/GO/JK/LA quotas, female-only seat pool, both surfaced as `*_advantage` rank cushions | No — all COMEDK colleges are in Karnataka, so there's no home-state axis; no gender pool either | No home-state/gender modeling found |
-| Bucketing method | Fixed absolute-rank thresholds off the real opening/closing window (`UPPER_MARGIN`/`LOWER_MARGIN`/`SAFE_FRACTION`) | Cutoff-relative bands **clamped** into an absolute rank range (`target_band`/`reach_band` in `comedk/config.py`) — deliberately different math because there's no real "window" to measure | Simple fixed ratio multipliers on the single cutoff (e.g. `cutoff < rank × 0.85` → Reach) — no clamping, no probability curve |
-| Admission probability | Sigmoid over `(closing_rank − rank) / σ`, `σ` from historical round-to-round volatility | Sigmoid over `(cutoff − rank) / σ`, `σ` a clamped fraction of the cutoff (stated as an assumption, not fitted — see `comedk/config.py`) | Not computed at all |
-| Server-side pagination | Accepted (`page`/`page_size`/`max_results`) but **not applied** — full result set returned every time | **Applied** across the selected bucket | Applied **only** to the `safe` list |
-| Response fields | Rich: `fit_label`, `reason`, `region`, `is_metro`, `is_top_iit`, `history`, `is_preparatory`, volatility-tag `confidence` | Additive superset of JEE's shape plus COMEDK-only fields (`kkr_gap`, `brand_tier`, `rank_gap`) — JEE-parallel fields present but not all consumed by the frontend yet | Minimal: `institute`, `program`, `quota`, `cutoff_rank`, `bucket`, `tags` only |
-| Language support | `en/hi/gu/kn`, both static UI strings (`js/i18n.js`) and backend-generated text (`lang` request field) | Backend accepts `lang`, but the frontend never sends anything but `"en"` — effectively English-only in practice | No `lang` field on the request or response at all |
+| Cutoff shape | **Pair**: `opening_rank` + `closing_rank`, derived at runtime as MIN/MAX across 6 rounds | **Single**: `cutoff_rank`, derived at runtime as **MAX across the COMEDK rounds a programme allotted in** (1-4; the mock round is excluded by construction), switchable via `comedk/config.py`'s `round_strategy`. The dataset keeps every round. | **Single**: `closing_rank`, derived at runtime as **MAX across KEA rounds 1-3** by default (same rule as JEE's closing rank), switchable via `kcet/config.py`'s `round_strategy`. The dataset keeps every round. A `float` — KEA publishes fractional cut-offs such as `76553.5`. |
+| Reservation dimension | `seat_category` — canonical values `OPEN / OBC-NCL / SC / ST / EWS`, each with a `" (PwD)"` variant | `quota` — `GM` (General Merit) / `KKR` (Kalyana Karnataka Region) | `seat_category` — 48 KEA codes: 8 reservation categories × 3 sub-quotas (`G`/`K`/`R`) × 2 seat pools (Rest-of-Karnataka and 371(j) Kalyana-Karnataka, whose codes end in `H`) |
+| Career-goal step | Yes — `goal` drives `interest_score` / `matched_interest` via a tag-weight model | No — replaced with a `branch_families` multi-select filter; `goals` in meta is always `[]` | Yes — `goal` exists on the schema and drives `interest_score` / `matched_interest`, blended against college quality by `brand_branch_ratio` (the "no `goal` field, 500s on every call" bug described in older revisions was fixed in the engine rebuild) |
+| Home-state / gender quota | Yes — HS/OS/GO/JK/LA quotas, female-only seat pool, both surfaced as `*_advantage` rank cushions | No — all COMEDK colleges are in Karnataka, so there's no home-state axis; no gender pool either | No gender pool. Region is folded into the category code rather than modelled as a separate axis |
+| Bucketing method | Fixed absolute-rank thresholds off the real opening/closing window (`UPPER_MARGIN`/`LOWER_MARGIN`/`SAFE_FRACTION`) | Cutoff-relative bands **clamped** into an absolute rank range (`core.cutoff.PointCutoffModel` with `comedk/config.py`'s constants) — deliberately different math because there's no real "window" to measure | The **observed** range of ranks admitted across KEA's rounds (`core.cutoff.RangeCutoffModel`), plus a separate relevance window deciding whether an option is worth showing at all. See [EXAM_DIFFERENCES.md](EXAM_DIFFERENCES.md) §4 for why the two point exams differ here |
+| Admission probability | Sigmoid over `(closing_rank − rank) / σ`, `σ` from historical round-to-round volatility | Sigmoid over `(cutoff − rank) / σ`, `σ` a clamped fraction of the cutoff (stated as an assumption, not fitted — see `comedk/config.py`) | Sigmoid over `(rank_high − rank) / σ`, `σ` taken from the programme's **own** observed band, so a volatile programme reports less certainty than a stable one |
+| Server-side pagination | Accepted (`page`/`page_size`/`max_results`) but **not applied** — full result set returned every time | **Applied** across the selected bucket (`page` / `page_size`, with `has_next`) | None — no `page` field exists. A single-bucket request returns that bucket sliced to `max_results` (default 5,000, i.e. effectively uncapped) |
+| Response fields | Rich: `fit_label`, `reason`, `region`, `is_metro`, `is_top_iit`, `history`, `is_preparatory`, volatility-tag `confidence` | Additive superset of JEE's shape plus COMEDK-only fields (`kkr_gap`, `brand_tier`, `rank_gap`) — JEE-parallel fields present but not all consumed by the frontend yet | Now JEE-parallel: `fit_label`, `reason`, `confidence`, `admission_probability`, `quality_score`, `seat_category_label`, `college_code`, `tags` (the "minimal shape" described in older revisions predates the engine rebuild) |
+| Language support | `en/hi/gu/kn`, both static UI strings (`js/i18n.js`) and backend-generated text (`lang` request field) | Backend accepts `lang`, but the frontend never sends anything but `"en"` — effectively English-only in practice | `lang` exists but is `Literal["en"]` — English-only by declaration, and its prose lives as inline strings rather than translation tables |
 
-If you add a fourth exam, expect to make the same kind of shape decision COMEDK and KCET each made independently — there is currently no shared schema or shared recommender base class enforcing consistency across exams. See the root README's "Adding a new exam" section.
+If you add a fourth exam, you will still make this shape decision yourself: there is no shared response schema across exams, and the three that exist diverge (`closing_rank` vs `cutoff_rank`; `categories` vs `seat_categories` vs `quotas`; `branches` vs `branch_preferences` vs `branch_families`).
+
+What *is* now shared: registration (`app/disha/registry.py`) and the engine's stage rules in `app/disha/core/` — bucket ordering, capping and top-rank detection (`curation.py`), the band/probability models (`cutoff.py`), round selection and CSV parsing (`rounds.py`), and the competitiveness percentile (`scoring.py`). [EXAM_DIFFERENCES.md](EXAM_DIFFERENCES.md) inventories exactly what KCET and COMEDK still do differently, and why. Unifying the response contract is a deliberate non-goal for the moment — the current field names are what three shipped frontends and the UTMT portal integration already consume, so renaming them is a coordinated release, not a refactor. See the root README's "Adding a new exam" section.

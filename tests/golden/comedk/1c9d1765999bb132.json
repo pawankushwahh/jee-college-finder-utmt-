@@ -1,0 +1,92 @@
+{
+  "body": {
+    "branch_families": [
+      {
+        "label": "Computer Science & Engineering",
+        "value": "cse"
+      },
+      {
+        "label": "AI / Data Science / ML",
+        "value": "ai_ds"
+      },
+      {
+        "label": "Cyber Security / Blockchain / IoT",
+        "value": "cyber"
+      },
+      {
+        "label": "Information Science / IT",
+        "value": "it"
+      },
+      {
+        "label": "Electronics & Communication",
+        "value": "ece"
+      },
+      {
+        "label": "VLSI",
+        "value": "vlsi"
+      },
+      {
+        "label": "Electrical & Electronics",
+        "value": "eee"
+      },
+      {
+        "label": "Robotics & Automation",
+        "value": "robotics"
+      },
+      {
+        "label": "Mechanical Engineering",
+        "value": "mechanical"
+      },
+      {
+        "label": "Automobile Engineering",
+        "value": "automobile"
+      },
+      {
+        "label": "Civil Engineering",
+        "value": "civil"
+      },
+      {
+        "label": "Chemical Engineering",
+        "value": "chemical"
+      },
+      {
+        "label": "Aerospace / Aeronautical",
+        "value": "aerospace"
+      },
+      {
+        "label": "Biotechnology",
+        "value": "biotech"
+      },
+      {
+        "label": "Bio-Medical Engineering",
+        "value": "biomedical"
+      },
+      {
+        "label": "Industrial Engineering",
+        "value": "industrial"
+      },
+      {
+        "label": "Design",
+        "value": "design"
+      },
+      {
+        "label": "Agricultural Engineering",
+        "value": "agriculture"
+      }
+    ],
+    "goals": [],
+    "quotas": [
+      "GM",
+      "KKR"
+    ],
+    "total_programs": 1114
+  },
+  "note": "meta",
+  "request": {
+    "method": "GET",
+    "params": null,
+    "path": "/api/comedk/meta",
+    "payload": null
+  },
+  "status": 200
+}

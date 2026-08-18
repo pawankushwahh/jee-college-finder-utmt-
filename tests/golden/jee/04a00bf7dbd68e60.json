@@ -1,0 +1,180 @@
+{
+  "body": {
+    "allow_toggle": false,
+    "branches": [
+      {
+        "label": "CS / IT",
+        "value": "cs_it"
+      },
+      {
+        "label": "ECE",
+        "value": "ece"
+      },
+      {
+        "label": "Electrical (EE)",
+        "value": "ee"
+      },
+      {
+        "label": "Mathematics & Computing",
+        "value": "math_computing"
+      },
+      {
+        "label": "AI / Data Science",
+        "value": "ai_ds"
+      },
+      {
+        "label": "Mechanical",
+        "value": "mechanical"
+      },
+      {
+        "label": "Civil",
+        "value": "civil"
+      },
+      {
+        "label": "Chemical",
+        "value": "chemical"
+      },
+      {
+        "label": "Physics",
+        "value": "physics"
+      },
+      {
+        "label": "Maths",
+        "value": "math_science"
+      },
+      {
+        "label": "Biotechnology",
+        "value": "biotech"
+      }
+    ],
+    "categories": [
+      {
+        "available": true,
+        "label": "General (OPEN / CRL Category Rank)",
+        "value": "OPEN"
+      },
+      {
+        "available": true,
+        "label": "OBC-NCL",
+        "value": "OBC-NCL"
+      },
+      {
+        "available": true,
+        "label": "SC (Scheduled Caste)",
+        "value": "SC"
+      },
+      {
+        "available": true,
+        "label": "ST (Scheduled Tribe)",
+        "value": "ST"
+      },
+      {
+        "available": true,
+        "label": "EWS (Economically Weaker Section)",
+        "value": "EWS"
+      },
+      {
+        "available": true,
+        "label": "OPEN (PwD)",
+        "value": "OPEN (PwD)"
+      },
+      {
+        "available": true,
+        "label": "OBC-NCL (PwD)",
+        "value": "OBC-NCL (PwD)"
+      },
+      {
+        "available": true,
+        "label": "SC (PwD)",
+        "value": "SC (PwD)"
+      },
+      {
+        "available": true,
+        "label": "ST (PwD)",
+        "value": "ST (PwD)"
+      },
+      {
+        "available": true,
+        "label": "EWS (PwD)",
+        "value": "EWS (PwD)"
+      }
+    ],
+    "data_mode": "basic",
+    "extended_available": false,
+    "genders": [
+      "male",
+      "female"
+    ],
+    "goals": [
+      {
+        "label": "Software / coding career",
+        "value": "coding"
+      },
+      {
+        "label": "Research / higher studies",
+        "value": "research"
+      },
+      {
+        "label": "Pure Science (Physics, Chemistry, Maths)",
+        "value": "pure_science"
+      },
+      {
+        "label": "Management / MBA / business",
+        "value": "mba"
+      },
+      {
+        "label": "Core engineering",
+        "value": "core"
+      },
+      {
+        "label": "Undecided / keeping options open",
+        "value": "undecided"
+      }
+    ],
+    "states": [
+      "Andhra Pradesh",
+      "Arunachal Pradesh",
+      "Assam",
+      "Bihar",
+      "Chandigarh",
+      "Chhattisgarh",
+      "Daman and Diu",
+      "Delhi",
+      "Goa",
+      "Gujarat",
+      "Haryana",
+      "Himachal Pradesh",
+      "Jammu and Kashmir",
+      "Jharkhand",
+      "Karnataka",
+      "Kerala",
+      "Ladakh",
+      "Madhya Pradesh",
+      "Maharashtra",
+      "Manipur",
+      "Meghalaya",
+      "Mizoram",
+      "Nagaland",
+      "Odisha",
+      "Puducherry",
+      "Punjab",
+      "Rajasthan",
+      "Sikkim",
+      "Tamil Nadu",
+      "Telangana",
+      "Tripura",
+      "Uttar Pradesh",
+      "Uttarakhand",
+      "West Bengal"
+    ],
+    "total_programs": 11930
+  },
+  "note": "meta",
+  "request": {
+    "method": "GET",
+    "params": null,
+    "path": "/api/meta",
+    "payload": null
+  },
+  "status": 200
+}

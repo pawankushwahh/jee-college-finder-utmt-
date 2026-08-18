@@ -1,0 +1,193 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "These closed slightly above your rank last year. Cutoffs move between rounds, so list a few as ambitious choices.",
+        "category": "Reach",
+        "count": 6
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 6,
+        "Safe": 0,
+        "Target": 0
+      },
+      "is_curated": false,
+      "is_top_rank": false,
+      "shown": 6,
+      "shown_by_category": {
+        "Reach": 6,
+        "Safe": 0,
+        "Target": 0
+      },
+      "total": 6
+    },
+    "guidance": "Found 6 eligible college-programme options for your profile (showing 6). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
+    "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
+    "notes": [
+      "A rank of 400,001 is well outside KCET's published range and may be a typo."
+    ],
+    "recommendations": [
+      {
+        "admission_probability": 4.9,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 220077.0,
+        "college_code": "E129",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "St.Joseph Engineering College, Mangalore(AUTONOMOUS) MANGALORE",
+        "interest_score": 3.75,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 0.49,
+        "rank_high": 220077.0,
+        "rank_low": 37497.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at St.Joseph Engineering College, Mangalore(AUTONOMOUS) MANGALORE), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 5.2,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 244102.0,
+        "college_code": "E077",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Vidya Vikas Institute of Engineering & Technology, Mysore #127,ALANAHALLY,ALANAHALLY POST,MYSORE-BANNUR ROAD,MYSORE",
+        "interest_score": 3.58,
+        "matched_interest": true,
+        "program": "ELECTRICAL & ELECTRONICS ENGINEERING",
+        "quality_score": 0.15,
+        "rank_high": 244102.0,
+        "rank_low": 82998.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRICAL & ELECTRONICS ENGINEERING at Vidya Vikas Institute of Engineering & Technology, Mysore #127,ALANAHALLY,ALANAHALLY POST,MYSORE-BANNUR ROAD,MYSORE), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 6.0,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 250000.0,
+        "college_code": "E205",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "ATME College of Engineering, Mysore SY.NO.1002, HAROHALLI (MELLAHALLI),MYSORE",
+        "interest_score": 3.54,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 0.09,
+        "rank_high": 250000.0,
+        "rank_low": 86215.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at ATME College of Engineering, Mysore SY.NO.1002, HAROHALLI (MELLAHALLI),MYSORE), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 5.1,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 255253.0,
+        "college_code": "E146",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Shreedevi Institute of Technology, Mangalore AIRPORT ROAD, KENJAR VILLAGE,MALAVOOR PANCHAYAT,DAKSHINA KANNADA",
+        "interest_score": 3.53,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 0.06,
+        "rank_high": 255253.0,
+        "rank_low": 106290.0,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Shreedevi Institute of Technology, Mangalore AIRPORT ROAD, KENJAR VILLAGE,MALAVOOR PANCHAYAT,DAKSHINA KANNADA), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 9.6,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 258176.0,
+        "college_code": "E106",
+        "confidence": "medium",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "East West Institute Of Technology,Bangalore(AUTONOMOUS) SY. NO.63, OFF MAGADI MAIN ROAD, VISHWANEEDAM POST,BANGALORE",
+        "interest_score": 3.52,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 0.04,
+        "rank_high": 258176.0,
+        "rank_low": 68435.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at East West Institute Of Technology,Bangalore(AUTONOMOUS) SY. NO.63, OFF MAGADI MAIN ROAD, VISHWANEEDAM POST,BANGALORE), under the Category 1 (State-wide (General)) category. Cutoffs can move a little between rounds, so treat this as an estimate.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 8.1,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 260899.0,
+        "college_code": "E205",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "ATME College of Engineering, Mysore SY.NO.1002, HAROHALLI (MELLAHALLI),MYSORE",
+        "interest_score": 3.5,
+        "matched_interest": true,
+        "program": "ELECTRICAL & ELECTRONICS ENGINEERING",
+        "quality_score": 0.01,
+        "rank_high": 260899.0,
+        "rank_low": 88824.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRICAL & ELECTRONICS ENGINEERING at ATME College of Engineering, Mysore SY.NO.1002, HAROHALLI (MELLAHALLI),MYSORE), under the Category 1 (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "1G",
+        "seat_category_label": "Category 1 (State-wide (General))",
+        "tags": [
+          "ece",
+          "electrical"
+        ]
+      }
+    ],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "max_per_institute": 2,
+      "min_options": 25,
+      "relevance_ceiling_z": 4.0,
+      "safe_buffer_fraction": 0.0,
+      "top_rank_cap": 25,
+      "use_observed_range": true
+    },
+    "total_count": 6
+  },
+  "note": "core grid rank=400001 cat=1G",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/kcet/recommend",
+    "payload": {
+      "rank": 400001,
+      "seat_category": "1G"
+    }
+  },
+  "status": 200
+}

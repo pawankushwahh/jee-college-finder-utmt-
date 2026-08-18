@@ -1,0 +1,615 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "Your rank comfortably beats last year's closing rank here, so these are strong backups you are very likely to get.",
+        "category": "Safe",
+        "count": 25
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 0,
+        "Safe": 25,
+        "Target": 0
+      },
+      "is_curated": false,
+      "is_top_rank": true,
+      "shown": 25,
+      "shown_by_category": {
+        "Reach": 0,
+        "Safe": 25,
+        "Target": 0
+      },
+      "total": 25
+    },
+    "guidance": "Found 25 eligible college-programme options for your profile (showing 25). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
+    "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
+    "notes": [
+      "Your rank clears the cutoff for all 25 options you are eligible for under SCK, so there is nothing to mark Target or Dream. Showing the 25 most competitive of them."
+    ],
+    "recommendations": [
+      {
+        "admission_probability": 100.0,
+        "band_imputed": true,
+        "category": "Safe",
+        "closing_rank": 13399.0,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "interest_score": 8.5,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "quality_score": 10.0,
+        "rank_high": 18892.59,
+        "rank_low": 13399.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING) at R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 99.9,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 18292.0,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "interest_score": 8.49,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.98,
+        "rank_high": 18292.0,
+        "rank_low": 10130.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 20040.0,
+        "college_code": "E006",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 8.47,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.95,
+        "rank_high": 20040.0,
+        "rank_low": 18292.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": true,
+        "category": "Safe",
+        "closing_rank": 21658.0,
+        "college_code": "E048",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE",
+        "interest_score": 8.46,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+        "quality_score": 9.93,
+        "rank_high": 31187.52,
+        "rank_low": 21658.0,
+        "reason": "Safe for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND DATA SCIENCE at B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 22582.0,
+        "college_code": "E009",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085",
+        "interest_score": 8.46,
+        "matched_interest": true,
+        "program": "B TECH IN COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.91,
+        "rank_high": 22582.0,
+        "rank_low": 22210.0,
+        "reason": "Safe for you - strong fit for your goal (B TECH IN COMPUTER SCIENCE AND ENGINEERING at PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 33215.0,
+        "college_code": "E006",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 8.42,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "quality_score": 9.84,
+        "rank_high": 33215.0,
+        "rank_low": 23233.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING) at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 39060.0,
+        "college_code": "E001",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle, Bangalore",
+        "interest_score": 8.41,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.82,
+        "rank_high": 39060.0,
+        "rank_low": 29894.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle, Bangalore), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": true,
+        "category": "Safe",
+        "closing_rank": 39128.0,
+        "college_code": "E007",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Dayananda Sagar College of Engineering, Bangalore(AUTONOMOUS) SHAVIGE MALLESHWARA HILLS, KUMARASWAMY LAYOUT, BANGALORE-560078",
+        "interest_score": 8.4,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+        "quality_score": 9.8,
+        "rank_high": 56344.32,
+        "rank_low": 39128.0,
+        "reason": "Safe for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING at Dayananda Sagar College of Engineering, Bangalore(AUTONOMOUS) SHAVIGE MALLESHWARA HILLS, KUMARASWAMY LAYOUT, BANGALORE-560078), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 40136.0,
+        "college_code": "E048",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE",
+        "interest_score": 8.38,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.77,
+        "rank_high": 40136.0,
+        "rank_low": 28372.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 40731.0,
+        "college_code": "E007",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Dayananda Sagar College of Engineering, Bangalore(AUTONOMOUS) SHAVIGE MALLESHWARA HILLS, KUMARASWAMY LAYOUT, BANGALORE-560078",
+        "interest_score": 8.38,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.75,
+        "rank_high": 40731.0,
+        "rank_low": 28664.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Dayananda Sagar College of Engineering, Bangalore(AUTONOMOUS) SHAVIGE MALLESHWARA HILLS, KUMARASWAMY LAYOUT, BANGALORE-560078), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": true,
+        "category": "Safe",
+        "closing_rank": 41199.0,
+        "college_code": "E001",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle, Bangalore",
+        "interest_score": 8.35,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
+        "quality_score": 9.7,
+        "rank_high": 59326.56,
+        "rank_low": 41199.0,
+        "reason": "Safe for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND DATA SCIENCE at Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle, Bangalore), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": true,
+        "category": "Safe",
+        "closing_rank": 41707.0,
+        "college_code": "E008",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Bangalore Institute of Technology, K.R.Road, Bangalore (AUTONOMOUS) K.R.ROAD, V.V.PURA, BANGALORE-560004",
+        "interest_score": 8.34,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+        "quality_score": 9.68,
+        "rank_high": 60058.079999999994,
+        "rank_low": 41707.0,
+        "reason": "Safe for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING at Bangalore Institute of Technology, K.R.Road, Bangalore (AUTONOMOUS) K.R.ROAD, V.V.PURA, BANGALORE-560004), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": true,
+        "category": "Safe",
+        "closing_rank": 41985.0,
+        "college_code": "E021",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Sri Jayachamarajendra College of Engineering(Constituent College of JSS Science & Technology University), Mysore JSS TECHNICAL INSTITUTIONS CAMPUS,MANASAGANGOTHRI PO,MYSORE",
+        "interest_score": 8.32,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 9.64,
+        "rank_high": 60458.399999999994,
+        "rank_low": 41985.0,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at Sri Jayachamarajendra College of Engineering(Constituent College of JSS Science & Technology University), Mysore JSS TECHNICAL INSTITUTIONS CAMPUS,MANASAGANGOTHRI PO,MYSORE), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": true,
+        "category": "Safe",
+        "closing_rank": 42276.0,
+        "college_code": "E178",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "The National Institute of Engineering(NORTH CAMPUS), No.50(Part) Koorgalli,Hootgalli Industrial Area ,Mysuru-570018",
+        "interest_score": 8.3,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
+        "quality_score": 9.61,
+        "rank_high": 60877.439999999995,
+        "rank_low": 42276.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING) at The National Institute of Engineering(NORTH CAMPUS), No.50(Part) Koorgalli,Hootgalli Industrial Area ,Mysuru-570018), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 45219.0,
+        "college_code": "E016",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Siddaganga Institute of Technology,Tumkur",
+        "interest_score": 8.29,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.57,
+        "rank_high": 45219.0,
+        "rank_low": 41763.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Siddaganga Institute of Technology,Tumkur), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 45226.0,
+        "college_code": "E057",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "JSS Science and Technology University JSS TECHNICAL INSTITUTIONS CAMPUS, MANASAGANGOTHRI, MYSURU 570006",
+        "interest_score": 8.28,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.55,
+        "rank_high": 45226.0,
+        "rank_low": 40863.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at JSS Science and Technology University JSS TECHNICAL INSTITUTIONS CAMPUS, MANASAGANGOTHRI, MYSURU 570006), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 47208.0,
+        "college_code": "E008",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Bangalore Institute of Technology, K.R.Road, Bangalore (AUTONOMOUS) K.R.ROAD, V.V.PURA, BANGALORE-560004",
+        "interest_score": 8.26,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.52,
+        "rank_high": 47208.0,
+        "rank_low": 39060.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Bangalore Institute of Technology, K.R.Road, Bangalore (AUTONOMOUS) K.R.ROAD, V.V.PURA, BANGALORE-560004), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 48610.5,
+        "college_code": "E009",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085",
+        "interest_score": 8.25,
+        "matched_interest": true,
+        "program": "B TECH IN COMPUTER SCIENCE & ENGINEERING (ARTIFICAL INTELLIGENCE & MACHINE LEARNING)",
+        "quality_score": 9.5,
+        "rank_high": 48610.5,
+        "rank_low": 33215.0,
+        "reason": "Safe for you - strong fit for your goal (B TECH IN COMPUTER SCIENCE & ENGINEERING (ARTIFICAL INTELLIGENCE & MACHINE LEARNING) at PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "ai_ds",
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 49820.0,
+        "college_code": "E241",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "KLE Technological University(Formerly (BVBCET) BVBHOOMARADDI COLLEGE CAMPUS, VIDYANAGAR, HUBBALLI",
+        "interest_score": 8.24,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 9.48,
+        "rank_high": 49820.0,
+        "rank_low": 43309.0,
+        "reason": "Safe for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at KLE Technological University(Formerly (BVBCET) BVBHOOMARADDI COLLEGE CAMPUS, VIDYANAGAR, HUBBALLI), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 31839.0,
+        "college_code": "E005",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "interest_score": 8.43,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 9.86,
+        "rank_high": 31839.0,
+        "rank_low": 26600.0,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 40863.0,
+        "college_code": "E048",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE",
+        "interest_score": 8.37,
+        "matched_interest": true,
+        "program": "ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+        "quality_score": 9.73,
+        "rank_high": 40863.0,
+        "rank_low": 36311.875,
+        "reason": "Safe for you - strong fit for your goal (ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING at B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": true,
+        "category": "Safe",
+        "closing_rank": 41720.0,
+        "college_code": "E006",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 8.33,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 9.66,
+        "rank_high": 60076.799999999996,
+        "rank_low": 41720.0,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 44546.0,
+        "college_code": "E001",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle, Bangalore",
+        "interest_score": 8.29,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 9.59,
+        "rank_high": 44546.0,
+        "rank_low": 35408.0,
+        "reason": "Safe for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle, Bangalore), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 99.9,
+        "band_imputed": false,
+        "category": "Safe",
+        "closing_rank": 76667.0,
+        "college_code": "E007",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "Dayananda Sagar College of Engineering, Bangalore(AUTONOMOUS) SHAVIGE MALLESHWARA HILLS, KUMARASWAMY LAYOUT, BANGALORE-560078",
+        "interest_score": 7.38,
+        "matched_interest": true,
+        "program": "INFORMATION SCIENCE AND ENGINEERING",
+        "quality_score": 8.77,
+        "rank_high": 76667.0,
+        "rank_low": 44157.0,
+        "reason": "Safe for you - strong fit for your goal (INFORMATION SCIENCE AND ENGINEERING at Dayananda Sagar College of Engineering, Bangalore(AUTONOMOUS) SHAVIGE MALLESHWARA HILLS, KUMARASWAMY LAYOUT, BANGALORE-560078), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "it"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "band_imputed": true,
+        "category": "Safe",
+        "closing_rank": 31369.0,
+        "college_code": "E006",
+        "confidence": "high",
+        "fit_label": "Comfortable - your rank is well inside last year's closing rank.",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "interest_score": 7.95,
+        "matched_interest": true,
+        "program": "INFORMATION SCIENCE AND ENGINEERING",
+        "quality_score": 9.89,
+        "rank_high": 45171.36,
+        "rank_low": 31369.0,
+        "reason": "Safe for you - strong fit for your goal (INFORMATION SCIENCE AND ENGINEERING at M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "it"
+        ]
+      }
+    ],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "max_per_institute": 2,
+      "min_options": 25,
+      "relevance_ceiling_z": 4.0,
+      "safe_buffer_fraction": 0.0,
+      "top_rank_cap": 25,
+      "use_observed_range": true
+    },
+    "total_count": 25
+  },
+  "note": "core grid rank=234 cat=SCK",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/kcet/recommend",
+    "payload": {
+      "rank": 234,
+      "seat_category": "SCK"
+    }
+  },
+  "status": 200
+}

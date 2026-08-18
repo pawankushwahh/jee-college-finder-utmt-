@@ -1,0 +1,325 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "Your rank comfortably beats last year's opening rank here, so these are strong backups you are very likely to get.",
+        "category": "Safe",
+        "count": 7
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 0,
+        "Safe": 7,
+        "Target": 0
+      },
+      "by_type": {
+        "GFTI": 0,
+        "IIIT": 0,
+        "IIT": 7,
+        "NIT": 0,
+        "shown": 7,
+        "total": 7
+      },
+      "is_curated": false,
+      "is_top_rank": true,
+      "shown": 7,
+      "shown_by_category": {
+        "Reach": 0,
+        "Safe": 7,
+        "Target": 0
+      },
+      "total": 7
+    },
+    "guidance": "Found 7 eligible institute-branch options for your profile (showing 7). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
+    "interest_guidance": "Since you are aiming for a software/coding career, Computer Science, Mathematics & Computing, AI/Data Science and IT branches are ranked highest for you. A strong CS-adjacent branch usually matters more for coding roles than the exact institute, but a higher-brand institute helps with internships and placements.",
+    "notes": [
+      "No JEE Mains rank provided, so NITs / IIITs / GFTIs are not shown. Add a Mains rank to include them.",
+      "Your rank clears the cutoff for all 7 options you are eligible for, so there is nothing to mark Target or Dream. Showing the 7 most competitive of them."
+    ],
+    "page": null,
+    "page_size": null,
+    "recommendations": [
+      {
+        "admission_probability": 50.0,
+        "branch": "Computer Science and Engineering",
+        "branch_full": "Computer Science and Engineering (4 Years, Bachelor of Technology)",
+        "category": "Safe",
+        "closing_rank": 1,
+        "confidence": "highly_stable",
+        "degree": "Bachelor of Technology",
+        "exam": "advanced",
+        "female_seat_advantage": null,
+        "fit_label": "Comfortable - your rank is better than last year's opening rank.",
+        "flag_round": 2,
+        "gender_pool": "neutral",
+        "has_preparatory_rounds": false,
+        "history": {
+          "2025": 1
+        },
+        "home_state_advantage": null,
+        "institute": "Indian Institute of Technology Bombay",
+        "institute_state": "Maharashtra",
+        "institute_type": "IIT",
+        "interest_score": 10.0,
+        "is_metro": false,
+        "is_preparatory": false,
+        "is_top_iit": true,
+        "matched_interest": true,
+        "opening_rank": 1,
+        "quota": "AI",
+        "reason": "Safe for you - strong fit for your goal (Computer Science and Engineering at a top IIT). Cutoff is highly stable across all rounds.",
+        "region": "west"
+      },
+      {
+        "admission_probability": 50.0,
+        "branch": "Computer Science and Engineering",
+        "branch_full": "Computer Science and Engineering (4 Years, Bachelor of Technology)",
+        "category": "Safe",
+        "closing_rank": 1,
+        "confidence": "highly_stable",
+        "degree": "Bachelor of Technology",
+        "exam": "advanced",
+        "female_seat_advantage": null,
+        "fit_label": "Comfortable - your rank is better than last year's opening rank.",
+        "flag_round": 2,
+        "gender_pool": "neutral",
+        "has_preparatory_rounds": true,
+        "history": {
+          "2025": 1
+        },
+        "home_state_advantage": null,
+        "institute": "Indian Institute of Technology Roorkee",
+        "institute_state": "Uttarakhand",
+        "institute_type": "IIT",
+        "interest_score": 10.0,
+        "is_metro": false,
+        "is_preparatory": true,
+        "is_top_iit": false,
+        "matched_interest": true,
+        "opening_rank": 1,
+        "quota": "AI",
+        "reason": "Safe for you - strong fit for your goal (Computer Science and Engineering at a top IIT). Cutoff is highly stable across all rounds.",
+        "region": "north"
+      },
+      {
+        "admission_probability": 51.9,
+        "branch": "Computer Science and Engineering",
+        "branch_full": "Computer Science and Engineering (4 Years, Bachelor of Technology)",
+        "category": "Safe",
+        "closing_rank": 2,
+        "confidence": "highly_stable",
+        "degree": "Bachelor of Technology",
+        "exam": "advanced",
+        "female_seat_advantage": null,
+        "fit_label": "Comfortable - your rank is better than last year's opening rank.",
+        "flag_round": 2,
+        "gender_pool": "neutral",
+        "has_preparatory_rounds": false,
+        "history": {
+          "2025": 2
+        },
+        "home_state_advantage": null,
+        "institute": "Indian Institute of Technology Delhi",
+        "institute_state": "Delhi",
+        "institute_type": "IIT",
+        "interest_score": 10.0,
+        "is_metro": true,
+        "is_preparatory": false,
+        "is_top_iit": true,
+        "matched_interest": true,
+        "opening_rank": 2,
+        "quota": "AI",
+        "reason": "Safe for you - strong fit for your goal (Computer Science and Engineering at a top IIT). Cutoff is highly stable across all rounds.",
+        "region": "north"
+      },
+      {
+        "admission_probability": 53.7,
+        "branch": "Computer Science and Engineering",
+        "branch_full": "Computer Science and Engineering (4 Years, Bachelor of Technology)",
+        "category": "Safe",
+        "closing_rank": 3,
+        "confidence": "highly_stable",
+        "degree": "Bachelor of Technology",
+        "exam": "advanced",
+        "female_seat_advantage": null,
+        "fit_label": "Comfortable - your rank is better than last year's opening rank.",
+        "flag_round": 2,
+        "gender_pool": "neutral",
+        "has_preparatory_rounds": false,
+        "history": {
+          "2025": 3
+        },
+        "home_state_advantage": null,
+        "institute": "Indian Institute of Technology Kanpur",
+        "institute_state": "Uttar Pradesh",
+        "institute_type": "IIT",
+        "interest_score": 10.0,
+        "is_metro": false,
+        "is_preparatory": false,
+        "is_top_iit": true,
+        "matched_interest": true,
+        "opening_rank": 3,
+        "quota": "AI",
+        "reason": "Safe for you - strong fit for your goal (Computer Science and Engineering at a top IIT). Cutoff is highly stable across all rounds.",
+        "region": "north"
+      },
+      {
+        "admission_probability": 55.6,
+        "branch": "Computer Science and Engineering",
+        "branch_full": "Computer Science and Engineering (4 Years, Bachelor of Technology)",
+        "category": "Safe",
+        "closing_rank": 4,
+        "confidence": "highly_stable",
+        "degree": "Bachelor of Technology",
+        "exam": "advanced",
+        "female_seat_advantage": null,
+        "fit_label": "Comfortable - your rank is better than last year's opening rank.",
+        "flag_round": 2,
+        "gender_pool": "neutral",
+        "has_preparatory_rounds": true,
+        "history": {
+          "2025": 4
+        },
+        "home_state_advantage": null,
+        "institute": "Indian Institute of Technology Guwahati",
+        "institute_state": "Assam",
+        "institute_type": "IIT",
+        "interest_score": 10.0,
+        "is_metro": false,
+        "is_preparatory": true,
+        "is_top_iit": false,
+        "matched_interest": true,
+        "opening_rank": 4,
+        "quota": "AI",
+        "reason": "Safe for you - strong fit for your goal (Computer Science and Engineering at a top IIT). Cutoff is highly stable across all rounds.",
+        "region": "northeast"
+      },
+      {
+        "admission_probability": 55.6,
+        "branch": "Computer Science and Engineering",
+        "branch_full": "Computer Science and Engineering (4 Years, Bachelor of Technology)",
+        "category": "Safe",
+        "closing_rank": 4,
+        "confidence": "highly_stable",
+        "degree": "Bachelor of Technology",
+        "exam": "advanced",
+        "female_seat_advantage": null,
+        "fit_label": "Comfortable - your rank is better than last year's opening rank.",
+        "flag_round": 2,
+        "gender_pool": "neutral",
+        "has_preparatory_rounds": false,
+        "history": {
+          "2025": 4
+        },
+        "home_state_advantage": null,
+        "institute": "Indian Institute of Technology Kharagpur",
+        "institute_state": "West Bengal",
+        "institute_type": "IIT",
+        "interest_score": 10.0,
+        "is_metro": false,
+        "is_preparatory": false,
+        "is_top_iit": true,
+        "matched_interest": true,
+        "opening_rank": 4,
+        "quota": "AI",
+        "reason": "Safe for you - strong fit for your goal (Computer Science and Engineering at a top IIT). Cutoff is highly stable across all rounds.",
+        "region": "east"
+      },
+      {
+        "admission_probability": 57.4,
+        "branch": "Computer Science and Engineering",
+        "branch_full": "Computer Science and Engineering (4 Years, Bachelor of Technology)",
+        "category": "Safe",
+        "closing_rank": 5,
+        "confidence": "highly_stable",
+        "degree": "Bachelor of Technology",
+        "exam": "advanced",
+        "female_seat_advantage": null,
+        "fit_label": "Comfortable - your rank is better than last year's opening rank.",
+        "flag_round": 2,
+        "gender_pool": "neutral",
+        "has_preparatory_rounds": false,
+        "history": {
+          "2025": 5
+        },
+        "home_state_advantage": null,
+        "institute": "Indian Institute of Technology Hyderabad",
+        "institute_state": "Telangana",
+        "institute_type": "IIT",
+        "interest_score": 9.4,
+        "is_metro": true,
+        "is_preparatory": false,
+        "is_top_iit": false,
+        "matched_interest": true,
+        "opening_rank": 5,
+        "quota": "AI",
+        "reason": "Safe for you - strong fit for your goal (Computer Science and Engineering at an IIT). Cutoff is highly stable across all rounds.",
+        "region": "south"
+      }
+    ],
+    "thresholds": {
+      "caps": {
+        "Reach": 15,
+        "Safe": 15,
+        "Target": 25
+      },
+      "lower_margin": 0.35,
+      "max_per_institute": 2,
+      "safe_fraction": 0.15,
+      "top_rank_cap": 25,
+      "upper_margin": 0.25
+    },
+    "total_by_type": {
+      "all": {
+        "GFTI": 0,
+        "IIIT": 0,
+        "IIT": 7,
+        "NIT": 0,
+        "shown": 7,
+        "total": 7
+      },
+      "dream": {
+        "GFTI": 0,
+        "IIIT": 0,
+        "IIT": 0,
+        "NIT": 0,
+        "shown": 0,
+        "total": 0
+      },
+      "safe": {
+        "GFTI": 0,
+        "IIIT": 0,
+        "IIT": 7,
+        "NIT": 0,
+        "shown": 7,
+        "total": 7
+      },
+      "target": {
+        "GFTI": 0,
+        "IIIT": 0,
+        "IIT": 0,
+        "NIT": 0,
+        "shown": 0,
+        "total": 0
+      }
+    },
+    "total_count": 7,
+    "total_pages": null
+  },
+  "note": "core grid rank=1 cat=ST (PwD) ranks=adv_only",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/recommend",
+    "payload": {
+      "adv_rank": 1,
+      "gender": "female",
+      "goal": "coding",
+      "home_state": "Rajasthan",
+      "mains_rank": null,
+      "seat_category": "ST (PwD)"
+    }
+  },
+  "status": 200
+}

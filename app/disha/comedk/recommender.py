@@ -1,9 +1,13 @@
-"""COMEDK recommendation engine — mirrors the JEE pipeline stage for stage.
+"""COMEDK recommendation engine — the same pipeline every exam here runs.
 
 Pipeline:  filter → categorise → score → explain → order → curate.
 
-A maintainer who knows the JEE engine (``app/disha/recommender.py``) should be
-able to read this file and recognise every stage.
+A maintainer who knows the JEE engine (``app/disha/recommender.py``) or the
+KCET one should be able to read this file and recognise every stage. The stage
+*rules* — bucket ordering, the institute-diversity cap, top-rank detection, the
+point-cutoff maths — come from ``app/disha/core/``, so COMEDK and KCET cannot
+drift apart on what they mean. What stays here is what COMEDK's own counselling
+rules require; ``docs/EXAM_DIFFERENCES.md`` inventories the full set.
 
 What JEE actually does, and why it works
 ---------------------------------------
@@ -59,15 +63,37 @@ Key structural differences from JEE (all intentional):
 * **Branch families never reorder, they only filter.**  The ``branch_families``
   request field is an explicit opt-in filter for students who want to narrow the
   list; ordering is by option quality alone.
+
+Key differences from KCET (also intentional — same approach, different exam):
+
+* **A modelled band, not an observed range.**  Both exams publish per-round
+  cut-offs, but COMEDK's rounds are not category-symmetric (GM ran in rounds
+  1/3/4, KKR in 1/2), so a "range across the rounds" would mean different things
+  in the two quotas.  COMEDK collapses to one cut-off and models the band around
+  it; KCET reads the range off rounds that are near-symmetric across its 48
+  category codes (47 publish all three).
+* **A dynamic target-band floor** (``dynamic_floor_fraction = 0.5``).  At a
+  cutoff of 692 a flat 1,000-rank floor would swallow the whole rank range below
+  it and stop top ranks reading as Safe.  KCET's cut-offs start an order of
+  magnitude higher, so it uses a flat floor.
+* **Three confidence values**, adding ``borderline`` for the coin-flip zone.
+  KCET has two.  Same field name, different question — a shared vocabulary would
+  force one of them to lie.
+* **A hard rank gate on top-rank mode** (rank <= 100), and top-rank mode wins
+  over a single-bucket request.  KCET detects from bucket counts alone and lets
+  the request win.
+* **Four languages** (en/hi/gu/kn) and **paginated results**.  KCET's response is
+  English-only and unpaginated.
 """
 
 from __future__ import annotations
 
-import math
 from typing import Dict, List, Optional, Set
 
 
 
+from ..core import curation
+from ..core.cutoff import PointCutoffModel
 from .config import settings
 from .data_loader import get_programs
 from .schemas import (
@@ -92,8 +118,8 @@ TARGET_BAND_FLOOR = settings.target_band_floor
 TARGET_BAND_CEILING = settings.target_band_ceiling
 REACH_BAND_CEILING = settings.reach_band_ceiling
 
-# Display order — identical to JEE.
-CATEGORY_ORDER = {"Target": 0, "Reach": 1, "Safe": 2}
+# Display order — shared with every exam.
+CATEGORY_ORDER = curation.BUCKET_ORDER
 
 # Probability curve constants.
 # SIGMA_FRACTION is a *stated prior, not a fitted value*.  Only one year of
@@ -128,10 +154,6 @@ TOP_RANK_CAP = settings.top_rank_cap
 # Quality-score blend weights (programme cutoff percentile vs institute brand).
 W_COMPETITIVENESS = settings.weight_competitiveness
 W_BRAND = settings.weight_brand
-
-
-def _clamp(value: float, low: float, high: float) -> float:
-    return max(low, min(high, value))
 
 
 # ═══════════════════════════════════════════════════════════════════════════
@@ -557,93 +579,55 @@ _NOTES = {
 # Core engine functions
 # ═══════════════════════════════════════════════════════════════════════════
 
-def _target_band(cutoff: float) -> float:
-    """Width of the modelled admitted window below ``cutoff``.
+# COMEDK's cutoff model. Shared with KCET — same formulas, COMEDK's own
+# constants, measured from this dataset's distribution (see config.py).
+#
+# dynamic_floor_fraction lowers the target-band floor for very competitive
+# programmes: at cutoff 692 a flat 1,000-rank floor would swallow the whole
+# rank range below it and stop top ranks reading as Safe. KCET does not need
+# this and leaves it None.
+CUTOFF_MODEL = PointCutoffModel(
+    safe_margin=SAFE_MARGIN,
+    target_band_floor=TARGET_BAND_FLOOR,
+    target_band_ceiling=TARGET_BAND_CEILING,
+    upper_margin=UPPER_MARGIN,
+    reach_band_ceiling=REACH_BAND_CEILING,
+    sigma_fraction=SIGMA_FRACTION,
+    sigma_floor=SIGMA_FLOOR,
+    sigma_ceiling=SIGMA_CEILING,
+    steepness=STEEPNESS,
+    dynamic_floor_fraction=0.5,
+)
 
-    ``clamp(SAFE_MARGIN * cutoff, min(TARGET_BAND_FLOOR, cutoff * 0.5), TARGET_BAND_CEILING)``.
-
-    The fraction is JEE's; the clamps are what make a single published cutoff
-    usable across a 692 → 111,800 range. The dynamic floor ensures that for
-    highly competitive programmes (e.g. cutoff 692), the target band does not
-    swallow the entire rank range, allowing top ranks to correctly show as Safe.
-    """
-    floor = min(TARGET_BAND_FLOOR, cutoff * 0.5)
-    return _clamp(SAFE_MARGIN * cutoff, floor, TARGET_BAND_CEILING)
-
-
-def _reach_band(cutoff: float) -> float:
-    """How far past ``cutoff`` a programme is still worth listing as a Dream.
-
-    ``min(UPPER_MARGIN * cutoff, REACH_BAND_CEILING)`` — JEE's fraction with an
-    absolute cap and deliberately *no* floor.  A floor would tell a rank-2,000
-    student that a programme which closed at 692 is a Dream, when their true
-    chance there is ~0 %.  The cap is what finally stops a rank-130,000 student
-    being handed 82 "options" against a table whose worst cutoff is 111,800.
-    """
-    return min(UPPER_MARGIN * cutoff, REACH_BAND_CEILING)
-
-
-def _categorize(rank: int, cutoff: float) -> Optional[str]:
-    """Assign a programme to Safe / Target / Reach, or ``None`` (dropped).
-
-    Reads as a single number line, with ``gap = cutoff - rank`` (positive means
-    the student is ahead of the cutoff, i.e. has headroom):
-
-        gap < -reach_band   →  None    no realistic chance
-        -reach_band ≤ gap<0 →  Reach   just past the cutoff, worth listing
-        0 ≤ gap < band      →  Target  inside the modelled admitted window
-        gap ≥ band          →  Safe    clears the whole window with room spare
-    """
-    gap = cutoff - rank
-    if gap < -_reach_band(cutoff):
-        return None
-    if gap < 0:
-        return "Reach"
-    if gap < _target_band(cutoff):
-        return "Target"
-    return "Safe"
-
-
-def _calculate_probability(rank: int, cutoff: float) -> float:
-    """Sigmoid admission probability (0.0 – 100.0), same curve shape as JEE.
-
-    ``rank == cutoff`` gives exactly 50.0 %.  Sigma is proportional to the
-    cutoff — year-over-year drift is larger for higher-numbered cutoffs — but
-    clamped at both ends for the same reason the bands are: an unclamped sigma
-    of 13,400 at cutoff 111,800 read a 6,800-rank cushion as only 79 % likely.
-
-    See the module-level constants for the honesty caveat on SIGMA_FRACTION.
-    """
-    std_dev = _clamp(SIGMA_FRACTION * cutoff, SIGMA_FLOOR, SIGMA_CEILING)
-    z = (cutoff - rank) / std_dev
-    try:
-        prob = 100.0 / (1.0 + math.exp(-STEEPNESS * z))
-    except OverflowError:
-        prob = 100.0 if z > 0 else 0.0
-    return round(prob, 1)
+_target_band = CUTOFF_MODEL.target_band
+_reach_band = CUTOFF_MODEL.reach_band
+_categorize = CUTOFF_MODEL.categorize
+_calculate_probability = CUTOFF_MODEL.probability
 
 
 def _confidence(rank: int, cutoff: float) -> str:
     """Headroom-based confidence — no fabricated volatility.
 
-    COMEDK has one round, so there is no spread to measure.  What *can* be
+    COMEDK has one round, so there is no spread to measure. What *can* be
     stated factually is how far the student sits from the decision boundary.
-    This uses the *same* z-score that drives ``_calculate_probability``, so the
-    label and the percentage on a card can never disagree — the earlier version
-    measured headroom as a raw fraction of the cutoff and could call a 99.9 %
-    option "medium".
+    Uses the *same* z-score that drives the probability, so the label and the
+    percentage on a card can never disagree.
 
-        |z| < 0.5   →  borderline   (roughly 46–54 % — a coin flip)
-        z  >= 1.5   →  high         (roughly 90 % and up)
-        otherwise   →  medium
+        |z| < 0.5   ->  borderline   (roughly 46-54 % — a coin flip)
+        z  >= 1.5   ->  high         (roughly 90 % and up)
+        otherwise   ->  medium
+
+    Three values, deliberately not shared: KCET uses two (no ``borderline``)
+    and JEE uses four round-volatility tags. Same field name, different
+    questions.
     """
-    std_dev = _clamp(SIGMA_FRACTION * cutoff, SIGMA_FLOOR, SIGMA_CEILING)
-    z = (cutoff - rank) / std_dev
+    z = CUTOFF_MODEL.z_score(rank, cutoff)
     if abs(z) < 0.5:
         return "borderline"
     if z >= 1.5:
         return "high"
     return "medium"
+
 
 
 def _quality_score(competitiveness: float, brand_score: float) -> float:
@@ -658,72 +642,22 @@ def _quality_score(competitiveness: float, brand_score: float) -> float:
     return 10.0 * (W_COMPETITIVENESS * competitiveness + W_BRAND * brand_score)
 
 
-def _order_bucket(nodes: List[ComedkProgramNode], bucket: str) -> List[ComedkProgramNode]:
-    """Order one bucket best-first.
+def _group_and_order(nodes: List[ComedkProgramNode]) -> Dict[str, List[ComedkProgramNode]]:
+    """Bucket the scored rows, each bucket best-first — see ``core.curation``.
 
-    Target and Safe: best option first, so the cap keeps the strongest colleges
-    the rank can reach rather than an arbitrary slice.
-
-    Reach: also best-first, with the smallest overshoot breaking ties.  The
-    previous code sorted Reach by ascending cutoff, which put the *least*
-    attainable Dream at the top of the section.
+    COMEDK's cutoff attribute is ``cutoff_rank`` and its programme name is
+    ``branch``; KCET names the same two things ``closing_rank`` and ``program``.
+    Naming them at the call site is what lets one implementation serve both
+    without either schema knowing about the other.
     """
-    if bucket == "Reach":
-        return sorted(
-            nodes,
-            key=lambda r: (-r.interest_score, -r.cutoff_rank, r.institute, r.branch),
-        )
-    return sorted(
-        nodes,
-        key=lambda r: (-r.interest_score, r.cutoff_rank, r.institute, r.branch),
+    return curation.group_and_order(
+        nodes, rank_attr="cutoff_rank", name_attr="branch"
     )
 
 
-def _curate_bucket(
-    nodes: List[ComedkProgramNode], cap: int, max_per_institute: int
-) -> List[ComedkProgramNode]:
-    """Take the first ``cap`` options, allowing at most N per institute.
-
-    Nothing is deleted from the caller's data — this only chooses what the
-    default response displays.  ``nodes`` must already be ordered best-first.
-
-    The limit is raised one seat at a time rather than abandoned, so a bucket
-    that cannot fill under a strict limit still fills — fairly.  Relaxing it in
-    plain quality order instead would hand the spare seats to whichever college
-    happens to sit highest in the ordering: at rank 20,000 KKR that produced
-    four BMS rows in an eight-card bucket.  Raising the allowance gives every
-    college a third seat before any college gets a fourth.
-
-    Diversity therefore never costs the student options.  At rank 1 only three
-    programmes are Targets and all three belong to one college, so all three are
-    still shown.
-    """
-    if cap <= 0 or not nodes:
-        return []
-
-    kept: List[ComedkProgramNode] = []
-    taken: Set[int] = set()
-    per_institute: Dict[str, int] = {}
-    allowance = max(1, max_per_institute)
-
-    while len(kept) < cap:
-        progressed = False
-        for idx, node in enumerate(nodes):
-            if len(kept) >= cap:
-                break
-            if idx in taken:
-                continue
-            if per_institute.get(node.institute, 0) >= allowance:
-                continue
-            kept.append(node)
-            taken.add(idx)
-            per_institute[node.institute] = per_institute.get(node.institute, 0) + 1
-            progressed = True
-        if not progressed:
-            break
-        allowance += 1
-
-    return kept
+# Signature is identical to the shared implementation, so this is a plain
+# alias rather than a wrapper.
+_curate_bucket = curation.curate_bucket
 
 
 def _brand_phrase(brand_tier: str, lang: str = "en") -> str:
@@ -897,13 +831,7 @@ def recommend(req: ComedkRecommendRequest) -> ComedkRecommendResponse:
         all_matches.append(node)
 
     # ── Order each bucket best-first ─────────────────────────────────────
-    # Ordering happens per bucket because "best first" means something slightly
-    # different in the Reach bucket (see _order_bucket).
-    eligible: Dict[str, List[ComedkProgramNode]] = {c: [] for c in CATEGORY_ORDER}
-    for node in all_matches:
-        eligible[node.category].append(node)
-    for cat in eligible:
-        eligible[cat] = _order_bucket(eligible[cat], cat)
+    eligible = _group_and_order(all_matches)
 
     # Everything the student is eligible for.
     count_target = len(eligible["Target"])
@@ -916,36 +844,41 @@ def recommend(req: ComedkRecommendRequest) -> ComedkRecommendResponse:
     # and the three-bucket framing provides no signal.  Show a curated
     # shortlist of the TOP_RANK_CAP most competitive programmes with
     # institute diversity — mirroring JEE's _apply_top_rank_fallback().
-    is_top_rank = (
-        req.rank <= TOP_RANK_THRESHOLD
-        and total_all > 0
-        and count_target == 0
-        and count_reach == 0
+    # COMEDK is the only exam passing a rank_gate: JEE and KCET derive
+    # top-rank purely from the bucket counts.
+    is_top_rank = curation.detect_top_rank(
+        total_all,
+        count_target,
+        count_reach,
+        rank=req.rank,
+        rank_gate=TOP_RANK_THRESHOLD,
     )
 
+    # Precedence is COMEDK's own: top-rank mode wins over a single-bucket
+    # request.  The shortlist is built first and the bucket filter then runs
+    # over it, so `rank 50, bucket=safe` answers with the 10 most competitive
+    # programmes rather than a paginated walk through all 832 the rank clears.
+    # KCET resolves the same collision the other way round; see the note in its
+    # recommender.
     if is_top_rank:
         # Curate: pick the top N most competitive with institute diversity
-        curated_safe = _curate_bucket(eligible["Safe"], TOP_RANK_CAP, MAX_PER_INSTITUTE)
-        curated = {"Safe": curated_safe, "Target": [], "Reach": []}
+        curated = curation.top_rank_view(eligible, TOP_RANK_CAP, MAX_PER_INSTITUTE)
     else:
-        # Normal flow: curate each bucket using the normal BUCKET_CAPS
+        # A single-bucket request opts out of the caps entirely: the bucket
+        # filter and pagination below return that bucket's complete ordered
+        # list, so nothing eligible is ever unreachable.
         single_bucket = req.bucket in ("safe", "target", "reach", "dream")
         if single_bucket:
             curated = dict(eligible)
         else:
-            curated = {
-                cat: _curate_bucket(rows, BUCKET_CAPS[cat], MAX_PER_INSTITUTE)
-                for cat, rows in eligible.items()
-            }
+            curated = curation.curate_all(eligible, BUCKET_CAPS, MAX_PER_INSTITUTE)
 
     count_target_shown = len(curated["Target"])
     count_reach_shown = len(curated["Reach"])
     count_safe_shown = len(curated["Safe"])
 
-    # Flat list in JEE's display order: Target, then Reach, then Safe.
-    selected: List[ComedkProgramNode] = []
-    for cat in sorted(CATEGORY_ORDER, key=lambda c: CATEGORY_ORDER[c]):
-        selected.extend(curated[cat])
+    # Flat list in the shared display order: Target, then Reach, then Safe.
+    selected = curation.flatten(curated)
 
     total_unfiltered = len(selected)
     single_bucket = req.bucket in ("safe", "target", "reach", "dream")

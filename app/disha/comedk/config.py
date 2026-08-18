@@ -25,6 +25,32 @@ means 104 ranks at a cutoff of 692 and 16,770 ranks at a cutoff of 111,800:
 So the band width is a fraction of the cutoff **clamped into an absolute
 range**.  A clamped band keeps one interpretable meaning across the whole rank
 range: "within roughly N ranks of the cutoff" rather than "within N % of it".
+
+Constants after the move to all-rounds data — read this before tuning
+---------------------------------------------------------------------
+The engine now reads ``comedk_2025_all_rounds.csv`` and takes a programme's
+cut-off as the MAX across the rounds it actually allotted in (see
+``data_loader._resolve_rank``).  Two things changed, and only one of them is
+about this file.
+
+The *scale* barely moved.  The largest closing rank is still 111,800 and the
+smallest still 692, because the rebuild added colleges and courses rather than
+extending the rank range.  So every band and sigma ceiling below still sits
+where it was measured and none of them moved.
+
+The *distribution* moved a lot, for two compounding reasons: the dataset grew
+from 637 rows to 1,114 (150 colleges instead of 101, 69 courses instead of 46),
+and a round-4 cut-off is the loosest rank a programme ever admitted.  At GM
+rank 76,983 the eligible split went 217/36/32 (Safe/Target/Reach) to
+558/45/41 — Safe grew 2.6x while the dataset grew 1.75x.
+
+That is a real consequence of the data change, not a bug: more of the published
+record is now visible, and the most permissive rank actually admitted is a
+looser boundary than round 1 alone.  Re-tuning the bands against the new
+distribution is a deliberate product decision that belongs in its own change
+with its own justification — not folded into the data swap, which is why
+nothing below moved.  Setting ``round_strategy = 1`` reproduces the
+round-1-only view if that comparison is wanted.
 """
 
 from __future__ import annotations
@@ -35,10 +61,25 @@ _DATA_DIR = Path(__file__).resolve().parent / "data"
 
 
 class Settings:
-    # Path to the COMEDK cutoff CSV.
-    csv_path: str = str(_DATA_DIR / "comedk_2025.csv")
+    # The mock round, all four counselling rounds and the pre-counselling seat
+    # matrix, built from the six official PDFs by
+    # scripts/build_comedk_dataset.py — see docs/DATA_PIPELINE.md.
+    csv_path: str = str(_DATA_DIR / "comedk_2025_all_rounds.csv")
+
+    # ── Which round's cut-off to recommend against ────────────────────────
+    # The dataset keeps every round; this picks the one number the recommender
+    # compares a rank against.  "max" (highest rank admitted in any round) is
+    # the default and mirrors JEE and KCET.  "last" / "first" / an int round
+    # number are also accepted — see data_loader._resolve_rank, chiefly that a
+    # fixed round number drops every programme that did not allot in it, and
+    # that COMEDK's rounds are not category-symmetric (GM ran in rounds 1/3/4,
+    # KKR only in rounds 1/2), so an int strategy empties one quota entirely.
+    round_strategy: str = "max"
 
     # Sanity bound: reject any rank above this value as likely erroneous.
+    # The largest closing rank anywhere in the rebuilt dataset is 111,800 —
+    # unchanged from the previous CSV — so this ceiling still catches typos
+    # (an extra trailing digit) without rejecting a genuine rank.
     max_rank: int = 200_000
 
     # ── Target band (the modelled admitted window) ───────────────────────

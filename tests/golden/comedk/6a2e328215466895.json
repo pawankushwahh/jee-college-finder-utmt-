@@ -1,0 +1,587 @@
+{
+  "body": {
+    "category_guidance": [
+      {
+        "blurb": "Your rank comfortably beats the cutoff here, so these are strong backups you are very likely to get.",
+        "category": "Safe",
+        "count": 10
+      }
+    ],
+    "counts": {
+      "by_category": {
+        "Reach": 0,
+        "Reach_total_attainable": 0,
+        "Safe": 10,
+        "Safe_total_attainable": 282,
+        "Target": 0,
+        "Target_total_attainable": 0
+      },
+      "curated": true,
+      "shown": 10,
+      "total": 10,
+      "total_attainable": 282
+    },
+    "guidance": "Found 282 eligible programme options for your COMEDK profile (showing 10). They are grouped into Target, Reach and Safe, and ordered to match your stated interest.",
+    "has_next": false,
+    "interest_guidance": "",
+    "notes": [
+      "Note: a KKR seat is not automatically easier to get. In most programmes the KKR pool closes earlier (at a lower numerical rank) than GM. Check the KKR gap on each card.",
+      "Your rank clears every published cutoff in this quota, so every programme is within reach. The list below is the most competitive ones — the strongest colleges your rank can command.",
+      "Showing the strongest 10 of 282 options you are eligible for, best first, with at most 2 programmes per college."
+    ],
+    "reach": [],
+    "recommendations": [
+      {
+        "admission_probability": 100.0,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 1133.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "interest_score": 10.0,
+        "is_metro": true,
+        "kkr_gap": 441.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering",
+        "quota": "KKR",
+        "rank_gap": 1132,
+        "reason": "Safe for you — a sensible option to keep on your list (Computer Science & Engineering at an elite-tier college), and KKR pool gives roughly a 441-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Computer Science & Engineering (Artificial & Machine Learning)",
+        "branch_family": "ai_ds",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 2048.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "interest_score": 9.97,
+        "is_metro": true,
+        "kkr_gap": 1073.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering (Artificial & Machine Learning)",
+        "quota": "KKR",
+        "rank_gap": 2047,
+        "reason": "Safe for you — a sensible option to keep on your list (Computer Science & Engineering (Artificial & Machine Learning) at an elite-tier college), and KKR pool gives roughly a 1,073-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Artificial Intelligence & Machine Learning",
+        "branch_family": "ai_ds",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 5102.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "M.S. Ramaiah Institute of Technology-MSR Nagar, Bengaluru",
+        "interest_score": 9.84,
+        "is_metro": true,
+        "kkr_gap": 1858.0,
+        "matched_interest": false,
+        "program": "Artificial Intelligence & Machine Learning",
+        "quota": "KKR",
+        "rank_gap": 5101,
+        "reason": "Safe for you — a sensible option to keep on your list (Artificial Intelligence & Machine Learning at an elite-tier college), and KKR pool gives roughly a 1,858-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 6671.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "M.S. Ramaiah Institute of Technology-MSR Nagar, Bengaluru",
+        "interest_score": 9.81,
+        "is_metro": true,
+        "kkr_gap": 5004.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering",
+        "quota": "KKR",
+        "rank_gap": 6670,
+        "reason": "Safe for you — a sensible option to keep on your list (Computer Science & Engineering at an elite-tier college), and KKR pool gives roughly a 5,004-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Artificial Intelligence & Data Science",
+        "branch_family": "ai_ds",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 10668.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "BMS College of Engineering-Basavanagudi, Bengaluru",
+        "interest_score": 9.73,
+        "is_metro": true,
+        "kkr_gap": 4783.0,
+        "matched_interest": false,
+        "program": "Artificial Intelligence & Data Science",
+        "quota": "KKR",
+        "rank_gap": 10667,
+        "reason": "Safe for you — a sensible option to keep on your list (Artificial Intelligence & Data Science at an elite-tier college), and KKR pool gives roughly a 4,783-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 13042.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "Sri Jayachamarajendra College of Engineering constituent college of JSS Science and Technology University-Manasagangothri, Mysuru",
+        "interest_score": 9.67,
+        "is_metro": false,
+        "kkr_gap": 5886.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering",
+        "quota": "KKR",
+        "rank_gap": 13041,
+        "reason": "Safe for you — a sensible option to keep on your list (Computer Science & Engineering at an elite-tier college), and KKR pool gives roughly a 5,886-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 14570.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "BMS College of Engineering-Basavanagudi, Bengaluru",
+        "interest_score": 9.65,
+        "is_metro": true,
+        "kkr_gap": 9258.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering",
+        "quota": "KKR",
+        "rank_gap": 14569,
+        "reason": "Safe for you — a sensible option to keep on your list (Computer Science & Engineering at an elite-tier college), and KKR pool gives roughly a 9,258-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 18974.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "Dayananda Sagar College of Engineering-Kumaraswamy Layout, Bengaluru",
+        "interest_score": 9.46,
+        "is_metro": true,
+        "kkr_gap": 11155.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering",
+        "quota": "KKR",
+        "rank_gap": 18973,
+        "reason": "Safe for you — a sensible option to keep on your list (Computer Science & Engineering at an elite-tier college), and KKR pool gives roughly a 11,155-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Artificial Intelligence & Machine Learning",
+        "branch_family": "ai_ds",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 19685.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "Dayananda Sagar College of Engineering-Kumaraswamy Layout, Bengaluru",
+        "interest_score": 9.38,
+        "is_metro": true,
+        "kkr_gap": 10063.0,
+        "matched_interest": false,
+        "program": "Artificial Intelligence & Machine Learning",
+        "quota": "KKR",
+        "rank_gap": 19684,
+        "reason": "Safe for you — a sensible option to keep on your list (Artificial Intelligence & Machine Learning at an elite-tier college), and KKR pool gives roughly a 10,063-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Computer Science & Engineering (Artificial & Machine Learning)",
+        "branch_family": "ai_ds",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 25876.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "R V Institute of Technology and Management-J P Nagar, Bengaluru",
+        "interest_score": 9.19,
+        "is_metro": true,
+        "kkr_gap": 1203.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering (Artificial & Machine Learning)",
+        "quota": "KKR",
+        "rank_gap": 25875,
+        "reason": "Safe for you — a sensible option to keep on your list (Computer Science & Engineering (Artificial & Machine Learning) at an elite-tier college), and KKR pool gives roughly a 1,203-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "ai_ds"
+        ]
+      }
+    ],
+    "safe": [
+      {
+        "admission_probability": 100.0,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 1133.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "interest_score": 10.0,
+        "is_metro": true,
+        "kkr_gap": 441.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering",
+        "quota": "KKR",
+        "rank_gap": 1132,
+        "reason": "Safe for you — a sensible option to keep on your list (Computer Science & Engineering at an elite-tier college), and KKR pool gives roughly a 441-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Computer Science & Engineering (Artificial & Machine Learning)",
+        "branch_family": "ai_ds",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 2048.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "interest_score": 9.97,
+        "is_metro": true,
+        "kkr_gap": 1073.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering (Artificial & Machine Learning)",
+        "quota": "KKR",
+        "rank_gap": 2047,
+        "reason": "Safe for you — a sensible option to keep on your list (Computer Science & Engineering (Artificial & Machine Learning) at an elite-tier college), and KKR pool gives roughly a 1,073-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Artificial Intelligence & Machine Learning",
+        "branch_family": "ai_ds",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 5102.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "M.S. Ramaiah Institute of Technology-MSR Nagar, Bengaluru",
+        "interest_score": 9.84,
+        "is_metro": true,
+        "kkr_gap": 1858.0,
+        "matched_interest": false,
+        "program": "Artificial Intelligence & Machine Learning",
+        "quota": "KKR",
+        "rank_gap": 5101,
+        "reason": "Safe for you — a sensible option to keep on your list (Artificial Intelligence & Machine Learning at an elite-tier college), and KKR pool gives roughly a 1,858-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 6671.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "M.S. Ramaiah Institute of Technology-MSR Nagar, Bengaluru",
+        "interest_score": 9.81,
+        "is_metro": true,
+        "kkr_gap": 5004.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering",
+        "quota": "KKR",
+        "rank_gap": 6670,
+        "reason": "Safe for you — a sensible option to keep on your list (Computer Science & Engineering at an elite-tier college), and KKR pool gives roughly a 5,004-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Artificial Intelligence & Data Science",
+        "branch_family": "ai_ds",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 10668.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "BMS College of Engineering-Basavanagudi, Bengaluru",
+        "interest_score": 9.73,
+        "is_metro": true,
+        "kkr_gap": 4783.0,
+        "matched_interest": false,
+        "program": "Artificial Intelligence & Data Science",
+        "quota": "KKR",
+        "rank_gap": 10667,
+        "reason": "Safe for you — a sensible option to keep on your list (Artificial Intelligence & Data Science at an elite-tier college), and KKR pool gives roughly a 4,783-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 13042.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "Sri Jayachamarajendra College of Engineering constituent college of JSS Science and Technology University-Manasagangothri, Mysuru",
+        "interest_score": 9.67,
+        "is_metro": false,
+        "kkr_gap": 5886.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering",
+        "quota": "KKR",
+        "rank_gap": 13041,
+        "reason": "Safe for you — a sensible option to keep on your list (Computer Science & Engineering at an elite-tier college), and KKR pool gives roughly a 5,886-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 14570.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "BMS College of Engineering-Basavanagudi, Bengaluru",
+        "interest_score": 9.65,
+        "is_metro": true,
+        "kkr_gap": 9258.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering",
+        "quota": "KKR",
+        "rank_gap": 14569,
+        "reason": "Safe for you — a sensible option to keep on your list (Computer Science & Engineering at an elite-tier college), and KKR pool gives roughly a 9,258-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Computer Science & Engineering",
+        "branch_family": "cse",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 18974.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "Dayananda Sagar College of Engineering-Kumaraswamy Layout, Bengaluru",
+        "interest_score": 9.46,
+        "is_metro": true,
+        "kkr_gap": 11155.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering",
+        "quota": "KKR",
+        "rank_gap": 18973,
+        "reason": "Safe for you — a sensible option to keep on your list (Computer Science & Engineering at an elite-tier college), and KKR pool gives roughly a 11,155-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Artificial Intelligence & Machine Learning",
+        "branch_family": "ai_ds",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 19685.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "Dayananda Sagar College of Engineering-Kumaraswamy Layout, Bengaluru",
+        "interest_score": 9.38,
+        "is_metro": true,
+        "kkr_gap": 10063.0,
+        "matched_interest": false,
+        "program": "Artificial Intelligence & Machine Learning",
+        "quota": "KKR",
+        "rank_gap": 19684,
+        "reason": "Safe for you — a sensible option to keep on your list (Artificial Intelligence & Machine Learning at an elite-tier college), and KKR pool gives roughly a 10,063-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "ai_ds"
+        ]
+      },
+      {
+        "admission_probability": 100.0,
+        "branch": "Computer Science & Engineering (Artificial & Machine Learning)",
+        "branch_family": "ai_ds",
+        "brand_score": 1.0,
+        "brand_tier": "elite",
+        "bucket": "Safe",
+        "category": "Safe",
+        "confidence": "high",
+        "cutoff_rank": 25876.0,
+        "degree": "",
+        "fit_label": "Comfortable — your rank is well within this programme's cutoff.",
+        "institute": "R V Institute of Technology and Management-J P Nagar, Bengaluru",
+        "interest_score": 9.19,
+        "is_metro": true,
+        "kkr_gap": 1203.0,
+        "matched_interest": false,
+        "program": "Computer Science & Engineering (Artificial & Machine Learning)",
+        "quota": "KKR",
+        "rank_gap": 25875,
+        "reason": "Safe for you — a sensible option to keep on your list (Computer Science & Engineering (Artificial & Machine Learning) at an elite-tier college), and KKR pool gives roughly a 1,203-rank cushion here. You have significant headroom above this cutoff.",
+        "tags": [
+          "ai_ds"
+        ]
+      }
+    ],
+    "target": [],
+    "thresholds": {
+      "caps": {
+        "Reach": 20,
+        "Safe": 25,
+        "Target": 30
+      },
+      "max_per_institute": 2,
+      "reach_band_ceiling": 8000.0,
+      "safe_margin": 0.15,
+      "target_band_ceiling": 6000.0,
+      "target_band_floor": 1000.0,
+      "top_rank_cap": 10,
+      "top_rank_threshold": 100,
+      "upper_margin": 0.25
+    },
+    "total_by_type": {
+      "all": {
+        "total": 10,
+        "total_attainable": 282
+      },
+      "dream": {
+        "total": 0,
+        "total_attainable": 0
+      },
+      "safe": {
+        "total": 10,
+        "total_attainable": 282
+      },
+      "target": {
+        "total": 0,
+        "total_attainable": 0
+      }
+    },
+    "total_count": 10,
+    "total_reach": 0,
+    "total_safe": 10,
+    "total_target": 0
+  },
+  "note": "core grid rank=1 quota=KKR",
+  "request": {
+    "method": "POST",
+    "params": null,
+    "path": "/api/comedk/recommend",
+    "payload": {
+      "quota": "KKR",
+      "rank": 1
+    }
+  },
+  "status": 200
+}
