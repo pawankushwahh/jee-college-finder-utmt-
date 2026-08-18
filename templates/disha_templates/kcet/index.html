@@ -47,7 +47,7 @@
     <div class="topbar__right">
       <span class="topbar__data-note"><span>KCET 2025 cutoffs · </span><span
           id="program-count">637</span><span> programs</span></span>
-      <a href="../kcet/stats" class="btn btn--primary btn--sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 4px; height: 32px; padding: 0 12px; font-size: 13px;">
+      <a href="kcet/stats" class="btn btn--primary btn--sm" style="text-decoration: none; display: inline-flex; align-items: center; gap: 4px; height: 32px; padding: 0 12px; font-size: 13px;">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
           <path d="M18 20V10M12 20V4M6 20v-6"/>
         </svg>
@@ -140,16 +140,30 @@
           <fieldset class="step" data-step="1" hidden>
             <p class="eyebrow">Your eligibility</p>
             <h2 class="step__title">Which category applies to you?</h2>
-            <p class="step__hint">KKR (Kalyana Karnataka Region) is reserved for students domiciled in the Hyderabad-Karnataka region. Most students will be under General Merit (GM).</p>
+            <p class="step__hint">KEA prints one code on your rank card — like <kbd>2AK</kbd> — that combines your
+              reservation category, your seat quota and your seat pool. Pick each part below and we'll assemble the
+              code.</p>
 
             <div class="field">
-              <span class="field__label" id="seat_category-label">Category</span>
-              <div class="choice-row" role="radiogroup" aria-labelledby="seat_category-label" id="seat_category-row">
-                <button type="button" class="choice is-selected" role="radio" aria-checked="true" data-value="GM">GM — General Merit</button>
-                <button type="button" class="choice" role="radio" aria-checked="false" data-value="KKR">KKR — Kalyana Karnataka</button>
-              </div>
-              <p class="field__note" id="category-note">&nbsp;</p>
+              <span class="field__label" id="seat_base-label">Reservation category</span>
+              <div class="choice-row" role="radiogroup" aria-labelledby="seat_base-label" id="seat_base-row"></div>
             </div>
+
+            <div class="field">
+              <span class="field__label" id="seat_region-label">Seat quota</span>
+              <div class="choice-row" role="radiogroup" aria-labelledby="seat_region-label" id="seat_region-row"></div>
+              <p class="field__note">The Kannada-medium and Rural quotas need supporting documents. If you don't have
+                them, choose State-wide.</p>
+            </div>
+
+            <div class="field">
+              <span class="field__label" id="seat_pool-label">Seat pool</span>
+              <div class="choice-row" role="radiogroup" aria-labelledby="seat_pool-label" id="seat_pool-row"></div>
+              <p class="field__note">Article 371(J) seats are reserved for Kalyana-Karnataka candidates and need an
+                eligibility certificate. Everyone else takes Rest of Karnataka.</p>
+            </div>
+
+            <p class="field__note category-code" id="category-note" aria-live="polite"></p>
           </fieldset>
 
           <!-- Step 3: Branch preference -->
@@ -236,12 +250,21 @@
             </div>
 
             <div class="panel-field">
-              <span class="panel-field__label" id="panel-seat_category-label">Category</span>
-              <div class="choice-row choice-row--sm" role="radiogroup" aria-labelledby="panel-seat_category-label"
-                id="panel-seat_category-row">
-                <button type="button" class="choice is-selected" role="radio" aria-checked="true" data-value="GM">GM</button>
-                <button type="button" class="choice" role="radio" aria-checked="false" data-value="KKR">KKR</button>
-              </div>
+              <span class="panel-field__label" id="panel-seat_base-label">Category</span>
+              <div class="choice-row choice-row--sm" role="radiogroup" aria-labelledby="panel-seat_base-label"
+                id="panel-seat_base-row"></div>
+            </div>
+
+            <div class="panel-field">
+              <span class="panel-field__label" id="panel-seat_region-label">Seat quota</span>
+              <div class="choice-row choice-row--sm" role="radiogroup" aria-labelledby="panel-seat_region-label"
+                id="panel-seat_region-row"></div>
+            </div>
+
+            <div class="panel-field">
+              <span class="panel-field__label" id="panel-seat_pool-label">Seat pool</span>
+              <div class="choice-row choice-row--sm" role="radiogroup" aria-labelledby="panel-seat_pool-label"
+                id="panel-seat_pool-row"></div>
             </div>
 
             <div class="panel-field">
@@ -422,7 +445,9 @@
           </div>
 
           <p class="disclaimer">
-            Based on actual KCET 2025 cutoff data across General Merit and KKR categorys. 
+            Based on KEA's official KCET 2025 cut-off ranks — all three allotment rounds, every reservation
+            category, and both the Rest of Karnataka and Article 371(J) seat pools. A programme's cut-off is the
+            highest rank admitted across the three rounds.
             These recommendations are for guidance purposes and should be verified with the official KCET counselling data on <strong>cetonline.karnataka.gov.in/kea</strong> before finalizing choices.
           </p>
 

@@ -10,7 +10,8 @@ dataset's own distribution, not copied from COMEDK's.
 
 Why KCET needs its own numbers, not COMEDK's
 ----------------------------------------------
-``kcet_2025_round1_cutoffs_cleaned.csv`` (18,850 rows, GM category) has:
+The round-1-only dataset these constants were measured from (18,850 rows, GM
+category) had:
 
     p1    2,204      p50   67,328      p95  163,004
     p25  38,246      p75  101,524      p99  195,999
@@ -25,6 +26,26 @@ past the ~90th percentile look like it sits right at the ceiling. The band
 and sigma ceilings below are COMEDK's numbers scaled up by that measured
 tail ratio; everything else (the fractions themselves, the floor reasoning)
 follows the same logic COMEDK's config.py documents.
+
+Constants after the move to all-rounds data — read this before tuning
+---------------------------------------------------------------------
+The engine now takes a programme's cut-off as the MAX across rounds 1-3 (see
+``data_loader._load_raw_rows``). That barely moves the statistic these ceilings
+were derived from — the GM maximum went 249,733 -> 262,158, a 5% shift, so the
+tail-ratio scaling above still holds and the constants are left unchanged.
+
+It moves the *middle* of the distribution enormously, because a programme's
+round-3 cut-off is the loosest rank it ever admitted:
+
+    p25  38,246 ->  54,994      p75  101,524 -> 247,460
+    p50  67,328 -> 128,953      max  249,733 -> 262,158
+
+The bands are absolute (13k/18k) against cut-offs whose median has roughly
+doubled, so proportionally far more programmes now land in Safe and the
+Safe/Target/Reach split discriminates less than it did on round-1 data. That is
+a real consequence of the data change, not a bug, and re-tuning the bands is a
+deliberate product decision that belongs in its own change with its own
+justification — not folded into the data swap, which is why nothing below moved.
 """
 
 from __future__ import annotations
@@ -35,8 +56,87 @@ _DATA_DIR = Path(__file__).resolve().parent / "data"
 
 
 class Settings:
-    # Path to the KCET 2025 round-1 cutoff CSV.
-    csv_path: str = str(_DATA_DIR / "kcet_2025.csv")
+    # All three KEA rounds, both seat pools. Built from the official cut-off
+    # PDFs by scripts/build_kcet_dataset.py — see docs/DATA_PIPELINE.md.
+    csv_path: str = str(_DATA_DIR / "kcet_2025_all_rounds.csv")
+
+    # ── Which round's cut-off to recommend against ────────────────────────
+    # The dataset keeps every round; this picks the one number the recommender
+    # compares a rank against. "max" (highest rank admitted in any round) is the
+    # default and mirrors JEE. "last" / "first" / an int round number are also
+    # accepted — see data_loader._resolve_rank for the trade-offs, chiefly that
+    # a fixed round number drops every programme that did not allot in it.
+    round_strategy: str = "max"
+
+    # ── Observed-range bucketing ──────────────────────────────────────────
+    # A programme's bucket comes from the range of ranks KEA actually admitted
+    # across the rounds, not from a synthetic band:
+    #
+    #     rank <= rank_low            Safe    (clears even the toughest round)
+    #     rank_low < rank <= rank_high  Target  (admitted in some later round)
+    #     rank > rank_high            Dream   (admitted in no round)
+    #
+    # This replaced a modelled target band of 15% of the cutoff clamped to
+    # 13,000. Measured against the real admitted range, that band was 4.1x too
+    # narrow at cutoffs of 120k-200k and 8.1x too narrow above 200k (the flat
+    # ceiling stopped growing while the real range kept widening), and ~2x too
+    # wide below 5,000. That mis-scaling, more than anything else, is why
+    # 84-99% of every result set used to land in Safe.
+    use_observed_range: bool = True
+
+    # 26% of programmes appear in only one round, so they have no observed
+    # range. 95% of those publish only a round-1 value, which is the *tight*
+    # end -- so the band is imputed UPWARD from it. Treating the known value as
+    # the loose end instead would mislabel genuinely-Safe students as Target.
+    #
+    # Ratios are the measured median of (high/low - 1) for multi-round
+    # programmes in the same low-end bracket. Dispersion inside a bracket is
+    # wide (p25-p75 spans roughly 3x), so an imputed band is a coarse estimate,
+    # not a measurement -- programmes carrying one are flagged `band_imputed`
+    # so callers can treat them with less confidence. The burden is very uneven:
+    # 4% of GM rows need it versus 54-62% of some 371(j) categories.
+    band_imputation_ratios: tuple = (
+        (5_000, 0.51),
+        (20_000, 0.41),
+        (60_000, 0.44),
+        (120_000, 0.56),
+        (200_000, 0.30),
+        (float("inf"), 0.01),
+    )
+
+    # Extra slack below rank_low before a programme stops being Target.
+    #
+    # Deliberately 0.0. A rank just below 2025's toughest round might still miss
+    # 2026's, so some slack is defensible in principle -- but its correct width
+    # is year-over-year drift, which **cannot be measured from a single year**.
+    # Within-year round movement (median +28.8% from R1 to R2) measures the
+    # applicant pool shrinking as seats are taken, not a new cohort arriving,
+    # so it is the wrong quantity and is not used as a stand-in. Left at 0 so
+    # the buckets mean exactly what the data shows; raise it only as an
+    # explicit, stated safety margin.
+    safe_buffer_fraction: float = 0.0
+
+    # ── Relevance floor ───────────────────────────────────────────────────
+    # Observed ranges fix *which* bucket, but not whether an option is worth
+    # showing at all: a weak programme's own range is ~105,000 wide, so it
+    # would qualify as Safe for every rank. Without a floor a rank-100 student
+    # opening "Safe" received 1,576 options running out to cutoff 262,158 at
+    # "100.0% probability".
+    #
+    # Cut at 4 sigma below the tough end, i.e. ~99.75% admission probability at
+    # the current steepness: past that an option is a certainty and cannot
+    # change which seat the student ends up with. Sigma here is the *relevance*
+    # scale, deliberately separate from the probability sigma below -- one
+    # number cannot serve both jobs, which is what produced "100.0%" on a
+    # programme 2,600x below the student's rank.
+    relevance_ceiling_z: float = 4.0
+    relevance_sigma_fraction: float = 0.12
+    relevance_sigma_floor: float = 300.0
+    relevance_sigma_ceiling: float = 11_000.0
+
+    # The window alone leaves a top-rank student only ~5 options, too few to
+    # build a preference list from, so it never trims below this many.
+    min_options: int = 25
 
     # Sanity bound: reject any rank above this value as likely erroneous.
     # Measured max closing rank in the GM category is 249,733; a generous
@@ -60,10 +160,14 @@ class Settings:
     reach_band_ceiling: float = 18_000.0
 
     # ── Probability curve ────────────────────────────────────────────────
-    # Only one round of this dataset exists in the repo (round 1 only, no
-    # Closing_R2..R6 to measure real movement), so sigma_fraction is a stated
-    # prior — same situation and same value COMEDK used, since neither
-    # dataset can be fitted from year-over-year movement yet.
+    # sigma_fraction is still a stated prior, same value COMEDK used. It was
+    # originally justified by "only round 1 exists, so movement cannot be
+    # measured" — that is no longer true: the dataset now carries all three
+    # rounds and every programme keeps its round-wise history in
+    # KcetProgram.closing_rank_by_round, so round-to-round movement *is*
+    # measurable and sigma could be fitted from it the way JEE's is. Nobody has
+    # done that fitting yet, so the prior stands rather than being presented as
+    # something derived from this data.
     sigma_fraction: float = 0.12
     sigma_floor: float = 300.0
     sigma_ceiling: float = 11_000.0

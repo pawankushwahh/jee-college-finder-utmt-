@@ -150,3 +150,81 @@ class PointCutoffModel:
         except OverflowError:
             prob = 100.0 if z > 0 else 0.0
         return round(prob, 1)
+
+
+@dataclass(frozen=True)
+class RangeCutoffModel:
+    """Bucketing and probability for exams that publish a cut-off per round.
+
+    Where :class:`PointCutoffModel` invents a band around a single number, this
+    reads the band off the data: a programme's cut-offs across the rounds give
+    the range of ranks that were *actually* admitted, from the toughest round
+    (``low``) to the loosest (``high``).
+
+        rank <= low          -> Safe    cleared even the toughest round
+        low < rank <= high   -> Target  admitted in some later round
+        rank > high          -> Dream   admitted in no round
+
+    Every boundary is therefore an observed rank rather than a modelled one.
+    Used by KCET; JEE and COMEDK still use ``PointCutoffModel``, though JEE's
+    opening/closing pair has the same shape if it is ever migrated.
+
+    Two separate scales, deliberately not one:
+
+    * ``sigma`` for **probability**, taken from the programme's own band, so a
+      volatile programme reports less certainty than a stable one. A single
+      global fraction cannot do this — measured against real movement, KCET's
+      global 12% was roughly 4x too small.
+    * a **relevance** window, supplied by the caller, for whether an option is
+      worth showing at all. Band width cannot serve here: a weak programme's
+      band is enormous, so it would qualify as Safe for every rank.
+    """
+
+    steepness: float
+    # Dream extends this many band-widths past `high` before an option is
+    # dropped as unreachable. 1.0 = "one more round's worth of movement".
+    reach_bands: float = 1.0
+    # Slack below `low` that still counts as Target. See the KCET config for
+    # why this defaults to nothing.
+    safe_buffer_fraction: float = 0.0
+    # Floor on the probability sigma, for programmes with a near-zero band.
+    sigma_floor: float = 300.0
+
+    def target_floor(self, low: float) -> float:
+        return low * (1.0 - self.safe_buffer_fraction)
+
+    def dream_ceiling(self, low: float, high: float) -> float:
+        return high + self.reach_bands * max(high - low, self.sigma_floor)
+
+    def categorize(self, rank: int, low: float, high: float) -> Bucket:
+        if rank > self.dream_ceiling(low, high):
+            return None
+        if rank > high:
+            return "Reach"
+        if rank >= self.target_floor(low):
+            return "Target"
+        return "Safe"
+
+    def sigma(self, low: float, high: float) -> float:
+        """Spread of the probability curve, from the programme's own band.
+
+        Half the band puts ``rank == low`` at roughly two sigma of headroom,
+        so clearing the toughest round reads as near-certain while sitting at
+        the loosest round reads as a coin flip.
+        """
+        return max((high - low) / 2.0, self.sigma_floor)
+
+    def z_score(self, rank: int, low: float, high: float) -> float:
+        return (high - rank) / self.sigma(low, high)
+
+    def probability(self, rank: int, low: float, high: float) -> float:
+        """Admission probability as a percentage, centred on the loose end.
+
+        ``rank == high`` is 50%: the loosest round is exactly the boundary
+        between getting a seat and not.
+        """
+        try:
+            prob = 100.0 / (1.0 + math.exp(-self.steepness * self.z_score(rank, low, high)))
+        except OverflowError:
+            prob = 100.0 if rank < high else 0.0
+        return round(prob, 1)

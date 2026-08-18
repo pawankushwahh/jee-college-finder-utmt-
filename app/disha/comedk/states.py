@@ -84,7 +84,19 @@ _BRANCH_RULES: List[tuple[re.Pattern, str]] = [
     (re.compile(r"mechanical", re.I), "mechanical"),
 
     # ── Automobile ───────────────────────────────────────────────────────
-    (re.compile(r"automobile", re.I), "automobile"),
+    # "Automotive Engineering" (AVE) is a distinct COMEDK course code from
+    # "Automobile Engineering" (AU) but the same family for a student choosing
+    # a branch.
+    (re.compile(r"automobile|automotive", re.I), "automobile"),
+
+    # ── Mechatronics / Marine ────────────────────────────────────────────
+    # Both arrived with the full 69-course dataset; neither existed in the
+    # partial CSV this engine was first built on. Mechatronics is grouped with
+    # robotics rather than mechanical because that is what the course is —
+    # it sits after the robotics rules only because "Robotics & Artificial
+    # Intelligence" must win over the generic AI rule first.
+    (re.compile(r"mechatronic", re.I), "robotics"),
+    (re.compile(r"marine", re.I), "mechanical"),
 
     # ── Civil ────────────────────────────────────────────────────────────
     (re.compile(r"civil", re.I), "civil"),
@@ -100,6 +112,13 @@ _BRANCH_RULES: List[tuple[re.Pattern, str]] = [
 
     # ── Agriculture ──────────────────────────────────────────────────────
     (re.compile(r"agricultur", re.I), "agriculture"),
+
+    # ── Planning ─────────────────────────────────────────────────────────
+    # "Bachelor of Urban & Regional Planning" is not an engineering degree,
+    # but COMEDK counsels it through the engineering stream, so it needs a
+    # family rather than falling through to "other". Grouped with design as
+    # the nearest existing family; it is 18 seats across 1 college.
+    (re.compile(r"urban\s*&\s*regional planning|planning", re.I), "design"),
 ]
 
 
@@ -111,8 +130,8 @@ def classify_branch(program: str) -> str:
     enough that each row maps unambiguously to one family.
 
     Returns ``"other"`` only if no rule matches — but the rules are written to
-    cover all 46 programmes in the 2025 dataset, so ``"other"`` should never
-    appear in practice.
+    cover all 63 course names in the 2025 all-rounds dataset, so ``"other"``
+    should never appear in practice.  ``tests/test_core.py`` asserts that.
     """
     for pattern, family in _BRANCH_RULES:
         if pattern.search(program):

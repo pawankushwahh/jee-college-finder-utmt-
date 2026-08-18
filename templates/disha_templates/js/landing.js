@@ -58,41 +58,47 @@ const EXAMS = [
 
 /* ── Card renderer ───────────────────────────────────────────────── */
 
-function createExamCard(exam) {
+/**
+ * The card is an <article>, not an <a>. The title link is stretched over the
+ * whole surface via .exam-card__link::after, which keeps the card fully
+ * clickable while leaving the "Official site" anchor as a real, separate link —
+ * no nested interactive elements and no inline click handlers.
+ */
+function createExamCard(exam, index = 0) {
   return `
-    <a href="${exam.route}" class="exam-card"
-       aria-label="Go to ${exam.name}">
+    <article class="exam-card" style="--i:${index}">
 
       ${exam.badge ? `<span class="exam-card__badge">${exam.badge}</span>` : ''}
 
-      <div class="exam-card__icon" aria-hidden="true">
+      <span class="exam-card__icon" aria-hidden="true">
         ${exam.icon}
-      </div>
+      </span>
 
-      <h2 class="exam-card__title">${exam.name}</h2>
+      <h2 class="exam-card__title">
+        <a class="exam-card__link" href="${exam.route}">${exam.name}</a>
+      </h2>
       <p class="exam-card__desc">${exam.subtitle}</p>
 
-      <div class="exam-card__stat">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+      <p class="exam-card__stat">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
         </svg>
         ${exam.stat}
-      </div>
+      </p>
 
       <span class="exam-card__spacer"></span>
 
-      <p class="exam-card__conductor">
-        ${exam.conductingBody} ·
-        <span onclick="event.stopPropagation(); window.open('${exam.conductingBodyUrl}', '_blank')">Official site ↗</span>
-      </p>
-
-      <span class="exam-card__cta">
-        Explore
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M5 12h14M13 6l6 6-6 6"/>
-        </svg>
-      </span>
-    </a>
+      <div class="exam-card__foot">
+        <span class="exam-card__cta" aria-hidden="true">
+          Explore
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14M13 6l6 6-6 6"/>
+          </svg>
+        </span>
+        <a class="exam-card__official" href="${exam.conductingBodyUrl}" target="_blank" rel="noopener"
+           aria-label="${exam.conductingBody} — official site">${exam.conductingBody.replace(/^Conducted by /, '')} ↗</a>
+      </div>
+    </article>
   `;
 }
 
@@ -116,9 +122,9 @@ function renderExams(filter = '') {
   if (matched.length === 0) {
     container.innerHTML = `
       <div class="exam-grid">
-        <div class="exam-empty">
-          <div class="exam-empty__icon">🔍</div>
-          <p class="exam-empty__text">No matching exam found. Try a different keyword.</p>
+        <div class="empty-state">
+          <p><strong>No exam matches that search.</strong></p>
+          <p>Try a different keyword, or clear the search to see every exam.</p>
         </div>
       </div>
     `;
@@ -127,7 +133,7 @@ function renderExams(filter = '') {
 
   container.innerHTML = `
     <div class="exam-grid">
-      ${matched.map(e => createExamCard(e)).join('')}
+      ${matched.map((e, i) => createExamCard(e, i)).join('')}
     </div>
   `;
 }

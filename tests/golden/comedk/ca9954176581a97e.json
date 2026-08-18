@@ -22,20 +22,20 @@
         "Reach": 8,
         "Reach_total_attainable": 8,
         "Safe": 25,
-        "Safe_total_attainable": 406,
+        "Safe_total_attainable": 777,
         "Target": 7,
         "Target_total_attainable": 7
       },
       "curated": true,
       "shown": 0,
       "total": 40,
-      "total_attainable": 421
+      "total_attainable": 792
     },
-    "guidance": "Found 421 eligible programme options for your COMEDK profile (showing 0). They are grouped into Target, Reach and Safe, and ordered to match your stated interest.",
+    "guidance": "Found 792 eligible programme options for your COMEDK profile (showing 0). They are grouped into Target, Reach and Safe, and ordered to match your stated interest.",
     "has_next": false,
     "interest_guidance": "",
     "notes": [
-      "Showing the strongest 40 of 421 options you are eligible for, best first, with at most 2 programmes per college."
+      "Showing the strongest 40 of 792 options you are eligible for, best first, with at most 2 programmes per college."
     ],
     "reach": [],
     "recommendations": [],
@@ -59,7 +59,7 @@
     "total_by_type": {
       "all": {
         "total": 40,
-        "total_attainable": 421
+        "total_attainable": 792
       },
       "dream": {
         "total": 8,
@@ -67,7 +67,7 @@
       },
       "safe": {
         "total": 25,
-        "total_attainable": 406
+        "total_attainable": 777
       },
       "target": {
         "total": 7,

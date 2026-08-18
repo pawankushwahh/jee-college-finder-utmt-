@@ -1,354 +1,586 @@
 {
   "body": {
+    "band_width": {
+      "median_width": 31722,
+      "note": "Measured only on programmes that published more than one round.",
+      "observed_programs": 16568,
+      "p90_width": 104267
+    },
     "branch_counts": {},
     "branch_popularity": [
       {
-        "avg_closing_rank": 14018.0,
-        "branch": "INSTRUMENTATION ENGINEERING ELECTRONICS AND",
-        "total_programs": 5
-      },
-      {
-        "avg_closing_rank": 20281.2,
-        "branch": "AERO SPACE",
-        "total_programs": 5
-      },
-      {
-        "avg_closing_rank": 21975.8,
-        "branch": "TELECOMMUNICAT ION ENGINEERING INFORMATION",
-        "total_programs": 5
-      },
-      {
-        "avg_closing_rank": 24662.8,
-        "branch": "SPACE ENGINEERING B TECH IN",
-        "total_programs": 4
-      },
-      {
-        "avg_closing_rank": 24961.3,
-        "branch": "ENGINEERING BIO-TECHNOLOGY",
-        "total_programs": 3
-      },
-      {
-        "avg_closing_rank": 25890.0,
-        "branch": "ENGINEERING & MANAGEMENT MECHANICAL",
-        "total_programs": 3
-      },
-      {
-        "avg_closing_rank": 27029.9,
-        "branch": "INTELLIGENCE & MACHINE LEARNING) B TECH IN",
+        "avg_closing_rank": 30434.4,
+        "branch": "B TECH IN COMPUTER SCIENCE & ENGINEERING (ARTIFICAL INTELLIGENCE & MACHINE LEARNING)",
         "total_programs": 7
       },
       {
-        "avg_closing_rank": 31893.3,
-        "branch": "CHEMICAL",
-        "total_programs": 6
-      },
-      {
-        "avg_closing_rank": 34869.2,
-        "branch": "TELECOMMUNICAT ION ENGINEERING INDUSTRIAL",
+        "avg_closing_rank": 32049.8,
+        "branch": "B TECH IN AERO SPACE ENGINEERING",
         "total_programs": 4
       },
       {
-        "avg_closing_rank": 35623.3,
-        "branch": "SCIENCE AND ENGINEERING(CYB ER SECURITY) B TECH IN",
+        "avg_closing_rank": 42993.0,
+        "branch": "B TECH IN COMPUTER SCIENCE AND ENGINEERING(CYBER SECURITY)",
         "total_programs": 3
       },
       {
-        "avg_closing_rank": 35922.4,
-        "branch": "ENGINEERING ELECTRICAL &",
+        "avg_closing_rank": 43702.0,
+        "branch": "B TECH IN BIO- TECHNOLOGY",
+        "total_programs": 3
+      },
+      {
+        "avg_closing_rank": 45475.2,
+        "branch": "B TECH IN ARTIFICIAL INTELLIGENCE AND DATA SCIENCE",
         "total_programs": 5
       },
       {
-        "avg_closing_rank": 36290.7,
-        "branch": "SCIENCE AND BUSINESS SYSTEMS COMPUTER",
+        "avg_closing_rank": 48719.9,
+        "branch": "INDUSTRIAL ENGINEERING & MANAGEMENT",
+        "total_programs": 5
+      },
+      {
+        "avg_closing_rank": 49120.0,
+        "branch": "AERO SPACE ENGINEERING",
+        "total_programs": 5
+      },
+      {
+        "avg_closing_rank": 55429.0,
+        "branch": "B TECH IN INFORMATION SCIENCE ENGINEERING",
+        "total_programs": 4
+      },
+      {
+        "avg_closing_rank": 73633.4,
+        "branch": "ELECTRONICS AND TELECOMMUNIC ATION ENGINEERING",
+        "total_programs": 9
+      },
+      {
+        "avg_closing_rank": 78159.4,
+        "branch": "B TECH IN COMPUTER SCIENCE AND ENGINEERING",
+        "total_programs": 19
+      },
+      {
+        "avg_closing_rank": 78493.3,
+        "branch": "COMPUTER SCIENCE AND ENGG (ARTIFICIAL INTELLIGENCE)",
+        "total_programs": 7
+      },
+      {
+        "avg_closing_rank": 83425.6,
+        "branch": "BIO-TECHNOLOGY",
+        "total_programs": 14
+      },
+      {
+        "avg_closing_rank": 87391.2,
+        "branch": "B TECH IN ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING",
+        "total_programs": 4
+      },
+      {
+        "avg_closing_rank": 90295.2,
+        "branch": "B Tech in ROBOTICS AND ARTIFICIAL INTELLIGENCE",
+        "total_programs": 4
+      },
+      {
+        "avg_closing_rank": 95448.2,
+        "branch": "COMPUTER SCIENCE AND BUSINESS SYSTEMS",
         "total_programs": 13
-      },
-      {
-        "avg_closing_rank": 38679.0,
-        "branch": "INTELLIGENCE AND MACHINE LEARNING BIO-TECHNOLOGY",
-        "total_programs": 5
-      },
-      {
-        "avg_closing_rank": 39122.9,
-        "branch": "ENGINEERING B TECH IN",
-        "total_programs": 7
-      },
-      {
-        "avg_closing_rank": 40640.9,
-        "branch": "SCIENCE AND ENGG (ARTIFICIAL INTELLIGENCE) COMPUTER",
-        "total_programs": 7
       }
     ],
+    "category_comparison": [
+      {
+        "category": "3B",
+        "label": "Category 3B (State-wide (General))",
+        "median_cutoff": 102996,
+        "p10": 24490,
+        "p90": 180637,
+        "programs": 1358
+      },
+      {
+        "category": "3A",
+        "label": "Category 3A (State-wide (General))",
+        "median_cutoff": 103430,
+        "p10": 23950,
+        "p90": 187525,
+        "programs": 1276
+      },
+      {
+        "category": "1",
+        "label": "Category 1 (State-wide (General))",
+        "median_cutoff": 117675,
+        "p10": 29744,
+        "p90": 194534,
+        "programs": 1252
+      },
+      {
+        "category": "2B",
+        "label": "Category 2B (State-wide (General))",
+        "median_cutoff": 118456,
+        "p10": 31870,
+        "p90": 193504,
+        "programs": 1289
+      },
+      {
+        "category": "2A",
+        "label": "Category 2A (State-wide (General))",
+        "median_cutoff": 126995,
+        "p10": 31762,
+        "p90": 214704,
+        "programs": 1561
+      },
+      {
+        "category": "GM",
+        "label": "General Merit (State-wide (General))",
+        "median_cutoff": 128921,
+        "p10": 24119,
+        "p90": 258318,
+        "programs": 1582
+      },
+      {
+        "category": "ST",
+        "label": "Scheduled Tribe (State-wide (General))",
+        "median_cutoff": 175114,
+        "p10": 68031,
+        "p90": 244125,
+        "programs": 1437
+      },
+      {
+        "category": "SC",
+        "label": "Scheduled Caste (State-wide (General))",
+        "median_cutoff": 191335,
+        "p10": 73150,
+        "p90": 249019,
+        "programs": 1568
+      }
+    ],
+    "data_quality": {
+      "fractional_cutoffs": 978,
+      "imputed_pct": 32.4,
+      "imputed_programs": 7927,
+      "rounds_published": [
+        1,
+        2,
+        3
+      ],
+      "single_round_programs": 6472
+    },
     "highest_cutoffs": [
       {
-        "closing_rank": 234,
+        "closing_rank": 499,
         "inst_type": "KCET",
-        "institute": "R. V. College of Engineering",
-        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
         "quota": "GM"
       },
       {
-        "closing_rank": 367,
+        "closing_rank": 742,
         "inst_type": "KCET",
-        "institute": "R. V. College of Engineering",
-        "program": "SCIENCE AND ENGINEERING (CYBER SECURITY) COMPUTER",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "program": "COMPUTER SCIENCE AND ENGG(ARTIFICIAL INTELLIGENCE AND MACHINE LEARNING)",
         "quota": "GM"
       },
       {
-        "closing_rank": 429,
+        "closing_rank": 944,
         "inst_type": "KCET",
-        "institute": "R. V. College of Engineering",
-        "program": "ENGINEERING COMPUTER",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "program": "COMPUTER SCIENCE AND ENGINEERING(DATA SCIENCE)",
         "quota": "GM"
       },
       {
-        "closing_rank": 508,
+        "closing_rank": 990,
         "inst_type": "KCET",
-        "institute": "R. V. College of Engineering",
-        "program": "SCIENCE AND ENGINEERING COMPUTER",
-        "quota": "GM"
-      },
-      {
-        "closing_rank": 573,
-        "inst_type": "KCET",
-        "institute": "R. V. College of Engineering",
-        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
-        "quota": "GM"
-      },
-      {
-        "closing_rank": 934,
-        "inst_type": "KCET",
-        "institute": "PES University 100 Feet Ring Road",
-        "program": "INTELLIGENCE & MACHINE LEARNING) B TECH IN",
-        "quota": "GM"
-      },
-      {
-        "closing_rank": 987,
-        "inst_type": "KCET",
-        "institute": "R. V. College of Engineering",
-        "program": "COMMUNICATION ENGG ELECTRONICS AND",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "program": "COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY)",
         "quota": "GM"
       },
       {
         "closing_rank": 1100,
         "inst_type": "KCET",
-        "institute": "M S Ramaiah Institute of Technology",
-        "program": "INTELLIGENCE AND MACHINE LEARNING) COMPUTER",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
         "quota": "GM"
       },
       {
-        "closing_rank": 1126,
+        "closing_rank": 1507,
         "inst_type": "KCET",
-        "institute": "R. V. College of Engineering",
-        "program": "SCIENCE AND ENGINEERING(DAT A SCIENCE) ELECTRICAL &",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "program": "ELECTRONICS AND TELECOMMUNIC ATION ENGINEERING",
         "quota": "GM"
       },
       {
-        "closing_rank": 1417,
+        "closing_rank": 1654,
         "inst_type": "KCET",
-        "institute": "B M S College of Engineering",
-        "program": "ELECTRONICS ENGINEERING ELECTRONICS AND",
+        "institute": "PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085",
+        "program": "B TECH IN COMPUTER SCIENCE AND ENGINEERING",
         "quota": "GM"
+      },
+      {
+        "closing_rank": 2069,
+        "inst_type": "KCET",
+        "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+        "program": "AERO SPACE ENGINEERING",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 2076,
+        "inst_type": "KCET",
+        "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 2694,
+        "inst_type": "KCET",
+        "institute": "PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085",
+        "program": "B TECH IN COMPUTER SCIENCE & ENGINEERING (ARTIFICAL INTELLIGENCE & MACHINE LEARNING)",
+        "quota": "GM"
+      }
+    ],
+    "hk_advantage": [
+      {
+        "category": "3A",
+        "delta": 23378,
+        "general_median": 103430,
+        "hk_median": 126808
+      },
+      {
+        "category": "1",
+        "delta": 22027,
+        "general_median": 117675,
+        "hk_median": 139702
+      },
+      {
+        "category": "2B",
+        "delta": 18472,
+        "general_median": 118456,
+        "hk_median": 136928
+      },
+      {
+        "category": "3B",
+        "delta": 15814,
+        "general_median": 102996,
+        "hk_median": 118810
+      },
+      {
+        "category": "ST",
+        "delta": 1344,
+        "general_median": 175114,
+        "hk_median": 176458
+      },
+      {
+        "category": "SC",
+        "delta": -4988,
+        "general_median": 191335,
+        "hk_median": 186347
+      },
+      {
+        "category": "2A",
+        "delta": -6027,
+        "general_median": 126995,
+        "hk_median": 120968
+      },
+      {
+        "category": "GM",
+        "delta": -18950,
+        "general_median": 128921,
+        "hk_median": 109971
       }
     ],
     "inst_competitiveness": {
       "KCET": [
         {
-          "avg_closing_rank": 2859.0,
-          "institute": "R. V. College of Engineering",
-          "min_opening_rank": 234,
+          "avg_closing_rank": 4681.4,
+          "institute": "R. V. College of Engineering, Bangalore(AUTONOMOUS) R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+          "min_opening_rank": 499,
           "total_programs": 13
         },
         {
-          "avg_closing_rank": 3435.2,
-          "institute": "PES University 100 Feet Ring Road",
-          "min_opening_rank": 934,
-          "total_programs": 6
-        },
-        {
-          "avg_closing_rank": 4068.3,
-          "institute": "PES UNIVERSITY(Electronic City Campus) Hosur Rd",
-          "min_opening_rank": 3588,
+          "avg_closing_rank": 6941.7,
+          "institute": "PES UNIVERSITY(Electronic City Campus) Hosur Rd, Konappana Agrahara, Electronic City, Bengaluru, Karnataka 560100",
+          "min_opening_rank": 6056,
           "total_programs": 3
         },
         {
-          "avg_closing_rank": 6109.0,
-          "institute": "RV University R.V. VIDYANIKETAN POST",
-          "min_opening_rank": 6109,
+          "avg_closing_rank": 7638.5,
+          "institute": "PES University 100 Feet Ring Road, Banashankari, 3rd Stage, Hosakerehalli, Near DSERT, , Bangalore KARNATAKA, pin code -560085",
+          "min_opening_rank": 1654,
+          "total_programs": 6
+        },
+        {
+          "avg_closing_rank": 9773.0,
+          "institute": "RV University R.V. VIDYANIKETAN POST, MYSORE ROAD,BANGALORE",
+          "min_opening_rank": 9773,
           "total_programs": 1
         },
         {
-          "avg_closing_rank": 7669.2,
-          "institute": "M S Ramaiah Institute of Technology",
-          "min_opening_rank": 1100,
-          "total_programs": 17
-        },
-        {
-          "avg_closing_rank": 7843.3,
-          "institute": "R V Institute Of Technology and Management",
-          "min_opening_rank": 7208,
-          "total_programs": 3
-        },
-        {
-          "avg_closing_rank": 8248.5,
-          "institute": "The National Institute of Engineering(NORTH CAMPUS)",
-          "min_opening_rank": 8002,
+          "avg_closing_rank": 10791.0,
+          "institute": "The National Institute of Engineering(NORTH CAMPUS), No.50(Part) Koorgalli,Hootgalli Industrial Area ,Mysuru-570018",
+          "min_opening_rank": 10634,
           "total_programs": 2
         },
         {
-          "avg_closing_rank": 8937.0,
-          "institute": "B M S College of Engineering",
-          "min_opening_rank": 1417,
+          "avg_closing_rank": 12796.1,
+          "institute": "M S Ramaiah Institute of Technology, Bangalore(AUTONOMOUS) VIDYA SOUDHA,MSR NAGAR,MSRIT POST,BANGALORE - 560054.",
+          "min_opening_rank": 2076,
+          "total_programs": 17
+        },
+        {
+          "avg_closing_rank": 13418.3,
+          "institute": "R V Institute Of Technology and Management, Bengaluru KOTHANUR, 8TH PHASE J.P.NAGAR, BENGALURU-560 078.",
+          "min_opening_rank": 11688,
+          "total_programs": 3
+        },
+        {
+          "avg_closing_rank": 14391.9,
+          "institute": "B M S College of Engineering, Basavanagudi, Bangalore (AUTONOMOUS) POST BOX NO 1908, BULL TEMPLE ROAD,BANGALORE",
+          "min_opening_rank": 3114,
           "total_programs": 16
         },
         {
-          "avg_closing_rank": 14596.6,
-          "institute": "Dayananda Sagar College of Engineering",
-          "min_opening_rank": 4080,
+          "avg_closing_rank": 20288.9,
+          "institute": "C M R Institute of Technology, Kundala Halli village, Bangalore # 132, KUNDALAHALLI VILLAGE,IT PARK ROAD,BANGALORE - 560 037",
+          "min_opening_rank": 16221,
+          "total_programs": 7
+        },
+        {
+          "avg_closing_rank": 22390.7,
+          "institute": "Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle, Bangalore",
+          "min_opening_rank": 5020,
+          "total_programs": 7
+        },
+        {
+          "avg_closing_rank": 27537.4,
+          "institute": "Dayananda Sagar College of Engineering, Bangalore(AUTONOMOUS) SHAVIGE MALLESHWARA HILLS, KUMARASWAMY LAYOUT, BANGALORE-560078",
+          "min_opening_rank": 6584,
           "total_programs": 18
         },
         {
-          "avg_closing_rank": 15120.1,
-          "institute": "C M R Institute of Technology",
-          "min_opening_rank": 12029,
+          "avg_closing_rank": 27766.3,
+          "institute": "B M S Institute of Technology & Management, Yelahanka, Bangalore(AUTONOMOUS) POST BOX NO.6443, AVALAHALLI,DODDABALLAPURA MAIN ROAD,YELAHANKA, BANGALORE - 560064.",
+          "min_opening_rank": 12263,
           "total_programs": 7
         },
         {
-          "avg_closing_rank": 15710.7,
-          "institute": "Univesity of Visvesvaraya College of Engineering (A State Autonomous Public University on IIT Model) K R Circle",
-          "min_opening_rank": 3473,
-          "total_programs": 7
-        },
-        {
-          "avg_closing_rank": 15956.0,
-          "institute": "Bangalore Institute of Technology",
-          "min_opening_rank": 5036,
+          "avg_closing_rank": 29131.4,
+          "institute": "Bangalore Institute of Technology, K.R.Road, Bangalore (AUTONOMOUS) K.R.ROAD, V.V.PURA, BANGALORE-560004",
+          "min_opening_rank": 8157,
           "total_programs": 13
         },
         {
-          "avg_closing_rank": 18037.0,
-          "institute": "B N M Institute of Technology",
-          "min_opening_rank": 9231,
+          "avg_closing_rank": 31425.5,
+          "institute": "B N M Institute of Technology, Bangalore (AUTONOMOUS) 12TH MAIN, 27TH CROSS, BSK SECOND STAGE BANGALORE",
+          "min_opening_rank": 14324,
           "total_programs": 6
         },
         {
-          "avg_closing_rank": 19919.4,
-          "institute": "B M S Institute of Technology & Management",
-          "min_opening_rank": 9233,
-          "total_programs": 7
-        },
-        {
-          "avg_closing_rank": 20701.4,
-          "institute": "M . S . Ramaiah University of Applied Sciences UNIVERSITY HOUSE",
-          "min_opening_rank": 8400,
-          "total_programs": 11
+          "avg_closing_rank": 31758.8,
+          "institute": "G S S S Institute of Engineering & Technology for Women, Mysore K.R.S. ROAD, METAGALLI INDUSTRIAL AREA, MYSORE-16",
+          "min_opening_rank": 21447,
+          "total_programs": 6
         }
       ]
     },
     "lowest_cutoffs": [
       {
-        "closing_rank": 249733,
+        "closing_rank": 262158,
         "inst_type": "KCET",
-        "institute": "Sri Basaveswara Institute of Technology",
-        "program": "COMMUNICATION ENGG MECHANICAL",
+        "institute": "Jain Institute of Technology, Davanagere 323, BADA CROSS NEAR BLIND SCHOOL AVARAGERE DAVANGERE",
+        "program": "INFORMATION SCIENCE AND ENGINEERING",
         "quota": "GM"
       },
       {
-        "closing_rank": 241691,
+        "closing_rank": 262158,
         "inst_type": "KCET",
-        "institute": "BASAV ENGINEERING SCHOOL OF TECHNOLOGY",
-        "program": "SCIENCE AND ENGINEERING MECHANICAL",
+        "institute": "Jain Institute of Technology, Davanagere 323, BADA CROSS NEAR BLIND SCHOOL AVARAGERE DAVANGERE",
+        "program": "ELECTRICAL & ELECTRONICS ENGINEERING",
         "quota": "GM"
       },
       {
-        "closing_rank": 232230,
+        "closing_rank": 262150,
         "inst_type": "KCET",
-        "institute": "Sri Basaveswara Institute of Technology",
-        "program": "CIVIL",
+        "institute": "K C T Engineering College, Gulbarga KCT CAMPUS",
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
         "quota": "GM"
       },
       {
-        "closing_rank": 217343,
+        "closing_rank": 262145,
         "inst_type": "KCET",
-        "institute": "H K E's Society's Sir M Visvesvaraya College of Engineering",
-        "program": "COMMUNICATION ENGG MECHANICAL",
+        "institute": "S.S.E.T.S.S.G.Balekundri Institute of Technology, Shivabasavanagar, Belgaum SHIVABASAVA NAGAR, BELGAUM - 590010",
+        "program": "CIVIL ENGINEERING",
         "quota": "GM"
       },
       {
-        "closing_rank": 213786,
+        "closing_rank": 262122,
         "inst_type": "KCET",
-        "institute": "Veerappa Nisty Engineering College",
-        "program": "CIVIL",
+        "institute": "Maharaja Institute of Technology,Tandavapura,Mysore THANDAVAPURA VILLAGA,ON NATIONAL HIGHWWAYNANJANAGUD TALUK,MYSORE DISTRICT",
+        "program": "MECHANICAL ENGINEERING",
         "quota": "GM"
       },
       {
-        "closing_rank": 211336,
+        "closing_rank": 262116,
         "inst_type": "KCET",
-        "institute": "Government Engineering College",
-        "program": "COMMUNICATION ENGG MECHANICAL",
+        "institute": "Dr.T.Thimmaiah Institute of Technology, KGF 00RGAUM POST,KOLAR GOLD FIELDS - 563 120",
+        "program": "ELECTRICAL & ELECTRONICS ENGINEERING",
         "quota": "GM"
       },
       {
-        "closing_rank": 209115,
+        "closing_rank": 262107,
         "inst_type": "KCET",
-        "institute": "Shreedevi Institute of Technology",
-        "program": "INTELLIGENCE AND DATA SCIENCE CIVIL",
+        "institute": "Rajeev Institute of Technology, Hassan PLOT 1-D(P-1), GROWTH CENTRE, INDUSTRIAL AREA, BANGALORE MANGALORE BYPASS ROAD HASSAN-573201",
+        "program": "ELECTRICAL & ELECTRONICS ENGINEERING",
         "quota": "GM"
       },
       {
-        "closing_rank": 208258,
+        "closing_rank": 262098,
         "inst_type": "KCET",
-        "institute": "K C T Engineering College",
-        "program": "COMMUNICATION ENGG MECHANICAL",
+        "institute": "SRI SIDDHARTHA SCHOOL OF ENGINEERING, TUMKUR NH-4, KESARAMADU POST, KYATHASANDRA,TUMKUR",
+        "program": "ELECTRICAL & ELECTRONICS ENGINEERING",
         "quota": "GM"
       },
       {
-        "closing_rank": 206395,
+        "closing_rank": 262073,
         "inst_type": "KCET",
-        "institute": "Rao Bahadur Y.Mahabaleswarappa Engineering College",
-        "program": "SCIENCE AND ENGINEERING MECHANICAL",
+        "institute": "Gurunanak Dev Engineering College, Bidar MAILOOR ROAD,BIDAR 585403",
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
         "quota": "GM"
       },
       {
-        "closing_rank": 206298,
+        "closing_rank": 262065,
         "inst_type": "KCET",
-        "institute": "Karavali Institute of Technology",
-        "program": "COMMUNICATION ENGG MECHANICAL",
+        "institute": "Sri Revana Siddeswara Institute of Technology, Bangalore CHOKKANAHALLI, CHIKKAJALA,BANGALORE NORTH - 562157",
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
         "quota": "GM"
       }
     ],
     "quota_counts": {
-      "1G": 1220,
-      "1K": 100,
-      "1R": 293,
-      "2AG": 1552,
-      "2AK": 402,
-      "2AR": 981,
-      "2BG": 1236,
-      "2BK": 79,
-      "2BR": 291,
-      "3AG": 1230,
-      "3AK": 100,
-      "3AR": 303,
-      "3BG": 1343,
-      "3BK": 146,
-      "3BR": 409,
-      "GM": 1573,
-      "GMK": 958,
-      "GMR": 1526,
-      "SCG": 1558,
-      "SCK": 434,
-      "SCR": 991,
-      "STG": 1425,
-      "STK": 154,
-      "STR": 496
+      "1G": 1252,
+      "1H": 215,
+      "1K": 107,
+      "1KH": 7,
+      "1R": 314,
+      "1RH": 39,
+      "2AG": 1561,
+      "2AH": 650,
+      "2AK": 424,
+      "2AKH": 55,
+      "2AR": 1003,
+      "2ARH": 156,
+      "2BG": 1289,
+      "2BH": 234,
+      "2BK": 82,
+      "2BKH": 7,
+      "2BR": 311,
+      "2BRH": 31,
+      "3AG": 1276,
+      "3AH": 200,
+      "3AK": 105,
+      "3AKH": 8,
+      "3AR": 323,
+      "3ARH": 28,
+      "3BG": 1358,
+      "3BH": 293,
+      "3BK": 155,
+      "3BKH": 18,
+      "3BR": 428,
+      "3BRH": 64,
+      "GM": 1582,
+      "GMH": 1328,
+      "GMK": 985,
+      "GMKH": 190,
+      "GMR": 1535,
+      "GMRH": 432,
+      "SCG": 1568,
+      "SCH": 690,
+      "SCK": 441,
+      "SCKH": 63,
+      "SCR": 1002,
+      "SCRH": 152,
+      "STG": 1437,
+      "STH": 343,
+      "STK": 162,
+      "STKH": 19,
+      "STR": 509,
+      "STRH": 64
     },
+    "rank_distribution": [
+      {
+        "count": 4,
+        "label": "Under 1K"
+      },
+      {
+        "count": 21,
+        "label": "1K–5K"
+      },
+      {
+        "count": 31,
+        "label": "5K–10K"
+      },
+      {
+        "count": 112,
+        "label": "10K–25K"
+      },
+      {
+        "count": 199,
+        "label": "25K–50K"
+      },
+      {
+        "count": 341,
+        "label": "50K–1L"
+      },
+      {
+        "count": 124,
+        "label": "1L–1.5L"
+      },
+      {
+        "count": 750,
+        "label": "Over 1.5L"
+      }
+    ],
+    "reference_category": "GM",
     "round_averages": {},
+    "round_participation": [
+      {
+        "coverage_pct": 98.2,
+        "median_cutoff": 90082,
+        "programs": 24046,
+        "round": 1
+      },
+      {
+        "coverage_pct": 74.7,
+        "median_cutoff": 94530,
+        "programs": 18287,
+        "round": 2
+      },
+      {
+        "coverage_pct": 55.5,
+        "median_cutoff": 85117,
+        "programs": 13599,
+        "round": 3
+      }
+    ],
+    "seat_pool": {
+      "general": {
+        "categories": 24,
+        "label": "Rest of Karnataka",
+        "median_cutoff": 128068,
+        "programs": 19209
+      },
+      "hk": {
+        "categories": 24,
+        "label": "371(j) Kalyana-Karnataka",
+        "median_cutoff": 135172,
+        "programs": 5286
+      }
+    },
     "summary": {
-      "total_records": 18800,
-      "unique_institutes": 200,
-      "unique_programs": 224,
-      "unique_quotas": 24,
-      "unique_seat_types": 24
+      "general_categories": 24,
+      "hk_categories": 24,
+      "imputed_pct": 32.4,
+      "rank_max": 262188,
+      "rank_min": 499,
+      "rounds_published": 3,
+      "total_records": 24495,
+      "unique_institutes": 217,
+      "unique_programs": 142,
+      "unique_quotas": 48,
+      "unique_seat_types": 48
     }
   },
   "note": "stats",

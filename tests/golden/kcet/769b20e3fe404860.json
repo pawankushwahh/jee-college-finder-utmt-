@@ -1,28 +1,57 @@
 {
   "body": {
-    "category_guidance": [],
+    "category_guidance": [
+      {
+        "blurb": "These closed slightly above your rank last year. Cutoffs move between rounds, so list a few as ambitious choices.",
+        "category": "Reach",
+        "count": 1
+      }
+    ],
     "counts": {
       "by_category": {
-        "Reach": 0,
+        "Reach": 1,
         "Safe": 0,
         "Target": 0
       },
       "is_curated": false,
       "is_top_rank": false,
-      "shown": 0,
+      "shown": 1,
       "shown_by_category": {
-        "Reach": 0,
+        "Reach": 1,
         "Safe": 0,
         "Target": 0
       },
-      "total": 0
+      "total": 1
     },
-    "guidance": "Your rank (400,001) is past the last seat you are eligible for under SCK in this dataset — the weakest cutoff closed at 260,252. Adding a different rank will not change this; try another category, or check KEA's special/extended rounds.",
+    "guidance": "Found 1 eligible college-programme options for your profile (showing 1). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
     "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
     "notes": [
       "A rank of 400,001 is well outside KCET's published range and may be a typo."
     ],
-    "recommendations": [],
+    "recommendations": [
+      {
+        "admission_probability": 6.5,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 258392.0,
+        "college_code": "E002",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Govt.S K S J T Institute of Engineering, Bangalore AMBEDKAR VEEDHI, K.R. CIRCLE, BANGALORE-01",
+        "interest_score": 2.6,
+        "matched_interest": true,
+        "program": "CIVIL ENGINEERING",
+        "quality_score": 0.2,
+        "rank_high": 258392.0,
+        "rank_low": 98630.0,
+        "reason": "Reach for you - strong fit for your goal (CIVIL ENGINEERING at Govt.S K S J T Institute of Engineering, Bangalore AMBEDKAR VEEDHI, K.R. CIRCLE, BANGALORE-01), under the Scheduled Caste (Kannada-medium quota) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "SCK",
+        "seat_category_label": "Scheduled Caste (Kannada-medium quota)",
+        "tags": [
+          "civil"
+        ]
+      }
+    ],
     "thresholds": {
       "caps": {
         "Reach": 15,
@@ -30,14 +59,13 @@
         "Target": 25
       },
       "max_per_institute": 2,
-      "reach_band_ceiling": 18000.0,
-      "safe_margin": 0.15,
-      "target_band_ceiling": 13000.0,
-      "target_band_floor": 1500.0,
+      "min_options": 25,
+      "relevance_ceiling_z": 4.0,
+      "safe_buffer_fraction": 0.0,
       "top_rank_cap": 25,
-      "upper_margin": 0.25
+      "use_observed_range": true
     },
-    "total_count": 0
+    "total_count": 1
   },
   "note": "core grid rank=400001 cat=SCK",
   "request": {

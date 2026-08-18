@@ -14,7 +14,7 @@
    Bump CACHE when shipping changes so old caches are purged on activate.
    ════════════════════════════════════════════════════════════════════════ */
 
-const CACHE = "disha-shell-v9";
+const CACHE = "disha-shell-v10";
 
 // Resolve paths relative to the service worker's actual location
 // so it works both at root (/) and in sub-apps (/learning_games/)
@@ -24,7 +24,7 @@ const APP_SHELL = [
   `${basePath}/`,
   `${basePath}/index.html`,
   `${basePath}/jee.html`,
-  `${basePath}/kcet.html`,
+  `${basePath}/kcet/index.html`,
   `${basePath}/comedk/index.html`,
   `${basePath}/comedk/js/app.js`,
   `${basePath}/stats`,
@@ -88,7 +88,7 @@ function isAppShellAsset(url) {
   return (
     p === `${basePath}/index.html` ||
     p === `${basePath}/jee.html` ||
-    p === `${basePath}/kcet.html` ||
+    p === `${basePath}/kcet/index.html` ||
     p === `${basePath}/comedk/index.html` ||
     p === `${basePath}/stats` ||
     p.endsWith(".js") ||
@@ -116,7 +116,7 @@ self.addEventListener("fetch", (event) => {
     } else if (url.pathname.includes("/exam/jee")) {
       event.respondWith(networkFirst(new Request(`${basePath}/jee.html`, { cache: "no-store" })));
     } else if (url.pathname.includes("/exam/kcet")) {
-      event.respondWith(networkFirst(new Request(`${basePath}/kcet.html`, { cache: "no-store" })));
+      event.respondWith(networkFirst(new Request(`${basePath}/kcet/index.html`, { cache: "no-store" })));
     } else if (url.pathname.includes("/exam/comedk")) {
       event.respondWith(networkFirst(new Request(`${basePath}/comedk/index.html`, { cache: "no-store" })));
     } else {

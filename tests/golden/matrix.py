@@ -316,6 +316,6 @@ def all_cases() -> List[Case]:
 # loudly rather than silently rebase every expectation.
 DATA_FILES = [
     "app/disha/data/josaa_merged_2025.csv",
-    "app/disha/kcet/data/kcet_2025.csv",
-    "app/disha/comedk/data/comedk_2025.csv",
+    "app/disha/kcet/data/kcet_2025_all_rounds.csv",
+    "app/disha/comedk/data/comedk_2025_all_rounds.csv",
 ]

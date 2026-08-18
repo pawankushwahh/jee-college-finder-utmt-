@@ -1,81 +1,1032 @@
 {
   "body": {
     "branch_counts": {},
+    "branch_families": [
+      {
+        "family": "chemical",
+        "median_cutoff": 52947,
+        "median_fee": 301100,
+        "programs": 8,
+        "seats": 84
+      },
+      {
+        "family": "automobile",
+        "median_cutoff": 73642,
+        "median_fee": 239550,
+        "programs": 4,
+        "seats": 28
+      },
+      {
+        "family": "vlsi",
+        "median_cutoff": 81817,
+        "median_fee": 278044,
+        "programs": 8,
+        "seats": 115
+      },
+      {
+        "family": "design",
+        "median_cutoff": 89470,
+        "median_fee": 220000,
+        "programs": 11,
+        "seats": 145
+      },
+      {
+        "family": "robotics",
+        "median_cutoff": 90218,
+        "median_fee": 301094,
+        "programs": 19,
+        "seats": 280
+      },
+      {
+        "family": "cyber",
+        "median_cutoff": 90964,
+        "median_fee": 220000,
+        "programs": 46,
+        "seats": 702
+      },
+      {
+        "family": "eee",
+        "median_cutoff": 92019,
+        "median_fee": 220000,
+        "programs": 35,
+        "seats": 551
+      },
+      {
+        "family": "agriculture",
+        "median_cutoff": 93611,
+        "median_fee": 100000,
+        "programs": 3,
+        "seats": 31
+      },
+      {
+        "family": "mechanical",
+        "median_cutoff": 94292,
+        "median_fee": 216045,
+        "programs": 65,
+        "seats": 982
+      },
+      {
+        "family": "aerospace",
+        "median_cutoff": 94924,
+        "median_fee": 220000,
+        "programs": 16,
+        "seats": 247
+      },
+      {
+        "family": "ece",
+        "median_cutoff": 95826,
+        "median_fee": 220000,
+        "programs": 120,
+        "seats": 3632
+      },
+      {
+        "family": "it",
+        "median_cutoff": 96812,
+        "median_fee": 220000,
+        "programs": 64,
+        "seats": 1693
+      },
+      {
+        "family": "ai_ds",
+        "median_cutoff": 99107,
+        "median_fee": 220000,
+        "programs": 205,
+        "seats": 5029
+      },
+      {
+        "family": "biotech",
+        "median_cutoff": 101145,
+        "median_fee": 250000,
+        "programs": 11,
+        "seats": 162
+      },
+      {
+        "family": "cse",
+        "median_cutoff": 101913,
+        "median_fee": 220000,
+        "programs": 167,
+        "seats": 8624
+      },
+      {
+        "family": "civil",
+        "median_cutoff": 102114,
+        "median_fee": 215000,
+        "programs": 46,
+        "seats": 629
+      }
+    ],
     "branch_popularity": [
       {
-        "avg_closing_rank": 28526.4,
-        "branch": "Electronics & Telecommunication Engineering (4 Years, Bachelor of Technology)",
-        "total_programs": 5
-      },
-      {
-        "avg_closing_rank": 45220.2,
-        "branch": "Computer Science & Business Systems (4 Years, Bachelor of Technology)",
-        "total_programs": 5
-      },
-      {
-        "avg_closing_rank": 45811.0,
-        "branch": "Electronics & Instrumentation Engineering (4 Years, Bachelor of Technology)",
-        "total_programs": 3
-      },
-      {
-        "avg_closing_rank": 47686.2,
-        "branch": "Aerospace Engineering (4 Years, Bachelor of Technology)",
-        "total_programs": 4
-      },
-      {
-        "avg_closing_rank": 49764.3,
-        "branch": "Robotics & Artificial Intelligence (4 Years, Bachelor of Technology)",
+        "avg_closing_rank": 46151.3,
+        "branch": "Electronics & Telecommunication Engineering",
         "total_programs": 6
       },
       {
-        "avg_closing_rank": 50369.5,
-        "branch": "Chemical Engineering (4 Years, Bachelor of Technology)",
-        "total_programs": 6
-      },
-      {
-        "avg_closing_rank": 60630.3,
-        "branch": "Computer Science & Engineering (Cyber Security) (4 Years, Bachelor of Technology)",
-        "total_programs": 11
-      },
-      {
-        "avg_closing_rank": 64309.7,
-        "branch": "Electronics Engineering (VLSI Design & Technology) (4 Years, Bachelor of Technology)",
+        "avg_closing_rank": 53633.0,
+        "branch": "Electronics & Instrumentation Engineering",
         "total_programs": 3
       },
       {
-        "avg_closing_rank": 66112.1,
-        "branch": "Computer Science & Engineering (IOT & Cyber Security Including Block Chain Technology) (4 Years, Bachelor of Technology)",
-        "total_programs": 13
+        "avg_closing_rank": 60441.1,
+        "branch": "Chemical Engineering",
+        "total_programs": 8
       },
       {
-        "avg_closing_rank": 66823.7,
-        "branch": "Electrical & Electronics Engineering (4 Years, Bachelor of Technology)",
-        "total_programs": 18
+        "avg_closing_rank": 63081.2,
+        "branch": "Aerospace Engineering",
+        "total_programs": 5
       },
       {
-        "avg_closing_rank": 67123.7,
-        "branch": "Computer Science & Engineering (Artificial Intelligence & Machine Learning) (4 Years, Bachelor of Technology)",
-        "total_programs": 37
+        "avg_closing_rank": 69248.0,
+        "branch": "Computer Science & Design",
+        "total_programs": 7
       },
       {
-        "avg_closing_rank": 69002.2,
-        "branch": "Computer Science & Engineering (Data Science) (4 Years, Bachelor of Technology)",
-        "total_programs": 30
-      },
-      {
-        "avg_closing_rank": 69307.5,
-        "branch": "Bio-Technology (4 Years, Bachelor of Technology)",
+        "avg_closing_rank": 70493.6,
+        "branch": "Computer Science & Business Systems",
         "total_programs": 10
       },
       {
-        "avg_closing_rank": 69988.0,
-        "branch": "Mechanical Engineering (4 Years, Bachelor of Technology)",
-        "total_programs": 21
+        "avg_closing_rank": 72950.7,
+        "branch": "Robotics & Artificial Intelligence",
+        "total_programs": 11
       },
       {
-        "avg_closing_rank": 70157.8,
-        "branch": "Aeronautical Engineering (4 Years, Bachelor of Technology)",
-        "total_programs": 6
+        "avg_closing_rank": 75538.2,
+        "branch": "Electronics Engineering (VLSI Design & Technology)",
+        "total_programs": 4
+      },
+      {
+        "avg_closing_rank": 76287.3,
+        "branch": "Data Science",
+        "total_programs": 3
+      },
+      {
+        "avg_closing_rank": 77587.5,
+        "branch": "Computer Science & Engineering (Cyber Security)",
+        "total_programs": 19
+      },
+      {
+        "avg_closing_rank": 78934.5,
+        "branch": "Computer Science & Engineering (IOT & Cyber Including Block Chain Technology)",
+        "total_programs": 23
+      },
+      {
+        "avg_closing_rank": 79314.1,
+        "branch": "Biotechnology",
+        "total_programs": 11
+      },
+      {
+        "avg_closing_rank": 80965.8,
+        "branch": "Computer Science & Engineering (Artificial & Machine Learning)",
+        "total_programs": 53
+      },
+      {
+        "avg_closing_rank": 81449.1,
+        "branch": "Electrical & Electronics Engineering",
+        "total_programs": 34
+      },
+      {
+        "avg_closing_rank": 83007.3,
+        "branch": "Automobile Engineering",
+        "total_programs": 3
+      }
+    ],
+    "brand_tiers": [
+      {
+        "median_cutoff": 12335,
+        "programs": 69,
+        "tier": "elite"
+      },
+      {
+        "median_cutoff": 60923,
+        "programs": 108,
+        "tier": "top"
+      },
+      {
+        "median_cutoff": 91514,
+        "programs": 240,
+        "tier": "strong"
+      },
+      {
+        "median_cutoff": 102881,
+        "programs": 245,
+        "tier": "mid"
+      },
+      {
+        "median_cutoff": 108359,
+        "programs": 170,
+        "tier": "emerging"
+      }
+    ],
+    "fee_distribution": [
+      {
+        "count": 15,
+        "label": "Under ₹1L"
+      },
+      {
+        "count": 97,
+        "label": "₹1L–1.75L"
+      },
+      {
+        "count": 453,
+        "label": "₹1.75L–2.25L"
+      },
+      {
+        "count": 30,
+        "label": "₹2.25L–2.75L"
+      },
+      {
+        "count": 451,
+        "label": "Over ₹2.75L"
+      }
+    ],
+    "fee_vs_competitiveness": [
+      {
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "median_cutoff": 2424,
+        "median_fee": 301100,
+        "programs": 13
+      },
+      {
+        "institute": "BMS College of Engineering-Basavanagudi, Bengaluru",
+        "median_cutoff": 6686,
+        "median_fee": 301100,
+        "programs": 11
+      },
+      {
+        "institute": "M.S. Ramaiah Institute of Technology-MSR Nagar, Bengaluru",
+        "median_cutoff": 8406,
+        "median_fee": 301100,
+        "programs": 17
+      },
+      {
+        "institute": "Dayananda Sagar College of Engineering-Kumaraswamy Layout, Bengaluru",
+        "median_cutoff": 23890,
+        "median_fee": 301100,
+        "programs": 18
+      },
+      {
+        "institute": "Siddaganga Institute of Technology-B H Road, Tumakuru",
+        "median_cutoff": 24204,
+        "median_fee": 301100,
+        "programs": 4
+      },
+      {
+        "institute": "R V Institute of Technology and Management-J P Nagar, Bengaluru",
+        "median_cutoff": 24673,
+        "median_fee": 301100,
+        "programs": 3
+      },
+      {
+        "institute": "The National Institute of Engineering North Campus-Koorgalli, Mysuru",
+        "median_cutoff": 24693,
+        "median_fee": 301088,
+        "programs": 2
+      },
+      {
+        "institute": "Shetty Institute of Technology - Gulbarga Shahabad Road, Kalaburagi",
+        "median_cutoff": 26392,
+        "median_fee": 120000,
+        "programs": 2
+      },
+      {
+        "institute": "JSS Science and Technology University-Mysuru",
+        "median_cutoff": 26967,
+        "median_fee": 301100,
+        "programs": 7
+      },
+      {
+        "institute": "BMS Institute of Technology and Management-Yelahanka, Bengaluru",
+        "median_cutoff": 29885,
+        "median_fee": 301100,
+        "programs": 7
+      },
+      {
+        "institute": "Bangalore Institute of Technology-V V Puram, Bengaluru",
+        "median_cutoff": 32635,
+        "median_fee": 301088,
+        "programs": 13
+      },
+      {
+        "institute": "C.M.R. Institute of Technology-Brookefield, Bengaluru",
+        "median_cutoff": 34791,
+        "median_fee": 301100,
+        "programs": 7
+      },
+      {
+        "institute": "The National Institute of Engineering South Campus-Mananthavady Road, Mysuru",
+        "median_cutoff": 37414,
+        "median_fee": 301088,
+        "programs": 3
+      },
+      {
+        "institute": "B.N.M. Institute of Technology-Banashankari, Bengaluru",
+        "median_cutoff": 54630,
+        "median_fee": 301100,
+        "programs": 6
+      },
+      {
+        "institute": "Bheemanna Khandre Institute of Technology-Bhalki, Bidar",
+        "median_cutoff": 59258,
+        "median_fee": 220000,
+        "programs": 3
+      },
+      {
+        "institute": "RNS Institute of Technology-R R Nagar Post, Bengaluru",
+        "median_cutoff": 59662,
+        "median_fee": 301100,
+        "programs": 8
+      },
+      {
+        "institute": "M.S. Ramaiah University of Applied Sciences-MSR Nagar, Bengaluru",
+        "median_cutoff": 61634,
+        "median_fee": 301100,
+        "programs": 3
+      },
+      {
+        "institute": "Rao Bahadur Y Mahabaleswarappa Engineering College-Cantonment, Ballari",
+        "median_cutoff": 62202,
+        "median_fee": 220000,
+        "programs": 2
+      },
+      {
+        "institute": "Tontadarya College of Engineering-Mundaragi Road , Gadag",
+        "median_cutoff": 66979,
+        "median_fee": 301000,
+        "programs": 3
+      },
+      {
+        "institute": "Basavakalyan Engineering College-NH9 Basavakalyan, Bidar",
+        "median_cutoff": 68884,
+        "median_fee": 160000,
+        "programs": 3
+      },
+      {
+        "institute": "GSSS Institute of Engineering and Technology for Women-Metagalli, Mysuru",
+        "median_cutoff": 74720,
+        "median_fee": 199390,
+        "programs": 5
+      },
+      {
+        "institute": "Sir M.Visvesvaraya Institute of Technology-Yelahanka, Bengaluru",
+        "median_cutoff": 74763,
+        "median_fee": 301100,
+        "programs": 13
+      },
+      {
+        "institute": "P.E.S.College of Engineering-PES College Road, Mandya",
+        "median_cutoff": 76667,
+        "median_fee": 195000,
+        "programs": 10
+      },
+      {
+        "institute": "Chanakya University-Devanahalli, Bengaluru Rural",
+        "median_cutoff": 78919,
+        "median_fee": 205000,
+        "programs": 3
+      },
+      {
+        "institute": "M.S. Engineering College-Sadahalli, Bengaluru",
+        "median_cutoff": 79163,
+        "median_fee": 220000,
+        "programs": 4
+      },
+      {
+        "institute": "Dayananda Sagar Academy of Technology and Management-Kanakpura Road, Bengaluru",
+        "median_cutoff": 80155,
+        "median_fee": 301100,
+        "programs": 8
+      },
+      {
+        "institute": "Shri Madhwa Vadiraja Institute of Technology and Management-Bantakal, Udupi",
+        "median_cutoff": 81570,
+        "median_fee": 220000,
+        "programs": 4
+      },
+      {
+        "institute": "SDM Institute of Technology, Tulu Minority-Ujjire, Dakshina Kannada",
+        "median_cutoff": 83331,
+        "median_fee": 220000,
+        "programs": 4
+      },
+      {
+        "institute": "Dr. Ambedkar Institute of Technology-Malathahalli, Bengaluru",
+        "median_cutoff": 84409,
+        "median_fee": 301100,
+        "programs": 9
+      },
+      {
+        "institute": "Amruta Institute of Engineering and Management Science-Bidadi, Ramnagar Taluk, Bengaluru Rural",
+        "median_cutoff": 84492,
+        "median_fee": 150000,
+        "programs": 6
+      },
+      {
+        "institute": "Kalpataru Institute of Technology-B H Road, Tiptur",
+        "median_cutoff": 84753,
+        "median_fee": 220000,
+        "programs": 2
+      },
+      {
+        "institute": "DON BOSCO Institute of Technology-Kumbalgodu, Bengaluru",
+        "median_cutoff": 85455,
+        "median_fee": 230100,
+        "programs": 7
+      },
+      {
+        "institute": "SJM Institute of Technology-NH 4 Bye-pass, Chitradurga",
+        "median_cutoff": 86353,
+        "median_fee": 200000,
+        "programs": 3
+      },
+      {
+        "institute": "Navkis College of Engineering -Kandali NH75, Hassan",
+        "median_cutoff": 86975,
+        "median_fee": 198123,
+        "programs": 4
+      },
+      {
+        "institute": "Cauvery College of Engineering-KBL Layout, Mysuru",
+        "median_cutoff": 87921,
+        "median_fee": 219000,
+        "programs": 3
+      },
+      {
+        "institute": "Sri Siddhartha School of Engineering-Near Kyathsandra Toll Gate, Tumkur",
+        "median_cutoff": 88268,
+        "median_fee": 200000,
+        "programs": 8
+      },
+      {
+        "institute": "SDM College of Engineering and Technology, Tulu Minority-Kalaghatagi, Dharwad",
+        "median_cutoff": 88366,
+        "median_fee": 245245,
+        "programs": 8
+      },
+      {
+        "institute": "Rajeev Institute of Technology-BM Bypass Road, Hassan",
+        "median_cutoff": 88374,
+        "median_fee": 195000,
+        "programs": 4
+      },
+      {
+        "institute": "Smt. Kamala and Sri Venkappa M. Agadi College of Engineering and Technology- Laxmeswar, Gadag",
+        "median_cutoff": 88389,
+        "median_fee": 220000,
+        "programs": 4
+      },
+      {
+        "institute": "KLS Gogte Institute of Technology-Udyambag, Belagavi",
+        "median_cutoff": 88764,
+        "median_fee": 189390,
+        "programs": 9
+      },
+      {
+        "institute": "JSS Academy of Technical Education-Kengeri Main Road, Bengaluru",
+        "median_cutoff": 89645,
+        "median_fee": 301100,
+        "programs": 8
+      },
+      {
+        "institute": "Gopalan College of Engineering And Management-Whitefield, Bengaluru",
+        "median_cutoff": 90783,
+        "median_fee": 220000,
+        "programs": 5
+      },
+      {
+        "institute": "KVG College Of Engineering-Sullia, Dakshina Kannada",
+        "median_cutoff": 91120,
+        "median_fee": 139500,
+        "programs": 2
+      },
+      {
+        "institute": "East West College of Engineering-Yelahanka, Bengaluru",
+        "median_cutoff": 91524,
+        "median_fee": 170000,
+        "programs": 5
+      },
+      {
+        "institute": "Mangalore Institute of Technology and Engineering-Moodbidri, Mangaluru",
+        "median_cutoff": 92032,
+        "median_fee": 301100,
+        "programs": 10
+      },
+      {
+        "institute": "Jain Institute of Technology-Avaragere Village, Davangere",
+        "median_cutoff": 92391,
+        "median_fee": 220000,
+        "programs": 2
+      },
+      {
+        "institute": "Maharaja Institute of Technology-Thandavapura, Mysuru",
+        "median_cutoff": 93818,
+        "median_fee": 220000,
+        "programs": 6
+      },
+      {
+        "institute": "Cauvery Institute Of Technology-Sundahalli, Mandya",
+        "median_cutoff": 94600,
+        "median_fee": 220000,
+        "programs": 3
+      },
+      {
+        "institute": "East West Institute of Technology-BEL Layout, Bengaluru",
+        "median_cutoff": 94673,
+        "median_fee": 187600,
+        "programs": 11
+      },
+      {
+        "institute": "Malnad College of Engineering-Rangoli Halla, Hassan",
+        "median_cutoff": 95048,
+        "median_fee": 301100,
+        "programs": 7
+      },
+      {
+        "institute": "Bangalore Technological Institute-Chikkanayakanahalli Dinne, Bengaluru",
+        "median_cutoff": 95617,
+        "median_fee": 120000,
+        "programs": 9
+      },
+      {
+        "institute": "Vivekananda College of Engineering and Technology-Puttur, Dakshin Kannada",
+        "median_cutoff": 95733,
+        "median_fee": 301100,
+        "programs": 3
+      },
+      {
+        "institute": "Seshadripuram Institute of Technology - Jaipura Hobli, Mysuru",
+        "median_cutoff": 96156,
+        "median_fee": 217090,
+        "programs": 6
+      },
+      {
+        "institute": "Jain College of Engineering-T.S Nagar, Belagavi",
+        "median_cutoff": 96545,
+        "median_fee": 220000,
+        "programs": 5
+      },
+      {
+        "institute": "Brindavan College of Engineering-Yelahanka, Bengaluru",
+        "median_cutoff": 96601,
+        "median_fee": 200000,
+        "programs": 7
+      },
+      {
+        "institute": "BGS College of Engineering and Technology-Mahalaxmipuram, Bengaluru",
+        "median_cutoff": 96926,
+        "median_fee": 301100,
+        "programs": 5
+      },
+      {
+        "institute": "New Ebenezer Institute of Technology - Kothanur, Bangalore",
+        "median_cutoff": 97018,
+        "median_fee": 165000,
+        "programs": 3
+      },
+      {
+        "institute": "Global Academy of Technology-Rajarajeshwari Nagar, Bengaluru",
+        "median_cutoff": 97235,
+        "median_fee": 220000,
+        "programs": 10
+      },
+      {
+        "institute": "Coorg Institute of Technology-Ponnampet, South Kodagu",
+        "median_cutoff": 97335,
+        "median_fee": 220000,
+        "programs": 6
+      },
+      {
+        "institute": "CMR University-Bagalur-Chagalatti, Bengaluru",
+        "median_cutoff": 98024,
+        "median_fee": 220000,
+        "programs": 7
+      },
+      {
+        "institute": "A.C.S. College of Engineering-Kambipura Mysore Road, Bengaluru",
+        "median_cutoff": 98605,
+        "median_fee": 220000,
+        "programs": 8
+      },
+      {
+        "institute": "S.E.A. College of Engineering and Technology-K R Puram, Bengaluru",
+        "median_cutoff": 98664,
+        "median_fee": 220000,
+        "programs": 6
+      },
+      {
+        "institute": "Srinivas Institute of Technology-Hampankatta, Mangaluru",
+        "median_cutoff": 99282,
+        "median_fee": 200000,
+        "programs": 6
+      },
+      {
+        "institute": "KLE Technological University Formerly called as KLE Dr. M.S. Sheshgiri College of Engineering and Technology-Udyambag, Belagavi",
+        "median_cutoff": 99417,
+        "median_fee": 301100,
+        "programs": 7
+      },
+      {
+        "institute": "Alliance College of Engineering and Design. Alliance University-Anekal, Bengaluru",
+        "median_cutoff": 99591,
+        "median_fee": 301100,
+        "programs": 14
+      },
+      {
+        "institute": "Jain College of Engineering and Technology-Unkal, Hubballi",
+        "median_cutoff": 99653,
+        "median_fee": 220000,
+        "programs": 5
+      },
+      {
+        "institute": "Sri Krishna Institute of Technology-Chikkabanavara, Bengaluru",
+        "median_cutoff": 99691,
+        "median_fee": 220000,
+        "programs": 3
+      },
+      {
+        "institute": "Sri Sairam College of Engineering-Anekal, Bengaluru",
+        "median_cutoff": 99816,
+        "median_fee": 220000,
+        "programs": 4
+      },
+      {
+        "institute": "Rajiv Gandhi Institute of Technology-R T Nagar Post, Bengaluru",
+        "median_cutoff": 99871,
+        "median_fee": 162500,
+        "programs": 8
+      },
+      {
+        "institute": "Mysore College of Engineering and Management-Chikkahalli, Mysuru",
+        "median_cutoff": 100014,
+        "median_fee": 220000,
+        "programs": 5
+      },
+      {
+        "institute": "Sir M V School Of Architecture-Yelahanka, Bengaluru",
+        "median_cutoff": 100189,
+        "median_fee": 150000,
+        "programs": 2
+      },
+      {
+        "institute": "Sapthagiri NPS University-Hesarghatta Main Road, Bengaluru",
+        "median_cutoff": 100227,
+        "median_fee": 245000,
+        "programs": 4
+      },
+      {
+        "institute": "Mysuru Royal Institute of Technology-Palahallli, Mandya District",
+        "median_cutoff": 100787,
+        "median_fee": 210000,
+        "programs": 2
+      },
+      {
+        "institute": "Ballari Institute of Technology And Management-Near Allipura, Ballari",
+        "median_cutoff": 100789,
+        "median_fee": 301100,
+        "programs": 6
+      },
+      {
+        "institute": "City Engineering College-Doddakalasandra, Bengaluru",
+        "median_cutoff": 100851,
+        "median_fee": 145000,
+        "programs": 5
+      },
+      {
+        "institute": "Sri Venkateshwara College of Engineering-KIAL Road, Bengaluru",
+        "median_cutoff": 101539,
+        "median_fee": 220000,
+        "programs": 6
+      },
+      {
+        "institute": "Jawaharlal Nehru New College of Engineering JNNCE-Swalanga Road, Shivamogga",
+        "median_cutoff": 101886,
+        "median_fee": 200000,
+        "programs": 9
+      },
+      {
+        "institute": "Garden City University-Old Madras Road, Bengaluru",
+        "median_cutoff": 101959,
+        "median_fee": 220000,
+        "programs": 6
+      },
+      {
+        "institute": "ATME College of Engineering-Bannur Road, Mysuru",
+        "median_cutoff": 102384,
+        "median_fee": 220000,
+        "programs": 4
+      },
+      {
+        "institute": "H.K.E.Societys P.D.A. College of Engineering-Aiwan E Shahi area, Kalaburgi",
+        "median_cutoff": 103125,
+        "median_fee": 220000,
+        "programs": 4
+      },
+      {
+        "institute": "Cambridge Institute of Technology-K R Puram, Bengaluru",
+        "median_cutoff": 103184,
+        "median_fee": 301100,
+        "programs": 8
+      },
+      {
+        "institute": "Vemana Institute of Technology-Koramangala, Bengaluru",
+        "median_cutoff": 103211,
+        "median_fee": 219000,
+        "programs": 7
+      },
+      {
+        "institute": "Sahyadri College of Engineering and Management-Adyar, Mangaluru",
+        "median_cutoff": 103240,
+        "median_fee": 301100,
+        "programs": 6
+      },
+      {
+        "institute": "Cambridge Institute of Technology North Campus-Kundana, Bengaluru",
+        "median_cutoff": 103260,
+        "median_fee": 301100,
+        "programs": 6
+      },
+      {
+        "institute": "Sambhram Institute of Technology-Jalahalli East, Bengaluru",
+        "median_cutoff": 103357,
+        "median_fee": 206000,
+        "programs": 7
+      },
+      {
+        "institute": "Akash Institute of Engineering and Technology-Devanahalli, Bengaluru Rural",
+        "median_cutoff": 103540,
+        "median_fee": 137500,
+        "programs": 8
+      },
+      {
+        "institute": "R.R. Institute of Technology-Chikkabanavara, Bengaluru",
+        "median_cutoff": 103610,
+        "median_fee": 220000,
+        "programs": 5
+      },
+      {
+        "institute": "Acharya Institute of Technology-Soladevanahalli, Bengaluru",
+        "median_cutoff": 103773,
+        "median_fee": 301100,
+        "programs": 12
+      },
+      {
+        "institute": "Channabasaveshwara Institute of Technology- Gubbi, Tumakuru",
+        "median_cutoff": 103899,
+        "median_fee": 301100,
+        "programs": 4
+      },
+      {
+        "institute": "S J C Institute of Technology-BB Road, Chikkaballapur",
+        "median_cutoff": 103949,
+        "median_fee": 220000,
+        "programs": 9
+      },
+      {
+        "institute": "KLE Technological University Formerly known as BVBCET-Vidyanagar, Hubballi",
+        "median_cutoff": 103984,
+        "median_fee": 301100,
+        "programs": 9
+      },
+      {
+        "institute": "Basaveshwar Engineering College-Vidya Nagar, Bagalkote",
+        "median_cutoff": 104104,
+        "median_fee": 220000,
+        "programs": 8
+      },
+      {
+        "institute": "Navodaya Institute of Technology-Bijangera, Raichur",
+        "median_cutoff": 104258,
+        "median_fee": 220000,
+        "programs": 2
+      },
+      {
+        "institute": "A.G.M Rural College of Engineering and Technology-Varur, Hubballi",
+        "median_cutoff": 104326,
+        "median_fee": 219620,
+        "programs": 2
+      },
+      {
+        "institute": "K.S School of Engineering And Management-Off Kanakapura Road, Bengaluru",
+        "median_cutoff": 104478,
+        "median_fee": 220000,
+        "programs": 4
+      },
+      {
+        "institute": "R T E Societys Rural Engineering College-Hulkoti, Gadag",
+        "median_cutoff": 104919,
+        "median_fee": 195550,
+        "programs": 2
+      },
+      {
+        "institute": "SSETs S.G. Balekundri Institute of Technology-Shivabasva Nagar, Belagavi",
+        "median_cutoff": 105004,
+        "median_fee": 220000,
+        "programs": 4
+      },
+      {
+        "institute": "Dr H N National College Of Engineering-Jayanagar, Bengaluru",
+        "median_cutoff": 105132,
+        "median_fee": 291000,
+        "programs": 4
+      },
+      {
+        "institute": "KLE College of Engineering and Technology-Chikodi Dist., Belagavi",
+        "median_cutoff": 105457,
+        "median_fee": 215000,
+        "programs": 5
+      },
+      {
+        "institute": "BLDEAs V.P. Dr.P.G.Halakatti College of Engineering and Technology-Ashram Road, Vijayapura",
+        "median_cutoff": 105483,
+        "median_fee": 220000,
+        "programs": 5
+      },
+      {
+        "institute": "APS College of Engineering-Kanakapura Road, Bengaluru",
+        "median_cutoff": 106002,
+        "median_fee": 212110,
+        "programs": 5
+      },
+      {
+        "institute": "Akshaya Institute of Technology-Koratagere Road, Tumakuru",
+        "median_cutoff": 106026,
+        "median_fee": 220000,
+        "programs": 2
+      },
+      {
+        "institute": "Bapuji Institute of Engineering and Technology-Shamanur Road, Davangere",
+        "median_cutoff": 106255,
+        "median_fee": 220000,
+        "programs": 9
+      },
+      {
+        "institute": "Adichunchanagiri Institute Of Technology-Jyothi Nagara, Chikkamagaluru",
+        "median_cutoff": 106549,
+        "median_fee": 220000,
+        "programs": 8
+      },
+      {
+        "institute": "R.L. Jalappa Institute of Technology-Kodigehalli, Doddaballapur",
+        "median_cutoff": 106576,
+        "median_fee": 220000,
+        "programs": 3
+      },
+      {
+        "institute": "K.S. Institute of Technology-Kanakapura Main Road, Bengaluru",
+        "median_cutoff": 106608,
+        "median_fee": 220000,
+        "programs": 7
+      },
+      {
+        "institute": "Atria Institute of Technology-Hebbal, Bengaluru",
+        "median_cutoff": 106737,
+        "median_fee": 220000,
+        "programs": 8
+      },
+      {
+        "institute": "Vidyavardhaka College of Engineering-Gokulam, Mysuru",
+        "median_cutoff": 106778,
+        "median_fee": 250500,
+        "programs": 6
+      },
+      {
+        "institute": "East Point College of Engineering and Technology-Avalahalli, Bengaluru",
+        "median_cutoff": 106920,
+        "median_fee": 220000,
+        "programs": 6
+      },
+      {
+        "institute": "KNS Institute of Technology-Yelahanka, Bengaluru",
+        "median_cutoff": 106945,
+        "median_fee": 220000,
+        "programs": 7
+      },
+      {
+        "institute": "Sai Vidya Institute of Technology-Rajan Kunte, Bengaluru",
+        "median_cutoff": 107167,
+        "median_fee": 200000,
+        "programs": 7
+      },
+      {
+        "institute": "AMC Engineering College-Bannerghatta Rd, Bengaluru",
+        "median_cutoff": 107250,
+        "median_fee": 195000,
+        "programs": 9
+      },
+      {
+        "institute": "Nagarjuna College of Engineering And Technology-Devanahalli, Bengaluru",
+        "median_cutoff": 107308,
+        "median_fee": 220000,
+        "programs": 6
+      },
+      {
+        "institute": "Shridevi Institute of Engineering and Technology-Sira Road, Tumakuru",
+        "median_cutoff": 107365,
+        "median_fee": 220000,
+        "programs": 4
+      },
+      {
+        "institute": "Raja Rajeswari College of Engineering-Kumbalgodu, Bengaluru",
+        "median_cutoff": 107629,
+        "median_fee": 220000,
+        "programs": 7
+      },
+      {
+        "institute": "Angadi Institute of Technology and Management-Savagaon Road, Belagavi",
+        "median_cutoff": 107672,
+        "median_fee": 219138,
+        "programs": 3
+      },
+      {
+        "institute": "PES Institute of Technology and Management-Kotegangoor Cost, Shivamogga",
+        "median_cutoff": 108053,
+        "median_fee": 220000,
+        "programs": 10
+      },
+      {
+        "institute": "SJB Institute of Technology-Kengeri, Bengaluru",
+        "median_cutoff": 108202,
+        "median_fee": 301100,
+        "programs": 8
+      },
+      {
+        "institute": "Aditya College of Engineering and Technology-Yelahanka, Bengaluru",
+        "median_cutoff": 108560,
+        "median_fee": 260000,
+        "programs": 6
+      },
+      {
+        "institute": "GM Institute of Technology-P B Road, Davangere",
+        "median_cutoff": 108985,
+        "median_fee": 220000,
+        "programs": 3
+      },
+      {
+        "institute": "Vijaya Vittala Institution of Technology-Kothanur, Bengaluru",
+        "median_cutoff": 109004,
+        "median_fee": 220000,
+        "programs": 3
+      },
+      {
+        "institute": "Alvas Institute of Engineering and Technology-Moodbidri, Mangaluru",
+        "median_cutoff": 109198,
+        "median_fee": 220000,
+        "programs": 8
+      },
+      {
+        "institute": "Jyothy Institute of Technology-Tathguni, Bengaluru",
+        "median_cutoff": 109278,
+        "median_fee": 220000,
+        "programs": 5
+      },
+      {
+        "institute": "Jain College of Engineering and Research-Udyambag, Belagavi",
+        "median_cutoff": 109403,
+        "median_fee": 220000,
+        "programs": 5
+      },
+      {
+        "institute": "KLS Vishwanathrao Deshpande Institute of Technology-Dandeli Road, Haliyal",
+        "median_cutoff": 109568,
+        "median_fee": 220000,
+        "programs": 4
+      },
+      {
+        "institute": "Anuvartik Mirji Bharatesh Institute of Technology-Shindhollicross, Belagavi",
+        "median_cutoff": 109578,
+        "median_fee": 135000,
+        "programs": 3
+      },
+      {
+        "institute": "Maharaja Institute of Technology-Belawadi, Mandya",
+        "median_cutoff": 109740,
+        "median_fee": 220000,
+        "programs": 11
+      },
+      {
+        "institute": "Vidya Vikas Institute of Engineering and Technology-Alnahally, Mysuru",
+        "median_cutoff": 109865,
+        "median_fee": 220000,
+        "programs": 2
+      },
+      {
+        "institute": "Harsha Institute of Technology-Nelamangala Taluk, Bangalore Rural",
+        "median_cutoff": 110173,
+        "median_fee": 220000,
+        "programs": 5
+      },
+      {
+        "institute": "Yenepoya Institute of Technology formerly known as Dr. M V Shetty Institute of Technology-Moodbidri, Mangaluru",
+        "median_cutoff": 111559,
+        "median_fee": 220000,
+        "programs": 3
+      },
+      {
+        "institute": "Karavali Institute of Technology-Kottara, Mangaluru",
+        "median_cutoff": 111679,
+        "median_fee": 180000,
+        "programs": 3
       }
     ],
     "highest_cutoffs": [
@@ -83,164 +1034,164 @@
         "closing_rank": 692,
         "inst_type": "COMEDK",
         "institute": "R V College of Engineering-Mysore Road, Bengaluru",
-        "program": "Computer Science & Engineering (4 Years, Bachelor of Technology)",
+        "program": "Computer Science & Engineering",
         "quota": "GM"
       },
       {
         "closing_rank": 890,
         "inst_type": "COMEDK",
         "institute": "R V College of Engineering-Mysore Road, Bengaluru",
-        "program": "Computer Science & Engineering (Data Science) (4 Years, Bachelor of Technology)",
+        "program": "Computer Science & Engineering (Data Science)",
         "quota": "GM"
       },
       {
         "closing_rank": 975,
         "inst_type": "COMEDK",
         "institute": "R V College of Engineering-Mysore Road, Bengaluru",
-        "program": "Computer Science & Engineering (Artificial Intelligence & Machine Learning) (4 Years, Bachelor of Technology)",
+        "program": "Computer Science & Engineering (Artificial & Machine Learning)",
         "quota": "GM"
       },
       {
         "closing_rank": 1091,
         "inst_type": "COMEDK",
         "institute": "R V College of Engineering-Mysore Road, Bengaluru",
-        "program": "Computer Science & Engineering (Cyber Security) (4 Years, Bachelor of Technology)",
+        "program": "Computer Science & Engineering (Cyber Security)",
         "quota": "GM"
       },
       {
         "closing_rank": 1399,
         "inst_type": "COMEDK",
         "institute": "R V College of Engineering-Mysore Road, Bengaluru",
-        "program": "Electronics & Communication Engineering (4 Years, Bachelor of Technology)",
-        "quota": "GM"
-      },
-      {
-        "closing_rank": 1621,
-        "inst_type": "COMEDK",
-        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
-        "program": "Electronics & Telecommunication Engineering (4 Years, Bachelor of Technology)",
+        "program": "Electronics & Communication Engineering",
         "quota": "GM"
       },
       {
         "closing_rank": 1667,
         "inst_type": "COMEDK",
         "institute": "M.S. Ramaiah Institute of Technology-MSR Nagar, Bengaluru",
-        "program": "Computer Science & Engineering (4 Years, Bachelor of Technology)",
+        "program": "Computer Science & Engineering",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 1790,
+        "inst_type": "COMEDK",
+        "institute": "R V College of Engineering-Mysore Road, Bengaluru",
+        "program": "Electronics & Telecommunication Engineering",
         "quota": "GM"
       },
       {
         "closing_rank": 2098,
         "inst_type": "COMEDK",
         "institute": "M.S. Ramaiah Institute of Technology-MSR Nagar, Bengaluru",
-        "program": "Computer Science & Engineering (Artificial Intelligence & Machine Learning) (4 Years, Bachelor of Technology)",
+        "program": "Computer Science & Engineering (Artificial & Machine Learning)",
         "quota": "GM"
       },
       {
         "closing_rank": 2424,
         "inst_type": "COMEDK",
         "institute": "R V College of Engineering-Mysore Road, Bengaluru",
-        "program": "Electrical & Electronics Engineering (4 Years, Bachelor of Technology)",
+        "program": "Electrical & Electronics Engineering",
         "quota": "GM"
       },
       {
-        "closing_rank": 2845,
+        "closing_rank": 2852,
         "inst_type": "COMEDK",
         "institute": "M.S. Ramaiah Institute of Technology-MSR Nagar, Bengaluru",
-        "program": "Computer Science & Engineering (Cyber Security) (4 Years, Bachelor of Technology)",
+        "program": "Computer Science & Engineering (Cyber Security)",
         "quota": "GM"
       }
     ],
     "inst_competitiveness": {
       "COMEDK": [
         {
-          "avg_closing_rank": 7039.0,
-          "institute": "Sri Jayachamarajendra College of Engineering constituent college of JSS Science and Technology University-",
-          "min_opening_rank": 7039,
+          "avg_closing_rank": 7156.0,
+          "institute": "Sri Jayachamarajendra College of Engineering constituent college of JSS Science and Technology University-Manasagangothri, Mysuru",
+          "min_opening_rank": 7156,
           "total_programs": 1
         },
         {
-          "avg_closing_rank": 7056.2,
+          "avg_closing_rank": 7161.0,
           "institute": "R V College of Engineering-Mysore Road, Bengaluru",
           "min_opening_rank": 692,
           "total_programs": 13
         },
         {
-          "avg_closing_rank": 17911.8,
+          "avg_closing_rank": 17973.3,
           "institute": "BMS College of Engineering-Basavanagudi, Bengaluru",
           "min_opening_rank": 5312,
           "total_programs": 11
         },
         {
-          "avg_closing_rank": 17943.6,
+          "avg_closing_rank": 18246.6,
           "institute": "M.S. Ramaiah Institute of Technology-MSR Nagar, Bengaluru",
           "min_opening_rank": 1667,
           "total_programs": 17
         },
         {
-          "avg_closing_rank": 22676.0,
+          "avg_closing_rank": 23816.7,
           "institute": "R V Institute of Technology and Management-J P Nagar, Bengaluru",
           "min_opening_rank": 21189,
           "total_programs": 3
         },
         {
           "avg_closing_rank": 24693.0,
-          "institute": "The National Institute of Engineering North Campus- Koorgalli, Mysuru",
+          "institute": "The National Institute of Engineering North Campus-Koorgalli, Mysuru",
           "min_opening_rank": 24347,
           "total_programs": 2
         },
         {
-          "avg_closing_rank": 25946.0,
+          "avg_closing_rank": 25969.0,
           "institute": "Siddaganga Institute of Technology-B H Road, Tumakuru",
-          "min_opening_rank": 19599,
+          "min_opening_rank": 19691,
           "total_programs": 4
         },
         {
-          "avg_closing_rank": 32533.6,
+          "avg_closing_rank": 26392.0,
+          "institute": "Shetty Institute of Technology - Gulbarga Shahabad Road, Kalaburagi",
+          "min_opening_rank": 8078,
+          "total_programs": 2
+        },
+        {
+          "avg_closing_rank": 33028.4,
           "institute": "Dayananda Sagar College of Engineering-Kumaraswamy Layout, Bengaluru",
           "min_opening_rank": 7819,
           "total_programs": 18
         },
         {
-          "avg_closing_rank": 32957.0,
-          "institute": "Brindavan College of Engineering-Yelahanka, Bengaluru",
-          "min_opening_rank": 32957,
-          "total_programs": 1
-        },
-        {
           "avg_closing_rank": 36600.4,
-          "institute": "CMR Institute of Technology-Brookefield, Bengaluru",
+          "institute": "C.M.R. Institute of Technology-Brookefield, Bengaluru",
           "min_opening_rank": 26223,
           "total_programs": 7
         },
         {
-          "avg_closing_rank": 40862.0,
-          "institute": "East West College of Engineering-Yelahanka, Bengaluru",
-          "min_opening_rank": 40862,
-          "total_programs": 1
-        },
-        {
-          "avg_closing_rank": 42278.0,
-          "institute": "The National Institute of Engineering South Campus- Mananthavady Road, Mysuru",
+          "avg_closing_rank": 44193.3,
+          "institute": "The National Institute of Engineering South Campus-Mananthavady Road, Mysuru",
           "min_opening_rank": 30072,
           "total_programs": 3
         },
         {
-          "avg_closing_rank": 43003.3,
-          "institute": "Bangalore Institute of Technology-V V Puram, Bengaluru",
-          "min_opening_rank": 16385,
-          "total_programs": 13
-        },
-        {
-          "avg_closing_rank": 44496.7,
+          "avg_closing_rank": 44890.6,
           "institute": "BMS Institute of Technology and Management-Yelahanka, Bengaluru",
-          "min_opening_rank": 19940,
+          "min_opening_rank": 19984,
           "total_programs": 7
         },
         {
-          "avg_closing_rank": 52265.0,
-          "institute": "Bangalore Technological Institute-Chikkanayakanahalli Dinne, Bengaluru",
-          "min_opening_rank": 37912,
-          "total_programs": 3
+          "avg_closing_rank": 45046.1,
+          "institute": "Bangalore Institute of Technology-V V Puram, Bengaluru",
+          "min_opening_rank": 16423,
+          "total_programs": 13
+        },
+        {
+          "avg_closing_rank": 56920.9,
+          "institute": "JSS Science and Technology University-Mysuru",
+          "min_opening_rank": 15742,
+          "total_programs": 7
+        },
+        {
+          "avg_closing_rank": 57867.0,
+          "institute": "Biluru Gurubasava Mahaswamiji Institute of Technology-Mudhol, Bagalkot",
+          "min_opening_rank": 57867,
+          "total_programs": 1
         }
       ]
     },
@@ -249,87 +1200,256 @@
         "closing_rank": 111800,
         "inst_type": "COMEDK",
         "institute": "Global Academy of Technology-Rajarajeshwari Nagar, Bengaluru",
-        "program": "Electronics & Communication Engineering (4 Years, Bachelor of Technology)",
+        "program": "Electronics & Communication Engineering",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 111798,
+        "inst_type": "COMEDK",
+        "institute": "S J C Institute of Technology-BB Road, Chikkaballapur",
+        "program": "Aeronautical Engineering",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 111754,
+        "inst_type": "COMEDK",
+        "institute": "Rajiv Gandhi Institute of Technology-R T Nagar Post, Bengaluru",
+        "program": "Computer Science & Engineering (IOT & Cyber Including Block Chain Technology)",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 111746,
+        "inst_type": "COMEDK",
+        "institute": "Karavali Institute of Technology-Kottara, Mangaluru",
+        "program": "Aeronautical Engineering",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 111733,
+        "inst_type": "COMEDK",
+        "institute": "Yenepoya Institute of Technology formerly known as Dr. M V Shetty Institute of Technology-Moodbidri, Mangaluru",
+        "program": "Computer Science & Engineering",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 111733,
+        "inst_type": "COMEDK",
+        "institute": "Akash Institute of Engineering and Technology-Devanahalli, Bengaluru Rural",
+        "program": "Computer Science & Engineering",
+        "quota": "GM"
+      },
+      {
+        "closing_rank": 111716,
+        "inst_type": "COMEDK",
+        "institute": "S J C Institute of Technology-BB Road, Chikkaballapur",
+        "program": "Computer Science & Engineering",
         "quota": "GM"
       },
       {
         "closing_rank": 111716,
         "inst_type": "COMEDK",
         "institute": "Bapuji Institute of Engineering and Technology-Shamanur Road, Davangere",
-        "program": "Computer Science & Engineering (4 Years, Bachelor of Technology)",
+        "program": "Computer Science & Engineering (Data Science)",
         "quota": "GM"
       },
       {
-        "closing_rank": 111412,
+        "closing_rank": 111716,
         "inst_type": "COMEDK",
         "institute": "Bapuji Institute of Engineering and Technology-Shamanur Road, Davangere",
-        "program": "Artificial Intelligence & Machine Learning (4 Years, Bachelor of Technology)",
+        "program": "Computer Science & Engineering",
         "quota": "GM"
       },
       {
-        "closing_rank": 111127,
+        "closing_rank": 111679,
         "inst_type": "COMEDK",
-        "institute": "KLE Technological University Formerly known as BVBCET- Vidyanagar, Hubballi",
-        "program": "Civil Engineering (4 Years, Bachelor of Technology)",
-        "quota": "GM"
-      },
-      {
-        "closing_rank": 111099,
-        "inst_type": "COMEDK",
-        "institute": "Maharaja Institute of Technology-Belawadi, Mandya",
-        "program": "Computer Science & Engineering (4 Years, Bachelor of Technology)",
-        "quota": "GM"
-      },
-      {
-        "closing_rank": 111074,
-        "inst_type": "COMEDK",
-        "institute": "KLS Vishwanathrao Deshpande Institute of Technology- Dandeli Road, Haliyal",
-        "program": "Computer Science & Engineering (Artificial Intelligence) (4 Years, Bachelor of Technology)",
-        "quota": "GM"
-      },
-      {
-        "closing_rank": 111070,
-        "inst_type": "COMEDK",
-        "institute": "Malnad College of Engineering-Rangoli Halla, Hassan",
-        "program": "Computer Science & Engineering (4 Years, Bachelor of Technology)",
-        "quota": "GM"
-      },
-      {
-        "closing_rank": 111065,
-        "inst_type": "COMEDK",
-        "institute": "SJB Institute of Technology-Kengeri, Bengaluru",
-        "program": "Computer Science & Engineering (Data Science) (4 Years, Bachelor of Technology)",
-        "quota": "GM"
-      },
-      {
-        "closing_rank": 110996,
-        "inst_type": "COMEDK",
-        "institute": "Jain College of Engineering and Research-Udyambag, Belagavi",
-        "program": "Computer Science & Engineering (4 Years, Bachelor of Technology)",
-        "quota": "GM"
-      },
-      {
-        "closing_rank": 110976,
-        "inst_type": "COMEDK",
-        "institute": "AMC Engineering College-Bannerghatta Rd, Bengaluru",
-        "program": "Computer Science & Engineering (Artificial Intelligence & Machine Learning) (4 Years, Bachelor of Technology)",
+        "institute": "Karavali Institute of Technology-Kottara, Mangaluru",
+        "program": "Computer Science & Engineering (Data Science)",
         "quota": "GM"
       }
     ],
-    "quota_counts": {
-      "GM": 459,
-      "KKR": 178
+    "metro_split": {
+      "metro": {
+        "median_cutoff": 93611,
+        "programs": 481
+      },
+      "non_metro": {
+        "median_cutoff": 100014,
+        "programs": 351
+      }
     },
+    "mock_accuracy": {
+      "actual_looser_pct": 21.6,
+      "comparable_programs": 657,
+      "median_delta": -1226,
+      "note": "Mock allotted no seat; shown only as a predictor of round 1."
+    },
+    "quota_counts": {
+      "GM": 832,
+      "KKR": 282
+    },
+    "quota_gap": {
+      "gm_median": 73772,
+      "kkr_easier_pct": 63.5,
+      "kkr_median": 77465,
+      "median_gap": 5262,
+      "note": "Paired per (college, branch); GM ran rounds 1/3/4 and KKR rounds 1/2.",
+      "paired_programs": 282
+    },
+    "rank_distribution": [
+      {
+        "count": 3,
+        "label": "Under 1K"
+      },
+      {
+        "count": 11,
+        "label": "1K–5K"
+      },
+      {
+        "count": 19,
+        "label": "5K–10K"
+      },
+      {
+        "count": 15,
+        "label": "10K–20K"
+      },
+      {
+        "count": 45,
+        "label": "20K–40K"
+      },
+      {
+        "count": 97,
+        "label": "40K–70K"
+      },
+      {
+        "count": 642,
+        "label": "Over 70K"
+      }
+    ],
+    "reference_quota": "GM",
     "round_averages": {},
     "round_averages_adv": {},
     "round_averages_main": {},
+    "round_participation": [
+      {
+        "coverage_pct": 98.9,
+        "median_cutoff": 72036,
+        "programs": 1102,
+        "round": 1
+      },
+      {
+        "coverage_pct": 11.9,
+        "median_cutoff": 65823,
+        "programs": 133,
+        "round": 2
+      },
+      {
+        "coverage_pct": 45.6,
+        "median_cutoff": 75437,
+        "programs": 508,
+        "round": 3
+      },
+      {
+        "coverage_pct": 29.2,
+        "median_cutoff": 71122,
+        "programs": 325,
+        "round": 4
+      }
+    ],
+    "seat_matrix": {
+      "category_seats_by_quota": {
+        "GM": 19931,
+        "KKR": 1235
+      },
+      "largest_intake": 360,
+      "programs_with_seats": 832,
+      "total_seats": 22983
+    },
     "summary": {
-      "total_records": 637,
-      "unique_institutes": 101,
-      "unique_programs": 46,
+      "median_fee": 220000,
+      "rank_max": 111800,
+      "rank_min": 692,
+      "rounds_published": 4,
+      "total_records": 1114,
+      "total_seats": 22983,
+      "unique_institutes": 147,
+      "unique_programs": 63,
       "unique_quotas": 2,
-      "unique_seat_types": 0
-    }
+      "unique_seat_types": 2
+    },
+    "value_picks": [
+      {
+        "institute": "Shetty Institute of Technology - Gulbarga Shahabad Road, Kalaburagi",
+        "median_cutoff": 26392,
+        "median_fee": 120000,
+        "programs": 2
+      },
+      {
+        "institute": "Bheemanna Khandre Institute of Technology-Bhalki, Bidar",
+        "median_cutoff": 59258,
+        "median_fee": 220000,
+        "programs": 3
+      },
+      {
+        "institute": "Rao Bahadur Y Mahabaleswarappa Engineering College-Cantonment, Ballari",
+        "median_cutoff": 62202,
+        "median_fee": 220000,
+        "programs": 2
+      },
+      {
+        "institute": "Basavakalyan Engineering College-NH9 Basavakalyan, Bidar",
+        "median_cutoff": 68884,
+        "median_fee": 160000,
+        "programs": 3
+      },
+      {
+        "institute": "GSSS Institute of Engineering and Technology for Women-Metagalli, Mysuru",
+        "median_cutoff": 74720,
+        "median_fee": 199390,
+        "programs": 5
+      },
+      {
+        "institute": "P.E.S.College of Engineering-PES College Road, Mandya",
+        "median_cutoff": 76667,
+        "median_fee": 195000,
+        "programs": 10
+      },
+      {
+        "institute": "Chanakya University-Devanahalli, Bengaluru Rural",
+        "median_cutoff": 78919,
+        "median_fee": 205000,
+        "programs": 3
+      },
+      {
+        "institute": "M.S. Engineering College-Sadahalli, Bengaluru",
+        "median_cutoff": 79163,
+        "median_fee": 220000,
+        "programs": 4
+      },
+      {
+        "institute": "Shri Madhwa Vadiraja Institute of Technology and Management-Bantakal, Udupi",
+        "median_cutoff": 81570,
+        "median_fee": 220000,
+        "programs": 4
+      },
+      {
+        "institute": "SDM Institute of Technology, Tulu Minority-Ujjire, Dakshina Kannada",
+        "median_cutoff": 83331,
+        "median_fee": 220000,
+        "programs": 4
+      },
+      {
+        "institute": "Amruta Institute of Engineering and Management Science-Bidadi, Ramnagar Taluk, Bengaluru Rural",
+        "median_cutoff": 84492,
+        "median_fee": 150000,
+        "programs": 6
+      },
+      {
+        "institute": "Kalpataru Institute of Technology-B H Road, Tiptur",
+        "median_cutoff": 84753,
+        "median_fee": 220000,
+        "programs": 2
+      }
+    ]
   },
   "note": "stats",
   "request": {

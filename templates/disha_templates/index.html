@@ -32,223 +32,6 @@
       }
     }
   </script>
-  <style>
-    /* ── Landing page styles ─────────────────────────────────────── */
-    .landing-main {
-      padding: 56px 24px 80px;
-      max-width: 1100px;
-      margin: 0 auto;
-      text-align: center;
-    }
-    .landing-eyebrow {
-      font-size: 0.8rem;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--pine);
-      margin-bottom: 12px;
-    }
-    .landing-title {
-      font-family: var(--serif);
-      font-size: 2.6rem;
-      font-weight: 600;
-      color: var(--ink);
-      margin-bottom: 12px;
-      line-height: 1.2;
-    }
-    .landing-subtitle {
-      font-size: 1.1rem;
-      color: var(--ink-soft);
-      margin-bottom: 32px;
-      max-width: 560px;
-      margin-left: auto;
-      margin-right: auto;
-      line-height: 1.5;
-    }
-
-    /* ── Search ───────────────────────────────────────────────────── */
-    .exam-search-wrap {
-      max-width: 480px;
-      margin: 0 auto 40px;
-      position: relative;
-    }
-    .exam-search-wrap svg {
-      position: absolute;
-      left: 16px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--ink-faint);
-      pointer-events: none;
-    }
-    .exam-search {
-      width: 100%;
-      padding: 12px 16px 12px 44px;
-      border: 1px solid var(--line);
-      border-radius: 12px;
-      font-size: 0.95rem;
-      font-family: var(--sans);
-      background: var(--card);
-      color: var(--ink);
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .exam-search::placeholder { color: var(--ink-faint); }
-    .exam-search:focus {
-      border-color: var(--pine);
-      box-shadow: 0 0 0 3px var(--pine-tint);
-    }
-
-    /* ── Grid ─────────────────────────────────────────────────────── */
-    .exam-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      padding: 0;
-      margin: 0;
-    }
-    @media (max-width: 900px) {
-      .exam-grid { grid-template-columns: repeat(2, 1fr); }
-    }
-    @media (max-width: 580px) {
-      .exam-grid { grid-template-columns: 1fr; }
-      .landing-title { font-size: 2rem; }
-    }
-
-    /* ── Card ─────────────────────────────────────────────────────── */
-    .exam-card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-left: 4px solid var(--pine);
-      border-radius: 12px;
-      padding: 24px 20px 20px;
-      text-decoration: none;
-      color: var(--ink);
-      transition: transform 0.18s cubic-bezier(0.0, 0.0, 0.2, 1), box-shadow 0.22s, border-color 0.22s;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.02);
-      text-align: left;
-      overflow: hidden;
-    }
-    .exam-card:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06), 0 3px 6px rgba(0, 0, 0, 0.03);
-      border-color: var(--line-soft);
-      border-left-color: var(--pine-deep);
-    }
-
-    /* Badge */
-    .exam-card__badge {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      padding: 3px 10px;
-      border-radius: 20px;
-      background: var(--pine-tint);
-      color: var(--pine);
-      line-height: 1.4;
-    }
-
-    .exam-card__icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 14px;
-      background: var(--paper-deep);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 18px;
-      color: var(--pine);
-      flex-shrink: 0;
-    }
-
-    /* Title */
-    .exam-card__title {
-      font-size: 1.2rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-      line-height: 1.3;
-    }
-
-    /* Description */
-    .exam-card__desc {
-      font-size: 0.9rem;
-      color: var(--ink-soft);
-      line-height: 1.5;
-      margin-bottom: 10px;
-    }
-
-    /* Stat line */
-    .exam-card__stat {
-      font-size: 0.8rem;
-      font-weight: 500;
-      color: var(--ink-soft);
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .exam-card__stat svg {
-      flex-shrink: 0;
-    }
-
-    /* Spacer to push bottom content down */
-    .exam-card__spacer { flex: 1; }
-
-    /* Conducting body */
-    .exam-card__conductor {
-      font-size: 0.78rem;
-      color: var(--ink-faint);
-      margin-bottom: 16px;
-      line-height: 1.4;
-    }
-    .exam-card__conductor span {
-      color: #2563eb;
-      font-weight: 500;
-      text-decoration: none;
-      border-bottom: 1px dashed #93c5fd;
-      transition: color 0.15s, border-color 0.15s;
-      cursor: pointer;
-    }
-    .exam-card__conductor span:hover {
-      color: #1d4ed8;
-      border-bottom-color: #1d4ed8;
-    }
-
-    /* CTA */
-    .exam-card__cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      color: var(--pine);
-      transition: gap 0.2s ease;
-    }
-    .exam-card:hover .exam-card__cta {
-      gap: 10px;
-    }
-
-    /* ── Empty state ──────────────────────────────────────────────── */
-    .exam-empty {
-      grid-column: 1 / -1;
-      text-align: center;
-      padding: 48px 24px;
-      color: var(--ink-faint);
-    }
-    .exam-empty__icon {
-      font-size: 2.5rem;
-      margin-bottom: 12px;
-    }
-    .exam-empty__text {
-      font-size: 1rem;
-    }
-  </style>
 </head>
 <body>
   <header class="topbar">
@@ -262,28 +45,31 @@
     <a class="utmt-badge" href="https://www.utmt.org" target="_blank" rel="noopener">a <strong>UTMT</strong> initiative</a>
   </header>
 
-  <main class="landing-main">
-    <p class="landing-eyebrow">College Counselling Made Simple</p>
-    <h1 class="landing-title">Find your direction.</h1>
-    <p class="landing-subtitle">Choose your counselling exam to get realistic, data-driven college recommendations.</p>
+  <main class="landing">
+    <div class="landing__head">
+      <p class="eyebrow landing__eyebrow">College counselling made simple</p>
+      <h1 class="landing__title">Find your <em>direction.</em></h1>
+      <p class="landing__lede">Choose your counselling exam and we'll show you the colleges where you genuinely
+        stand a chance — from real cutoff data, not guesswork.</p>
 
-    <div class="exam-search-wrap">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <circle cx="11" cy="11" r="8"></circle><path d="M21 21l-4.3-4.3"></path>
-      </svg>
-      <input type="search" class="exam-search" id="exam-search" placeholder="Search exams (e.g. JEE, KCET, COMEDK)..." aria-label="Search exams" />
+      <div class="searchbox searchbox--landing">
+        <svg width="14" height="14" viewBox="0 0 20 20" aria-hidden="true">
+          <path
+            d="M9 3.5a5.5 5.5 0 1 0 3.4 9.8l3.2 3.2a.9.9 0 0 0 1.3-1.3l-3.2-3.2A5.5 5.5 0 0 0 9 3.5zm-3.7 5.5a3.7 3.7 0 1 1 7.4 0 3.7 3.7 0 0 1-7.4 0z"
+            fill="currentColor" />
+        </svg>
+        <input type="search" id="exam-search" placeholder="Search exams — JEE, KCET, COMEDK…" aria-label="Search exams" />
+      </div>
     </div>
 
-    <div id="exam-grid-container">
+    <div id="exam-grid-container" aria-live="polite">
       <!-- JS renders exam cards here -->
     </div>
   </main>
 
-  <footer class="footer" style="flex-direction: column; align-items: center; gap: 12px;">
-    <div style="text-align: center; color: var(--ink-soft); max-width: 600px; padding: 0 16px;">
-      Data sourced from official JoSAA/KEA/COMEDK 2025 cutoffs — updated regularly.
-    </div>
-    <div>
+  <footer class="footer footer--landing">
+    <p class="footer__note">Data sourced from official JoSAA / KEA / COMEDK 2025 cutoffs — updated regularly.</p>
+    <div class="footer__row">
       <span>Disha — a <a href="https://www.utmt.org" target="_blank" rel="noopener">UTMT</a> initiative</span>
       <span class="footer__sep" aria-hidden="true">·</span>
       <span>Open source · Free · No login</span>

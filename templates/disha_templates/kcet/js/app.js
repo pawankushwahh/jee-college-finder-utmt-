@@ -165,6 +165,111 @@ function advanceStep() {
 }
 
 // ── Quota pills ─────────────────────────────────────────────────────────
+//
+// A KEA category code packs three independent choices into one string:
+//
+//   1. reservation category — GM, 1, 2A, 2B, 3A, 3B, SC, ST
+//   2. sub-quota suffix     — G = state-wide, K = Kannada medium, R = Rural
+//   3. seat pool            — Rest of Karnataka, or Article 371(J)
+//                             Kalyana-Karnataka, which appends "H"
+//
+// The API's 48 codes are the full 8x3x2 cross-product, so the UI asks the three
+// questions separately and composes the code rather than listing 48 pills.
+//
+// The pool axis arrived with the all-rounds dataset. Before it, parseCategory()
+// only knew suffixes G/K/R, so every "H" code fell through to its catch-all and
+// rendered as its own raw "reservation category" pill — 24 of them.
+//
+// `state.seat_category` stays the composed code — the request payload, the
+// share URL and the API contract are all unchanged.
+
+// Display order, not the API's alphabetical one: General Merit covers most
+// students, so it leads rather than sorting in after Category 3B.
+const BASE_ORDER = ["GM", "1", "2A", "2B", "3A", "3B", "SC", "ST"];
+
+const BASE_LABELS = {
+  GM: "General Merit",
+  "1": "Category 1",
+  "2A": "Category 2A",
+  "2B": "Category 2B",
+  "3A": "Category 3A",
+  "3B": "Category 3B",
+  SC: "Scheduled Caste",
+  ST: "Scheduled Tribe",
+};
+
+const REGION_LABELS = {
+  G: "State-wide",
+  K: "Kannada medium",
+  R: "Rural",
+};
+
+// Panel pills sit in a narrow sidebar — same meaning, fewer characters.
+const REGION_LABELS_SHORT = { G: "State-wide", K: "Kannada", R: "Rural" };
+
+const POOL_LABELS = { rok: "Rest of Karnataka", hk: "Article 371(J)" };
+const POOL_LABELS_SHORT = { rok: "RoK", hk: "371(J)" };
+
+/** "GMKH" -> "GMK". Mirrors states.split_seat_pool(). */
+function splitSeatPool(code) {
+  const c = String(code || "").trim().toUpperCase();
+  if (c.length >= 2 && c.endsWith("H")) {
+    const stem = c.slice(0, -1);
+    if (BASE_LABELS[stem]) {
+      return { code: stem === "GM" ? "GM" : stem + "G", pool: "hk" };
+    }
+    if (stem.length >= 2 && "GKRP".includes(stem.slice(-1)) && BASE_LABELS[stem.slice(0, -1)]) {
+      return { code: stem, pool: "hk" };
+    }
+  }
+  return { code: c, pool: "rok" };
+}
+
+/** "2AKH" -> {base:"2A", region:"K", pool:"hk"}. Mirrors states.parse_category(). */
+function parseCategory(code) {
+  const { code: c, pool } = splitSeatPool(code);
+  if (c === "GM") return { base: "GM", region: "G", pool };
+  const suffix = c.slice(-1);
+  const base = c.slice(0, -1);
+  if ("GKR".includes(suffix) && BASE_LABELS[base]) return { base, region: suffix, pool };
+  return { base: c, region: "G", pool };
+}
+
+/** The inverse: (base, region, pool) -> the published code. */
+function buildCode(base, region, pool) {
+  const rok = base === "GM" && region === "G" ? "GM" : base + region;
+  if (pool !== "hk") return rok;
+  // 371(j) appends "H", and a state-wide "G" is replaced by it rather than kept.
+  return region === "G" ? base + "H" : rok + "H";
+}
+
+/** The codes the API actually ships, as a Set — the source of truth for
+ *  which (base, region) pairs are selectable. */
+function availableCodes() {
+  const cats = (state.meta && state.meta.seat_categories) || [];
+  return new Set(cats.map((c) => c.value));
+}
+
+/** Compose a code, preferring the exact triple but falling back so a click can
+ *  never land on a code the API does not publish. */
+function composeCategory(base, region, pool) {
+  const codes = availableCodes();
+  const exact = buildCode(base, region, pool);
+  if (!codes.size || codes.has(exact)) return exact;
+  // Same base and pool, any sub-quota.
+  for (const r of ["G", "K", "R"]) {
+    const alt = buildCode(base, r, pool);
+    if (codes.has(alt)) return alt;
+  }
+  // Last resort: keep the category, fall back to the other pool.
+  for (const p of ["rok", "hk"]) {
+    for (const r of ["G", "K", "R"]) {
+      const alt = buildCode(base, r, p);
+      if (codes.has(alt)) return alt;
+    }
+  }
+  return exact;
+}
 
 function setQuota(value) {
   state.seat_category = value;
@@ -172,23 +277,115 @@ function setQuota(value) {
   saveStateToURL();
 }
 
+/** Rebuild both axes from meta. Called once after /meta resolves. */
+function renderQuotaRows() {
+  const cats = (state.meta && state.meta.seat_categories) || [];
+  if (!cats.length) return;
+
+  const bases = [];
+  const regions = [];
+  const pools = [];
+  for (const c of cats) {
+    const { base, region, pool } = parseCategory(c.value);
+    if (!bases.includes(base)) bases.push(base);
+    if (!regions.includes(region)) regions.push(region);
+    if (!pools.includes(pool)) pools.push(pool);
+  }
+  const rank = (list, v) => (list.indexOf(v) === -1 ? list.length : list.indexOf(v));
+  bases.sort((a, b) => rank(BASE_ORDER, a) - rank(BASE_ORDER, b));
+  regions.sort((a, b) => "GKR".indexOf(a) - "GKR".indexOf(b));
+  pools.sort((a, b) => rank(["rok", "hk"], a) - rank(["rok", "hk"], b));
+
+  const pills = (values, labelFor) =>
+    values
+      .map(
+        (v) =>
+          `<button type="button" class="choice" role="radio" aria-checked="false" data-value="${escapeHtml(v)}">${escapeHtml(labelFor(v))}</button>`
+      )
+      .join("");
+
+  const baseHtml = pills(bases, (b) => BASE_LABELS[b] || b);
+  const baseHtmlShort = pills(bases, (b) => (b === "GM" ? "GM" : b));
+  const regionHtml = pills(regions, (r) => REGION_LABELS[r] || r);
+  const regionHtmlShort = pills(regions, (r) => REGION_LABELS_SHORT[r] || r);
+  const poolHtml = pills(pools, (p) => POOL_LABELS[p] || p);
+  const poolHtmlShort = pills(pools, (p) => POOL_LABELS_SHORT[p] || p);
+
+  const set = (id, html) => {
+    const el = $(id);
+    if (el) el.innerHTML = html;
+  };
+  set("seat_base-row", baseHtml);
+  set("seat_region-row", regionHtml);
+  set("seat_pool-row", poolHtml);
+  set("panel-seat_base-row", baseHtmlShort);
+  set("panel-seat_region-row", regionHtmlShort);
+  set("panel-seat_pool-row", poolHtmlShort);
+
+  if (!availableCodes().has(state.seat_category)) {
+    state.seat_category = cats[0].value;
+  }
+  syncQuotaRows();
+}
+
 function syncQuotaRows() {
-  document
-    .querySelectorAll("#seat_category-row .choice, #panel-seat_category-row .choice")
-    .forEach((c) => {
-      const on = c.dataset.value === state.seat_category;
+  const { base, region, pool } = parseCategory(state.seat_category);
+  const codes = availableCodes();
+
+  const mark = (selector, active) => {
+    document.querySelectorAll(selector).forEach((c) => {
+      const on = c.dataset.value === active;
       c.classList.toggle("is-selected", on);
       c.setAttribute("aria-checked", on ? "true" : "false");
     });
+  };
+  mark("#seat_base-row .choice, #panel-seat_base-row .choice", base);
+  mark("#seat_region-row .choice, #panel-seat_region-row .choice", region);
+  mark("#seat_pool-row .choice, #panel-seat_pool-row .choice", pool);
+
+  // Grey out any combination this base has no published code for.
+  const disableUnavailable = (selector, codeFor) => {
+    document.querySelectorAll(selector).forEach((c) => {
+      const ok = !codes.size || codes.has(codeFor(c.dataset.value));
+      c.disabled = !ok;
+      c.setAttribute("aria-disabled", ok ? "false" : "true");
+    });
+  };
+  disableUnavailable(
+    "#seat_region-row .choice, #panel-seat_region-row .choice",
+    (r) => buildCode(base, r, pool)
+  );
+  disableUnavailable(
+    "#seat_pool-row .choice, #panel-seat_pool-row .choice",
+    (p) => buildCode(base, region, p)
+  );
+
+  const note = $("category-note");
+  if (note) {
+    note.innerHTML = `Your KEA category code: <kbd>${escapeHtml(state.seat_category)}</kbd>`;
+  }
 }
 
+/** All three axes share one handler: read the axis off the row, recompose. */
 function bindQuotaRow(rowId, onChange) {
   const row = $(rowId);
   if (!row) return;
+  const axis = rowId.includes("region")
+    ? "region"
+    : rowId.includes("pool")
+      ? "pool"
+      : "base";
   row.addEventListener("click", (e) => {
     const btn = e.target.closest(".choice");
-    if (!btn) return;
-    setQuota(btn.dataset.value);
+    if (!btn || btn.disabled) return;
+    const cur = parseCategory(state.seat_category);
+    const picked = btn.dataset.value;
+    const next = composeCategory(
+      axis === "base" ? picked : cur.base,
+      axis === "region" ? picked : cur.region,
+      axis === "pool" ? picked : cur.pool
+    );
+    setQuota(next);
     if (onChange) onChange();
   });
 }
@@ -254,11 +451,18 @@ function branchReviewValue() {
 
 function renderReview() {
   const rank = parseRankInput($("kcet-rank"));
-  const quotaText = state.seat_category === "GM" ? "GM — General Merit" : "KKR — Kalyana Karnataka";
+  const { base, region, pool } = parseCategory(state.seat_category);
+  // Name the pool only when it is 371(J). Rest of Karnataka is the default the
+  // large majority take, and spelling it out on every review row would bury the
+  // one case a student needs to double-check.
+  const poolText = pool === "hk" ? ` · ${POOL_LABELS.hk}` : "";
+  const quotaText =
+    `${BASE_LABELS[base] || base} · ${REGION_LABELS[region] || region}` +
+    `${poolText} (${state.seat_category})`;
 
   const rows = [
     { key: "KCET Rank", val: rank ? fmt(rank) : '<small>not given</small>', step: 0 },
-    { key: "Quota", val: escapeHtml(quotaText), step: 1 },
+    { key: "Category", val: escapeHtml(quotaText), step: 1 },
     { key: "Branch preference", val: escapeHtml(branchReviewValue()), step: 2 },
   ];
 
@@ -289,17 +493,7 @@ async function loadMeta() {
 
     if (meta.total_programs) $("program-count").textContent = fmt(meta.total_programs);
 
-    if (meta.seat_categories && meta.seat_categories.length) {
-      const opts = meta.seat_categories.map(c => `<button type="button" class="choice" role="radio" aria-checked="false" data-value="${escapeHtml(c.value)}">${escapeHtml(c.label)}</button>`).join("");
-      const q1 = $("seat_category-row");
-      const q2 = $("panel-seat_category-row");
-      if (q1) q1.innerHTML = opts;
-      if (q2) q2.innerHTML = opts;
-      if (!meta.seat_categories.some(c => c.value === state.seat_category)) {
-        state.seat_category = meta.seat_categories[0].value;
-      }
-      syncQuotaRows();
-    }
+    renderQuotaRows();
 
 
     renderBranchGrids();
@@ -520,7 +714,10 @@ function renderNote(data) {
 
 // ── Rank ruler ──────────────────────────────────────────────────────────
 
-const RANK_AXIS_MAX = 200000;
+// Must stay at or above the dataset's largest cut-off, or every rank past the
+// ceiling is clamped to the same position on the ruler. KCET 2025 reaches
+// 262,188 (rank_high 264,810), so 200,000 silently mis-plotted the tail.
+const RANK_AXIS_MAX = 270000;
 const LOG_AXIS_MAX = Math.log10(RANK_AXIS_MAX);
 
 function rankPos(rank) {
@@ -1612,7 +1809,9 @@ function bindPanelEvents() {
     });
   }
 
-  bindQuotaRow("panel-seat_category-row", schedulePanelUpdate);
+  bindQuotaRow("panel-seat_base-row", schedulePanelUpdate);
+  bindQuotaRow("panel-seat_region-row", schedulePanelUpdate);
+  bindQuotaRow("panel-seat_pool-row", schedulePanelUpdate);
 }
 
 // ── Events ──────────────────────────────────────────────────────────────
@@ -1656,7 +1855,9 @@ function bindEvents() {
   $("edit-profile-btn").addEventListener("click", backToReview);
   $("empty-edit-btn")?.addEventListener("click", backToReview);
 
-  bindQuotaRow("seat_category-row");
+  bindQuotaRow("seat_base-row");
+  bindQuotaRow("seat_region-row");
+  bindQuotaRow("seat_pool-row");
   bindPanelEvents();
 
   // Choice drawer

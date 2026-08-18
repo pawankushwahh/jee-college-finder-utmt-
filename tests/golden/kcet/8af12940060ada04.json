@@ -1,28 +1,368 @@
 {
   "body": {
-    "category_guidance": [],
+    "category_guidance": [
+      {
+        "blurb": "These closed slightly above your rank last year. Cutoffs move between rounds, so list a few as ambitious choices.",
+        "category": "Reach",
+        "count": 26
+      }
+    ],
     "counts": {
       "by_category": {
-        "Reach": 0,
+        "Reach": 26,
         "Safe": 0,
         "Target": 0
       },
-      "is_curated": false,
+      "is_curated": true,
       "is_top_rank": false,
-      "shown": 0,
+      "shown": 15,
       "shown_by_category": {
-        "Reach": 0,
+        "Reach": 15,
         "Safe": 0,
         "Target": 0
       },
-      "total": 0
+      "total": 26
     },
-    "guidance": "Your rank (400,001) is past the last seat you are eligible for under 2AG in this dataset — the weakest cutoff closed at 261,787. Adding a different rank will not change this; try another category, or check KEA's special/extended rounds.",
+    "guidance": "Found 26 eligible college-programme options for your profile (showing 15). They are grouped into Target, Dream and Safe, and ordered to match your stated interest.",
     "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
     "notes": [
-      "A rank of 400,001 is well outside KCET's published range and may be a typo."
+      "A rank of 400,001 is well outside KCET's published range and may be a typo.",
+      "Showing the 15 strongest picks out of 26 eligible options, with at most a couple of programmes per college. Open a single section to see every option in it."
     ],
-    "recommendations": [],
+    "recommendations": [
+      {
+        "admission_probability": 5.8,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 234587.0,
+        "college_code": "E222",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Cambridge Institute Of Technology, North Campus, Devanahalli, Bangalore SURVEY NO. 73, LINGADHEERA GOLLAHALLI, KUNDANA POST, DEVANAHALLI TALUK",
+        "interest_score": 3.75,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY)",
+        "quality_score": 0.51,
+        "rank_high": 234587.0,
+        "rank_low": 56365.0,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY) at Cambridge Institute Of Technology, North Campus, Devanahalli, Bangalore SURVEY NO. 73, LINGADHEERA GOLLAHALLI, KUNDANA POST, DEVANAHALLI TALUK), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 6.3,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 241079.5,
+        "college_code": "E017",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Sri Siddhartha Institute of Technology MARALUR ,TUMKUR",
+        "interest_score": 3.71,
+        "matched_interest": true,
+        "program": "ROBOTICS AND ARTIFICIAL INTELLIGENCE",
+        "quality_score": 0.41,
+        "rank_high": 241079.5,
+        "rank_low": 63932.0,
+        "reason": "Reach for you - strong fit for your goal (ROBOTICS AND ARTIFICIAL INTELLIGENCE at Sri Siddhartha Institute of Technology MARALUR ,TUMKUR), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ai_ds",
+          "production"
+        ]
+      },
+      {
+        "admission_probability": 6.3,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 244243.0,
+        "college_code": "E106",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "East West Institute Of Technology,Bangalore(AUTONOMOUS) SY. NO.63, OFF MAGADI MAIN ROAD, VISHWANEEDAM POST,BANGALORE",
+        "interest_score": 3.67,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 0.35,
+        "rank_high": 244243.0,
+        "rank_low": 71176.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at East West Institute Of Technology,Bangalore(AUTONOMOUS) SY. NO.63, OFF MAGADI MAIN ROAD, VISHWANEEDAM POST,BANGALORE), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 7.3,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 247415.5,
+        "college_code": "E087",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Vivekananada Institute of Technology, Kengeri, Bangalore GUDIMAVU VILLAGE ,KENGERI(HOBLI)NEAR KUMBALAGODU,BANGALORE",
+        "interest_score": 3.64,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 0.28,
+        "rank_high": 247415.5,
+        "rank_low": 66845.0,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Vivekananada Institute of Technology, Kengeri, Bangalore GUDIMAVU VILLAGE ,KENGERI(HOBLI)NEAR KUMBALAGODU,BANGALORE), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 5.5,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 249499.0,
+        "college_code": "E201",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Gopalan College of Engineering & Management, K.R. Puram, Bangalore SONNENAHALLI, HOODI VILLAGE, ITPL ROAD,BANGALORE",
+        "interest_score": 3.62,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 0.24,
+        "rank_high": 249499.0,
+        "rank_low": 91231.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at Gopalan College of Engineering & Management, K.R. Puram, Bangalore SONNENAHALLI, HOODI VILLAGE, ITPL ROAD,BANGALORE), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 7.4,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 249584.0,
+        "college_code": "E128",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Sharanbasava University (Formerly Appa Institute of Engineering and Tech) SHARNBASVESHWARA INSTITUTIONS CAMPUS , KALABURAGI ( GULBARGA) -585103 , KARNATAKA",
+        "interest_score": 3.61,
+        "matched_interest": true,
+        "program": "B TECH IN ELECTRONICS & COMMUNICATION ENGINEERING",
+        "quality_score": 0.22,
+        "rank_high": 249584.0,
+        "rank_low": 71302.0,
+        "reason": "Reach for you - strong fit for your goal (B TECH IN ELECTRONICS & COMMUNICATION ENGINEERING at Sharanbasava University (Formerly Appa Institute of Engineering and Tech) SHARNBASVESHWARA INSTITUTIONS CAMPUS , KALABURAGI ( GULBARGA) -585103 , KARNATAKA), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 6.3,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 253509.0,
+        "college_code": "E307",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "SESHADRIPURAM INSTITUTE OF TECHNOLOGY MYSURU MYSURU",
+        "interest_score": 3.58,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 0.15,
+        "rank_high": 253509.0,
+        "rank_low": 90580.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at SESHADRIPURAM INSTITUTE OF TECHNOLOGY MYSURU MYSURU), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 5.2,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 253227.0,
+        "college_code": "E162",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Government Engineering College, Raichur RAICHUR-HYDERABAD ROAD YERAMARUS,RAICHUR",
+        "interest_score": 3.58,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 0.17,
+        "rank_high": 253227.0,
+        "rank_low": 101890.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at Government Engineering College, Raichur RAICHUR-HYDERABAD ROAD YERAMARUS,RAICHUR), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 6.5,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 253722.0,
+        "college_code": "E194",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Government Engineering College, Karwar MAJALI VILLAGE, KARWAR TALUK, UTTARA KANNADA DIST, KARNATAKA -PIN 581345",
+        "interest_score": 3.57,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 0.14,
+        "rank_high": 253722.0,
+        "rank_low": 89041.0,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Government Engineering College, Karwar MAJALI VILLAGE, KARWAR TALUK, UTTARA KANNADA DIST, KARNATAKA -PIN 581345), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 5.9,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 254295.0,
+        "college_code": "E075",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Ballari Institute of Technology & Management, Bellary(AUTONOMOUS) \"JNANA GANGOTRI\" CAMPUS, #873/2 OF KOLAGAL VILLAGE,BELLARY-HOSPET ROAD, ALLIPUR",
+        "interest_score": 3.56,
+        "matched_interest": true,
+        "program": "ELECTRICAL & ELECTRONICS ENGINEERING",
+        "quality_score": 0.13,
+        "rank_high": 254295.0,
+        "rank_low": 96229.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRICAL & ELECTRONICS ENGINEERING at Ballari Institute of Technology & Management, Bellary(AUTONOMOUS) \"JNANA GANGOTRI\" CAMPUS, #873/2 OF KOLAGAL VILLAGE,BELLARY-HOSPET ROAD, ALLIPUR), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ece",
+          "electrical"
+        ]
+      },
+      {
+        "admission_probability": 5.0,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 257139.0,
+        "college_code": "E018",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Kalpatharu Institute of Technology, Tiptur B.H.ROAD,HASSAN CIRCLE,TIPTUR-572202",
+        "interest_score": 3.55,
+        "matched_interest": true,
+        "program": "ELECTRONICS AND COMMUNICATION ENGG",
+        "quality_score": 0.1,
+        "rank_high": 257139.0,
+        "rank_low": 112060.0,
+        "reason": "Reach for you - strong fit for your goal (ELECTRONICS AND COMMUNICATION ENGG at Kalpatharu Institute of Technology, Tiptur B.H.ROAD,HASSAN CIRCLE,TIPTUR-572202), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "ece"
+        ]
+      },
+      {
+        "admission_probability": 8.4,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 259316.0,
+        "college_code": "E109",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "City Engineering College,Doddakalisandra, Bangalore South DODDAKALLASANDRA, KANAKAPURA ROAD, BANGALORE.",
+        "interest_score": 3.52,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 0.04,
+        "rank_high": 259316.0,
+        "rank_low": 82817.0,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at City Engineering College,Doddakalisandra, Bangalore South DODDAKALLASANDRA, KANAKAPURA ROAD, BANGALORE.), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 6.7,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 259200.0,
+        "college_code": "E278",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "VISVESVARAYA TECHNOLOGICAL UNIVERSITY, BELAGAVI, VIAT, MUDDENAHALLI CAMPUS, CHIKKABALLAPUR Muddenahalli campus,Chickkaballapur",
+        "interest_score": 3.52,
+        "matched_interest": true,
+        "program": "B TECH IN COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 0.04,
+        "rank_high": 259200.0,
+        "rank_low": 98423.0,
+        "reason": "Reach for you - strong fit for your goal (B TECH IN COMPUTER SCIENCE AND ENGINEERING at VISVESVARAYA TECHNOLOGICAL UNIVERSITY, BELAGAVI, VIAT, MUDDENAHALLI CAMPUS, CHIKKABALLAPUR Muddenahalli campus,Chickkaballapur), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 7.2,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 259170.0,
+        "college_code": "E127",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "M S Engineering College, Bangalore NAVARATHNA AGRAHARA, SADAHALLIPOST, NEAR BIAL, BANGALORE",
+        "interest_score": 3.52,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY)",
+        "quality_score": 0.05,
+        "rank_high": 259170.0,
+        "rank_low": 94062.5,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING (CYBER SECURITY) at M S Engineering College, Bangalore NAVARATHNA AGRAHARA, SADAHALLIPOST, NEAR BIAL, BANGALORE), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      },
+      {
+        "admission_probability": 4.8,
+        "band_imputed": false,
+        "category": "Reach",
+        "closing_rank": 261492.0,
+        "college_code": "E159",
+        "confidence": "high",
+        "fit_label": "Ambitious - just beyond last year's closing rank, but worth a try.",
+        "institute": "Karavali Institute of Technology, Neermarga, Mangalore PADU POST, VIA PEDUMALE,NEERUMARGA,MANGALORE -575029",
+        "interest_score": 3.5,
+        "matched_interest": true,
+        "program": "COMPUTER SCIENCE AND ENGINEERING",
+        "quality_score": 0.01,
+        "rank_high": 261492.0,
+        "rank_low": 121905.0,
+        "reason": "Reach for you - strong fit for your goal (COMPUTER SCIENCE AND ENGINEERING at Karavali Institute of Technology, Neermarga, Mangalore PADU POST, VIA PEDUMALE,NEERUMARGA,MANGALORE -575029), under the Category 2A (State-wide (General)) category. This cutoff sits in a wide, stable part of the rank range.",
+        "seat_category": "2AG",
+        "seat_category_label": "Category 2A (State-wide (General))",
+        "tags": [
+          "cse"
+        ]
+      }
+    ],
     "thresholds": {
       "caps": {
         "Reach": 15,
@@ -30,14 +370,13 @@
         "Target": 25
       },
       "max_per_institute": 2,
-      "reach_band_ceiling": 18000.0,
-      "safe_margin": 0.15,
-      "target_band_ceiling": 13000.0,
-      "target_band_floor": 1500.0,
+      "min_options": 25,
+      "relevance_ceiling_z": 4.0,
+      "safe_buffer_fraction": 0.0,
       "top_rank_cap": 25,
-      "upper_margin": 0.25
+      "use_observed_range": true
     },
-    "total_count": 0
+    "total_count": 26
   },
   "note": "core grid rank=400001 cat=2AG",
   "request": {

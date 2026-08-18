@@ -17,7 +17,7 @@
       },
       "total": 0
     },
-    "guidance": "Your rank (400,001) is past the last seat you are eligible for under STR in this dataset — the weakest cutoff closed at 259,691. Adding a different rank will not change this; try another category, or check KEA's special/extended rounds.",
+    "guidance": "Your rank (400,001) is past the last seat you are eligible for under STR in this dataset — the weakest cutoff closed at 264,187.215. Adding a different rank will not change this; try another category, or check KEA's special/extended rounds.",
     "interest_guidance": "Since you are still deciding, the list favours versatile, high-demand branches (CS, ECE, AI/DS, Electrical, Mechanical) that keep the most doors open.",
     "notes": [
       "A rank of 400,001 is well outside KCET's published range and may be a typo."
@@ -30,12 +30,11 @@
         "Target": 25
       },
       "max_per_institute": 2,
-      "reach_band_ceiling": 18000.0,
-      "safe_margin": 0.15,
-      "target_band_ceiling": 13000.0,
-      "target_band_floor": 1500.0,
+      "min_options": 25,
+      "relevance_ceiling_z": 4.0,
+      "safe_buffer_fraction": 0.0,
       "top_rank_cap": 25,
-      "upper_margin": 0.25
+      "use_observed_range": true
     },
     "total_count": 0
   },
